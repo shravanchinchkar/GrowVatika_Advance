@@ -1,5 +1,5 @@
 {
-  "name": "my-turborepo",
+  "name": "grow-vatika",
   "private": true,
   "scripts": {
     "build": "turbo run build",

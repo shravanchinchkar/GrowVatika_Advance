@@ -7,7 +7,38 @@ export default {
     "../../packages/ui/**/*.{js,ts,jsx,tsx,mdx}",
   ],
   theme: {
-    extend: {},
+    extend: {
+      colors: {
+        background: "var(--background)",
+        foreground: "var(--foreground)",
+      },
+      dropShadow: {
+        "3xl": "0 5px 5px rgba(0, 0, 0, 0.75)",
+        "4xl": "0 15px 25px rgba(0, 0, 0, 0.85)",
+      },
+      backgroundImage: {
+        "custom-gradient": "linear-gradient(to left, #649173, #DBD5A4)",
+        "feature-gradient":
+          "linear-gradient(301deg, rgba(100, 145, 115, 0.30) 34.51%, rgba(219, 213, 164, 0.30) 102.82%)",
+        "test-one": "url('/assets/images/TestmonialImageOne.jpg')",
+        "test-two": "url('/assets/images/TestmonialImageTwo.jpeg')",
+        "test-three": "url('/assets/images/TestmonialImageThree.jpg')",
+        "testimonial-gradient":
+          "linear-gradient(301deg, rgba(100, 145, 115, 0.53) 34.51%, rgba(219, 213, 164, 0.53) 102.82%)",
+        "testimonial-gradient-2":
+          "linear-gradient(301deg, rgba(100, 145, 115, 0.53) 34.51%, rgba(219, 213, 164, 0.53) 102.82%)",
+        "contact-form":
+          "linear-gradient(301deg, rgba(100, 145, 115, 0.30) 18.97%, rgba(219, 213, 164, 0.30) 87.28%)",
+      },
+      boxShadow: {
+        "explore-custom": "10px 10px 59px #85A947",
+        "testinomial-custom": "0px 4px 9.9px 0px rgba(0, 0, 0, 0.44)",
+      },
+      screens: {
+        "new-xl": "1330px",
+        "new-xl-2": "1400px",
+      },
+    },
   },
   plugins: [],
 };

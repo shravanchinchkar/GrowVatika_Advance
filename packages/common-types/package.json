@@ -1,9 +1,9 @@
 {
-  "name": "@repo/db",
+  "name": "@repo/common-types",
   "version": "1.0.0",
   "main": "index.js",
-  "exports": {
-    "./client": "./index.ts"
+  "exports":{
+    "./types":"./src/index.ts"
   },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
@@ -12,8 +12,5 @@
   "author": "",
   "license": "ISC",
   "type": "module",
-  "description": "",
-  "dependencies": {
-    "@prisma/client": "^6.5.0"
-  }
+  "description": ""
 }

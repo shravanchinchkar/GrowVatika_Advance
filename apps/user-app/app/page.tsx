@@ -1,10 +1,6 @@
-import client from "@repo/db/client"
-
-
+import { LandingPage } from "../components/landing";
 export default function Home() {
   return (
-    <div className="text-2xl border-[2px] border-black">
-      Hello GrowVatika User!
-    </div>
+    <LandingPage/>
   );
 }

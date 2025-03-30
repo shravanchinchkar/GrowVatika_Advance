@@ -7,7 +7,7 @@ import { verifyCode } from "../app/actions/auth";
 import { useSearchParams } from "next/navigation";
 import { toastStyle } from "../app/lib/toast-style";
 import { SiteLogo } from "./brand-logo";
-import { AuthButton } from "./auth-button";
+import { AuthButton } from "@repo/ui/auth-button";
 import { SignupResponse } from "@repo/common-types/types";
 import { VerifyCodeFooter } from "./verify-code-footer";
 

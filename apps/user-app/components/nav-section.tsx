@@ -2,7 +2,8 @@
 
 import { useState } from "react";
 import { NavLinks } from "./nav-links";
-import { AuthButton } from "./auth-button";
+// import { AuthButton } from "./auth-button";
+import { AuthButton } from "@repo/ui/auth-button";
 import { useRouter } from "next/navigation";
 import { signOut, useSession } from "next-auth/react";
 

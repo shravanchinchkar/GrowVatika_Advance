@@ -1,6 +1,6 @@
 "use client";
 import { toast } from "react-hot-toast";
-import { LabelInput } from "./label-input";
+import { LabelInput } from "@repo/ui/label-input";
 import { useState, useCallback } from "react";
 import { toastStyle } from "../app/lib/toast-style";
 import { storeDataInExcel } from "../app/actions/auth";

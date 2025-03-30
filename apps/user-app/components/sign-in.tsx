@@ -9,9 +9,10 @@ import { useRouter } from "next/navigation";
 import { feSigninInputs } from "@repo/common-types/types";
 import { toastStyle } from "../app/lib/toast-style";
 import { SiteLogo } from "./brand-logo";
-import { LabelInput } from "./label-input";
-import { AuthButton } from "./auth-button";
+import { LabelInput } from "@repo/ui/label-input";
+import { AuthButton } from "@repo/ui/auth-button";
 import AuthImage from "../public/assets/images/AuthImages/AuthImages.png";
+import { ButtonLoadingSign } from "@repo/ui/loading-sign";
 
 export const Sign_In = () => {
   const router = useRouter();
@@ -21,7 +22,9 @@ export const Sign_In = () => {
   });
   const [signInError, setSignInError] = useState(false);
   const [loading, setLoading] = useState(false);
+  const [loadingGoogleLogin, setLoadingGoogleLogin] = useState(false);
 
+  // Handle Login with credentials
   async function handleLogIn() {
     setLoading(true);
     const res = await signIn("credentials", {
@@ -60,6 +63,33 @@ export const Sign_In = () => {
     }
   }
 
+  // Handle Login with google
+  async function handleLoginWithGoogle() {
+    try {
+      console.log("Google hit!");
+      setLoadingGoogleLogin(true);
+      const result = await signIn("google", {
+        callbackUrl: "/",
+        redirect: false,
+      });
+      setLoadingGoogleLogin(false);
+      if (result?.error) {
+        toast.error(
+          result.error === "AccessDenied"
+            ? "Access denied. Please check your credentials."
+            : "Sign-in failed. Please try again.",
+          toastStyle
+        );
+      } else if (result?.ok) {
+        toast.success("Sign-in Successful", toastStyle);
+        router.push("/");
+      }
+    } catch (error) {
+      console.error("Sign-in error:", error);
+      toast.error("An unexpected error occurred during sign-in", toastStyle);
+    }
+  }
+
   return (
     <div className="w-screen h-screen bg-[#FFF6F4] flex font-[Poppins]">
       <div className="w-[50%] flex flex-col gap-[1rem]">
@@ -78,7 +108,8 @@ export const Sign_In = () => {
             </p>
           </div>
         </div>
-        {/* Following div consist of Auth Steps */}
+
+        {/* Following div consist of Signin form */}
         <div
           className={
             !signInError
@@ -91,7 +122,7 @@ export const Sign_In = () => {
               Invalid Credentials!
             </div>
           ) : null}
-          {/* Following is the login form */}
+
           <form className="w-[70%] h-max flex flex-col items-center gap-[1.5rem]">
             {/* Following is the Email Input Field */}
             <div className="lg:w-[23rem] lg:h-[3rem] xl:w-[28rem]  2xl:w-[30.1875rem] 2xl:h-[3.56894rem]">
@@ -127,6 +158,7 @@ export const Sign_In = () => {
                 }}
               />
             </div>
+
             {/* Login Button */}
             <div className="lg:w-[23rem] lg:h-[3rem] xl:w-[28rem]  2xl:w-[30.1875rem] 2xl:h-[3.56894rem]">
               <AuthButton
@@ -136,52 +168,35 @@ export const Sign_In = () => {
               />
             </div>
           </form>
+
           {/* Following is the OR Section */}
           <div className="text-[#606060] text-[1.25rem] font-normal">
             - OR -
           </div>
+
           {/* Following is the Login with Google Section */}
           <button
-            className="lg:w-[13rem] lg:h-[3rem] 2xl:w-[15.1rem] 2xl:h-[4.01379rem] flex justify-evenly items-center bg-[#fff] border-[2px] border-[#8C8C8C] rounded-l-full rounded-r-full"
-            onClick={async () => {
-              try {
-                console.log("Google hit!");
-                const result = await signIn("google", {
-                  callbackUrl: "/",
-                  redirect: false,
-                });
-
-                if (result?.error) {
-                  toast.error(
-                    result.error === "AccessDenied"
-                      ? "Access denied. Please check your credentials."
-                      : "Sign-in failed. Please try again.",
-                    toastStyle
-                  );
-                } else if (result?.ok) {
-                  toast.success("Sign-in Successful", toastStyle);
-                  router.push("/");
-                }
-              } catch (error) {
-                console.error("Sign-in error:", error);
-                toast.error(
-                  "An unexpected error occurred during sign-in",
-                  toastStyle
-                );
-              }
-            }}
+            className={`lg:w-[13rem] lg:h-[3rem] 2xl:w-[15.1rem] 2xl:h-[4.01379rem] flex justify-evenly items-center bg-[#fff] border-[2px] border-[#8C8C8C] rounded-l-full rounded-r-full ${loadingGoogleLogin ? "cursor-not-allowed" : "cursor-pointer"}`}
+            onClick={handleLoginWithGoogle}
+            disabled={loadingGoogleLogin}
           >
-            <div className="lg:w-[1.5rem] lg:h-[1.5rem] 2xl:w-[1.80619rem] 2xl:h-[1.80619rem] relative">
-              <Image
-                src={"/assets/images/AuthImages/auth-Google.svg"}
-                alt="google-auth"
-                className="object-cover"
-                fill
-              />
-            </div>
-            <div className="font-[Roboto] text-[#1F1F1F] lg:text-[1rem] 2xl:text-[1.18963rem] font-medium">
-              Sign in with Google
-            </div>
+            {!loadingGoogleLogin ? (
+              <>
+                <div className="lg:w-[1.5rem] lg:h-[1.5rem] 2xl:w-[1.80619rem] 2xl:h-[1.80619rem] relative">
+                  <Image
+                    src={"/assets/images/AuthImages/auth-Google.svg"}
+                    alt="google-auth"
+                    className="object-cover"
+                    fill
+                  />
+                </div>
+                <div className="font-[Roboto] text-[#1F1F1F] lg:text-[1rem] 2xl:text-[1.18963rem] font-medium">
+                  Sign in with Google
+                </div>
+              </>
+            ) : (
+              <ButtonLoadingSign />
+            )}
           </button>
         </div>
 
@@ -193,6 +208,7 @@ export const Sign_In = () => {
           </Link>
         </div>
       </div>
+      
       {/* Following div consist of Image */}
       <div className="w-[50%] flex justify-center items-center">
         <div className="lg:w-[30rem] lg:h-[30rem] xl:w-[31rem] xl:h-[31rem] 2xl:w-[42rem] 2xl:h-[42rem] shrink-0 relative rounded-[28px] overflow-hidden">

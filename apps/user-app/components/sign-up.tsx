@@ -5,11 +5,11 @@ import { useState } from "react";
 import { toast } from "react-hot-toast";
 import { useRouter } from "next/navigation";
 import { signup } from "../app/actions/auth";
-import { feSigninInputs,SignupResponse } from "@repo/common-types/types";
+import { feSignupInputs,SignupResponse } from "@repo/common-types/types";
 import { toastStyle } from "../app/lib/toast-style";
 import { SiteLogo } from "./brand-logo";
-import { LabelInput } from "./label-input";
-import { AuthButton } from "./auth-button";
+import { LabelInput } from "@repo/ui/label-input";
+import { AuthButton } from "@repo/ui/auth-button";
 import AuthImage from "../public/assets/images/AuthImages/AuthImages.png";
 
 interface SignupError {
@@ -21,7 +21,7 @@ interface SignupError {
 export const Sign_Up = () => {
   const router = useRouter();
   const [loading, setLoading] = useState(false);
-  const [signupInputs, setSignupInputs] = useState<feSigninInputs>({
+  const [signupInputs, setSignupInputs] = useState<feSignupInputs>({
     name: "",
     email: "",
     password: "",

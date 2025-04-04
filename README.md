@@ -13,6 +13,7 @@ BE FINAL YEAR PROJECT
 
 ## Following Stack is used for this project
 
+- Turborepo
 - NEXT.js
 - NextAuth for user Validation
 - Resend to send verification mail

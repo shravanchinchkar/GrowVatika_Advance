@@ -8,7 +8,7 @@ import { signIn } from "next-auth/react";
 import { useRouter } from "next/navigation";
 import { feSigninInputs } from "@repo/common-types/types";
 import { toastStyle } from "../app/lib/toast-style";
-import { SiteLogo } from "./brand-logo";
+import { SiteLogo } from "@repo/ui/brand-logo";
 import { LabelInput } from "@repo/ui/label-input";
 import { AuthButton } from "@repo/ui/auth-button";
 import AuthImage from "../public/assets/images/AuthImages/AuthImages.png";

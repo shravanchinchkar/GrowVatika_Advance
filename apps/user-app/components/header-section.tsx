@@ -1,6 +1,6 @@
 import { ProductSearchBar } from "./product-search-bar";
 import { ShoppingCartIcon } from "./cart-icon";
-import { SiteLogo } from "./brand-logo";
+import { SiteLogo } from "@repo/ui/brand-logo";
 
 
 export const Header = () => {

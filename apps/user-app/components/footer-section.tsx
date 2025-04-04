@@ -1,4 +1,4 @@
-import { SiteLogo } from "./brand-logo";
+import { SiteLogo } from "@repo/ui/brand-logo";
 import Image from "next/image";
 
 export const Footer = () => {

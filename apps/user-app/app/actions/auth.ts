@@ -5,12 +5,13 @@ import bcrypt from "bcrypt";
 import client from "@repo/db/client";
 import { google } from "googleapis";
 import { JWT } from "google-auth-library";
-import { UserDetails,ApiResponseType,SignupResponse,feSigninInputs,beSigninInputs, beSignupInputs } from "@repo/common-types/types";
-import { getExpiryDate } from "../lib/generate-expiry-date";
-import { generateVerifyCode } from "../lib/generate-verify-code";
-import { getCurrentFormattedDate } from "../lib/get-current-date";
+import { getExpiryDate } from "@repo/shared/utilfunctions";
+import { generateVerifyCode } from "@repo/shared/utilfunctions";
+import { getCurrentFormattedDate } from "@repo/shared/utilfunctions";
 import { sendVerificationEmail } from "../helper/sendVerificationEmail";
 import { successfulCollaboration } from "../helper/successful-Collaboration-Mail";
+import { UserDetails,ApiResponseType,SignupResponse,beSignupInputs,feSignupInputs } from "@repo/common-types/types";
+
 
 interface VerifyCodeProps {
   email?: string;
@@ -20,7 +21,7 @@ interface VerifyCodeProps {
 
 // Following server action is used for signup
 export async function signup(
-  signupCredentials: feSigninInputs
+  signupCredentials: feSignupInputs
 ): Promise<SignupResponse> {
   console.log("User Credentials:", signupCredentials);
 
@@ -331,10 +332,11 @@ export async function storeDataInExcel(
         await client.seller.update({
           where: { email: userDetails.email },
           data: {
-            ownerName:userDetails.fullName,
-            phoneNumber:userDetails.phoneNumber,
+            firstName:"",
+            lastName:"",
             nurseryName:userDetails.nurseryName,
-            city:userDetails.city,
+            phoneNumber:userDetails.phoneNumber,
+            password:"",
             verifyCode: verifyCode,
             verifyCodeExpiry: expiryDate,
           },
@@ -363,7 +365,7 @@ export async function storeDataInExcel(
         };
       }
     } else {
-      //If the Seller Email address is unique then first stroe the details of the seller in the google spread sheet
+      //If the Seller Email address is unique then first store the details of the seller in the google spread sheet
 
       // Load credentials from environment variables or a secure config
       const credentials = {
@@ -413,11 +415,12 @@ export async function storeDataInExcel(
 
       const createNewSeller = await client.seller.create({
         data: {
-          ownerName: userDetails.fullName,
-          phoneNumber: userDetails.phoneNumber,
-          email: userDetails.email,
+          firstName:"",
+          lastName:"",
           nurseryName: userDetails.nurseryName,
-          city: userDetails.city,
+          email: userDetails.email,
+          phoneNumber: userDetails.phoneNumber,
+          password:"",
           verifyCode: verifyCode,
           verifyCodeExpiry: expiryDate,
         },

@@ -207,6 +207,7 @@ export const Sign_In = () => {
             Sign up
           </Link>
         </div>
+        
       </div>
       
       {/* Following div consist of Image */}

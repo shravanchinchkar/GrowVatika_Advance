@@ -3,8 +3,8 @@ import client from "@repo/db/client";
 import { beSigninInputs } from "@repo/common-types/types";
 import CredentialsProvider from "next-auth/providers/credentials";
 import GoogleProvider from "next-auth/providers/google";
-import { getExpiryDate } from "../lib/generate-expiry-date";
-import { generateVerifyCode } from "../lib/generate-verify-code";
+import { getExpiryDate } from "@repo/shared/utilfunctions";
+import { generateVerifyCode } from "@repo/shared/utilfunctions";
 import { sendVerificationEmail } from "../helper/sendVerificationEmail";
 
 export const NEXT_AUTH = {

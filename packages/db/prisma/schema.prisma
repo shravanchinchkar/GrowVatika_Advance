@@ -20,11 +20,12 @@ model User {
 
 model Seller {
   id               String    @id @default(uuid())
-  ownerName        String
-  phoneNumber      String
-  email            String    @unique
+  firstName        String
+  lastName         String
   nurseryName      String
-  city             String
+  email            String    @unique
+  phoneNumber      String
+  password         String
   verifyCode       String?
   verifyCodeExpiry DateTime?
   isVerified       Boolean   @default(false)

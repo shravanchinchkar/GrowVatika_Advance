@@ -3,7 +3,7 @@
 import { toast } from "react-hot-toast";
 import { useState, useEffect } from "react";
 import { resendOTP } from "../app/actions/auth";
-import { toastStyle } from "../app/lib/toast-style";
+import { toastStyle } from "@repo/shared/utilfunctions";
 import { SignupResponse } from "@repo/common-types/types";
 import { formatCountdown } from "@repo/shared/utilfunctions";
 

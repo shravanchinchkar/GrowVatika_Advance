@@ -33,12 +33,12 @@ export const NEXT_AUTH = {
           //extract the email and password send by the user
           const { email, password } = credentials;
           //check if the user with the entered email already exists in db
-          const userExists = await client.user.findFirst({
+          const sellerExists = await client.seller.findFirst({
             where: {
               email: email,
             },
           });
-          if (!userExists) {
+          if (!sellerExists) {
             console.error("User doesn't exists");
             throw new Error(
               JSON.stringify({
@@ -50,15 +50,15 @@ export const NEXT_AUTH = {
           } else {
             const passwordValidation = await bcrypt.compare(
               password,
-              userExists.password
+              sellerExists.password
             );
 
             if (passwordValidation) {
               return {
-                id: userExists.id.toString(),
-                name: userExists.name,
-                email: userExists.email,
-                isVerified: userExists.isVerified,
+                id: sellerExists.id.toString(),
+                name: sellerExists.firstName,
+                email: sellerExists.email,
+                isVerified: sellerExists.isVerified,
                 customResponse: {
                   success: true,
                   message: "Sign-in successful",

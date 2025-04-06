@@ -30,10 +30,7 @@ export const VerifyCodePage = () => {
 
   const handelVerifyCode = async () => {
     setLoading(true);
-    const res: SignupResponse = await verifyCode({
-      email,
-      userVerifyCode,
-    });
+    const res: SignupResponse = await verifyCode({ email, userVerifyCode });
     console.log("verify code response to FE", res);
     setLoading(false);
     if (res.errors) {
@@ -49,7 +46,7 @@ export const VerifyCodePage = () => {
       }
     } else {
       toast.success("Email verified!", toastStyle);
-      router.push("/");
+      router.push(`/register?email=${encodeURIComponent(email)}`);
     }
   };
 

@@ -1,9 +1,11 @@
-import type { Metadata } from "next";
 import "./globals.css";
+import type { Metadata } from "next";
+import { Providers } from "./providers";
 
 export const metadata: Metadata = {
   title: "GrowVatika Seller",
-  description: "Collaborate and grow your plant nursery business with growvatika",
+  description:
+    "Collaborate and grow your plant nursery business with growvatika",
 };
 
 export default function RootLayout({
@@ -14,7 +16,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body>
-        {children}
+        <Providers>{children}</Providers>
       </body>
     </html>
   );

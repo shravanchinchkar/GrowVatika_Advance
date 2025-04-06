@@ -4,7 +4,7 @@ import { LabelInput } from "@repo/ui/label-input";
 import { useState, useCallback } from "react";
 import { toastStyle } from "../app/lib/toast-style";
 import { storeDataInExcel } from "../app/actions/auth";
-import { UserDetails,customer } from "@repo/common-types/types";
+import { UserDetails, customer } from "@repo/common-types/types";
 import { ContactSuccess } from "./contact-success-msg";
 
 interface FormErrors {
@@ -37,7 +37,7 @@ export const ContactForm = () => {
   // Handle input changes and clear corresponding errors
   const handleInputChange =
     (field: keyof UserDetails) => (e: React.ChangeEvent<HTMLInputElement>) => {
-      setUserDetails((prev:any) => ({ ...prev, [field]: e.target.value }));
+      setUserDetails((prev: any) => ({ ...prev, [field]: e.target.value }));
       setErrors((prev) => ({ ...prev, [field]: undefined }));
     };
 
@@ -53,7 +53,7 @@ export const ContactForm = () => {
       });
     }
 
-    if (isChecked===false) {
+    if (isChecked === false) {
       newErrors.terms = "You must agree to the terms and conditions.";
     }
 
@@ -163,7 +163,7 @@ export const ContactForm = () => {
             {/* Input Field for Email */}
             <div className="lg:w-[25rem] xl:w-[30rem] 2xl:w-[34.25rem] h-[4.0625rem] col-span-3">
               <LabelInput
-                legendName="Email"
+                legendName="Business Email"
                 placeHolder="Enter your mail here"
                 useType="sellerForm"
                 value={userDetails.email}
@@ -193,23 +193,27 @@ export const ContactForm = () => {
               />
             </div>
 
-
-            <div className={hasErrors?"flex flex-col items-center col-span-3":"flex flex-col items-center col-span-3 mt-[3rem]"}>
+            <div
+              className={
+                hasErrors
+                  ? "flex flex-col items-center col-span-3"
+                  : "flex flex-col items-center col-span-3 mt-[3rem]"
+              }
+            >
               {/* Following is the terms and conditions div */}
               <div className="flex gap-[0.5rem]">
                 <input
                   className="w-[2.375rem] h-[1.5rem] accent-[#123524] cursor-pointer rounded-[1rem]"
                   type="checkbox"
                   checked={isChecked}
-                  onChange={(e)=>{
-                    if(e.target.checked===true){
-                      console.log("Check value:",e.target.checked)
-                      setIsChecked(true)
-                      setErrors({...errors,terms:""})
-                    }
-                    else if(!e.target.checked){
-                      console.log("else if check value:",e.target.checked)
-                      setIsChecked(false)
+                  onChange={(e) => {
+                    if (e.target.checked === true) {
+                      console.log("Check value:", e.target.checked);
+                      setIsChecked(true);
+                      setErrors({ ...errors, terms: "" });
+                    } else if (!e.target.checked) {
+                      console.log("else if check value:", e.target.checked);
+                      setIsChecked(false);
                     }
                   }}
                 />
@@ -225,7 +229,7 @@ export const ContactForm = () => {
 
               {/* Following div consist of Form Action Button */}
 
-              <div className={hasErrors?"mt-0":"mt-[2rem]"}>
+              <div className={hasErrors ? "mt-0" : "mt-[2rem]"}>
                 <button
                   type="submit"
                   className={`${buttonStyle} mt-[1rem] ${loading ? "cursor-not-allowed" : ""}`}

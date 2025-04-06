@@ -10,13 +10,17 @@ import { generateVerifyCode } from "@repo/shared/utilfunctions";
 import { getCurrentFormattedDate } from "@repo/shared/utilfunctions";
 import { sendVerificationEmail } from "../helper/sendVerificationEmail";
 import { successfulCollaboration } from "../helper/successful-Collaboration-Mail";
-import { UserDetails,ApiResponseType,SignupResponse,beSignupInputs,feSignupInputs } from "@repo/common-types/types";
-
+import {
+  UserDetails,
+  ApiResponseType,
+  SignupResponse,
+  beSignupInputs,
+  feSignupInputs,
+} from "@repo/common-types/types";
 
 interface VerifyCodeProps {
   email?: string;
   userVerifyCode: string;
-  seller: boolean;
 }
 
 // Following server action is used for signup
@@ -72,7 +76,7 @@ export async function signup(
 
         // Send verification email for the unverified user
         const emailResponse = await sendVerificationEmail(
-          signupCredentials.name,
+          signupCredentials.name || "",
           signupCredentials.email,
           verifyCode
         );
@@ -95,7 +99,7 @@ export async function signup(
       const hashPassword = await bcrypt.hash(signupCredentials.password, 10);
       const newUser = await client.user.create({
         data: {
-          name: signupCredentials.name,
+          name: signupCredentials.name || "",
           email: signupCredentials.email,
           password: hashPassword,
           verifyCode: verifyCode,
@@ -148,79 +152,33 @@ export async function signup(
 export async function verifyCode({
   email,
   userVerifyCode,
-  seller,
 }: VerifyCodeProps): Promise<SignupResponse> {
   try {
-    // If the end-user is not a seller then
-    if (!seller) {
-      console.log("inside user!");
-      const user = await client.user.findUnique({
-        where: {
-          email: email,
-        },
-      });
-      console.log("Verify Code user exists", user);
-
-      // If the email dose not exists then
-      if (!user) {
-        console.error("verify user not found!");
-        return { success: false, errors: "User not found!", status: 400 };
-      }
-
-      const currentTime = new Date();
-      if (
-        !user.verifyCode ||
-        !user.verifyCodeExpiry ||
-        user.verifyCode !== userVerifyCode ||
-        currentTime > user.verifyCodeExpiry
-      ) {
-        console.error("Invalid OTP");
-        return { success: false, errors: "Invalid or expired OTP" };
-      }
-
-      const updateUser = await client.user.update({
-        where: { email: email },
-        data: {
-          isVerified: true,
-          verifyCode: null,
-          verifyCodeExpiry: null,
-        },
-      });
-
-      if (!updateUser) {
-        console.error("Error While Updating Verified User");
-        return { success: false, errors: "Error While Updating Verified User" };
-      }
-      return { success: true, message: "Email verified successfully" };
-    }
-
-    console.log("Inside seller");
-    // If the end-user is a seller then
-    const existingSeller = await client.seller.findUnique({
+    const user = await client.user.findUnique({
       where: {
         email: email,
       },
     });
-    console.log("Verify Code user exists", seller);
+    console.log("Verify Code user exists", user);
 
     // If the email dose not exists then
-    if (!existingSeller) {
+    if (!user) {
       console.error("verify user not found!");
       return { success: false, errors: "User not found!", status: 400 };
     }
 
     const currentTime = new Date();
     if (
-      !existingSeller.verifyCode ||
-      !existingSeller.verifyCodeExpiry ||
-      existingSeller.verifyCode !== userVerifyCode ||
-      currentTime > existingSeller.verifyCodeExpiry
+      !user.verifyCode ||
+      !user.verifyCodeExpiry ||
+      user.verifyCode !== userVerifyCode ||
+      currentTime > user.verifyCodeExpiry
     ) {
       console.error("Invalid OTP");
       return { success: false, errors: "Invalid or expired OTP" };
     }
 
-    const updateSeller = await client.seller.update({
+    const updateUser = await client.user.update({
       where: { email: email },
       data: {
         isVerified: true,
@@ -229,9 +187,9 @@ export async function verifyCode({
       },
     });
 
-    if (!updateSeller) {
-      console.error("Error While Updating Verified seller");
-      return { success: false, errors: "Error While Updating Verified seller" };
+    if (!updateUser) {
+      console.error("Error While Updating Verified User");
+      return { success: false, errors: "Error While Updating Verified User" };
     }
     return { success: true, message: "Email verified successfully" };
   } catch (err) {
@@ -332,18 +290,18 @@ export async function storeDataInExcel(
         await client.seller.update({
           where: { email: userDetails.email },
           data: {
-            firstName:"",
-            lastName:"",
-            nurseryName:userDetails.nurseryName,
-            phoneNumber:userDetails.phoneNumber,
-            password:"",
+            firstName: "",
+            lastName: "",
+            nurseryName: userDetails.nurseryName,
+            phoneNumber: userDetails.phoneNumber,
+            password: "",
             verifyCode: verifyCode,
             verifyCodeExpiry: expiryDate,
           },
         });
 
-         // Send verification email for the unverified seller
-         const emailResponse = await successfulCollaboration(
+        // Send verification email for the unverified seller
+        const emailResponse = await successfulCollaboration(
           userDetails.nurseryName,
           userDetails.fullName,
           getCurrentFormattedDate(),
@@ -415,12 +373,12 @@ export async function storeDataInExcel(
 
       const createNewSeller = await client.seller.create({
         data: {
-          firstName:"",
-          lastName:"",
+          firstName: "",
+          lastName: "",
           nurseryName: userDetails.nurseryName,
           email: userDetails.email,
           phoneNumber: userDetails.phoneNumber,
-          password:"",
+          password: "",
           verifyCode: verifyCode,
           verifyCodeExpiry: expiryDate,
         },

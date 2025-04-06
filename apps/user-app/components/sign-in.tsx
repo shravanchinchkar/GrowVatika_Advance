@@ -93,13 +93,16 @@ export const Sign_In = () => {
   return (
     <div className="w-screen h-screen bg-[#FFF6F4] flex font-[Poppins]">
       <div className="w-[50%] flex flex-col gap-[1rem]">
-        {/* Following div consist of site logo and welcome message */}
+        {/* Following div consist of site logo */}
         <div className="flex flex-col items-start gap-[2rem] pl-[2rem] pt-[1rem]">
           <div>
             <SiteLogo />
           </div>
+        </div>
 
-          <div className="font-bold flex flex-col gap-0 ml-[2rem]">
+        <div className="flex flex-col items-start pl-[6.5rem] mt-[2rem]">
+          {/* Following div consist of welcome message */}
+          <div className="font-bold flex flex-col gap-0">
             <p className="text-[#000] lg:text-[1.5rem] xl:text-[1.8rem] 2xl:text-[2rem]">
               Hello there!
             </p>
@@ -107,109 +110,107 @@ export const Sign_In = () => {
               Ready to Grow Green?
             </p>
           </div>
-        </div>
 
-        {/* Following div consist of Signin form */}
-        <div
-          className={
-            !signInError
-              ? "w-[100%] h-max flex flex-col items-center gap-[1rem] lg:mt-[0.2rem] 2xl:mt-[2rem]"
-              : "w-[100%] h-max flex flex-col items-center gap-[1rem] lg:mt-[0.2rem] 2xl:mt-0"
-          }
-        >
-          {signInError ? (
-            <div className="w-[30rem] bg-red-500 p-[1rem] text-[#fff] font-semibold text-center shadow-md">
-              Invalid Credentials!
-            </div>
-          ) : null}
-
-          <form className="w-[70%] h-max flex flex-col items-center gap-[1.5rem]">
-            {/* Following is the Email Input Field */}
-            <div className="lg:w-[23rem] lg:h-[3rem] xl:w-[28rem]  2xl:w-[30.1875rem] 2xl:h-[3.56894rem]">
-              <LabelInput
-                legendName="Email"
-                useType="authForm"
-                placeHolder="Enter your email here"
-                name="email"
-                value={signInInputs.email}
-                onChange={(e) => {
-                  setSignInError(false);
-                  setSignInInputs({
-                    ...signInInputs,
-                    email: e.target.value,
-                  });
-                }}
-              />
-            </div>
-            {/* Following is the Password Input Field */}
-            <div className="lg:w-[23rem] lg:h-[3rem] xl:w-[28rem]  2xl:w-[30.1875rem] 2xl:h-[3.56894rem]">
-              <LabelInput
-                legendName="Password"
-                useType="authForm"
-                placeHolder="Enter your password here"
-                name="password"
-                value={signInInputs.password}
-                onChange={(e) => {
-                  setSignInError(false);
-                  setSignInInputs({
-                    ...signInInputs,
-                    password: e.target.value,
-                  });
-                }}
-              />
-            </div>
-
-            {/* Login Button */}
-            <div className="lg:w-[23rem] lg:h-[3rem] xl:w-[28rem]  2xl:w-[30.1875rem] 2xl:h-[3.56894rem]">
-              <AuthButton
-                buttonName="Sign In"
-                onClick={handleLogIn}
-                loading={loading}
-              />
-            </div>
-          </form>
-
-          {/* Following is the OR Section */}
-          <div className="text-[#606060] text-[1.25rem] font-normal">
-            - OR -
-          </div>
-
-          {/* Following is the Login with Google Section */}
-          <button
-            className={`lg:w-[13rem] lg:h-[3rem] 2xl:w-[15.1rem] 2xl:h-[4.01379rem] flex justify-evenly items-center bg-[#fff] border-[2px] border-[#8C8C8C] rounded-l-full rounded-r-full ${loadingGoogleLogin ? "cursor-not-allowed" : "cursor-pointer"}`}
-            onClick={handleLoginWithGoogle}
-            disabled={loadingGoogleLogin}
+          {/* Following div consist of Signup Form, OR and Signin with google option */}
+          <div
+            className={`h-max flex flex-col items-center gap-[1rem] lg:mt-[0.2rem] ${!signInError ? "2xl:mt-[2rem]" : "2xl:mt-0"}`}
           >
-            {!loadingGoogleLogin ? (
-              <>
-                <div className="lg:w-[1.5rem] lg:h-[1.5rem] 2xl:w-[1.80619rem] 2xl:h-[1.80619rem] relative">
-                  <Image
-                    src={"/assets/images/AuthImages/auth-Google.svg"}
-                    alt="google-auth"
-                    className="object-cover"
-                    fill
-                  />
-                </div>
-                <div className="font-[Roboto] text-[#1F1F1F] lg:text-[1rem] 2xl:text-[1.18963rem] font-medium">
-                  Sign in with Google
-                </div>
-              </>
-            ) : (
-              <ButtonLoadingSign />
-            )}
-          </button>
-        </div>
+            {signInError ? (
+              <div className="w-[30rem] bg-red-500 p-[1rem] text-[#fff] font-semibold text-center shadow-md">
+                Invalid Credentials!
+              </div>
+            ) : null}
 
-        {/* Following is the Sign-up Option */}
-        <div className="m-auto text-[#123524] lg:text-[1rem] 2xl:text-[1.25rem] font-normal flex">
-          <p>Don’t have an account?</p>
-          <Link href={"/signup"} className="font-bold">
-            Sign up
-          </Link>
+            {/* Signin form */}
+            <form className="w-max h-max flex flex-col items-start gap-[1.5rem]">
+              {/* Following is the Email Input Field */}
+              <div className="lg:w-[23rem] lg:h-[3rem] xl:w-[28rem]  2xl:w-[30.1875rem] 2xl:h-[3.56894rem]">
+                <LabelInput
+                  legendName="Email"
+                  useType="authForm"
+                  placeHolder="Enter your email here"
+                  name="email"
+                  value={signInInputs.email}
+                  onChange={(e) => {
+                    setSignInError(false);
+                    setSignInInputs({
+                      ...signInInputs,
+                      email: e.target.value,
+                    });
+                  }}
+                />
+              </div>
+              {/* Following is the Password Input Field */}
+              <div className="lg:w-[23rem] lg:h-[3rem] xl:w-[28rem]  2xl:w-[30.1875rem] 2xl:h-[3.56894rem]">
+                <LabelInput
+                  legendName="Password"
+                  useType="authForm"
+                  placeHolder="Enter your password here"
+                  name="password"
+                  value={signInInputs.password}
+                  onChange={(e) => {
+                    setSignInError(false);
+                    setSignInInputs({
+                      ...signInInputs,
+                      password: e.target.value,
+                    });
+                  }}
+                />
+              </div>
+
+              {/* Login Button */}
+              <div className="lg:w-[23rem] lg:h-[3rem] xl:w-[28rem] 2xl:w-[30.1875rem] 2xl:h-[3.56894rem]">
+                <AuthButton
+                  buttonName="Sign In"
+                  onClick={handleLogIn}
+                  loading={loading}
+                />
+              </div>
+            </form>
+
+            {/* Following is the OR Section */}
+            <div className="text-[#606060] text-[1.25rem] font-normal">
+              - OR -
+            </div>
+
+            {/* Following is the Login with Google Section */}
+            <button
+              className={`lg:w-[13rem] lg:h-[3rem] 2xl:w-[15.1rem] 2xl:h-[4.01379rem] flex justify-evenly items-center bg-[#fff] border-[2px] border-[#8C8C8C] rounded-l-full rounded-r-full ${loadingGoogleLogin ? "cursor-not-allowed" : "cursor-pointer"}`}
+              onClick={handleLoginWithGoogle}
+              disabled={loadingGoogleLogin}
+            >
+              {!loadingGoogleLogin ? (
+                <>
+                  <div className="lg:w-[1.5rem] lg:h-[1.5rem] 2xl:w-[1.80619rem] 2xl:h-[1.80619rem] relative">
+                    <Image
+                      src={"/assets/images/AuthImages/auth-Google.svg"}
+                      alt="google-auth"
+                      className="object-cover"
+                      fill
+                    />
+                  </div>
+                  <div className="font-[Roboto] text-[#1F1F1F] lg:text-[1rem] 2xl:text-[1.18963rem] font-medium">
+                    Sign in with Google
+                  </div>
+                </>
+              ) : (
+                <ButtonLoadingSign />
+              )}
+            </button>
+
+            {/* Following is the Sign-up Option */}
+            <div
+              className={`m-auto ${signInError ? "mt-0" : "mt-[2rem]"} text-[#123524] lg:text-[1rem] 2xl:text-[1.25rem] font-normal flex`}
+            >
+              <p>Don’t have an account?</p>
+              <Link href={"/signup"} className="font-bold">
+                Sign up
+              </Link>
+            </div>
+          </div>
         </div>
-        
       </div>
-      
+
       {/* Following div consist of Image */}
       <div className="w-[50%] flex justify-center items-center">
         <div className="lg:w-[30rem] lg:h-[30rem] xl:w-[31rem] xl:h-[31rem] 2xl:w-[42rem] 2xl:h-[42rem] shrink-0 relative rounded-[28px] overflow-hidden">

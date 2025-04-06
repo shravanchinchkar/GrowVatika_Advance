@@ -50,14 +50,14 @@ export const LabelInput = ({
         >
           {legendName}
         </legend>
-
-        {/* w-[100%] */}
         <input
-          className={`${legendName === "Password" ? "w-[130%]" : "w-[100%]"}  pl-[0.4rem] bg-transparent text-[#8C8C8C] outline-none text-[1.25rem] font-normal  rounded-l-full rounded-r-full`}
+          className={`${legendName === "Password" ? "w-[130%]" : "w-[100%]"}  pl-[0.4rem] bg-transparent text-[#0B1320] outline-none text-[1.25rem] font-normal  rounded-l-full rounded-r-full`}
           type={
             legendName === "Phone Number"
               ? "tel"
-              : legendName === "Password" && viewPassword === false
+              : (legendName === "Password" ||
+                    legendName === "Confirm Password") &&
+                  viewPassword === false
                 ? "password"
                 : legendName === "Password" && viewPassword === true
                   ? "text"
@@ -69,7 +69,7 @@ export const LabelInput = ({
           onChange={onChange}
         />
 
-        {legendName === "Password" && (
+        {legendName === "Password" || legendName === "Confirm Password" ? (
           <button
             type="button"
             className="w-[3rem] h-[2rem] relative border-none outline-none"
@@ -89,7 +89,7 @@ export const LabelInput = ({
               />
             )}
           </button>
-        )}
+        ) : null}
       </fieldset>
     </div>
   );

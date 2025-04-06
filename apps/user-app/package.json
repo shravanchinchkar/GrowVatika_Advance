@@ -13,7 +13,7 @@
   "dependencies": {
     "@react-email/components": "0.0.34",
     "@remixicon/react": "^4.6.0",
-    "@repo/shared":"*",
+    "@repo/shared": "*",
     "@repo/common-types": "*",
     "@repo/db": "*",
     "@repo/ui": "*",

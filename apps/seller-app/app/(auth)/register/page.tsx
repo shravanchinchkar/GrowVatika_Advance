@@ -1,4 +1,8 @@
 import { SellerRegister } from "../../../components/seller-register";
 export default function () {
-  return <SellerRegister />;
+  return (
+    <div className="overflow-x-hidden">
+      <SellerRegister />
+    </div>
+  );
 }

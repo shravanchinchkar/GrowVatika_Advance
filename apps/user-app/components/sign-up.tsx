@@ -5,12 +5,12 @@ import { useState } from "react";
 import { toast } from "react-hot-toast";
 import { useRouter } from "next/navigation";
 import { signup } from "../app/actions/auth";
-import { feSignupInputs,SignupResponse } from "@repo/common-types/types";
-import { toastStyle } from "../app/lib/toast-style";
 import { SiteLogo } from "@repo/ui/brand-logo";
 import { LabelInput } from "@repo/ui/label-input";
 import { AuthButton } from "@repo/ui/auth-button";
+import { toastStyle } from "../app/lib/toast-style";
 import AuthImage from "../public/assets/images/AuthImages/AuthImages.png";
+import { feSignupInputs, SignupResponse } from "@repo/common-types/types";
 
 interface SignupError {
   nameError: string;
@@ -82,7 +82,7 @@ export const Sign_Up = () => {
 
     // Handle other messages (e.g., errors)
     if (res?.message && !res.success) {
-      console.error("Error message:",res.message)
+      console.error("Error message:", res.message);
       toast.error("Please try again", toastStyle);
     }
   };
@@ -104,13 +104,18 @@ export const Sign_Up = () => {
       </div>
 
       <div className="w-[50%] flex flex-col gap-[1rem]">
-        {/* Following div consist of site logo and welcome message */}
+        {/* Following div consist of site logo*/}
         <div className="flex flex-col items-start gap-[2rem] pl-[2rem] pt-[1rem]">
           <div>
             <SiteLogo />
           </div>
+        </div>
 
-          <div className="font-bold flex flex-col gap-0 ml-[2rem]">
+        {/* Following div consist of welcome message, signup form, and sign-in option */}
+        <div className="flex flex-col items-start pl-[6.5rem] mt-[2rem]">
+
+          {/* Following div consist of welcome message  */}
+          <div className="font-bold flex flex-col gap-0">
             <p className="text-[#000] lg:text-[1.5rem] xl:text-[1.8rem] 2xl:text-[2rem] ">
               Create an account
             </p>
@@ -118,150 +123,152 @@ export const Sign_Up = () => {
               Sign up to Explore Your Green World!
             </p>
           </div>
-        </div>
 
-        {/* Following div consist of Auth Steps */}
-        <div
-          className={
-            signupErrors.nameError === "" &&
-            signupErrors.emailError === "" &&
-            signupErrors.passwordError === ""
-              ? "w-[100%] h-max flex flex-col items-center gap-[1rem] lg:mt-[0.5rem] 2xl:mt-[3rem]"
-              : signupErrors.nameError === "" &&
-                  signupErrors.passwordError === "" &&
+          {/* Following div consist of Signup form and sign-in option */}
+          <div
+            className={
+              signupErrors.nameError === "" &&
+              signupErrors.emailError === "" &&
+              signupErrors.passwordError === ""
+                ? "w-max h-max flex flex-col gap-[1rem] lg:mt-[0.5rem] 2xl:mt-[3rem]"
+                : signupErrors.nameError === "" &&
+                    signupErrors.passwordError === "" &&
+                    signupErrors.emailError != ""
+                  ? "w-max h-max flex flex-col  gap-[1rem] lg:mt-[0.5rem] 2xl:mt-[1rem]"
+                  : "w-max h-max flex flex-col  gap-[1rem] lg:mt-[0.5rem] 2xl:mt-[1rem]"
+            }
+          >
+            {/* Following is the Signup form */}
+            <form className="w-max h-max flex flex-col gap-[1.5rem]">
+              {/* Following is the Name Input Field */}
+              <div className="lg:w-[23rem] lg:h-[3rem] xl:w-[28rem] 2xl:w-[30.1875rem] 2xl:h-[3.56894rem] flex flex-col">
+                {signupErrors.nameError != "" ? (
+                  <div className="w-[90%] m-auto px-[2rem] text-red-500 font-bold">
+                    {signupErrors.nameError}
+                  </div>
+                ) : null}
+
+                <LabelInput
+                  name="userFullName"
+                  legendName="Name"
+                  useType="authForm"
+                  placeHolder="Enter your name here"
+                  value={signupInputs.name}
+                  onChange={(e) => {
+                    setSignupErrors({
+                      ...signupErrors,
+                      nameError: "",
+                      emailError: "",
+                      passwordError: "",
+                    });
+                    setSignupInputs({
+                      ...signupInputs,
+                      name: e.target.value,
+                    });
+                  }}
+                />
+              </div>
+
+              {/* Following is the Email Input Field */}
+              <div
+                className={
+                  signupErrors.emailError != "" && signupErrors.nameError != ""
+                    ? "lg:w-[23rem] lg:h-[3rem] xl:w-[28rem] 2xl:w-[30.1875rem] 2xl:h-[3.56894rem] flex flex-col mt-[1rem]"
+                    : signupErrors.emailError != "" &&
+                        signupErrors.nameError === ""
+                      ? "lg:w-[23rem] lg:h-[3rem] xl:w-[28rem] 2xl:w-[30.1875rem] 2xl:h-[3.56894rem] flex flex-col"
+                      : "lg:w-[23rem] lg:h-[3rem] xl:w-[28rem] 2xl:w-[30.1875rem] 2xl:h-[3.56894rem] flex flex-col"
+                }
+              >
+                {signupErrors.emailError != "" ? (
+                  <div className="w-[90%] m-auto px-[2rem] text-red-500 font-bold pt-[0.2rem]">
+                    {signupErrors.emailError}
+                  </div>
+                ) : null}
+                <LabelInput
+                  name="userEmail"
+                  legendName="Email"
+                  useType="authForm"
+                  placeHolder="Enter your email here"
+                  value={signupInputs.email}
+                  onChange={(e) => {
+                    setSignupErrors({
+                      ...signupErrors,
+                      nameError: "",
+                      emailError: "",
+                      passwordError: "",
+                    });
+                    setSignupInputs({
+                      ...signupInputs,
+                      email: e.target.value,
+                    });
+                  }}
+                />
+              </div>
+
+              {/* Following is the Password Input Field */}
+              <div
+                className={
+                  signupErrors.passwordError != "" ||
                   signupErrors.emailError != ""
-                ? "w-[100%] h-max flex flex-col items-center gap-[1rem] lg:mt-[0.5rem] 2xl:mt-[1rem]"
-                : "w-[100%] h-max flex flex-col items-center gap-[1rem] lg:mt-[0.5rem] 2xl:mt-[1rem]"
-          }
-        >
-          {/* Following is the login form */}
-
-          <form className="w-[70%] h-max flex flex-col items-center gap-[1.5rem]">
-            {/* Following is the Name Input Field */}
-            <div className="lg:w-[23rem] lg:h-[3rem] xl:w-[28rem] 2xl:w-[30.1875rem] 2xl:h-[3.56894rem] flex flex-col">
-              {signupErrors.nameError != "" ? (
-                <div className="w-[90%] m-auto px-[2rem] text-red-500 font-bold">
-                  {signupErrors.nameError}
-                </div>
-              ) : null}
-
-              <LabelInput
-                name="userFullName"
-                legendName="Name"
-                useType="authForm"
-                placeHolder="Enter your name here"
-                value={signupInputs.name}
-                onChange={(e) => {
-                  setSignupErrors({
-                    ...signupErrors,
-                    nameError: "",
-                    emailError: "",
-                    passwordError: "",
-                  });
-                  setSignupInputs({
-                    ...signupInputs,
-                    name: e.target.value,
-                  });
-                }}
-              />
-            </div>
-
-            {/* Following is the Email Input Field */}
-            <div
-              className={
-                signupErrors.emailError != "" && signupErrors.nameError != ""
-                  ? "lg:w-[23rem] lg:h-[3rem] xl:w-[28rem] 2xl:w-[30.1875rem] 2xl:h-[3.56894rem] flex flex-col mt-[1rem]"
-                  : signupErrors.emailError != "" &&
-                      signupErrors.nameError === ""
-                    ? "lg:w-[23rem] lg:h-[3rem] xl:w-[28rem] 2xl:w-[30.1875rem] 2xl:h-[3.56894rem] flex flex-col"
+                    ? "lg:w-[23rem] lg:h-[3rem] xl:w-[28rem] 2xl:w-[30.1875rem] 2xl:h-[3.56894rem] flex flex-col mt-[1rem]"
                     : "lg:w-[23rem] lg:h-[3rem] xl:w-[28rem] 2xl:w-[30.1875rem] 2xl:h-[3.56894rem] flex flex-col"
-              }
-            >
-              {signupErrors.emailError != "" ? (
-                <div className="w-[90%] m-auto px-[2rem] text-red-500 font-bold pt-[0.2rem]">
-                  {signupErrors.emailError}
-                </div>
-              ) : null}
-              <LabelInput
-                name="userEmail"
-                legendName="Email"
-                useType="authForm"
-                placeHolder="Enter your email here"
-                value={signupInputs.email}
-                onChange={(e) => {
-                  setSignupErrors({
-                    ...signupErrors,
-                    nameError: "",
-                    emailError: "",
-                    passwordError: "",
-                  });
-                  setSignupInputs({
-                    ...signupInputs,
-                    email: e.target.value,
-                  });
-                }}
-              />
+                }
+              >
+                {signupErrors.passwordError != "" ? (
+                  <div className="w-[90%] m-auto px-[2rem] text-red-500 font-bold pt-[0.5rem]">
+                    {signupErrors.passwordError}
+                  </div>
+                ) : null}
+                <LabelInput
+                  name="userPassword"
+                  legendName="Password"
+                  useType="authForm"
+                  placeHolder="Enter your password here"
+                  value={signupInputs.password}
+                  onChange={(e) => {
+                    setSignupErrors({
+                      ...signupErrors,
+                      nameError: "",
+                      emailError: "",
+                      passwordError: "",
+                    });
+                    setSignupInputs({
+                      ...signupInputs,
+                      password: e.target.value,
+                    });
+                  }}
+                />
+              </div>
+
+              {/* Login Button */}
+              <div
+                className={
+                  signupErrors.passwordError != ""
+                    ? "lg:w-[23rem] lg:h-[3.5rem] xl:w-[28rem] 2xl:w-[30.1875rem] 2xl:h-[4.01506rem] mt-[2.5rem]"
+                    : "lg:w-[23rem] lg:h-[3.5rem] xl:w-[28rem] 2xl:w-[30.1875rem] 2xl:h-[4.01506rem] mt-[0.5rem]"
+                }
+              >
+                <AuthButton
+                  buttonName="Sign up"
+                  onClick={handleSignup}
+                  loading={loading}
+                />
+              </div>
+            </form>
+
+            {/* Following is the Sign-in Option */}
+            <div className="m-auto text-[#123524] text-[1.25rem] font-normal flex mt-[2rem]">
+              <p>Don’t have an account?</p>
+              <Link href={"/signin"} className="font-bold">
+                Sign in
+              </Link>
             </div>
 
-            {/* Following is the Password Input Field */}
-            <div
-              className={
-                signupErrors.passwordError != "" ||
-                signupErrors.emailError != ""
-                  ? "lg:w-[23rem] lg:h-[3rem] xl:w-[28rem] 2xl:w-[30.1875rem] 2xl:h-[3.56894rem] flex flex-col mt-[1rem]"
-                  : "lg:w-[23rem] lg:h-[3rem] xl:w-[28rem] 2xl:w-[30.1875rem] 2xl:h-[3.56894rem] flex flex-col"
-              }
-            >
-              {signupErrors.passwordError != "" ? (
-                <div className="w-[90%] m-auto px-[2rem] text-red-500 font-bold pt-[0.5rem]">
-                  {signupErrors.passwordError}
-                </div>
-              ) : null}
-              <LabelInput
-                name="userPassword"
-                legendName="Password"
-                useType="authForm"
-                placeHolder="Enter your password here"
-                value={signupInputs.password}
-                onChange={(e) => {
-                  setSignupErrors({
-                    ...signupErrors,
-                    nameError: "",
-                    emailError: "",
-                    passwordError: "",
-                  });
-                  setSignupInputs({
-                    ...signupInputs,
-                    password: e.target.value,
-                  });
-                }}
-              />
-            </div>
+          </div>
 
-            {/* Login Button */}
-            <div
-              className={
-                signupErrors.passwordError != ""
-                  ? "lg:w-[23rem] lg:h-[3.5rem] xl:w-[28rem] 2xl:w-[30.1875rem] 2xl:h-[4.01506rem] mt-[2.5rem]"
-                  : "lg:w-[23rem] lg:h-[3.5rem] xl:w-[28rem] 2xl:w-[30.1875rem] 2xl:h-[4.01506rem] mt-[0.5rem]"
-              }
-            >
-              <AuthButton
-                buttonName="Sign up"
-                onClick={handleSignup}
-                loading={loading}
-              />
-            </div>
-          </form>
         </div>
 
-        {/* Following is the Sign-up Option */}
-        <div className="m-auto text-[#123524] text-[1.25rem] font-normal flex">
-          <p>Don’t have an account?</p>
-          <Link href={"/signin"} className="font-bold">
-            Log in
-          </Link>
-        </div>
       </div>
     </div>
   );

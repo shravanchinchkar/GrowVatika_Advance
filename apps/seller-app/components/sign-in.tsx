@@ -1,13 +1,13 @@
 "use client";
 import Link from "next/link";
 import { useState } from "react";
+import { toast } from "react-hot-toast";
 import { signIn } from "next-auth/react";
 import { useRouter } from "next/navigation";
 import { SiteLogo } from "@repo/ui/brand-logo";
 import { LabelInput } from "@repo/ui/label-input";
 import { AuthButton } from "@repo/ui/auth-button";
 import { feSigninInputs } from "@repo/common-types/types";
-import { toast } from "react-hot-toast";
 import { toastStyle } from "@repo/shared/utilfunctions";
 
 export const SellerSignin = () => {
@@ -19,6 +19,7 @@ export const SellerSignin = () => {
   });
   const [signInError, setSignInError] = useState(false);
 
+  // Function to handle Seller Signin
   async function handleSellerSignin() {
     setLoading(true);
     const res = await signIn("credentials", {
@@ -83,7 +84,7 @@ export const SellerSignin = () => {
         </div>
 
         {/* Following div consist of welcome message, signin error message, signin form , and signup message */}
-        <div className="flex flex-col gap-[2rem] items-start pl-[6.5rem]">
+        <div className="flex flex-col gap-[2rem] items-start pl-[6.5rem] mt-[1rem]">
           {/* Following div consist of welcome message */}
           <div className="font-bold flex flex-col gap-0">
             <p className="text-[#000] lg:text-[1.5rem] xl:text-[1.8rem] 2xl:text-[2rem] ">
@@ -107,7 +108,7 @@ export const SellerSignin = () => {
 
             {/* Signin Form */}
             <form
-              className={`h-max flex flex-col items-center gap-[1.2rem] lg:mt-[0.5rem] ${signInError ? "2xl:mt-[0rem]" : "2xl:mt-[2rem]"}`}
+              className={`h-max flex flex-col items-center gap-[1.5rem] lg:mt-[0.5rem] ${signInError ? "2xl:mt-[0rem]" : "2xl:mt-[2rem]"}`}
             >
               {/* Following is the Email Input Field */}
               <div className="lg:w-[23rem] lg:h-[3rem] xl:w-[28rem]  2xl:w-[30.1875rem] 2xl:h-[3.56894rem]">
@@ -165,7 +166,7 @@ export const SellerSignin = () => {
 
           {/* Copyright div */}
           <div
-            className={`flex flex-col ml-[4rem] mt-[3rem] text-[#8C8C8C] text-[1.25rem] font-normal`}
+            className="flex flex-col ml-[4rem] mt-[1rem] text-[#8C8C8C] text-[1.25rem] font-normal"
           >
             <div className="flex">
               <div>&#169;</div>
@@ -177,7 +178,9 @@ export const SellerSignin = () => {
               <p>Help</p>
             </div>
           </div>
+
         </div>
+
       </div>
     </div>
   );

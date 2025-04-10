@@ -5,30 +5,42 @@ import { toast } from "react-hot-toast";
 import { signIn } from "next-auth/react";
 import { useRouter } from "next/navigation";
 import { SiteLogo } from "@repo/ui/brand-logo";
-import { LabelInput } from "@repo/ui/label-input";
 import { AuthButton } from "@repo/ui/auth-button";
-import { feSigninInputs } from "@repo/common-types/types";
+import { zodResolver } from "@hookform/resolvers/zod";
 import { toastStyle } from "@repo/shared/utilfunctions";
+import { useForm, SubmitHandler } from "react-hook-form";
+import { LabelInput, FormType } from "@repo/ui/label-input";
+import { SignInInputs, SignInSchema } from "@repo/common-types/types";
 
 export const SellerSignin = () => {
   const router = useRouter();
   const [loading, setLoading] = useState(false);
-  const [signInInputs, setSignInInputs] = useState<feSigninInputs>({
-    email: "",
-    password: "",
+
+  const {
+    register,
+    setValue,
+    formState: { errors },
+    handleSubmit,
+  } = useForm<SignInInputs>({
+    resolver: zodResolver(SignInSchema),
+    defaultValues: {
+      email: "",
+      password: "",
+    },
   });
-  const [signInError, setSignInError] = useState(false);
 
   // Function to handle Seller Signin
-  async function handleSellerSignin() {
+  async function handleSellerSignin(data: SignInInputs) {
     setLoading(true);
     const res = await signIn("credentials", {
-      email: signInInputs.email,
-      password: signInInputs.password,
+      email: data.email,
+      password: data.password,
       redirect: false,
     });
-    console.log("Response to FE:", res);
+    console.log("Seller signin response:", res);
     setLoading(false);
+    setValue("email", "");
+    setValue("password", "");
 
     if (res?.error) {
       const errorResponse = JSON.parse(res.error) as {
@@ -38,21 +50,19 @@ export const SellerSignin = () => {
         status?: string;
       };
       console.log("signin  error :", errorResponse);
-      setSignInError(true);
       toast.error("Signin Failed", toastStyle);
     } else if (res?.ok) {
       // Check session to determine verification status
       const sessionResponse = await fetch("/api/auth/session");
       const session = await sessionResponse.json();
       console.log("session in signin:", session);
-
       if (session?.user?.isVerified) {
         console.log("Email already Verified signin successful!");
         toast.success("Signin successful!", toastStyle);
         router.push("/");
       } else {
         console.log("Email not verified, redirecting to verify!");
-        router.push(`/verify?email=${signInInputs.email}`);
+        router.push(`/verify?email=${data.email}`);
       }
     }
   }
@@ -84,7 +94,9 @@ export const SellerSignin = () => {
         </div>
 
         {/* Following div consist of welcome message, signin error message, signin form , and signup message */}
-        <div className="flex flex-col gap-[2rem] items-start pl-[6.5rem] mt-[1rem]">
+        <div
+          className={`flex flex-col items-start pl-[6.5rem] mt-[1rem] ${errors.email || errors.password ? "gap-[0rem]" : "gap-[1rem]"}`}
+        >
           {/* Following div consist of welcome message */}
           <div className="font-bold flex flex-col gap-0">
             <p className="text-[#000] lg:text-[1.5rem] xl:text-[1.8rem] 2xl:text-[2rem] ">
@@ -95,68 +107,55 @@ export const SellerSignin = () => {
             </p>
           </div>
 
-          {/* Following div consist of signin error message, signin form , and signup message */}
+          {/* Following div consist of  signin form , and signup message */}
           <div className="flex flex-col items-center">
-            {/* Signin Error message */}
-            {signInError ? (
-              <div className="w-[100%] flex justify-center">
-                <div className="w-[20rem] bg-red-500 p-[0.5rem] text-[#fff] font-semibold text-center shadow-md">
-                  Invalid Credentials!
-                </div>
-              </div>
-            ) : null}
-
             {/* Signin Form */}
             <form
-              className={`h-max flex flex-col items-center gap-[1.5rem] lg:mt-[0.5rem] ${signInError ? "2xl:mt-[0rem]" : "2xl:mt-[2rem]"}`}
+              onSubmit={handleSubmit(handleSellerSignin)}
+              className={`h-max flex flex-col items-center gap-[1rem] lg:mt-[0.5rem] ${errors.email || errors.password ? "2xl:mt-[1rem]" : "2xl:mt-[2rem]"}`}
             >
               {/* Following is the Email Input Field */}
-              <div className="lg:w-[23rem] lg:h-[3rem] xl:w-[28rem]  2xl:w-[30.1875rem] 2xl:h-[3.56894rem]">
+              <div className="lg:w-[23rem] lg:h-[3rem] xl:w-[28rem]  2xl:w-[30.1875rem] 2xl:h-max">
+                {errors.email && (
+                  <div className="ml-[1rem] text-red-500 font-bold text-start">
+                    {errors.email.message}
+                  </div>
+                )}
                 <LabelInput
-                  legendName="Email"
-                  useType="authForm"
+                  legendName="Business Email"
+                  useType={FormType.AUTH}
                   placeHolder="Enter your email here"
-                  name="email"
-                  value={signInInputs.email}
-                  onChange={(e) => {
-                    setSignInError(false);
-                    setSignInInputs({
-                      ...signInInputs,
-                      email: e.target.value,
-                    });
-                  }}
+                  {...register("email", { required: true })}
                 />
               </div>
+
               {/* Following is the Password Input Field */}
-              <div className="lg:w-[23rem] lg:h-[3rem] xl:w-[28rem]  2xl:w-[30.1875rem] 2xl:h-[3.56894rem]">
+              <div className="lg:w-[23rem] lg:h-[3rem] xl:w-[28rem]  2xl:w-[30.1875rem] 2xl:h-max">
+                {errors.password && (
+                  <div className="ml-[1rem] text-red-500 font-bold text-start">
+                    {errors.password.message}
+                  </div>
+                )}
                 <LabelInput
                   legendName="Password"
-                  useType="authForm"
+                  useType={FormType.AUTH}
                   placeHolder="Enter your password here"
-                  name="password"
-                  value={signInInputs.password}
-                  onChange={(e) => {
-                    setSignInError(false);
-                    setSignInInputs({
-                      ...signInInputs,
-                      password: e.target.value,
-                    });
-                  }}
+                  {...register("password", { required: true })}
                 />
               </div>
 
               {/* Login Button */}
-              <div className="lg:w-[23rem] lg:h-[3rem] xl:w-[28rem]  2xl:w-[30.1875rem] 2xl:h-[3.56894rem]">
+              <div className="lg:w-[23rem] lg:h-[3rem] xl:w-[28rem]  2xl:w-[30.1875rem] 2xl:h-[3.56894rem] mt-[0.5rem]">
                 <AuthButton
+                  type="submit"
                   buttonName="Sign In"
-                  onClick={handleSellerSignin}
                   loading={loading}
                 />
               </div>
             </form>
 
             {/* Signup message */}
-            <div className=" mt-[1.3rem] text-[#123524] text-[1.25rem] font-normal flex">
+            <div className=" mt-[1.3rem] text-[#123524] text-[1.25rem] font-normal flex gap-[0.5rem]">
               <p>Don't have a seller account?</p>
               <Link href={"/register"} className="font-bold">
                 Register here
@@ -165,9 +164,7 @@ export const SellerSignin = () => {
           </div>
 
           {/* Copyright div */}
-          <div
-            className="flex flex-col ml-[4rem] mt-[1rem] text-[#8C8C8C] text-[1.25rem] font-normal"
-          >
+          <div className="flex flex-col ml-[4rem] mt-[2.5rem] text-[#8C8C8C] text-[1.25rem] font-normal">
             <div className="flex">
               <div>&#169;</div>
               <div>2025 GrowVatika. All rights reserved.</div>
@@ -178,9 +175,7 @@ export const SellerSignin = () => {
               <p>Help</p>
             </div>
           </div>
-
         </div>
-
       </div>
     </div>
   );

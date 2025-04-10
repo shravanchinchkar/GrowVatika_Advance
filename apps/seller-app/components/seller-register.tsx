@@ -2,131 +2,95 @@
 
 import Link from "next/link";
 import { toast } from "react-hot-toast";
-import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
+import { useState, useEffect } from "react";
 import { SiteLogo } from "@repo/ui/brand-logo";
-import { LabelInput } from "@repo/ui/label-input";
 import { AuthButton } from "@repo/ui/auth-button";
+import { useSearchParams } from "next/navigation";
+import { zodResolver } from "@hookform/resolvers/zod";
 import { toastStyle } from "@repo/shared/utilfunctions";
+import { useForm, SubmitHandler } from "react-hook-form";
+import { LabelInput, FormType } from "@repo/ui/label-input";
 import { sellerRegistration, getSellerData } from "../app/actions/auth";
 import {
-  SignInInputs,
-  SignupInputs,
+  SignUpInputs,
   SignupResponse,
-  ApiResponseType,
   SignUpSchema,
 } from "@repo/common-types/types";
-import { useSearchParams } from "next/navigation";
-
-interface SignupError {
-  firstNameError: string;
-  lastNameError: string;
-  nurseryNameError: string;
-  emailError: string;
-  phoneNumberError: string;
-  passwordError: string;
-  confirmPasswordError: string;
-}
 
 export const SellerRegister = () => {
   const router = useRouter();
   const [loading, setLoading] = useState(false);
-  const [signUpInputs, setsignUpInputs] = useState<SignupInputs>({
-    firstName: "",
-    lastName: "",
-    nurseryName: "",
-    phoneNumber: "",
-    email: "",
-    password: "",
-    confirmPassword: "",
-  });
-  const [signUpInputError, setSignUpInputError] = useState<SignupError>({
-    firstNameError: "",
-    lastNameError: "",
-    nurseryNameError: "",
-    emailError: "",
-    phoneNumberError: "",
-    passwordError: "",
-    confirmPasswordError: "",
-  });
   const searchParams = useSearchParams();
   const searchParamsEmail = searchParams.get("email") || "";
 
+  const {
+    register,
+    setValue,
+    formState: { errors },
+    handleSubmit,
+  } = useForm<SignUpInputs>({
+    resolver: zodResolver(SignUpSchema),
+    defaultValues: {
+      firstName: "",
+      lastName: "",
+      nurseryName: "",
+      email: "",
+      password: "",
+      confirmPassword: "",
+    },
+  });
+
+  // Get Data of the seller
   async function getData() {
     const res = await getSellerData(searchParamsEmail);
     console.log("Seller Data:", res);
     if (res.error) {
       toast.error(res.error.toString(), toastStyle);
-      setsignUpInputs({
-        ...signUpInputs,
-        nurseryName: res.sellerData?.nurseryName || "",
-        email: res.sellerData?.email || "",
-        phoneNumber: res.sellerData?.phoneNumber || "",
-      });
+    } else {
+      setValue("nurseryName", res.sellerData?.nurseryName);
+      setValue("email", res.sellerData?.email || "");
+      setValue("phoneNumber", res.sellerData?.phoneNumber);
     }
   }
-
   async function main() {
     await getData();
   }
-
   useEffect(() => {
     main();
   }, []);
 
   // Handle Seller Registration
-  const handelSellerRegistration = async () => {
+  const handelSellerRegistration: SubmitHandler<SignUpInputs> = async (
+    data: SignUpInputs
+  ) => {
     setLoading(true);
-    const inputValidation = SignUpSchema.safeParse(signUpInputs);
-    // If Inpurts are wrong the execute the below block
-    if (inputValidation.error) {
+    // If password and confirm-password are not exactly similar then, execute the below block
+    if (data.password !== data.confirmPassword) {
+      toast.error("Invalid Password", toastStyle);
       setLoading(false);
-      const inputError = inputValidation.error.flatten().fieldErrors;
-      console.log("Input error is :", inputError);
-      setSignUpInputError({
-        firstNameError: inputError.firstName?.join(",") || "",
-        lastNameError: inputError.lastName?.join(", ") || "",
-        nurseryNameError: inputError.nurseryName?.join(",") || "",
-        emailError: inputError.email?.join(", ") || "",
-        phoneNumberError: inputError.phoneNumber?.join(",") || "",
-        passwordError: inputError.lastName?.join(", ") || "",
-        confirmPasswordError: inputError.confirmPassword?.join(",") || "",
-      });
     }
-    // If Inputs are correct then execute the below block
+    // If both the passwords are correct then execute the following below block
     else {
-      // If password and confirm-password are not exactly similar then, execute the below block
-      if (signUpInputs.password !== signUpInputs.confirmPassword) {
-        toast.error("Invalid Password", toastStyle);
-        setLoading(false);
-      }
-      // If Inputs are correct and passwords are also exactly similar then hit the BE
-      else {
-        const res: SignupResponse = await sellerRegistration(signUpInputs);
-        console.log("response is:", res);
-        setLoading(true);
-        if (res.errors) {
-          console.error("Error While registrating the seller:", res.errors);
-          toast.error(res.errors.toString(), toastStyle);
-          setsignUpInputs({
-            ...signUpInputs,
-            firstName: "",
-            lastName: "",
-            password: "",
-            confirmPassword: "",
-          });
-        } else if (res.success) {
-          if (
-            res.message ===
-            "Seller Created Successfully. Please verify your email"
-          ) {
-            router.push(
-              `/verify?email=${encodeURIComponent(searchParamsEmail)}`
-            );
-          } else {
-            toast.success("Registration Successful", toastStyle);
-            router.push("/signin");
-          }
+      const res: SignupResponse = await sellerRegistration(data);
+      console.log("Seller Registration response:", res);
+      setLoading(false);
+      if (res.errors) {
+        console.error("Error While registrating the seller:", res.errors);
+        toast.error(res.errors.toString(), toastStyle);
+        setValue("firstName", "");
+        setValue("lastName", "");
+        setValue("password", "");
+        setValue("confirmPassword", "");
+      } else if (res.success) {
+        if (
+          res.message ===
+          "Seller Created Successfully. Please verify your email"
+        ) {
+          router.push(`/verify?email=${encodeURIComponent(searchParamsEmail)}`);
+        } else {
+          toast.success("Registration Successful", toastStyle);
+          router.push("/signin");
         }
       }
     }
@@ -171,208 +135,126 @@ export const SellerRegister = () => {
 
           {/* Following div consist of signup form , and signup message */}
           <div className="flex flex-col items-center">
-            {/* Signin Form */}
-            <form className="flex flex-col items-start gap-[1.2rem] lg:mt-[0.5rem]">
+            {/* Seller Registration Form */}
+            <form
+              className="flex flex-col items-start gap-[1rem] lg:mt-[0.5rem]"
+              onSubmit={handleSubmit(handelSellerRegistration)}
+            >
               {/* Following div consist of firstName and lastName */}
               <div className="lg:w-[23rem] lg:h-[3rem] xl:w-[28rem]  2xl:w-[30.1875rem] 2xl:h-max grid grid-cols-2 gap-x-[1rem]">
                 {/* Following div consist of firstName*/}
                 <div>
-                  {signUpInputError.firstNameError != "" ? (
+                  {errors.firstName && (
                     <div className="ml-[1rem] text-red-500 font-bold text-start">
-                      {signUpInputError.firstNameError}
+                      {errors.firstName.message}
                     </div>
-                  ) : null}
+                  )}
                   <LabelInput
                     legendName="First Name"
-                    useType="authForm"
-                    placeHolder="Enter First Name"
-                    value={signUpInputs.firstName}
-                    onChange={(e) => {
-                      setsignUpInputs({
-                        ...signUpInputs,
-                        firstName: e.target.value,
-                      });
-                      setSignUpInputError({
-                        ...signUpInputError,
-                        firstNameError: "",
-                      });
-                    }}
+                    useType={FormType.AUTH}
+                    placeHolder="First Name"
+                    {...register("firstName", { required: true })}
                   />
                 </div>
-
                 {/* Following div consist of lastName */}
                 <div>
-                  {signUpInputError.lastNameError != "" ? (
-                    <div className="ml-[1rem] text-red-500 font-bold text-start ">
-                      {signUpInputError.lastNameError}
+                  {errors.lastName && (
+                    <div className="ml-[1rem] text-red-500 font-bold text-start">
+                      {errors.lastName.message}
                     </div>
-                  ) : null}
+                  )}
                   <LabelInput
                     legendName="Last Name"
-                    useType="authForm"
-                    placeHolder="Enter Last Name"
-                    value={signUpInputs.lastName}
-                    onChange={(e) => {
-                      setsignUpInputs({
-                        ...signUpInputs,
-                        lastName: e.target.value,
-                      });
-                      setSignUpInputError({
-                        ...signUpInputError,
-                        lastNameError: "",
-                      });
-                    }}
+                    useType={FormType.AUTH}
+                    placeHolder="Last Name"
+                    {...register("lastName", { required: true })}
                   />
                 </div>
               </div>
 
               {/* Following div consist of input field for nursery name */}
               <div className="lg:w-[23rem] lg:h-[3rem] xl:w-[28rem] 2xl:w-[30.1875rem] 2xl:h-max">
-                {signUpInputError.nurseryNameError != "" ? (
-                  <div className="ml-[1rem] text-red-500 font-bold text-start ">
-                    {signUpInputError.nurseryNameError}
+                {errors.nurseryName && (
+                  <div className="ml-[1rem] text-red-500 font-bold text-start">
+                    {errors.nurseryName.message}
                   </div>
-                ) : null}
-                <fieldset className="w-[100%] px-[1rem]  border-[2px] text-[#8C8C8C] border-[#8C8C8C] rounded-[6.5625rem] flex items-center gap-[1rem] pb-[0.5rem] cursor-not-allowed">
-                  <legend className="text-[0.99138rem] text-[#8C8C8C] font-medium">
-                    Nursery Name
-                  </legend>
-                  <input
-                    className={`w-[100%] pl-[0.4rem] bg-transparent text-[#0B1320] outline-none text-[1.25rem] font-normal  rounded-l-full rounded-r-full cursor-not-allowed`}
-                    placeholder="Enter your email here"
-                    value={signUpInputs.nurseryName}
-                    onChange={(e) => {
-                      setsignUpInputs({
-                        ...signUpInputs,
-                        nurseryName: e.target.value,
-                      });
-                      setSignUpInputError({
-                        ...signUpInputError,
-                        nurseryNameError: "",
-                      });
-                    }}
-                    readOnly
-                  />
-                </fieldset>
+                )}
+                <LabelInput
+                  legendName="Nursery Name"
+                  useType={FormType.AUTH}
+                  placeHolder="Enter your nursery name here"
+                  {...register("nurseryName", { required: true })}
+                  readonly={true}
+                />
               </div>
 
               {/* Following is the Email Input Field */}
-              <div className="lg:w-[23rem] lg:h-[3rem] xl:w-[28rem] 2xl:w-[30.1875rem] 2xl:h-max">
-                {signUpInputError.emailError != "" ? (
-                  <div className="ml-[1rem] text-red-500 font-bold text-start ">
-                    {signUpInputError.emailError}
+              <div className="lg:w-[23rem] lg:h-[3rem] xl:w-[28rem] 2xl:w-[30.1875rem] 2xl:h-max ">
+                {errors.email && (
+                  <div className="ml-[1rem] text-red-500 font-bold text-start">
+                    {errors.email.message}
                   </div>
-                ) : null}
-                <fieldset className="w-[100%] px-[1rem]  border-[2px] text-[#8C8C8C] border-[#8C8C8C] rounded-[6.5625rem] flex items-center gap-[1rem] pb-[0.5rem] cursor-not-allowed">
-                  <legend className="text-[0.99138rem] text-[#8C8C8C] font-medium">
-                    Business Email
-                  </legend>
-                  <input
-                    className={`w-[100%] pl-[0.4rem] bg-transparent text-[#0B1320] outline-none text-[1.25rem] font-normal  rounded-l-full rounded-r-full cursor-not-allowed`}
-                    placeholder="Enter your email here"
-                    value={signUpInputs.email}
-                    onChange={(e) => {
-                      setsignUpInputs({
-                        ...signUpInputs,
-                        email: e.target.value,
-                      });
-                      setSignUpInputError({
-                        ...signUpInputError,
-                        emailError: "",
-                      });
-                    }}
-                    readOnly
-                  />
-                </fieldset>
+                )}
+                <LabelInput
+                  legendName="Business Email"
+                  useType={FormType.AUTH}
+                  placeHolder="Enter your business email here"
+                  {...register("email", { required: true })}
+                  readonly={true}
+                />
               </div>
 
               {/* Following div consist of input field for Phone number */}
               <div className="lg:w-[23rem] lg:h-[3rem] xl:w-[28rem] 2xl:w-[30.1875rem] 2xl:h-max">
-                {signUpInputError.phoneNumberError != "" ? (
-                  <div className="ml-[1rem] text-red-500 font-bold text-start ">
-                    {signUpInputError.phoneNumberError}
+                {errors.phoneNumber && (
+                  <div className="ml-[1rem] text-red-500 font-bold text-start">
+                    {errors.phoneNumber.message}
                   </div>
-                ) : null}
-                <fieldset className="w-[100%] px-[1rem]  border-[2px] text-[#8C8C8C] border-[#8C8C8C] rounded-[6.5625rem] flex items-center gap-[1rem] pb-[0.5rem] cursor-not-allowed">
-                  <legend className="text-[0.99138rem] text-[#8C8C8C] font-medium">
-                    Phone Number
-                  </legend>
-                  <input
-                    className={`w-[100%] pl-[0.4rem] bg-transparent text-[#0B1320] outline-none text-[1.25rem] font-normal  rounded-l-full rounded-r-full cursor-not-allowed`}
-                    placeholder="Enter your email here"
-                    value={signUpInputs.phoneNumber}
-                    onChange={(e) => {
-                      setsignUpInputs({
-                        ...signUpInputs,
-                        phoneNumber: e.target.value,
-                      });
-                      setSignUpInputError({
-                        ...signUpInputError,
-                        phoneNumberError: "",
-                      });
-                    }}
-                    readOnly
-                  />
-                </fieldset>
+                )}
+                <LabelInput
+                  legendName="Phone No."
+                  useType={FormType.AUTH}
+                  placeHolder="Enter your phone no. here"
+                  {...register("phoneNumber", { required: true })}
+                  readonly={true}
+                />
               </div>
 
               {/* Following is the Password Input Field */}
               <div className="lg:w-[23rem] lg:h-[3rem] xl:w-[28rem]  2xl:w-[30.1875rem] 2xl:h-max">
-                {signUpInputError.passwordError != "" ? (
-                  <div className="ml-[1rem] text-red-500 font-bold text-start ">
-                    {signUpInputError.passwordError}
+                {errors.password && (
+                  <div className="ml-[1rem] text-red-500 font-bold text-start">
+                    {errors.password.message}
                   </div>
-                ) : null}
+                )}
                 <LabelInput
                   legendName="Password"
-                  useType="authForm"
+                  useType={FormType.AUTH}
                   placeHolder="Enter your password here"
-                  name="password"
-                  value={signUpInputs.password}
-                  onChange={(e) => {
-                    setsignUpInputs({
-                      ...signUpInputs,
-                      password: e.target.value,
-                    });
-                    setSignUpInputError({
-                      ...signUpInputError,
-                      passwordError: "",
-                    });
-                  }}
+                  {...register("password", { required: true })}
                 />
               </div>
 
               {/* Following is the confirm password field */}
               <div className="lg:w-[23rem] lg:h-[3rem] xl:w-[28rem]  2xl:w-[30.1875rem] 2xl:h-max">
-                {signUpInputError.confirmPasswordError != "" ? (
-                  <div className="ml-[1rem] text-red-500 font-bold text-start ">
-                    {signUpInputError.confirmPasswordError}
+                {errors.confirmPassword && (
+                  <div className="ml-[1rem] text-red-500 font-bold text-start">
+                    {errors.confirmPassword.message}
                   </div>
-                ) : null}
+                )}
                 <LabelInput
                   legendName="Confirm Password"
-                  useType="authForm"
-                  placeHolder="Re-enter the password"
-                  name="password"
-                  value={signUpInputs.confirmPassword}
-                  onChange={(e) => {
-                    setsignUpInputs({
-                      ...signUpInputs,
-                      confirmPassword: e.target.value,
-                    });
-                    setSignUpInputError({
-                      ...signUpInputError,
-                      confirmPasswordError: "",
-                    });
-                  }}
+                  useType={FormType.AUTH}
+                  placeHolder="Enter your password again"
+                  {...register("confirmPassword", { required: true })}
                 />
               </div>
 
-              {/* Login Button */}
-              <div className="lg:w-[23rem] lg:h-[3rem] xl:w-[28rem] 2xl:w-[30.1875rem] 2xl:h-[3.5rem]">
+              {/* Singup Button */}
+              <div className="lg:w-[23rem] lg:h-[3rem] xl:w-[28rem] 2xl:w-[30.1875rem] 2xl:h-[3.5rem] mt-[0.5rem]">
                 <AuthButton
+                  type="submit"
                   buttonName="Create Account"
-                  onClick={handelSellerRegistration}
                   loading={loading}
                 />
               </div>
@@ -388,7 +270,7 @@ export const SellerRegister = () => {
           </div>
 
           {/* Copyright div */}
-          <div className="flex flex-col ml-[4rem] mt-[3rem] text-[#8C8C8C] text-[1.25rem] font-normal">
+          <div className="flex flex-col ml-[4rem] mt-[1rem] mb-[1rem] text-[#8C8C8C] text-[1.25rem] font-normal">
             <div className="flex">
               <div>&#169;</div>
               <div>2025 GrowVatika. All rights reserved.</div>

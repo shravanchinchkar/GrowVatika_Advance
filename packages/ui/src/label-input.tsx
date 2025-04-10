@@ -13,6 +13,7 @@ interface LabelInputProps {
   placeHolder?: string;
   useType: FormType;
   onChange?: React.ChangeEventHandler<HTMLInputElement>;
+  readonly?: boolean;
   props?: any;
 }
 
@@ -23,6 +24,7 @@ export const LabelInput = ({
   placeHolder,
   useType,
   onChange,
+  readonly,
   ...props
 }: LabelInputProps) => {
   const [viewPassword, setViewPassword] = useState(false);
@@ -39,10 +41,10 @@ export const LabelInput = ({
     <div className="font-[Poppins]">
       <fieldset
         className={
-          useType === FormType.Seller
+          useType == FormType.Seller
             ? "w-[100%] h-[100%] px-[2rem] border-[2px] border-[#fff] rounded-[6.5625rem] flex gap-[1rem] pb-[0.5rem]"
-            : useType === FormType.AUTH
-              ? "w-[100%] h-[100%] px-[1rem]  border-[2px] text-[#8C8C8C] border-[#8C8C8C] rounded-[6.5625rem] flex items-center gap-[1rem] pb-[0.5rem]"
+            : useType == FormType.AUTH
+              ? `w-[100%] h-[100%] px-[1rem]  border-[2px] text-[#8C8C8C] border-[#8C8C8C] rounded-[6.5625rem] flex items-center gap-[1rem] pb-[0.5rem] ${readonly ? "cursor-not-allowed" : "cursor-default"}`
               : ""
         }
       >
@@ -58,7 +60,7 @@ export const LabelInput = ({
           {legendName}
         </legend>
         <input
-          className={`${legendName === "Password" ? "w-[130%]" : "w-[100%]"}  pl-[0.4rem] bg-transparent text-[#0B1320] outline-none text-[1.25rem] font-normal  rounded-l-full rounded-r-full`}
+          className={`${legendName === "Password" ? "w-[130%]" : readonly ? "cursor-not-allowed w-[100%]" : "w-[100%]"} pl-[0.4rem] bg-transparent text-[#0B1320] outline-none text-[1.25rem] font-normal  rounded-l-full rounded-r-full`}
           type={
             legendName === "Phone Number"
               ? "tel"
@@ -74,6 +76,7 @@ export const LabelInput = ({
           value={value}
           placeholder={placeHolder}
           onChange={onChange}
+          readOnly={readonly}
           {...props}
         />
 

@@ -5,7 +5,6 @@ node_modules
 .pnp
 .pnp.js
 
-app/user-app/components/temperory-signup.tsx
 
 # Local env files
 .env

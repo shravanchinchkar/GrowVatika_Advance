@@ -1,13 +1,19 @@
 import { useState } from "react";
 import Image from "next/image";
 
+export enum FormType {
+  AUTH = "authForm",
+  Seller = "sellerForm",
+}
+
 interface LabelInputProps {
   name?: string;
   value?: any;
   legendName: string;
   placeHolder?: string;
-  useType: string;
+  useType: FormType;
   onChange?: React.ChangeEventHandler<HTMLInputElement>;
+  props?: any;
 }
 
 export const LabelInput = ({
@@ -17,6 +23,7 @@ export const LabelInput = ({
   placeHolder,
   useType,
   onChange,
+  ...props
 }: LabelInputProps) => {
   const [viewPassword, setViewPassword] = useState(false);
 
@@ -32,18 +39,18 @@ export const LabelInput = ({
     <div className="font-[Poppins]">
       <fieldset
         className={
-          useType === "sellerForm"
+          useType === FormType.Seller
             ? "w-[100%] h-[100%] px-[2rem] border-[2px] border-[#fff] rounded-[6.5625rem] flex gap-[1rem] pb-[0.5rem]"
-            : useType === "authForm"
+            : useType === FormType.AUTH
               ? "w-[100%] h-[100%] px-[1rem]  border-[2px] text-[#8C8C8C] border-[#8C8C8C] rounded-[6.5625rem] flex items-center gap-[1rem] pb-[0.5rem]"
               : ""
         }
       >
         <legend
           className={
-            useType === "sellerFrom"
+            useType === FormType.Seller
               ? "text-[1.125rem] text-[#123524] font-normal"
-              : useType === "authForm"
+              : useType === FormType.AUTH
                 ? "text-[0.99138rem] text-[#8C8C8C] font-medium"
                 : ""
           }
@@ -67,6 +74,7 @@ export const LabelInput = ({
           value={value}
           placeholder={placeHolder}
           onChange={onChange}
+          {...props}
         />
 
         {legendName === "Password" || legendName === "Confirm Password" ? (

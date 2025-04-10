@@ -1,6 +1,6 @@
 import bcrypt from "bcrypt";
 import client from "@repo/db/client";
-import { beSigninInputs } from "@repo/common-types/types";
+import { SignInSchema } from "@repo/common-types/types";
 import CredentialsProvider from "next-auth/providers/credentials";
 
 export const NEXT_AUTH = {
@@ -17,7 +17,7 @@ export const NEXT_AUTH = {
       },
       async authorize(credentials: any) {
         //validate the user Input
-        const inputResult = beSigninInputs.safeParse(credentials);
+        const inputResult = SignInSchema.safeParse(credentials);
         if (!inputResult.success) {
           console.error("input Eror:", inputResult.error.flatten().fieldErrors);
           throw new Error(

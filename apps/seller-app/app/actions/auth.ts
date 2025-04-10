@@ -2,9 +2,10 @@
 import bcrypt from "bcrypt";
 import client from "@repo/db/client";
 import {
-  feSignupInputs,
+  SignupInputs,
   SignupResponse,
   ApiResponseType,
+  SignUpSchema,
 } from "@repo/common-types/types";
 import { getCurrentFormattedDate } from "@repo/shared/utilfunctions";
 import { generateVerifyCode, getExpiryDate } from "@repo/shared/utilfunctions";
@@ -17,8 +18,13 @@ interface VerifyCodeProps {
 
 // Register the new Seller
 export async function sellerRegistration(
-  registrationCredentials: feSignupInputs
+  registrationCredentials: SignupInputs
 ): Promise<SignupResponse> {
+  // First Validate the Inputs
+  const validateInput = SignUpSchema.safeParse(registrationCredentials);
+  if (!validateInput.success) {
+    return { success: false, errors: "Invalid Inputs" };
+  }
   try {
     const sellerExists = await client.seller.findUnique({
       where: {
@@ -30,31 +36,92 @@ export async function sellerRegistration(
         success: false,
         errors: "Invalid Seller Email Id",
       };
-    } else {
-      const hashPassword = await bcrypt.hash(
-        registrationCredentials.confirmPassword || "",
-        10
-      );
-      const createNewSeller = await client.seller.update({
-        where: {
-          email: sellerExists.email,
-        },
-        data: {
-          firstName: registrationCredentials.firstName,
-          lastName: registrationCredentials.lastName,
-          password: hashPassword,
-        },
-      });
+    }
+    //If the seller already exists then evaluate the seller as follows:
+    else {
+      //If the seller already exists and is not verified
+      if (!sellerExists.isVerified) {
+        const verifyCode = generateVerifyCode(); //Generate the verify Code for email Authentication
+        const expiryDate = getExpiryDate();
 
-      if (!createNewSeller) {
-        console.error("Error while creating new seller");
+        const hashPassword = await bcrypt.hash(
+          registrationCredentials.confirmPassword || "",
+          10
+        );
+
+        const createNewSeller = await client.seller.update({
+          where: {
+            email: sellerExists.email,
+          },
+          data: {
+            firstName: registrationCredentials.firstName,
+            lastName: registrationCredentials.lastName,
+            password: hashPassword,
+            verifyCode: verifyCode,
+            verifyCodeExpiry: expiryDate,
+          },
+        });
+
+        if (!createNewSeller) {
+          console.error("Error while creating new seller");
+          return {
+            success: false,
+            errors: "Please try again :(",
+          };
+        }
+        console.log("New seller Created", createNewSeller);
+
+        // Send verification email for the unverified user
+        const emailResponse = await successfulCollaboration(
+          sellerExists.nurseryName,
+          sellerExists.firstName || "",
+          getCurrentFormattedDate(),
+          sellerExists.email,
+          verifyCode
+        );
+
+        // If error while sending email
+        if (!emailResponse.success) {
+          console.log("email not send message:", emailResponse.message);
+          return { success: false, message: emailResponse.message };
+        }
+        console.log("email success message:", emailResponse);
+
         return {
-          success: false,
-          errors: "Please try again! Can't create the seller account",
+          success: true,
+          message: "Seller Created Successfully. Please verify your email",
         };
       }
-      console.log("New seller Created", createNewSeller);
-      return { success: true, message: "Successfully created the new seller" };
+      //The seller exists and is verified
+      else {
+        const hashPassword = await bcrypt.hash(
+          registrationCredentials.confirmPassword || "",
+          10
+        );
+        const createNewSeller = await client.seller.update({
+          where: {
+            email: sellerExists.email,
+          },
+          data: {
+            firstName: registrationCredentials.firstName,
+            lastName: registrationCredentials.lastName,
+            password: hashPassword,
+          },
+        });
+
+        if (!createNewSeller) {
+          console.error("Error while creating new seller");
+          return {
+            success: false,
+            errors: "Please try again! Can't create the seller account",
+          };
+        }
+        console.log("New seller Created", createNewSeller);
+        return {
+          success: true,
+          message: "Seller account created successfully!",
+        };
+      }
     }
   } catch (error) {
     console.error("Error while registrating seller", error);

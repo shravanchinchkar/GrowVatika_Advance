@@ -1,7 +1,7 @@
 import zod from "zod";
 
 // Following zod schema is used for the backend purpose
-export const beSignupInputs = zod.object({
+export const SignUpSchema = zod.object({
   firstName: zod
     .string()
     .min(2, { message: "Must contain atleast 2 characters" })
@@ -32,11 +32,13 @@ export const beSignupInputs = zod.object({
     .min(6, { message: "Password must be atleast of 6 characters" })
     .optional(),
 });
-export const beSigninInputs = zod.object({
+export const SignInSchema = zod.object({
   email: zod.string().email(),
-  password: zod.string().min(6),
+  password: zod
+    .string()
+    .min(6, { message: "Password must be atleast of 6 characters" }),
 });
 
 //Following zod schema is used for frontend purpose
-export type feSignupInputs = zod.infer<typeof beSignupInputs>;
-export type feSigninInputs = zod.infer<typeof beSigninInputs>;
+export type SignUpInputs = zod.infer<typeof SignUpSchema>;
+export type SignInInputs = zod.infer<typeof SignInSchema>;

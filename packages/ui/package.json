@@ -11,9 +11,9 @@
     "check-types": "tsc --noEmit"
   },
   "devDependencies": {
-    "@repo/shared":"*",
-    "@repo/common-types":"*",
+    "@repo/common-types": "*",
     "@repo/eslint-config": "*",
+    "@repo/shared": "*",
     "@repo/typescript-config": "*",
     "@turbo/gen": "^2.4.4",
     "@types/node": "^22.13.10",
@@ -23,7 +23,10 @@
     "typescript": "5.8.2"
   },
   "dependencies": {
+    "@hookform/resolvers": "^5.0.1",
     "react": "^19.0.0",
-    "react-dom": "^19.0.0"
+    "react-dom": "^19.0.0",
+    "react-hook-form": "^7.55.0",
+    "zod": "^3.24.2"
   }
 }

@@ -1,6 +1,6 @@
 import zod from "zod";
 
-export const customer = zod.object({
+export const GetStartedFromSchema = zod.object({
   fullName: zod
     .string()
     .min(2, { message: "Name must be atleast of 2 characters" }),
@@ -17,4 +17,4 @@ export const customer = zod.object({
     .min(2, { message: "City name must be of atleast 2 characters" }),
 });
 
-export type UserDetails = zod.infer<typeof customer>;
+export type GetStartedFromInput = zod.infer<typeof GetStartedFromSchema>;

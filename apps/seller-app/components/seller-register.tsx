@@ -10,9 +10,11 @@ import { AuthButton } from "@repo/ui/auth-button";
 import { toastStyle } from "@repo/shared/utilfunctions";
 import { sellerRegistration, getSellerData } from "../app/actions/auth";
 import {
-  feSignupInputs,
-  beSignupInputs,
+  SignInInputs,
+  SignupInputs,
   SignupResponse,
+  ApiResponseType,
+  SignUpSchema,
 } from "@repo/common-types/types";
 import { useSearchParams } from "next/navigation";
 
@@ -29,7 +31,7 @@ interface SignupError {
 export const SellerRegister = () => {
   const router = useRouter();
   const [loading, setLoading] = useState(false);
-  const [signUpInputs, setsignUpInputs] = useState<feSignupInputs>({
+  const [signUpInputs, setsignUpInputs] = useState<SignupInputs>({
     firstName: "",
     lastName: "",
     nurseryName: "",
@@ -53,12 +55,15 @@ export const SellerRegister = () => {
   async function getData() {
     const res = await getSellerData(searchParamsEmail);
     console.log("Seller Data:", res);
-    setsignUpInputs({
-      ...signUpInputs,
-      nurseryName: res.sellerData?.nurseryName || "",
-      email: res.sellerData?.email || "",
-      phoneNumber: res.sellerData?.phoneNumber || "",
-    });
+    if (res.error) {
+      toast.error(res.error.toString(), toastStyle);
+      setsignUpInputs({
+        ...signUpInputs,
+        nurseryName: res.sellerData?.nurseryName || "",
+        email: res.sellerData?.email || "",
+        phoneNumber: res.sellerData?.phoneNumber || "",
+      });
+    }
   }
 
   async function main() {
@@ -72,8 +77,7 @@ export const SellerRegister = () => {
   // Handle Seller Registration
   const handelSellerRegistration = async () => {
     setLoading(true);
-    const inputValidation = beSignupInputs.safeParse(signUpInputs);
-
+    const inputValidation = SignUpSchema.safeParse(signUpInputs);
     // If Inpurts are wrong the execute the below block
     if (inputValidation.error) {
       setLoading(false);
@@ -102,6 +106,7 @@ export const SellerRegister = () => {
         console.log("response is:", res);
         setLoading(true);
         if (res.errors) {
+          console.error("Error While registrating the seller:", res.errors);
           toast.error(res.errors.toString(), toastStyle);
           setsignUpInputs({
             ...signUpInputs,
@@ -111,8 +116,17 @@ export const SellerRegister = () => {
             confirmPassword: "",
           });
         } else if (res.success) {
-          toast.success(res.message?.toString() || " ", toastStyle);
-          router.push("/signin");
+          if (
+            res.message ===
+            "Seller Created Successfully. Please verify your email"
+          ) {
+            router.push(
+              `/verify?email=${encodeURIComponent(searchParamsEmail)}`
+            );
+          } else {
+            toast.success("Registration Successful", toastStyle);
+            router.push("/signin");
+          }
         }
       }
     }

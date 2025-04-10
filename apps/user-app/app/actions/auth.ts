@@ -11,7 +11,7 @@ import { getCurrentFormattedDate } from "@repo/shared/utilfunctions";
 import { sendVerificationEmail } from "../helper/sendVerificationEmail";
 import { successfulCollaboration } from "../helper/successful-Collaboration-Mail";
 import {
-  SignupInputs,
+  SignUpInputs,
   SignUpSchema,
   SignupResponse,
   ApiResponseType,
@@ -26,7 +26,7 @@ interface VerifyCodeProps {
 
 // Following server action is used for signup
 export async function signup(
-  signupCredentials: SignupInputs
+  signupCredentials: SignUpInputs
 ): Promise<SignupResponse> {
 
   //validate the user's input

@@ -4,18 +4,24 @@ import { ApiResponseType } from "@repo/common-types/types";
 import NurseryCollaborationEmail from "../../emails/successful-Collaboration-template";
 
 export async function successfulCollaboration(
-    nurseryName:string,
-    ownerName:string,
-    registrationDate:string,
-    email:string,
-    verifyCode:string
+  nurseryName: string,
+  ownerName: string,
+  registrationDate: string,
+  email: string,
+  verifyCode: string
 ): Promise<ApiResponseType> {
   try {
     const { data, error } = await resend.emails.send({
       from: "GrowVatika Support <support@growvatika.live>",
       to: email,
       subject: "Collaboration Successful With GrowVatika ",
-      react: NurseryCollaborationEmail({nurseryName,ownerName,registrationDate,email,verifyCode}),
+      react: NurseryCollaborationEmail({
+        nurseryName,
+        ownerName,
+        registrationDate,
+        email,
+        verifyCode,
+      }),
       headers: {
         "X-Entity-Ref-ID": uuidv4(),
       },

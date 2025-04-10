@@ -1,7 +1,4 @@
 import ExploerCardImage from "../public/assets/images/ExploreImages/ExploreCardImage.png"
-
-
-
 export const ExploreMoreSectionData=[{
     id:"Plants",
     title:"Plant",

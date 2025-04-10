@@ -7,8 +7,8 @@ import { useRouter } from "next/navigation";
 import { signup } from "../app/actions/auth";
 import { SiteLogo } from "@repo/ui/brand-logo";
 import { AuthButton } from "@repo/ui/auth-button";
-import { toastStyle } from "../app/lib/toast-style";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { toastStyle } from "@repo/shared/utilfunctions";
 import { useForm, SubmitHandler } from "react-hook-form";
 import { LabelInput, FormType } from "@repo/ui/label-input";
 import {

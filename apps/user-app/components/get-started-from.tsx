@@ -1,11 +1,14 @@
 "use client";
 import { toast } from "react-hot-toast";
-import { LabelInput } from "@repo/ui/label-input";
 import { useState, useCallback } from "react";
-import { toastStyle } from "../app/lib/toast-style";
 import { storeDataInExcel } from "../app/actions/auth";
-import { GetStartedFromInput, GetStartedFromSchema } from "@repo/common-types/types";
 import { ContactSuccess } from "./contact-success-msg";
+import { toastStyle } from "@repo/shared/utilfunctions";
+import { LabelInput, FormType } from "@repo/ui/label-input";
+import {
+  GetStartedFromInput,
+  GetStartedFromSchema,
+} from "@repo/common-types/types";
 
 interface FormErrors {
   fullNameError?: string;
@@ -36,7 +39,8 @@ export const ContactForm = () => {
 
   // Handle input changes and clear corresponding errors
   const handleInputChange =
-    (field: keyof GetStartedFromInput) => (e: React.ChangeEvent<HTMLInputElement>) => {
+    (field: keyof GetStartedFromInput) =>
+    (e: React.ChangeEvent<HTMLInputElement>) => {
       setUserDetails((prev: any) => ({ ...prev, [field]: e.target.value }));
       setErrors((prev) => ({ ...prev, [field]: undefined }));
     };
@@ -143,7 +147,7 @@ export const ContactForm = () => {
               <LabelInput
                 legendName="Full Name"
                 placeHolder="Enter your name here"
-                useType="sellerForm"
+                useType={FormType.Seller}
                 value={userDetails.fullName}
                 onChange={handleInputChange("fullName")}
               />
@@ -154,7 +158,7 @@ export const ContactForm = () => {
               <LabelInput
                 legendName="Phone Number"
                 placeHolder={"+91 999 999 9999"}
-                useType="sellerForm"
+                useType={FormType.Seller}
                 value={userDetails.phoneNumber}
                 onChange={handleInputChange("phoneNumber")}
               />
@@ -165,7 +169,7 @@ export const ContactForm = () => {
               <LabelInput
                 legendName="Business Email"
                 placeHolder="Enter your mail here"
-                useType="sellerForm"
+                useType={FormType.Seller}
                 value={userDetails.email}
                 onChange={handleInputChange("email")}
               />
@@ -176,7 +180,7 @@ export const ContactForm = () => {
               <LabelInput
                 legendName="Nursery Name"
                 placeHolder="Enter your nursery name here"
-                useType="sellerForm"
+                useType={FormType.Seller}
                 value={userDetails.nurseryName}
                 onChange={handleInputChange("nurseryName")}
               />
@@ -187,7 +191,7 @@ export const ContactForm = () => {
               <LabelInput
                 legendName="City"
                 placeHolder="Enter your city here"
-                useType="sellerForm"
+                useType={FormType.Seller}
                 value={userDetails.city}
                 onChange={handleInputChange("city")}
               />

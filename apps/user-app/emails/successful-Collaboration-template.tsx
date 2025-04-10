@@ -87,8 +87,8 @@ export const NurseryCollaborationEmail = ({
   };
   const mainColor = "#2e7d32"; // Forest green color
 
-  // const verificationUrl = `https://seller.growvatika.live/verify?email=${encodeURIComponent(email)}&seller=${true}`; //for production
-  const verificationUrl = `http://localhost:3001/verify?email=${encodeURIComponent(email)}`; //for development
+  const verificationUrl = `https://seller.growvatika.live/verify?email=${encodeURIComponent(email)}&seller=${true}`; //for production
+  // const verificationUrl = `http://localhost:3001/verify?email=${encodeURIComponent(email)}`; //for development
   return (
     <Html>
       <Head></Head>

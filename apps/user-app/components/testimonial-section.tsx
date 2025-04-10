@@ -1,8 +1,8 @@
 "use client";
 
+import Image from "next/image";
 import { useState } from "react";
 import { TestmonialData } from "../data/testmonialData";
-import Image from "next/image";
 
 export const TestmonialSection = () => {
   const [currentIndex, setCurrentIndex] = useState(0);

@@ -152,18 +152,4 @@ const VerificationEmail = ({ name, verifyCode }: GrowVatikaVerifyEmailProp) => {
     </Html>
   );
 };
-
-// const brandTitle = {
-//   fontSize: "30px",
-//   fontFamily: "'Impact', 'Poppins', sans-serif",
-//   color: "#123524",
-//   lineHeight: "1.2",
-// };
-
-// const brandTagLine = {
-//   fontSize: "12px",
-//   color: "#123524",
-//   lineHeight: "1.2",
-// };
-
 export default VerificationEmail;

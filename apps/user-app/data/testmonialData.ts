@@ -1,4 +1,3 @@
-
 interface TestmonialDataType{
   id:string
     image:string,

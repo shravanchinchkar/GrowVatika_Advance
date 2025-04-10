@@ -5,13 +5,14 @@
   "private": true,
   "scripts": {
     "dev": "next dev --turbopack --port 3000",
-    "build": "next build",
+    "build": "prisma generate && next build",
     "start": "next start",
     "lint": "next lint --max-warnings 0",
     "check-types": "tsc --noEmit"
   },
   "dependencies": {
     "@hookform/resolvers": "^5.0.1",
+    "@prisma/client": "^6.6.0",
     "@radix-ui/react-label": "^2.1.2",
     "@radix-ui/react-slot": "^1.1.2",
     "@react-email/components": "0.0.34",
@@ -28,6 +29,7 @@
     "lucide-react": "^0.487.0",
     "next": "^15.2.1",
     "next-auth": "^4.24.11",
+    "prisma": "^6.6.0",
     "react": "19.0.0",
     "react-dom": "19.0.0",
     "react-hook-form": "^7.55.0",

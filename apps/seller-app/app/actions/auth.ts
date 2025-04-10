@@ -2,7 +2,7 @@
 import bcrypt from "bcrypt";
 import client from "@repo/db/client";
 import {
-  SignupInputs,
+  SignUpInputs,
   SignupResponse,
   ApiResponseType,
   SignUpSchema,
@@ -18,7 +18,7 @@ interface VerifyCodeProps {
 
 // Register the new Seller
 export async function sellerRegistration(
-  registrationCredentials: SignupInputs
+  registrationCredentials: SignUpInputs
 ): Promise<SignupResponse> {
   // First Validate the Inputs
   const validateInput = SignUpSchema.safeParse(registrationCredentials);

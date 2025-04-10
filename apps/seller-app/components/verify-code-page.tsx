@@ -1,13 +1,13 @@
 "use client";
 
-import { useEffect, useState } from "react";
 import { toast } from "react-hot-toast";
+import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
+import { SiteLogo } from "@repo/ui/brand-logo";
 import { verifyCode } from "../app/actions/auth";
 import { useSearchParams } from "next/navigation";
-import { toastStyle } from "@repo/shared/utilfunctions";
-import { SiteLogo } from "@repo/ui/brand-logo";
 import { AuthButton } from "@repo/ui/auth-button";
+import { toastStyle } from "@repo/shared/utilfunctions";
 import { SignupResponse } from "@repo/common-types/types";
 import { VerifyCodeFooter } from "./verify-code-footer";
 

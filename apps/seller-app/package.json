@@ -12,6 +12,7 @@
   },
   "dependencies": {
     "@hookform/resolvers": "^5.0.1",
+    "@prisma/client": "^6.6.0",
     "@react-email/components": "0.0.34",
     "@repo/common-types": "*",
     "@repo/db": "*",
@@ -20,6 +21,7 @@
     "bcrypt": "^5.1.1",
     "next": "^15.2.1",
     "next-auth": "^4.24.11",
+    "prisma": "^6.6.0",
     "react": "19.1.0",
     "react-dom": "19.1.0",
     "react-hook-form": "^7.55.0",

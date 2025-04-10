@@ -8,7 +8,7 @@ import { SiteLogo } from "@repo/ui/brand-logo";
 import { AuthButton } from "@repo/ui/auth-button";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { toastStyle } from "@repo/shared/utilfunctions";
-import { useForm, SubmitHandler } from "react-hook-form";
+import { useForm } from "react-hook-form";
 import { LabelInput, FormType } from "@repo/ui/label-input";
 import { SignInInputs, SignInSchema } from "@repo/common-types/types";
 

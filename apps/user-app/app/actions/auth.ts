@@ -11,11 +11,12 @@ import { getCurrentFormattedDate } from "@repo/shared/utilfunctions";
 import { sendVerificationEmail } from "../helper/sendVerificationEmail";
 import { successfulCollaboration } from "../helper/successful-Collaboration-Mail";
 import {
-  UserDetails,
-  ApiResponseType,
+  SignupInputs,
+  SignUpSchema,
   SignupResponse,
-  beSignupInputs,
-  feSignupInputs,
+  ApiResponseType,
+  GetStartedFromInput,
+  GetStartedFromSchema,
 } from "@repo/common-types/types";
 
 interface VerifyCodeProps {
@@ -25,24 +26,22 @@ interface VerifyCodeProps {
 
 // Following server action is used for signup
 export async function signup(
-  signupCredentials: feSignupInputs
+  signupCredentials: SignupInputs
 ): Promise<SignupResponse> {
-  console.log("User Credentials:", signupCredentials);
 
-  const result = beSignupInputs.safeParse(signupCredentials); //validate the user's input
-  // If the user's input is correct execute the below code
+  //validate the user's input
+  console.log("User Credentials:", signupCredentials);
+  const result = SignUpSchema.safeParse(signupCredentials);
+
+  // If the user's input is incorrect execute the below code
   if (!result.success) {
-    //if user's input is not valid, return the
-    console.log("errors:", result.error.flatten().fieldErrors);
-    const errors = result.error.format().email?._errors;
-    console.log("email errors:", errors);
+    console.error("errors:", result.error.flatten().fieldErrors);
     return {
       success: false,
-      errors: result.error.flatten().fieldErrors,
+      errors: "Invalid Inputs",
       status: 400,
     };
   }
-
   try {
     //check if the user already exists
     const existingUserByEmail = await client.user.findUnique({
@@ -80,14 +79,13 @@ export async function signup(
           signupCredentials.email,
           verifyCode
         );
-
         // If error while sending email
         if (!emailResponse.success) {
           console.log("email not send message:", emailResponse.message);
-          return { success: false, message: emailResponse.message };
+          return { success: false, errors: emailResponse.message };
         }
-
         console.log("email success message:", emailResponse);
+
         // If success in sending email
         return {
           success: true,
@@ -106,33 +104,33 @@ export async function signup(
           verifyCodeExpiry: expiryDate,
         },
       });
-
       // If new fresh user can't be created then
       if (!newUser) {
         console.error("Please try again! Can't create the account");
         return {
           success: false,
-          message: "Please try again! Can't create the account",
+          errors: "Please try again! Can't create the account",
         };
       }
 
       console.log("New User Created", newUser);
-
       // If the new fresh user is created, then send an otp to the user's email to verify
       const emailResponse = await sendVerificationEmail(
         newUser.name,
         newUser.email,
         verifyCode
       );
-      // If error while sending email
+
+      // If error while sending email to the new user
       if (!emailResponse.success) {
         console.log(
           "new user created email not send message:",
           emailResponse.message
         );
-        return { success: false, message: emailResponse.message };
+        return { success: false, errors: emailResponse.message };
       }
-      // If success in sending email
+
+      // If success in sending email to the new user
       console.log(
         "new user created email send message:",
         emailResponse.message
@@ -144,7 +142,7 @@ export async function signup(
     }
   } catch (err) {
     console.error("error while Signup! please try again", err);
-    return { success: false, message: "Error while signup! Please try again" };
+    return { success: false, errors: "Error while signup! Please try again" };
   }
 }
 
@@ -262,11 +260,16 @@ export async function resendOTP({
 
 // Following server action is used to store data in google sheets
 export async function storeDataInExcel(
-  userDetails: UserDetails
+  userDetails: GetStartedFromInput
 ): Promise<ApiResponseType> {
+  //  First Validate the input
+  const validateInput = GetStartedFromSchema.safeParse(userDetails);
+  if (!validateInput.success) {
+    return { success: false, error: "Invalid Inputs" };
+  }
+  // If Inputs are correct then Proceed for the following block
   try {
     console.log("User Details:", userDetails);
-
     const existingSellerByEmail = await client.seller.findUnique({
       where: { email: userDetails.email },
     });
@@ -367,7 +370,6 @@ export async function storeDataInExcel(
 
       //After Storing the seller's data in the spread sheet, then store the data in the db
       console.log("Current Date is:", getCurrentFormattedDate());
-
       const verifyCode = generateVerifyCode(); //Generate the verify Code for email Authentication
       const expiryDate = getExpiryDate();
 
@@ -408,7 +410,6 @@ export async function storeDataInExcel(
       }
 
       console.log("email success message:", emailResponse);
-
       return {
         success: true,
         message: "Form submitted successfully",

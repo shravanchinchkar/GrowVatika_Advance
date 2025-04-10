@@ -4,7 +4,7 @@ import { LabelInput } from "@repo/ui/label-input";
 import { useState, useCallback } from "react";
 import { toastStyle } from "../app/lib/toast-style";
 import { storeDataInExcel } from "../app/actions/auth";
-import { UserDetails, customer } from "@repo/common-types/types";
+import { GetStartedFromInput, GetStartedFromSchema } from "@repo/common-types/types";
 import { ContactSuccess } from "./contact-success-msg";
 
 interface FormErrors {
@@ -24,7 +24,7 @@ export const ContactForm = () => {
   const [isChecked, setIsChecked] = useState(false);
   const [displayForm, setDisplayForm] = useState(false);
   const [successMessage, setSuccessMessage] = useState(false);
-  const [userDetails, setUserDetails] = useState<UserDetails>({
+  const [userDetails, setUserDetails] = useState<GetStartedFromInput>({
     fullName: "",
     phoneNumber: "",
     email: "",
@@ -36,14 +36,14 @@ export const ContactForm = () => {
 
   // Handle input changes and clear corresponding errors
   const handleInputChange =
-    (field: keyof UserDetails) => (e: React.ChangeEvent<HTMLInputElement>) => {
+    (field: keyof GetStartedFromInput) => (e: React.ChangeEvent<HTMLInputElement>) => {
       setUserDetails((prev: any) => ({ ...prev, [field]: e.target.value }));
       setErrors((prev) => ({ ...prev, [field]: undefined }));
     };
 
   // Validate form and return errors if any
   const validateForm = useCallback(() => {
-    const inputValidation = customer.safeParse(userDetails);
+    const inputValidation = GetStartedFromSchema.safeParse(userDetails);
     const newErrors: FormErrors = {};
 
     if (!inputValidation.success) {

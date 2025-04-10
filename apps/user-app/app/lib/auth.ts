@@ -1,11 +1,12 @@
 import bcrypt from "bcrypt";
 import client from "@repo/db/client";
-import { beSigninInputs } from "@repo/common-types/types";
+import { SignInSchema } from "@repo/common-types/types";
 import CredentialsProvider from "next-auth/providers/credentials";
 import GoogleProvider from "next-auth/providers/google";
 import { getExpiryDate } from "@repo/shared/utilfunctions";
 import { generateVerifyCode } from "@repo/shared/utilfunctions";
 import { sendVerificationEmail } from "../helper/sendVerificationEmail";
+import { error } from "console";
 
 export const NEXT_AUTH = {
   providers: [
@@ -21,14 +22,16 @@ export const NEXT_AUTH = {
       },
       async authorize(credentials: any) {
         //validate the user Input
-        const inputResult = beSigninInputs.safeParse(credentials);
+        const inputResult = SignInSchema.safeParse(credentials);
         if (!inputResult.success) {
-          console.error("input Eror:", inputResult.error.flatten().fieldErrors);
+          console.error(
+            "Input Error:",
+            inputResult.error.flatten().fieldErrors
+          );
           throw new Error(
             JSON.stringify({
               success: false,
-              message: "Invalid input",
-              error: inputResult.error.flatten().fieldErrors,
+              error: "Invalid Inputs",
               status: "400",
             })
           );
@@ -47,7 +50,7 @@ export const NEXT_AUTH = {
             throw new Error(
               JSON.stringify({
                 success: false,
-                message: "User doesn't exist",
+                error: "User doesn't exist",
                 status: "404",
               })
             );
@@ -57,6 +60,7 @@ export const NEXT_AUTH = {
               password,
               userExists.password
             );
+            // If Correct Password then execute the below block
             if (passwordValidation) {
               const verifyCode = generateVerifyCode(); //Generate the verify Code for email Authentication
               const expiryDate = getExpiryDate();
@@ -80,7 +84,7 @@ export const NEXT_AUTH = {
                   throw new Error(
                     JSON.stringify({
                       success: false,
-                      message: emailResponse.message,
+                      error: emailResponse.message,
                       status: "500",
                     })
                   );
@@ -105,13 +109,13 @@ export const NEXT_AUTH = {
               throw new Error(
                 JSON.stringify({
                   success: false,
-                  message: "Invalid password",
+                  error: "Invalid password",
                   status: "401",
                 })
               );
             }
           }
-          // Initially user has signedin using NextAuth but now the user is signing using credentials then the following code block
+          // Initially user has signedin using Google but now the user is signing using credentials then the following code block
           else if (
             userExists.isOAuth &&
             userExists.password === "oauth-no-password"
@@ -122,12 +126,12 @@ export const NEXT_AUTH = {
             throw new Error(
               JSON.stringify({
                 success: false,
-                message: "OAuth user cannot use credentials login",
+                error: "OAuth user cannot use credentials login",
                 status: "403",
               })
             );
           }
-          // Initially user has signedin using NextAuth but now the user is signing using credentials then the following code block
+          // Normal use Case
           else {
             const passwordValidation = await bcrypt.compare(
               password,
@@ -162,7 +166,7 @@ export const NEXT_AUTH = {
           throw new Error(
             JSON.stringify({
               success: false,
-              message: "Error while signing in",
+              error: "Error while signing in",
               status: "500",
             })
           );

@@ -6,87 +6,62 @@ import { toast } from "react-hot-toast";
 import { useRouter } from "next/navigation";
 import { signup } from "../app/actions/auth";
 import { SiteLogo } from "@repo/ui/brand-logo";
-import { LabelInput } from "@repo/ui/label-input";
 import { AuthButton } from "@repo/ui/auth-button";
 import { toastStyle } from "../app/lib/toast-style";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { useForm, SubmitHandler } from "react-hook-form";
+import { LabelInput, FormType } from "@repo/ui/label-input";
+import {
+  SignUpInputs,
+  SignupResponse,
+  SignUpSchema,
+} from "@repo/common-types/types";
 import AuthImage from "../public/assets/images/AuthImages/AuthImages.png";
-import { feSignupInputs, SignupResponse } from "@repo/common-types/types";
-
-interface SignupError {
-  nameError: string;
-  emailError: string;
-  passwordError: string;
-}
 
 export const Sign_Up = () => {
   const router = useRouter();
   const [loading, setLoading] = useState(false);
-  const [signupInputs, setSignupInputs] = useState<feSignupInputs>({
-    name: "",
-    email: "",
-    password: "",
-  });
-  const [signupErrors, setSignupErrors] = useState<SignupError>({
-    nameError: "",
-    emailError: "",
-    passwordError: "",
+  const {
+    register,
+    setValue,
+    setError,
+    handleSubmit,
+    formState: { errors },
+  } = useForm<SignUpInputs>({
+    resolver: zodResolver(SignUpSchema),
+    defaultValues: {
+      name: "",
+      email: "",
+      password: "",
+    },
   });
 
-  const handleSignup = async () => {
+  //Following is the Signup handler function
+  const handleSignup: SubmitHandler<SignUpInputs> = async (
+    data: SignUpInputs
+  ) => {
+    console.log("Data is:", data);
     setLoading(true);
-    console.log("Signin Inputs:", signupInputs);
-    const res: SignupResponse = await signup(signupInputs); //here signup() is the server action function
-    console.log("Response of BE to FE is:", res);
+    const res: SignupResponse = await signup(data); //here signup() is the server action function 
+    console.log("Signup Response:", res);
+    setValue("name", "");
+    setValue("email", "");
+    setValue("password", "");
     setLoading(false);
-
     // Check if errors exists
     if (res.errors) {
-      if (typeof res.errors === "string") {
-        // If errors is a string, assign it to emailError
-        setSignupErrors({
-          nameError: "",
-          emailError: res.errors,
-          passwordError: "",
-        });
+      if (res.errors === "Email already in use") {
+        setError("email", { message: res.errors.toString() });
       } else {
-        // If errors is an object, extract field-specific errors
-        setSignupErrors({
-          nameError: res.errors.name?.join(", ") || "",
-          emailError: res.errors.email?.join(", ") || "",
-          passwordError: res.errors.password?.join(", ") || "",
-        });
+        toast.error(res.errors.toString(), toastStyle);
       }
-    } else {
-      // Reset errors if no errors are present
-      setSignupErrors({
-        nameError: "",
-        emailError: "",
-        passwordError: "",
-      });
     }
-
     // Handle success
     if (res?.success && res?.message?.includes("successfully")) {
-      setSignupInputs({
-        name: "",
-        email: "",
-        password: "",
-      });
-      setSignupErrors({
-        nameError: "",
-        emailError: "",
-        passwordError: "",
-      });
-      router.push(`/verify?email=${signupInputs.email}`);
-    }
-
-    // Handle other messages (e.g., errors)
-    if (res?.message && !res.success) {
-      console.error("Error message:", res.message);
-      toast.error("Please try again", toastStyle);
+      toast.success("Signup Successful", toastStyle);
+      router.push(`/verify?email=${data.email}`);
     }
   };
-
   return (
     <div className="w-screen h-screen bg-[#FFF6F4] flex font-[Poppins]">
       {/* Following div consist of Image */}
@@ -113,7 +88,6 @@ export const Sign_Up = () => {
 
         {/* Following div consist of welcome message, signup form, and sign-in option */}
         <div className="flex flex-col items-start pl-[6.5rem] mt-[2rem]">
-
           {/* Following div consist of welcome message  */}
           <div className="font-bold flex flex-col gap-0">
             <p className="text-[#000] lg:text-[1.5rem] xl:text-[1.8rem] 2xl:text-[2rem] ">
@@ -126,132 +100,63 @@ export const Sign_Up = () => {
 
           {/* Following div consist of Signup form and sign-in option */}
           <div
-            className={
-              signupErrors.nameError === "" &&
-              signupErrors.emailError === "" &&
-              signupErrors.passwordError === ""
-                ? "w-max h-max flex flex-col gap-[1rem] lg:mt-[0.5rem] 2xl:mt-[3rem]"
-                : signupErrors.nameError === "" &&
-                    signupErrors.passwordError === "" &&
-                    signupErrors.emailError != ""
-                  ? "w-max h-max flex flex-col  gap-[1rem] lg:mt-[0.5rem] 2xl:mt-[1rem]"
-                  : "w-max h-max flex flex-col  gap-[1rem] lg:mt-[0.5rem] 2xl:mt-[1rem]"
-            }
+            className={`w-max h-max flex flex-col lg:mt-[0.5rem] ${errors.name || errors.email || errors.password ? "2xl:mt-[1rem]" : "2xl:mt-[3rem]"}`}
           >
-            {/* Following is the Signup form */}
-            <form className="w-max h-max flex flex-col gap-[1.5rem]">
-              {/* Following is the Name Input Field */}
-              <div className="lg:w-[23rem] lg:h-[3rem] xl:w-[28rem] 2xl:w-[30.1875rem] 2xl:h-[3.56894rem] flex flex-col">
-                {signupErrors.nameError != "" ? (
-                  <div className="w-[90%] m-auto px-[2rem] text-red-500 font-bold">
-                    {signupErrors.nameError}
+            {/* Following div consist of Signup form and Signup button */}
+            <form
+              onSubmit={handleSubmit(handleSignup)}
+              className="w-max h-max flex flex-col gap-[1rem]"
+            >
+              {/* Following is the input field for Name */}
+              <div className="h-max lg:w-[23rem] xl:w-[28rem] 2xl:w-[30.1875rem] flex flex-col">
+                {errors.name && (
+                  <div className="w-[90%] px-[1rem] text-red-500 font-bold">
+                    {errors.name.message}
                   </div>
-                ) : null}
-
+                )}
                 <LabelInput
-                  name="userFullName"
                   legendName="Name"
-                  useType="authForm"
+                  useType={FormType.AUTH}
                   placeHolder="Enter your name here"
-                  value={signupInputs.name}
-                  onChange={(e) => {
-                    setSignupErrors({
-                      ...signupErrors,
-                      nameError: "",
-                      emailError: "",
-                      passwordError: "",
-                    });
-                    setSignupInputs({
-                      ...signupInputs,
-                      name: e.target.value,
-                    });
-                  }}
+                  {...register("name", { required: true })}
                 />
               </div>
 
-              {/* Following is the Email Input Field */}
-              <div
-                className={
-                  signupErrors.emailError != "" && signupErrors.nameError != ""
-                    ? "lg:w-[23rem] lg:h-[3rem] xl:w-[28rem] 2xl:w-[30.1875rem] 2xl:h-[3.56894rem] flex flex-col mt-[1rem]"
-                    : signupErrors.emailError != "" &&
-                        signupErrors.nameError === ""
-                      ? "lg:w-[23rem] lg:h-[3rem] xl:w-[28rem] 2xl:w-[30.1875rem] 2xl:h-[3.56894rem] flex flex-col"
-                      : "lg:w-[23rem] lg:h-[3rem] xl:w-[28rem] 2xl:w-[30.1875rem] 2xl:h-[3.56894rem] flex flex-col"
-                }
-              >
-                {signupErrors.emailError != "" ? (
-                  <div className="w-[90%] m-auto px-[2rem] text-red-500 font-bold pt-[0.2rem]">
-                    {signupErrors.emailError}
+              {/* Following is the input field for Email */}
+              <div className="h-max lg:w-[23rem] xl:w-[28rem] 2xl:w-[30.1875rem] flex flex-col">
+                {errors.email && (
+                  <div className="w-[90%] px-[1rem] text-red-500 font-bold">
+                    {errors.email.message}
                   </div>
-                ) : null}
+                )}
                 <LabelInput
-                  name="userEmail"
                   legendName="Email"
-                  useType="authForm"
+                  useType={FormType.AUTH}
                   placeHolder="Enter your email here"
-                  value={signupInputs.email}
-                  onChange={(e) => {
-                    setSignupErrors({
-                      ...signupErrors,
-                      nameError: "",
-                      emailError: "",
-                      passwordError: "",
-                    });
-                    setSignupInputs({
-                      ...signupInputs,
-                      email: e.target.value,
-                    });
-                  }}
+                  {...register("email", { required: true })}
                 />
               </div>
 
-              {/* Following is the Password Input Field */}
-              <div
-                className={
-                  signupErrors.passwordError != "" ||
-                  signupErrors.emailError != ""
-                    ? "lg:w-[23rem] lg:h-[3rem] xl:w-[28rem] 2xl:w-[30.1875rem] 2xl:h-[3.56894rem] flex flex-col mt-[1rem]"
-                    : "lg:w-[23rem] lg:h-[3rem] xl:w-[28rem] 2xl:w-[30.1875rem] 2xl:h-[3.56894rem] flex flex-col"
-                }
-              >
-                {signupErrors.passwordError != "" ? (
-                  <div className="w-[90%] m-auto px-[2rem] text-red-500 font-bold pt-[0.5rem]">
-                    {signupErrors.passwordError}
+              {/* Following is the input field for Password */}
+              <div className="h-max lg:w-[23rem] xl:w-[28rem] 2xl:w-[30.1875rem] flex flex-col">
+                {errors.password && (
+                  <div className="w-[90%] px-[1rem] text-red-500 font-bold">
+                    {errors.password.message}
                   </div>
-                ) : null}
+                )}
                 <LabelInput
-                  name="userPassword"
                   legendName="Password"
-                  useType="authForm"
+                  useType={FormType.AUTH}
                   placeHolder="Enter your password here"
-                  value={signupInputs.password}
-                  onChange={(e) => {
-                    setSignupErrors({
-                      ...signupErrors,
-                      nameError: "",
-                      emailError: "",
-                      passwordError: "",
-                    });
-                    setSignupInputs({
-                      ...signupInputs,
-                      password: e.target.value,
-                    });
-                  }}
+                  {...register("password", { required: true })}
                 />
               </div>
 
-              {/* Login Button */}
-              <div
-                className={
-                  signupErrors.passwordError != ""
-                    ? "lg:w-[23rem] lg:h-[3.5rem] xl:w-[28rem] 2xl:w-[30.1875rem] 2xl:h-[4.01506rem] mt-[2.5rem]"
-                    : "lg:w-[23rem] lg:h-[3.5rem] xl:w-[28rem] 2xl:w-[30.1875rem] 2xl:h-[4.01506rem] mt-[0.5rem]"
-                }
-              >
+              {/*Following div consist of Signup Button*/}
+              <div className="lg:w-[23rem] lg:h-[3.5rem] xl:w-[28rem] 2xl:w-[30.1875rem] 2xl:h-[4.01506rem] mt-[0.5rem]">
                 <AuthButton
                   buttonName="Sign up"
-                  onClick={handleSignup}
+                  type="submit"
                   loading={loading}
                 />
               </div>
@@ -264,11 +169,8 @@ export const Sign_Up = () => {
                 Sign in
               </Link>
             </div>
-
           </div>
-
         </div>
-
       </div>
     </div>
   );

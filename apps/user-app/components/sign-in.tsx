@@ -5,35 +5,42 @@ import Image from "next/image";
 import { useState } from "react";
 import { toast } from "react-hot-toast";
 import { signIn } from "next-auth/react";
+import { useForm } from "react-hook-form";
 import { useRouter } from "next/navigation";
-import { feSigninInputs } from "@repo/common-types/types";
-import { toastStyle } from "../app/lib/toast-style";
 import { SiteLogo } from "@repo/ui/brand-logo";
-import { LabelInput } from "@repo/ui/label-input";
 import { AuthButton } from "@repo/ui/auth-button";
-import AuthImage from "../public/assets/images/AuthImages/AuthImages.png";
+import { toastStyle } from "../app/lib/toast-style";
+import { zodResolver } from "@hookform/resolvers/zod";
 import { ButtonLoadingSign } from "@repo/ui/loading-sign";
+import { FormType, LabelInput } from "@repo/ui/label-input";
+import { SignInInputs, SignInSchema } from "@repo/common-types/types";
+import AuthImage from "../public/assets/images/AuthImages/AuthImages.png";
 
 export const Sign_In = () => {
   const router = useRouter();
-  const [signInInputs, setSignInInputs] = useState<feSigninInputs>({
-    email: "",
-    password: "",
-  });
-  const [signInError, setSignInError] = useState(false);
   const [loading, setLoading] = useState(false);
   const [loadingGoogleLogin, setLoadingGoogleLogin] = useState(false);
 
+  const {
+    register,
+    setValue,
+    handleSubmit,
+    formState: { errors },
+  } = useForm<SignInInputs>({
+    resolver: zodResolver(SignInSchema),
+    defaultValues: { email: "", password: "" },
+  });
+
   // Handle Login with credentials
-  async function handleLogIn() {
+  async function handleSignIn(data: SignInInputs) {
     setLoading(true);
     const res = await signIn("credentials", {
-      email: signInInputs.email,
-      password: signInInputs.password,
+      email: data.email,
+      password: data.password,
       redirect: false,
     });
 
-    console.log("Response to FE:", res);
+    console.log("Signin Response:", res);
     setLoading(false);
 
     if (res?.error) {
@@ -44,10 +51,11 @@ export const Sign_In = () => {
         status?: string;
       };
       console.log("signin  error :", errorResponse);
-      setSignInError(true);
       toast.error("Signin Failed", toastStyle);
     } else if (res?.ok) {
       // Check session to determine verification status
+      setValue("email", "");
+      setValue("password", "");
       const sessionResponse = await fetch("/api/auth/session");
       const session = await sessionResponse.json();
       console.log("session in signin:", session);
@@ -58,7 +66,7 @@ export const Sign_In = () => {
         router.push("/");
       } else {
         console.log("Email not verified, redirecting to verify!");
-        router.push(`/verify?email=${signInInputs.email}`);
+        router.push(`/verify?email=${data.email}`);
       }
     }
   }
@@ -100,7 +108,9 @@ export const Sign_In = () => {
           </div>
         </div>
 
-        <div className="flex flex-col items-start pl-[6.5rem] mt-[2rem]">
+        <div
+          className={`flex flex-col items-start pl-[6.5rem] ${errors.email || errors.password ? "mt-[1rem]" : "mt-[2rem]"}`}
+        >
           {/* Following div consist of welcome message */}
           <div className="font-bold flex flex-col gap-0">
             <p className="text-[#000] lg:text-[1.5rem] xl:text-[1.8rem] 2xl:text-[2rem]">
@@ -113,56 +123,48 @@ export const Sign_In = () => {
 
           {/* Following div consist of Signup Form, OR and Signin with google option */}
           <div
-            className={`h-max flex flex-col items-center gap-[1rem] lg:mt-[0.2rem] ${!signInError ? "2xl:mt-[2rem]" : "2xl:mt-0"}`}
+            className={`h-max flex flex-col items-center gap-[1rem] lg:mt-[0.2rem] ${errors.email || errors.password ? "2xl:mt-[0.5rem]" : "2xl:mt-[2rem]"}`}
           >
-            {signInError ? (
-              <div className="w-[30rem] bg-red-500 p-[1rem] text-[#fff] font-semibold text-center shadow-md">
-                Invalid Credentials!
-              </div>
-            ) : null}
-
             {/* Signin form */}
-            <form className="w-max h-max flex flex-col items-start gap-[1.5rem]">
-              {/* Following is the Email Input Field */}
-              <div className="lg:w-[23rem] lg:h-[3rem] xl:w-[28rem]  2xl:w-[30.1875rem] 2xl:h-[3.56894rem]">
+            <form
+              onSubmit={handleSubmit(handleSignIn)}
+              className={`w-max h-max flex flex-col items-start gap-[1rem]`}
+            >
+              {/* Following is the input field for email */}
+              <div className="lg:w-[23rem] xl:w-[28rem] 2xl:w-[30.1875rem] h-max">
+                {errors.email && (
+                  <div className="w-[90%] px-[1rem] text-red-500 font-bold">
+                    {errors.email.message}
+                  </div>
+                )}
                 <LabelInput
                   legendName="Email"
-                  useType="authForm"
+                  useType={FormType.AUTH}
                   placeHolder="Enter your email here"
-                  name="email"
-                  value={signInInputs.email}
-                  onChange={(e) => {
-                    setSignInError(false);
-                    setSignInInputs({
-                      ...signInInputs,
-                      email: e.target.value,
-                    });
-                  }}
-                />
-              </div>
-              {/* Following is the Password Input Field */}
-              <div className="lg:w-[23rem] lg:h-[3rem] xl:w-[28rem]  2xl:w-[30.1875rem] 2xl:h-[3.56894rem]">
-                <LabelInput
-                  legendName="Password"
-                  useType="authForm"
-                  placeHolder="Enter your password here"
-                  name="password"
-                  value={signInInputs.password}
-                  onChange={(e) => {
-                    setSignInError(false);
-                    setSignInInputs({
-                      ...signInInputs,
-                      password: e.target.value,
-                    });
-                  }}
+                  {...register("email", { required: true })}
                 />
               </div>
 
-              {/* Login Button */}
-              <div className="lg:w-[23rem] lg:h-[3rem] xl:w-[28rem] 2xl:w-[30.1875rem] 2xl:h-[3.56894rem]">
+              {/* Following is the input field for Password */}
+              <div className="lg:w-[23rem] xl:w-[28rem] 2xl:w-[30.1875rem] h-max">
+                {errors.password && (
+                  <div className="w-[90%] px-[1rem] text-red-500 font-bold">
+                    {errors.password.message}
+                  </div>
+                )}
+                <LabelInput
+                  legendName="Password"
+                  useType={FormType.AUTH}
+                  placeHolder="Enter your password here"
+                  {...register("password", { required: true })}
+                />
+              </div>
+
+              {/*Following div consist of Signin Button*/}
+              <div className="lg:w-[23rem] lg:h-[3rem] xl:w-[28rem] 2xl:w-[30.1875rem] 2xl:h-[3.56894rem] mt-[0.5rem]">
                 <AuthButton
                   buttonName="Sign In"
-                  onClick={handleLogIn}
+                  type="submit"
                   loading={loading}
                 />
               </div>
@@ -199,9 +201,7 @@ export const Sign_In = () => {
             </button>
 
             {/* Following is the Sign-up Option */}
-            <div
-              className={`m-auto ${signInError ? "mt-0" : "mt-[2rem]"} text-[#123524] lg:text-[1rem] 2xl:text-[1.25rem] font-normal flex`}
-            >
+            <div className="m-auto mt-[2rem] text-[#123524] lg:text-[1rem] 2xl:text-[1.25rem] font-normal flex">
               <p>Don’t have an account?</p>
               <Link href={"/signup"} className="font-bold">
                 Sign up

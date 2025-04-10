@@ -2,6 +2,8 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+
 .polygon {
   /*                    top              right     bottom      */
   clip-path: polygon(100% 0%, 100% 40%, 100% 30%, 51% 100%, 0% 100%, 0% 0%);
@@ -12,3 +14,4 @@
 .rectangle {
   clip-path: polygon(0% 71%, 100% 70%, 100% 100%, 0% 100%);
 }
+

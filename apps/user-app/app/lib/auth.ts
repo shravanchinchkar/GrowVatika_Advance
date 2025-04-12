@@ -185,7 +185,7 @@ export const NEXT_AUTH = {
       },
     }),
   ],
-  secret: process.env.JWT_SECRET || "secret",
+  secret: process.env.NEXTAUTH_SECRET || "secret",
   callbacks: {
     signIn: async ({ user, account, profile, email, credentials }: any) => {
       if (account.provider === "google") {

@@ -89,7 +89,7 @@ export const NEXT_AUTH = {
       },
     }),
   ],
-  secret: process.env.JWT_SECRET || "secret",
+  secret: process.env.NEXTAUTH_SECRET|| "secret",
   callbacks: {
     async jwt({ token, user }: any) {
       // When the user signs in, `user` contains the object returned by `authorize`

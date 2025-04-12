@@ -208,7 +208,7 @@ export async function verifyCode({
     }
     return { success: true, message: "Email verified successfully" };
   } catch (err) {
-    console.error("Error verifying end-user otp");
+    console.error("Error verifying end-user otp",err);
     return {
       success: false,
       errors: "Error verifying end-user otp",

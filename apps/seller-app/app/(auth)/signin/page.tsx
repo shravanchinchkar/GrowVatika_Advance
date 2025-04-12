@@ -1,5 +1,5 @@
 import { SellerSignin } from "../../../components/sign-in";
 
-export default function () {
+export default function SellerSigninPage () {
   return <SellerSignin />;
 }

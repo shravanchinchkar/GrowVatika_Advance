@@ -1,5 +1,5 @@
 import bcrypt from "bcrypt";
-import client from "@repo/db/client";
+import client from "@repo/db/client"
 import { SignInSchema } from "@repo/common-types/types";
 import CredentialsProvider from "next-auth/providers/credentials";
 

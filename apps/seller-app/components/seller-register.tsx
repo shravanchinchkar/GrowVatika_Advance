@@ -58,7 +58,7 @@ export const SellerRegister = () => {
   }
   useEffect(() => {
     main();
-  }, []);
+  }, [main]);
 
   // Handle Seller Registration
   const handelSellerRegistration: SubmitHandler<SignUpInputs> = async (

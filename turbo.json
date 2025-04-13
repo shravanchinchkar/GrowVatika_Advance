@@ -3,20 +3,9 @@
   "ui": "tui",
   "tasks": {
     "build": {
-      "dependsOn": ["^build", "@repo/db/db#prisma:generate"],
+      "dependsOn": ["^build", "@repo/db/#prisma:generate"],
       "inputs": ["$TURBO_DEFAULT$", ".env*"],
-      "outputs": [".next/**", "!.next/cache/**"],
-      "env": [
-        "NEXTAUTH_URL",
-        "NEXTAUTH_SECRET",
-        "GOOGLE_CLIENT_ID",
-        "GOOGLE_CLIENT_SECRET",
-        "RESEND_API_KEY",
-        "GOOGLE_SERVICE_ACCOUNT_EMAIL",
-        "GOOGLE_PRIVATE_KEY",
-        "SPREADSHEET_ID",
-        "JWT_SECRET"
-      ]
+      "outputs": [".next/**", "!.next/cache/**"]
     },
     "lint": {
       "dependsOn": ["^lint"]

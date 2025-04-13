@@ -42,7 +42,7 @@ export const Sign_Up = () => {
   ) => {
     console.log("Data is:", data);
     setLoading(true);
-    const res: SignupResponse = await signup(data); //here signup() is the server action function 
+    const res: SignupResponse = await signup(data); //here signup() is the server action function
     console.log("Signup Response:", res);
     setValue("name", "");
     setValue("email", "");

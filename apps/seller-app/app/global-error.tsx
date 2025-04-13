@@ -1,5 +1,7 @@
-// apps/seller-app/app/global-error.tsx
-"use client"
+// app/global-error.tsx
+"use client";
+
+import React from "react";
 
 export default function GlobalError({
   error,
@@ -8,14 +10,17 @@ export default function GlobalError({
   error: Error & { digest?: string };
   reset: () => void;
 }) {
+  // Make sure to actually use the error or remove it to fix the linting warning
+  console.error("Global error occurred:", error);
+
   return (
     <html>
       <body>
-        <div className="flex flex-col items-center justify-center min-h-screen">
-          <h1 className="text-4xl font-bold">Something went wrong!</h1>
+        <div className="flex min-h-screen flex-col items-center justify-center">
+          <h2 className="text-xl font-semibold">Something went wrong!</h2>
           <button
+            className="mt-4 rounded-md bg-primary px-4 py-2 text-white"
             onClick={() => reset()}
-            className="mt-6 px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600"
           >
             Try again
           </button>

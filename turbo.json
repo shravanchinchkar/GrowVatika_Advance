@@ -2,8 +2,11 @@
   "$schema": "https://turbo.build/schema.json",
   "ui": "tui",
   "tasks": {
+    "prisma:generate": {
+      "cache": false
+    },
     "build": {
-      "dependsOn": ["^build", "@repo/db#prisma:generate"],
+      "dependsOn": ["^build"],
       "inputs": ["$TURBO_DEFAULT$", ".env*"],
       "outputs": [".next/**", "!.next/cache/**"]
     },

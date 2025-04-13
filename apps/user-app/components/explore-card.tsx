@@ -29,11 +29,13 @@ export const ExploreCard: React.FC<ExploreCardProps> = ({ cardData }) => {
           </div>
         </div>
 
-        <div className="lg:w-[8rem] xl:w-[9rem] new-xl:w-[10.0452rem] lg:h-[13rem]  xl:h-[16.7419rem] relative">
+        <div
+          className={`lg:w-[8rem] xl:w-[9rem] new-xl:w-[10.0452rem]  lg:h-[13rem] xl:h-[16.7419rem] relative`}
+        >
           <Image
             className="object-cover"
             src={cardData.image}
-            alt="cardIamge"
+            alt={cardData.id}
             fill
             sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 25vw"
             placeholder="blur"

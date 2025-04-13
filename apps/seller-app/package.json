@@ -15,7 +15,7 @@
     "@prisma/client": "^6.6.0",
     "@react-email/components": "0.0.34",
     "@repo/common-types": "*",
-    "@repo/db": "*",
+    "@repo/db":"*",
     "@repo/shared": "*",
     "@repo/ui": "*",
     "bcrypt": "^5.1.1",

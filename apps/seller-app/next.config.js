@@ -1,20 +1,25 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   reactStrictMode: true,
-  output: "standalone",
+  swcMinify: true,
   typescript: {
-    // Ignore TypeScript errors, consider fixing these later
+    // This will ignore TypeScript errors during build
     ignoreBuildErrors: true,
   },
   eslint: {
-    // Ignore ESLint errors for now to get the build working
+    // This will ignore ESLint errors during build
     ignoreDuringBuilds: true,
   },
-  // Disable static optimization
   experimental: {
-    // For Next.js 15, use this instead of the deprecated appDir
-    staticPageGenerationTimeout: 0,
+    // Remove the deprecated option
+    // staticPageGenerationTimeout: 180,
+
+    // Add optimizations for build process
+    optimizeCss: true,
+    scrollRestoration: true,
   },
+  // For Vercel deployment
+  output: process.env.NODE_ENV === "production" ? "standalone" : undefined,
 };
 
 export default nextConfig;

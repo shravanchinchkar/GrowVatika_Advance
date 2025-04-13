@@ -1,5 +1,5 @@
 // apps/seller-app/app/global-error.tsx
-("use client");
+"use client"
 
 export default function GlobalError({
   error,

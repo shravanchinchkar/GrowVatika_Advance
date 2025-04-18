@@ -3,7 +3,7 @@ import { Section } from "@react-email/components";
 
 const ResetPasswordMailTemplate = ({ email }: { email: string }) => {
 
-  const resetUrl = `https://growvatika.com/resetpassword?email=${encodeURIComponent(email)}`;//Production
+  const resetUrl = `https://growvatika.live/resetpassword?email=${encodeURIComponent(email)}`;//Production
   // const resetUrl = `http://localhost:3000/resetpassword?email=${encodeURIComponent(email)}`; //development
   
   const brandTitle = {

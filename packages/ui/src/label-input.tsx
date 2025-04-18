@@ -64,7 +64,7 @@ export const LabelInput = ({
           type={
             legendName === "Phone Number"
               ? "tel"
-              : (legendName === "Password" ||
+              : (legendName.includes("Password") ||
                     legendName === "Confirm Password") &&
                   viewPassword === false
                 ? "password"
@@ -80,7 +80,7 @@ export const LabelInput = ({
           {...props}
         />
 
-        {legendName === "Password" || legendName === "Confirm Password" ? (
+        {legendName.includes("Password") || legendName === "Confirm Password" ? (
           <button
             type="button"
             className="w-[3rem] h-[2rem] relative border-none outline-none"

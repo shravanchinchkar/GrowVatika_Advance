@@ -32,11 +32,20 @@ export const SignUpSchema = zod.object({
     .min(6, { message: "Password must be atleast of 6 characters" })
     .optional(),
 });
+
 export const SignInSchema = zod.object({
   email: zod.string().email(),
   password: zod
     .string()
     .min(6, { message: "Password must be atleast of 6 characters" }),
+  confirmPassword: zod
+    .string()
+    .min(6, { message: "Password must be atleast of 6 characters" })
+    .optional(),
+});
+
+export const EmailOnlySchema = zod.object({
+  email: zod.string().email(),
 });
 
 //Following zod schema is used for frontend purpose

@@ -10,6 +10,7 @@ import { useRouter } from "next/navigation";
 import { SiteLogo } from "@repo/ui/brand-logo";
 import { AuthButton } from "@repo/ui/auth-button";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { resetPasswordEmail } from "@/app/actions/auth";
 import { toastStyle } from "@repo/shared/utilfunctions";
 import { ButtonLoadingSign } from "@repo/ui/loading-sign";
 import { FormType, LabelInput } from "@repo/ui/label-input";
@@ -19,11 +20,13 @@ import AuthImage from "../public/assets/images/AuthImages/AuthImages.png";
 export const Sign_In = () => {
   const router = useRouter();
   const [loading, setLoading] = useState(false);
+  const [resetPasswordLoading, setResetPasswordLoading] = useState(false);
   const [loadingGoogleLogin, setLoadingGoogleLogin] = useState(false);
 
   const {
     register,
     setValue,
+    getValues,
     handleSubmit,
     formState: { errors },
   } = useForm<SignInInputs>({
@@ -98,6 +101,26 @@ export const Sign_In = () => {
     }
   }
 
+  //Handle ResetPassword
+  const handleResetPasswordEmail = async () => {
+    setResetPasswordLoading(true);
+    const email = getValues("email");
+    if (email === "") {
+      toast.error("Invalid email", toastStyle);
+      setResetPasswordLoading(false);
+    } else {
+      const res = await resetPasswordEmail(email);
+      console.log("Reset Password response:", res);
+      setResetPasswordLoading(false);
+      if (res.error) {
+        toast.error(res.error.toString(), toastStyle);
+        console.error("Error While sending reset password mail:", res.error);
+      } else {
+        router.push(`/resetpasswordmessage?email=${email}`);
+      }
+    }
+  };
+
   return (
     <div className="w-screen h-screen bg-[#FFF6F4] flex font-[Poppins]">
       <div className="w-[50%] flex flex-col gap-[1rem]">
@@ -128,7 +151,7 @@ export const Sign_In = () => {
             {/* Signin form */}
             <form
               onSubmit={handleSubmit(handleSignIn)}
-              className={`w-max h-max flex flex-col items-start gap-[1rem]`}
+              className="w-max h-max flex flex-col items-end gap-[1rem]"
             >
               {/* Following is the input field for email */}
               <div className="lg:w-[23rem] xl:w-[28rem] 2xl:w-[30.1875rem] h-max">
@@ -160,8 +183,18 @@ export const Sign_In = () => {
                 />
               </div>
 
+              {/* Forgot password option */}
+              <button
+                type="button"
+                className={`text-[#123524] text-[1.25rem] font-semibold underline ${resetPasswordLoading ? "cursor-not-allowed" : "cursor-pointer"}`}
+                onClick={handleResetPasswordEmail}
+                disabled={resetPasswordLoading}
+              >
+                {resetPasswordLoading ? "Loading..." : "Forgot Password"}
+              </button>
+
               {/*Following div consist of Signin Button*/}
-              <div className="lg:w-[23rem] lg:h-[3rem] xl:w-[28rem] 2xl:w-[30.1875rem] 2xl:h-[3.56894rem] mt-[0.5rem]">
+              <div className="lg:w-[23rem] lg:h-[3rem] xl:w-[28rem] 2xl:w-[30.1875rem] 2xl:h-[3.56894rem]">
                 <AuthButton
                   buttonName="Sign In"
                   type="submit"
@@ -201,7 +234,7 @@ export const Sign_In = () => {
             </button>
 
             {/* Following is the Sign-up Option */}
-            <div className="m-auto mt-[2rem] text-[#123524] lg:text-[1rem] 2xl:text-[1.25rem] font-normal flex">
+            <div className="m-auto mt-[0.5rem]  text-[#123524] lg:text-[1rem] 2xl:text-[1.25rem] font-normal flex">
               <p>Don’t have an account?</p>
               <Link href={"/signup"} className="font-bold">
                 Sign up

@@ -2,21 +2,24 @@
 
 // Following is the backend SignUp route
 import bcrypt from "bcrypt";
-import client from "@repo/db/client";
 import { google } from "googleapis";
+import client from "@repo/db/client";
 import { JWT } from "google-auth-library";
 import { getExpiryDate } from "@repo/shared/utilfunctions";
 import { generateVerifyCode } from "@repo/shared/utilfunctions";
 import { getCurrentFormattedDate } from "@repo/shared/utilfunctions";
-import { sendVerificationEmail } from "../helper/sendVerificationEmail";
-import { successfulCollaboration } from "../helper/successful-Collaboration-Mail";
+import { sendVerificationEmail } from "../helper/sendVerificationMail";
+import { sendResendPasswordMail } from "../helper/sendResetPasswordMail";
+import { successfulCollaboration } from "../helper/successfulCollaborationMail";
 import {
   SignUpInputs,
   SignUpSchema,
   SignupResponse,
+  EmailOnlySchema,
   ApiResponseType,
   GetStartedFromInput,
   GetStartedFromSchema,
+  SignInInputs,
 } from "@repo/common-types/types";
 
 interface VerifyCodeProps {
@@ -28,7 +31,6 @@ interface VerifyCodeProps {
 export async function signup(
   signupCredentials: SignUpInputs
 ): Promise<SignupResponse> {
-
   //validate the user's input
   console.log("User Credentials:", signupCredentials);
   const result = SignUpSchema.safeParse(signupCredentials);
@@ -63,7 +65,10 @@ export async function signup(
       //If the user already exists but is not verified
       else {
         console.log("Email exists but not verified!", existingUserByEmail);
-        const hashPassword = await bcrypt.hash(signupCredentials.password, 10);
+        const hashPassword = await bcrypt.hash(
+          signupCredentials.confirmPassword || "",
+          10
+        );
         await client.user.update({
           where: { email: signupCredentials.email },
           data: {
@@ -94,7 +99,10 @@ export async function signup(
       }
     } else {
       // If the user doesn't exists create the new fresh user
-      const hashPassword = await bcrypt.hash(signupCredentials.password, 10);
+      const hashPassword = await bcrypt.hash(
+        signupCredentials.confirmPassword || "",
+        10
+      );
       const newUser = await client.user.create({
         data: {
           name: signupCredentials.name || "",
@@ -143,6 +151,86 @@ export async function signup(
   } catch (err) {
     console.error("error while Signup! please try again", err);
     return { success: false, errors: "Error while signup! Please try again" };
+  }
+}
+
+//Following is the server action that sends reset password email
+export async function resetPasswordEmail(
+  email: string
+): Promise<ApiResponseType> {
+  //Validate the input type
+  const validateInput = EmailOnlySchema.safeParse(email);
+  if (!validateInput) {
+    return { success: false, error: "Invalid Email" };
+  } else {
+    try {
+      const emailResponse = await sendResendPasswordMail(email);
+      // If error while sending email
+      if (!emailResponse.success) {
+        console.log("Can't send reset password link", emailResponse.message);
+        return { success: false, error: emailResponse.message };
+      }
+      // If success in sending email
+      return {
+        success: true,
+        message: "Reset Password email send successfully!",
+      };
+    } catch (error) {
+      console.error("Error while sending reset password link", error);
+      return {
+        success: false,
+        error: "Error while sending reset password link",
+      };
+    }
+  }
+}
+
+//following server action resets the passwords of the user
+export async function resetPassword(
+  resetPasswordData: SignInInputs
+): Promise<ApiResponseType> {
+  //Validate input
+  const validateInput = EmailOnlySchema.safeParse(resetPasswordData);
+  if (!validateInput) {
+    return { success: false, error: "Invalid Data" };
+  }
+  // If the inputs are valid then
+  else {
+    try {
+      // Check if the user exists in the User table
+      const existingUser = await client.user.findUnique({
+        where: { email: resetPasswordData.email },
+      });
+      // If the user dose not exists return the error message
+      if (!existingUser) {
+        return { success: false, error: "User Not Found" };
+      }
+      // If the user exists, then hash the new password and store it in db
+      else {
+        const hashPassword = await bcrypt.hash(
+          resetPasswordData.confirmPassword || "",
+          10
+        );
+        const updateExistingUser = await client.user.update({
+          where: {
+            email: existingUser.email,
+          },
+          data: {
+            password: hashPassword,
+          },
+        });
+        if (!updateExistingUser) {
+          return {
+            success: false,
+            error: "Error while updating the user password",
+          };
+        }
+        return { success: true, message: "Password Updated Successfully" };
+      }
+    } catch (error) {
+      console.error("Error While updating the user's password");
+      return { success: false, error: "error while updating the password" };
+    }
   }
 }
 

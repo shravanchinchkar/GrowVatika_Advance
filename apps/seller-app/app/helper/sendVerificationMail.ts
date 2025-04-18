@@ -1,7 +1,7 @@
 import { v4 as uuidv4 } from "uuid"; 
 import { resend } from "../lib/resend";
 import { ApiResponseType } from "@repo/common-types/types";
-import VerificationEmail from "../../emails/email-verification-template-2";
+import VerificationEmail from "../../emails/email-verification-template";
 
 export async function sendVerificationEmail(
   name: string,

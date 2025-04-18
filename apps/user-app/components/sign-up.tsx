@@ -42,28 +42,34 @@ export const Sign_Up = () => {
   ) => {
     console.log("Data is:", data);
     setLoading(true);
-    const res: SignupResponse = await signup(data); //here signup() is the server action function
-    console.log("Signup Response:", res);
-    setValue("name", "");
-    setValue("email", "");
-    setValue("password", "");
-    setLoading(false);
-    // Check if errors exists
-    if (res.errors) {
-      if (res.errors === "Email already in use") {
-        setError("email", { message: res.errors.toString() });
-      } else {
-        toast.error(res.errors.toString(), toastStyle);
+    if (data.password !== data.confirmPassword) {
+      toast.error("Password Dose Not Match", toastStyle);
+    } else {
+      const res: SignupResponse = await signup(data); //here signup() is the server action function
+      console.log("Signup Response:", res);
+      setValue("name", "");
+      setValue("email", "");
+      setValue("password", "");
+      setValue("confirmPassword", "");
+      setLoading(false);
+      // Check if errors exists
+      if (res.errors) {
+        if (res.errors === "Email already in use") {
+          setError("email", { message: res.errors.toString() });
+        } else {
+          toast.error(res.errors.toString(), toastStyle);
+        }
+      }
+      // Handle success
+      if (res?.success && res?.message?.includes("successfully")) {
+        toast.success("Signup Successful", toastStyle);
+        router.push(`/verify?email=${data.email}`);
       }
     }
-    // Handle success
-    if (res?.success && res?.message?.includes("successfully")) {
-      toast.success("Signup Successful", toastStyle);
-      router.push(`/verify?email=${data.email}`);
-    }
   };
+
   return (
-    <div className="w-screen h-screen bg-[#FFF6F4] flex font-[Poppins]">
+    <div className="w-screen h-screen bg-[#FFF6F4] flex font-[Poppins] overflow-x-hidden">
       {/* Following div consist of Image */}
       <div className="w-[50%] flex justify-center items-center cursor-pointer">
         <div className="lg:w-[30rem] lg:h-[30rem] xl:w-[31rem] xl:h-[31rem] 2xl:w-[42rem] 2xl:h-[42rem] shrink-0 relative rounded-[28px] overflow-hidden">
@@ -87,7 +93,7 @@ export const Sign_Up = () => {
         </div>
 
         {/* Following div consist of welcome message, signup form, and sign-in option */}
-        <div className="flex flex-col items-start pl-[6.5rem] mt-[2rem]">
+        <div className="flex flex-col items-start pl-[6.5rem] mt-[1rem]">
           {/* Following div consist of welcome message  */}
           <div className="font-bold flex flex-col gap-0">
             <p className="text-[#000] lg:text-[1.5rem] xl:text-[1.8rem] 2xl:text-[2rem] ">
@@ -100,12 +106,12 @@ export const Sign_Up = () => {
 
           {/* Following div consist of Signup form and sign-in option */}
           <div
-            className={`w-max h-max flex flex-col lg:mt-[0.5rem] ${errors.name || errors.email || errors.password ? "2xl:mt-[1rem]" : "2xl:mt-[3rem]"}`}
+            className={`w-max h-max flex flex-col lg:mt-[0.5rem] ${errors.name || errors.email || errors.password ? "2xl:mt-[1rem]" : "2xl:mt-[1rem]"}`}
           >
             {/* Following div consist of Signup form and Signup button */}
             <form
               onSubmit={handleSubmit(handleSignup)}
-              className="w-max h-max flex flex-col gap-[1rem]"
+              className={`w-max h-max flex flex-col `}
             >
               {/* Following is the input field for Name */}
               <div className="h-max lg:w-[23rem] xl:w-[28rem] 2xl:w-[30.1875rem] flex flex-col">
@@ -123,7 +129,9 @@ export const Sign_Up = () => {
               </div>
 
               {/* Following is the input field for Email */}
-              <div className="h-max lg:w-[23rem] xl:w-[28rem] 2xl:w-[30.1875rem] flex flex-col">
+              <div
+                className={`h-max lg:w-[23rem] xl:w-[28rem] 2xl:w-[30.1875rem] flex flex-col ${errors.email ? "mt-[0rem]" : "mt-[1rem]"}`}
+              >
                 {errors.email && (
                   <div className="w-[90%] px-[1rem] text-red-500 font-bold">
                     {errors.email.message}
@@ -138,7 +146,9 @@ export const Sign_Up = () => {
               </div>
 
               {/* Following is the input field for Password */}
-              <div className="h-max lg:w-[23rem] xl:w-[28rem] 2xl:w-[30.1875rem] flex flex-col">
+              <div
+                className={`h-max lg:w-[23rem] xl:w-[28rem] 2xl:w-[30.1875rem] flex flex-col ${errors.password ? "mt-[0rem]" : "mt-[1rem]"}`}
+              >
                 {errors.password && (
                   <div className="w-[90%] px-[1rem] text-red-500 font-bold">
                     {errors.password.message}
@@ -152,8 +162,27 @@ export const Sign_Up = () => {
                 />
               </div>
 
+              {/* Following is the input field for Confirm Password */}
+              <div
+                className={`h-max lg:w-[23rem] xl:w-[28rem] 2xl:w-[30.1875rem] flex flex-col ${errors.confirmPassword ? "mt-[0rem]" : "mt-[1rem]"}`}
+              >
+                {errors.confirmPassword && (
+                  <div className="w-[90%] px-[1rem] text-red-500 font-bold">
+                    {errors.confirmPassword.message}
+                  </div>
+                )}
+                <LabelInput
+                  legendName="Confirm Password"
+                  useType={FormType.AUTH}
+                  placeHolder="Enter your password here"
+                  {...register("confirmPassword", { required: true })}
+                />
+              </div>
+
               {/*Following div consist of Signup Button*/}
-              <div className="lg:w-[23rem] lg:h-[3.5rem] xl:w-[28rem] 2xl:w-[30.1875rem] 2xl:h-[4.01506rem] mt-[0.5rem]">
+              <div
+                className={`lg:w-[23rem] lg:h-[3.5rem] xl:w-[28rem] 2xl:w-[30.1875rem] 2xl:h-[4.01506rem] ${errors.confirmPassword ? "mt-[0.8rem]" : "mt-[1rem]"}`}
+              >
                 <AuthButton
                   buttonName="Sign up"
                   type="submit"
@@ -163,7 +192,9 @@ export const Sign_Up = () => {
             </form>
 
             {/* Following is the Sign-in Option */}
-            <div className="m-auto text-[#123524] text-[1.25rem] font-normal flex mt-[2rem]">
+            <div
+              className={`m-auto text-[#123524] text-[1.25rem] font-normal flex ${errors.confirmPassword ? "mt-[1rem]" : "mt-[2rem]"}`}
+            >
               <p>Don’t have an account?</p>
               <Link href={"/signin"} className="font-bold">
                 Sign in

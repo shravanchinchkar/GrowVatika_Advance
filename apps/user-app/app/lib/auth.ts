@@ -5,7 +5,7 @@ import CredentialsProvider from "next-auth/providers/credentials";
 import GoogleProvider from "next-auth/providers/google";
 import { getExpiryDate } from "@repo/shared/utilfunctions";
 import { generateVerifyCode } from "@repo/shared/utilfunctions";
-import { sendVerificationEmail } from "../helper/sendVerificationEmail";
+import { sendVerificationEmail } from "../helper/sendVerificationMail";
 import { error } from "console";
 
 export const NEXT_AUTH = {

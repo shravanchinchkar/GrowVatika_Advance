@@ -8,10 +8,7 @@ import {
   Preview,
   Section,
   Text,
-  Button,
   Hr,
-  Img,
-  Link,
 } from "@react-email/components";
 
 interface GrowVatikaVerifyEmailProp {
@@ -19,11 +16,11 @@ interface GrowVatikaVerifyEmailProp {
   verifyCode: string;
 }
 
-const VerificationEmail = ({ name, verifyCode }: GrowVatikaVerifyEmailProp) => {
+const ResetPasswordEmail = ({ name, verifyCode }: GrowVatikaVerifyEmailProp) => {
   const mainColor = "#2e7d32"; // Forest green color
   const backgroundColor = "#f5f5f5";
   const textColor = "#333333";
-
+  
   const brandTitle = {
     fontSize: "30px",
     fontFamily: "'Impact', 'Poppins', sans-serif",
@@ -78,13 +75,13 @@ const VerificationEmail = ({ name, verifyCode }: GrowVatikaVerifyEmailProp) => {
                 marginBottom: "20px",
               }}
             >
-              Welcome to GrowVatika, {name}!
+              Welcome to GrowVatika Seller Platform, {name}!
             </Heading>
 
             <Text
               style={{ fontSize: "16px", lineHeight: "1.5", color: textColor }}
             >
-              Thank you for registering with GrowVatika. To complete your
+              Thank you for collaborating with GrowVatika. To complete your
               account setup, please verify your email address using the
               following One-Time Password (OTP):
             </Text>
@@ -152,4 +149,4 @@ const VerificationEmail = ({ name, verifyCode }: GrowVatikaVerifyEmailProp) => {
     </Html>
   );
 };
-export default VerificationEmail;
+export default ResetPasswordEmail;

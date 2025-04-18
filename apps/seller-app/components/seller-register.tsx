@@ -22,7 +22,7 @@ export const SellerRegister = () => {
   const router = useRouter();
   const [loading, setLoading] = useState(false);
   const searchParams = useSearchParams();
-  const searchParamsEmail = searchParams.get("email") || "";
+  const searchParamsEmail = searchParams?.get("email") || "";
 
   const {
     register,
@@ -101,7 +101,7 @@ export const SellerRegister = () => {
       {/* Following is the left side div*/}
       <div className="w-[50%] flex justify-center items-center relative">
         {/* Following div consist of image */}
-        <div className="lg:w-[30rem] lg:h-[30rem] xl:w-[31rem] xl:h-[31rem] 2xl:w-[42rem] 2xl:h-[42rem] shrink-0 rounded-[28px] overflow-hidden bg-[url(/assets/images/AuthImages/seller-registration.png)] bg-cover bg-no-repeat border-[1px] border-[#8C8C8C] fixed top-[10px]">
+        <div className="lg:w-[30rem] lg:h-[30rem] xl:w-[31rem] xl:h-[31rem] 2xl:w-[42rem] 2xl:h-[42rem] shrink-0 rounded-[28px] overflow-hidden bg-[url(/assets/images/AuthImages/seller-registration.png)] bg-cover bg-no-repeat border-[1px] border-[#8C8C8C] fixed top-[10px] bottom-0">
           <div className="flex flex-col items-center text-[#606060] mt-[2rem]">
             <h1 className="text-[2rem] font-bold w-[32rem] text-center">
               Nursery For Everyone
@@ -136,6 +136,7 @@ export const SellerRegister = () => {
           {/* Following div consist of signup form , and signup message */}
           <div className="flex flex-col items-center">
             {/* Seller Registration Form */}
+
             <form
               className="flex flex-col items-start gap-[1rem] lg:mt-[0.5rem]"
               onSubmit={handleSubmit(handelSellerRegistration)}
@@ -258,6 +259,7 @@ export const SellerRegister = () => {
                   loading={loading}
                 />
               </div>
+              
             </form>
 
             {/* Signin message */}

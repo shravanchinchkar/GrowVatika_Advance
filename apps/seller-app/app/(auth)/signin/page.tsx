@@ -1,9 +1,10 @@
 import { Suspense } from "react";
-import { redirect } from "next/navigation";
+import Skeleton from "../../loading";
 import { NEXT_AUTH } from "../../lib/auth";
+import { redirect } from "next/navigation";
 import { getServerSession } from "next-auth";
-import LoadingSpinner from "../../../components/loading-spinner";
 import { SellerSignin } from "../../../components/sign-in";
+
 export default async function SellerSigninPage() {
   const session = await getServerSession(NEXT_AUTH);
   console.log("session", session);
@@ -12,7 +13,7 @@ export default async function SellerSigninPage() {
   } else {
     return (
       <div className="overflow-x-hidden">
-        <Suspense fallback={<LoadingSpinner />}>
+        <Suspense fallback={<Skeleton />}>
           <SellerSignin />;
         </Suspense>
       </div>

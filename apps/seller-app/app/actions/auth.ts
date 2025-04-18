@@ -8,6 +8,7 @@ import {
   SignUpSchema,
 } from "@repo/common-types/types";
 import { getCurrentFormattedDate } from "@repo/shared/utilfunctions";
+import { sendVerificationEmail } from "../helper/sendVerificationMail";
 import { generateVerifyCode, getExpiryDate } from "@repo/shared/utilfunctions";
 import { successfulCollaboration } from "../helper/successful-Collaboration-Mail";
 
@@ -70,12 +71,9 @@ export async function sellerRegistration(
           };
         }
         console.log("New seller Created", createNewSeller);
-
-        // Send verification email for the unverified user
-        const emailResponse = await successfulCollaboration(
-          sellerExists.nurseryName,
-          sellerExists.firstName || "",
-          getCurrentFormattedDate(),
+        
+        const emailResponse = await sendVerificationEmail(
+          sellerExists.firstName,
           sellerExists.email,
           verifyCode
         );
@@ -193,6 +191,7 @@ export async function verifyCode({
       return { success: false, errors: "Invalid or expired OTP" };
     }
 
+    // If the entered OTP is correct then update the seller
     const updateSeller = await client.seller.update({
       where: { email: email },
       data: {
@@ -206,9 +205,23 @@ export async function verifyCode({
       console.error("Error While Updating Verified seller");
       return { success: false, errors: "Error While Updating Verified seller" };
     }
-    return { success: true, message: "Email verified successfully" };
+
+    if (!updateSeller.password) {
+      console.log("Seller Verified in first step");
+      console.log("updated Seller Password:", updateSeller.password);
+      return {
+        success: true,
+        message: "Seller's Email verified successfully in first step",
+      };
+    }
+    console.log("Seller Verified in 2nd step!");
+    console.log("updated Seller Password:", updateSeller.password);
+    return {
+      success: true,
+      message: "Seller's Email verified successfully in 2nd step",
+    };
   } catch (err) {
-    console.error("Error verifying end-user otp",err);
+    console.error("Error verifying end-user otp", err);
     return {
       success: false,
       errors: "Error verifying end-user otp",

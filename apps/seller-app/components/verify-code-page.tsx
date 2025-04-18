@@ -14,7 +14,7 @@ import { VerifyCodeFooter } from "./verify-code-footer";
 export const VerifyCodePage = () => {
   const router = useRouter();
   const searchParams = useSearchParams();
-  const email = searchParams.get("email") || "";
+  const email = searchParams?.get("email") || "";
 
   const [loading, setLoading] = useState(false);
   const [userVerifyCode, setUserVerifyCode] = useState("");
@@ -44,9 +44,20 @@ export const VerifyCodePage = () => {
       ) {
         toast.error("Error verifying user", toastStyle);
       }
-    } else {
-      toast.success("Email verified!", toastStyle);
-      router.push(`/register?email=${encodeURIComponent(email)}`);
+    } else if (res.success) {
+      if (
+        res.message === "Seller's Email verified successfully in first step"
+      ) {
+        console.log("seller verify response:",res.message);
+        toast.success("Email verified!", toastStyle);
+        router.push(`/register?email=${encodeURIComponent(email)}`);
+      } else if (
+        res.message === "Seller's Email verified successfully in 2nd step"
+      ) {
+        console.log("seller verify response:",res.message);
+        toast.success("Email Verified!", toastStyle);
+        router.push("/signin");
+      }
     }
   };
 

@@ -7,10 +7,14 @@ import { useRouter } from "next/navigation";
 import { SiteLogo } from "@repo/ui/brand-logo";
 import { AuthButton } from "@repo/ui/auth-button";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { toastStyle } from "@repo/shared/utilfunctions";
+import {
+  limitExhaustedToastStyle,
+  toastStyle,
+} from "@repo/shared/utilfunctions";
 import { useForm } from "react-hook-form";
 import { LabelInput, FormType } from "@repo/ui/label-input";
 import { SignInInputs, SignInSchema } from "@repo/common-types/types";
+import { compareSync } from "bcrypt";
 
 export const SellerSignin = () => {
   const router = useRouter();
@@ -37,10 +41,9 @@ export const SellerSignin = () => {
       password: data.password,
       redirect: false,
     });
+
     console.log("Seller signin response:", res);
     setLoading(false);
-    setValue("email", "");
-    setValue("password", "");
 
     if (res?.error) {
       const errorResponse = JSON.parse(res.error) as {
@@ -49,19 +52,22 @@ export const SellerSignin = () => {
         error?: string;
         status?: string;
       };
-      console.log("signin  error :", errorResponse);
-      toast.error("Signin Failed", toastStyle);
+      console.log("Signin Error Response:", errorResponse);
+      toast.error(
+        errorResponse.error?.toString() || "Signin Failed",
+        toastStyle
+      );
     } else if (res?.ok) {
+      setValue("email", "");
+      setValue("password", "");
+
       // Check session to determine verification status
       const sessionResponse = await fetch("/api/auth/session");
       const session = await sessionResponse.json();
-      console.log("session in signin:", session);
       if (session?.user?.isVerified) {
-        console.log("Email already Verified signin successful!");
         toast.success("Signin successful!", toastStyle);
         router.push("/");
       } else {
-        console.log("Email not verified, redirecting to verify!");
         router.push(`/verify?email=${data.email}`);
       }
     }

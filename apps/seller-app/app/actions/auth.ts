@@ -7,10 +7,10 @@ import {
   ApiResponseType,
   SignUpSchema,
 } from "@repo/common-types/types";
-import { getCurrentFormattedDate } from "@repo/shared/utilfunctions";
+import { authRateLimit } from "../lib/rate-limit";
+import { getIp } from "../helper/get-ip-address";
 import { sendVerificationEmail } from "../helper/sendVerificationMail";
 import { generateVerifyCode, getExpiryDate } from "@repo/shared/utilfunctions";
-import { successfulCollaboration } from "../helper/successful-Collaboration-Mail";
 
 interface VerifyCodeProps {
   email?: string;
@@ -26,106 +26,122 @@ export async function sellerRegistration(
   if (!validateInput.success) {
     return { success: false, errors: "Invalid Inputs" };
   }
-  try {
-    const sellerExists = await client.seller.findUnique({
-      where: {
-        email: registrationCredentials.email,
-      },
-    });
-    if (!sellerExists) {
-      return {
-        success: false,
-        errors: "Invalid Seller Email Id",
-      };
-    }
-    //If the seller already exists then evaluate the seller as follows:
-    else {
-      //If the seller already exists and is not verified
-      if (!sellerExists.isVerified) {
-        const verifyCode = generateVerifyCode(); //Generate the verify Code for email Authentication
-        const expiryDate = getExpiryDate();
 
-        const hashPassword = await bcrypt.hash(
-          registrationCredentials.confirmPassword || "",
-          10
-        );
-
-        const createNewSeller = await client.seller.update({
-          where: {
-            email: sellerExists.email,
-          },
-          data: {
-            firstName: registrationCredentials.firstName,
-            lastName: registrationCredentials.lastName,
-            password: hashPassword,
-            verifyCode: verifyCode,
-            verifyCodeExpiry: expiryDate,
-          },
-        });
-
-        if (!createNewSeller) {
-          console.error("Error while creating new seller");
-          return {
-            success: false,
-            errors: "Please try again :(",
-          };
-        }
-        console.log("New seller Created", createNewSeller);
-        
-        const emailResponse = await sendVerificationEmail(
-          sellerExists.firstName,
-          sellerExists.email,
-          verifyCode
-        );
-
-        // If error while sending email
-        if (!emailResponse.success) {
-          console.log("email not send message:", emailResponse.message);
-          return { success: false, message: emailResponse.message };
-        }
-        console.log("email success message:", emailResponse);
-
-        return {
-          success: true,
-          message: "Seller Created Successfully. Please verify your email",
-        };
-      }
-      //The seller exists and is verified
-      else {
-        const hashPassword = await bcrypt.hash(
-          registrationCredentials.confirmPassword || "",
-          10
-        );
-        const createNewSeller = await client.seller.update({
-          where: {
-            email: sellerExists.email,
-          },
-          data: {
-            firstName: registrationCredentials.firstName,
-            lastName: registrationCredentials.lastName,
-            password: hashPassword,
-          },
-        });
-
-        if (!createNewSeller) {
-          console.error("Error while creating new seller");
-          return {
-            success: false,
-            errors: "Please try again! Can't create the seller account",
-          };
-        }
-        console.log("New seller Created", createNewSeller);
-        return {
-          success: true,
-          message: "Seller account created successfully!",
-        };
-      }
-    }
-  } catch (error) {
-    console.error("Error while registrating seller", error);
+  //If the count of signup request goes beyond 5 wihin 5 minutes then  the user gets blocked for 5 minutes, following is its logic
+  const IpAddress = await getIp();
+  console.log("Ip address is:", IpAddress);
+  const { success, pending, limit, reset, remaining } =
+    await authRateLimit.limit(IpAddress);
+  if (!success) {
+    console.error("Signup Limit Exhausted,try again after 5 minutes.");
     return {
       success: false,
+      errors: "Sigup Limit Exhausted,Try again after 5 minutes!",
+      status: 429,
     };
+  } else {
+    console.log("Remaining:", remaining);
+    try {
+      const sellerExists = await client.seller.findUnique({
+        where: {
+          email: registrationCredentials.email,
+        },
+      });
+      if (!sellerExists) {
+        return {
+          success: false,
+          errors: "Invalid Seller Email Id",
+        };
+      }
+      //If the seller already exists then evaluate the seller as follows:
+      else {
+        //If the seller already exists and is not verified
+        if (!sellerExists.isVerified) {
+          const verifyCode = generateVerifyCode(); //Generate the verify Code for email Authentication
+          const expiryDate = getExpiryDate();
+
+          const hashPassword = await bcrypt.hash(
+            registrationCredentials.confirmPassword || "",
+            10
+          );
+
+          const createNewSeller = await client.seller.update({
+            where: {
+              email: sellerExists.email,
+            },
+            data: {
+              firstName: registrationCredentials.firstName,
+              lastName: registrationCredentials.lastName,
+              password: hashPassword,
+              verifyCode: verifyCode,
+              verifyCodeExpiry: expiryDate,
+            },
+          });
+
+          if (!createNewSeller) {
+            console.error("Error while creating new seller");
+            return {
+              success: false,
+              errors: "Please try again :(",
+            };
+          }
+          console.log("New seller Created", createNewSeller);
+
+          const emailResponse = await sendVerificationEmail(
+            sellerExists.firstName,
+            sellerExists.email,
+            verifyCode
+          );
+
+          // If error while sending email
+          if (!emailResponse.success) {
+            console.log("email not send message:", emailResponse.message);
+            return { success: false, message: emailResponse.message };
+          }
+          console.log("email success message:", emailResponse);
+
+          return {
+            success: true,
+            message: "Seller Created Successfully. Please verify your email",
+          };
+        }
+        //The seller exists and is verified
+        else {
+          const hashPassword = await bcrypt.hash(
+            registrationCredentials.confirmPassword || "",
+            10
+          );
+          const createNewSeller = await client.seller.update({
+            where: {
+              email: sellerExists.email,
+            },
+            data: {
+              firstName: registrationCredentials.firstName,
+              lastName: registrationCredentials.lastName,
+              password: hashPassword,
+            },
+          });
+
+          if (!createNewSeller) {
+            console.error("Error while creating new seller");
+            return {
+              success: false,
+              errors: "Please try again! Can't create the seller account",
+            };
+          }
+          console.log("New seller Created", createNewSeller);
+          return {
+            success: true,
+            message: "Seller account created successfully!",
+          };
+        }
+      }
+    } catch (error) {
+      console.error("Error while registrating seller", error);
+      return {
+        success: false,
+      };
+    }
   }
 }
 
@@ -265,10 +281,8 @@ export async function resendOTP({
     });
 
     //Resend the OTP to the which is to be verified
-    const emailResponse = await successfulCollaboration(
-      seller.nurseryName,
+    const emailResponse = await sendVerificationEmail(
       seller.firstName,
-      getCurrentFormattedDate(),
       seller.email,
       newOTP
     );

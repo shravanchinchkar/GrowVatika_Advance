@@ -79,7 +79,7 @@ export const VerifyCodePage = () => {
               setUserVerifyCode(e.target.value);
             }}
           />
-          <div className="w-[15rem] h-[3rem] mt-[0.5rem]">
+          <div className="w-[17.3125rem] h-[3rem] mt-[0.5rem]">
             <AuthButton
               buttonName="Continue"
               onClick={handelVerifyCode}

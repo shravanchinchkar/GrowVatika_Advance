@@ -8,7 +8,10 @@ import { signup } from "../app/actions/auth";
 import { SiteLogo } from "@repo/ui/brand-logo";
 import { AuthButton } from "@repo/ui/auth-button";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { toastStyle } from "@repo/shared/utilfunctions";
+import {
+  toastStyle,
+  limitExhaustedToastStyle,
+} from "@repo/shared/utilfunctions";
 import { useForm, SubmitHandler } from "react-hook-form";
 import { LabelInput, FormType } from "@repo/ui/label-input";
 import {
@@ -44,24 +47,30 @@ export const Sign_Up = () => {
     setLoading(true);
     if (data.password !== data.confirmPassword) {
       toast.error("Password Dose Not Match", toastStyle);
+      setLoading(false);
     } else {
       const res: SignupResponse = await signup(data); //here signup() is the server action function
       console.log("Signup Response:", res);
-      setValue("name", "");
-      setValue("email", "");
-      setValue("password", "");
-      setValue("confirmPassword", "");
       setLoading(false);
-      // Check if errors exists
+
+      // If Error during Signup then executed the following below block
       if (res.errors) {
         if (res.errors === "Email already in use") {
           setError("email", { message: res.errors.toString() });
+        } else if (
+          res.errors === "Sigup Limit Exhausted,Try again after 5 minutes!"
+        ) {
+          toast.error(res.errors, limitExhaustedToastStyle);
         } else {
           toast.error(res.errors.toString(), toastStyle);
         }
       }
-      // Handle success
+      // If Signup succeed then execute the following below block
       if (res?.success && res?.message?.includes("successfully")) {
+        setValue("name", "");
+        setValue("email", "");
+        setValue("password", "");
+        setValue("confirmPassword", "");
         toast.success("Signup Successful", toastStyle);
         router.push(`/verify?email=${data.email}`);
       }

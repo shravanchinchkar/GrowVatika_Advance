@@ -78,11 +78,11 @@ export const SellerRegister = () => {
       if (res.errors) {
         console.error("Error While registrating the seller:", res.errors);
         toast.error(res.errors.toString(), toastStyle);
+      } else if (res.success) {
         setValue("firstName", "");
         setValue("lastName", "");
         setValue("password", "");
         setValue("confirmPassword", "");
-      } else if (res.success) {
         if (
           res.message ===
           "Seller Created Successfully. Please verify your email"
@@ -259,7 +259,6 @@ export const SellerRegister = () => {
                   loading={loading}
                 />
               </div>
-              
             </form>
 
             {/* Signin message */}

@@ -26,6 +26,7 @@ export const Navbar = () => {
   return (
     <div className="2xl:w-[82.1875rem] lg:w-[60rem]  xl:w-[70rem] flex justify-between items-center z-10 font-[Poppins] ">
       <div className="2xl:w-[58.3rem] xl:w-[50rem] lg:w-[40rem] h-[4.05rem] bg-gradient-to-r from-[#B0BF78] to-[#759D61] rounded-full shadow-lg">
+        
         <div className="relative w-[100%] h-[100%] flex items-center justify-between">
           <NavLinks linkName={"Home"} linkNumber={"1"} />
           <NavLinks

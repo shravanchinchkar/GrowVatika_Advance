@@ -5,9 +5,11 @@ import bcrypt from "bcrypt";
 import { google } from "googleapis";
 import client from "@repo/db/client";
 import { JWT } from "google-auth-library";
+import { getIp } from "../helper/get-ip-address";
 import { getExpiryDate } from "@repo/shared/utilfunctions";
 import { generateVerifyCode } from "@repo/shared/utilfunctions";
 import { getCurrentFormattedDate } from "@repo/shared/utilfunctions";
+import { authRateLimit, getStartedFromLimit } from "../lib/rate-limit";
 import { sendVerificationEmail } from "../helper/sendVerificationMail";
 import { sendResendPasswordMail } from "../helper/sendResetPasswordMail";
 import { successfulCollaboration } from "../helper/successfulCollaborationMail";
@@ -32,9 +34,7 @@ export async function signup(
   signupCredentials: SignUpInputs
 ): Promise<SignupResponse> {
   //validate the user's input
-  console.log("User Credentials:", signupCredentials);
   const result = SignUpSchema.safeParse(signupCredentials);
-
   // If the user's input is incorrect execute the below code
   if (!result.success) {
     console.error("errors:", result.error.flatten().fieldErrors);
@@ -44,113 +44,129 @@ export async function signup(
       status: 400,
     };
   }
-  try {
-    //check if the user already exists
-    const existingUserByEmail = await client.user.findUnique({
-      where: {
-        email: signupCredentials.email,
-      },
-    });
 
-    const verifyCode = generateVerifyCode(); //Generate the verify Code for email Authentication
-    const expiryDate = getExpiryDate();
+  //If the signup request count goes beyond 5 within 5 minutes,the block the user for 5 minutes
+  const IpAddress = await getIp(); //get the Ip address of the user
+  console.log("Ip address is:", IpAddress);
+  const { success, pending, limit, reset, remaining } =
+    await authRateLimit.limit(IpAddress);
+  if (!success) {
+    console.error("Signup Limit Exhausted,try again after");
+    return {
+      success: false,
+      errors: "Sigup Limit Exhausted,Try again after 5 minutes!",
+      status: 429,
+    };
+  } else {
+    try {
+      console.log("remaining:", remaining);
+      //check if the user already exists
+      const existingUserByEmail = await client.user.findUnique({
+        where: {
+          email: signupCredentials.email,
+        },
+      });
 
-    //If the user already exists then evaluate the user as follows:
-    if (existingUserByEmail) {
-      //If the user already exists and is verified
-      if (existingUserByEmail.isVerified) {
-        console.error("Email already in use", existingUserByEmail);
-        return { success: false, errors: "Email already in use" };
-      }
-      //If the user already exists but is not verified
-      else {
-        console.log("Email exists but not verified!", existingUserByEmail);
+      const verifyCode = generateVerifyCode(); //Generate the verify Code for email Authentication
+      const expiryDate = getExpiryDate();
+
+      //If the user already exists then evaluate the user as follows:
+      if (existingUserByEmail) {
+        //If the user already exists and is verified
+        if (existingUserByEmail.isVerified) {
+          console.error("Email already in use", existingUserByEmail);
+          return { success: false, errors: "Email already in use" };
+        }
+        //If the user already exists but is not verified
+        else {
+          console.log("Email exists but not verified!", existingUserByEmail);
+          const hashPassword = await bcrypt.hash(
+            signupCredentials.confirmPassword || "",
+            10
+          );
+          await client.user.update({
+            where: { email: signupCredentials.email },
+            data: {
+              password: hashPassword,
+              verifyCode: verifyCode,
+              verifyCodeExpiry: expiryDate,
+            },
+          });
+
+          // Send verification email for the unverified user
+          const emailResponse = await sendVerificationEmail(
+            signupCredentials.name || "",
+            signupCredentials.email,
+            verifyCode
+          );
+          // If error while sending email
+          if (!emailResponse.success) {
+            console.log("email not send message:", emailResponse.message);
+            return { success: false, errors: emailResponse.message };
+          }
+          console.log("email success message:", emailResponse);
+
+          // If success in sending email
+          return {
+            success: true,
+            message: "User updated successfully. Please verify your email",
+          };
+        }
+      } else {
+        // If the user doesn't exists create the new fresh user
         const hashPassword = await bcrypt.hash(
           signupCredentials.confirmPassword || "",
           10
         );
-        await client.user.update({
-          where: { email: signupCredentials.email },
+        const newUser = await client.user.create({
           data: {
+            name: signupCredentials.name || "",
+            email: signupCredentials.email,
             password: hashPassword,
             verifyCode: verifyCode,
             verifyCodeExpiry: expiryDate,
           },
         });
+        // If new fresh user can't be created then
+        if (!newUser) {
+          console.error("Please try again! Can't create the account");
+          return {
+            success: false,
+            errors: "Please try again! Can't create the account",
+          };
+        }
 
-        // Send verification email for the unverified user
+        console.log("New User Created", newUser);
+        // If the new fresh user is created, then send an otp to the user's email to verify
         const emailResponse = await sendVerificationEmail(
-          signupCredentials.name || "",
-          signupCredentials.email,
+          newUser.name,
+          newUser.email,
           verifyCode
         );
-        // If error while sending email
+
+        // If error while sending email to the new user
         if (!emailResponse.success) {
-          console.log("email not send message:", emailResponse.message);
+          console.log(
+            "new user created email not send message:",
+            emailResponse.message
+          );
           return { success: false, errors: emailResponse.message };
         }
-        console.log("email success message:", emailResponse);
 
-        // If success in sending email
-        return {
-          success: true,
-          message: "User updated successfully. Please verify your email",
-        };
-      }
-    } else {
-      // If the user doesn't exists create the new fresh user
-      const hashPassword = await bcrypt.hash(
-        signupCredentials.confirmPassword || "",
-        10
-      );
-      const newUser = await client.user.create({
-        data: {
-          name: signupCredentials.name || "",
-          email: signupCredentials.email,
-          password: hashPassword,
-          verifyCode: verifyCode,
-          verifyCodeExpiry: expiryDate,
-        },
-      });
-      // If new fresh user can't be created then
-      if (!newUser) {
-        console.error("Please try again! Can't create the account");
-        return {
-          success: false,
-          errors: "Please try again! Can't create the account",
-        };
-      }
-
-      console.log("New User Created", newUser);
-      // If the new fresh user is created, then send an otp to the user's email to verify
-      const emailResponse = await sendVerificationEmail(
-        newUser.name,
-        newUser.email,
-        verifyCode
-      );
-
-      // If error while sending email to the new user
-      if (!emailResponse.success) {
+        // If success in sending email to the new user
         console.log(
-          "new user created email not send message:",
+          "new user created email send message:",
           emailResponse.message
         );
-        return { success: false, errors: emailResponse.message };
+        return {
+          success: true,
+          message: "User registered successfully. Please verify your email",
+        };
       }
-
-      // If success in sending email to the new user
-      console.log(
-        "new user created email send message:",
-        emailResponse.message
-      );
-      return {
-        success: true,
-        message: "User registered successfully. Please verify your email",
-      };
+    } catch (err) {
+      console.error("error while Signup! please try again", err);
+      return { success: false, errors: "Error while signup! Please try again" };
     }
-  } catch (err) {
-    console.error("error while Signup! please try again", err);
-    return { success: false, errors: "Error while signup! Please try again" };
   }
 }
 
@@ -355,35 +371,135 @@ export async function storeDataInExcel(
   if (!validateInput.success) {
     return { success: false, error: "Invalid Inputs" };
   }
-  // If Inputs are correct then Proceed for the following block
-  try {
-    console.log("User Details:", userDetails);
-    const existingSellerByEmail = await client.seller.findUnique({
-      where: { email: userDetails.email },
-    });
 
-    //If the seller already exists then evaluate the seller as follows:
-    if (existingSellerByEmail) {
-      //If the seller already exists and is verified
-      if (existingSellerByEmail.isVerified) {
-        console.error(
-          "Seller Email already in use",
-          existingSellerByEmail.email
-        );
-        return { success: false, error: "Seller Email already exists" };
-      }
-      //If the seller already exists but is not verified
-      else {
+  //If the form request count goes beyond 3 within 5 minutes,the block the user for 5 minutes
+  const IpAddress = await getIp(); //get the Ip address of the user
+  console.log("Ip address is:", IpAddress);
+  const { success, pending, limit, reset, remaining } =
+    await getStartedFromLimit.limit(IpAddress);
+  if (!success) {
+    console.error("GetStarted form Limit Exhausted try again after 5 minutes");
+    return {
+      success: false,
+      error: "Limit Exhausted try again after 5 minutes!",
+      status: "429",
+    };
+  }
+  // If above everything succeed then execute the following block
+  else {
+    console.log("remaining:",remaining);
+    try {
+      console.log("User Details:", userDetails);
+      const existingSellerByEmail = await client.seller.findUnique({
+        where: { email: userDetails.email },
+      });
+
+      //If the seller already exists then evaluate the seller as follows:
+      if (existingSellerByEmail) {
+        //If the seller already exists and is verified
+        if (existingSellerByEmail.isVerified) {
+          console.error(
+            "Seller Email already in use",
+            existingSellerByEmail.email
+          );
+          return { success: false, error: "Seller Email already exists" };
+        }
+        //If the seller already exists but is not verified
+        else {
+          const verifyCode = generateVerifyCode(); //Generate the verify Code for email Authentication
+          const expiryDate = getExpiryDate();
+
+          console.log("Email exists but not verified!", existingSellerByEmail);
+          await client.seller.update({
+            where: { email: userDetails.email },
+            data: {
+              firstName: "",
+              lastName: "",
+              nurseryName: userDetails.nurseryName,
+              phoneNumber: userDetails.phoneNumber,
+              password: "",
+              verifyCode: verifyCode,
+              verifyCodeExpiry: expiryDate,
+            },
+          });
+
+          // Send verification email for the unverified seller
+          const emailResponse = await successfulCollaboration(
+            userDetails.nurseryName,
+            userDetails.fullName,
+            getCurrentFormattedDate(),
+            userDetails.email,
+            verifyCode
+          );
+
+          // If error while sending email
+          if (!emailResponse.success) {
+            console.log("email not send message:", emailResponse.message);
+            return { success: false, message: emailResponse.message };
+          }
+
+          console.log("email success message:", emailResponse);
+          // If success in sending email
+          return {
+            success: true,
+            message:
+              "Email verification mail send to the seller successsfully!",
+          };
+        }
+      } else {
+        //If the Seller Email address is unique then first store the details of the seller in the google spread sheet
+
+        // Load credentials from environment variables or a secure config
+        const credentials = {
+          email: process.env.GOOGLE_SERVICE_ACCOUNT_EMAIL,
+          key: process.env.GOOGLE_PRIVATE_KEY?.replace(/\\n/g, "\n"),
+          scopes: ["https://www.googleapis.com/auth/spreadsheets"],
+        };
+
+        // Authenticate with Google
+        const auth = new JWT({
+          email: credentials.email,
+          key: credentials.key,
+          scopes: credentials.scopes,
+        });
+
+        const sheets = google.sheets({ version: "v4", auth });
+
+        // Spreadsheet ID from your Google Sheet URL
+        const spreadsheetId = process.env.SPREADSHEET_ID;
+
+        // Prepare the data to be inserted
+        const values = [
+          [
+            userDetails.fullName,
+            userDetails.phoneNumber,
+            userDetails.email,
+            userDetails.nurseryName,
+            userDetails.city,
+          ],
+        ];
+
+        // Append data to the spreadsheet
+        const response = await sheets.spreadsheets.values.append({
+          spreadsheetId,
+          range: "Sheet1!A:D", // Adjust range based on your sheet structure
+          valueInputOption: "USER_ENTERED",
+          requestBody: {
+            values,
+          },
+        });
+
+        //After Storing the seller's data in the spread sheet, then store the data in the db
+        console.log("Current Date is:", getCurrentFormattedDate());
         const verifyCode = generateVerifyCode(); //Generate the verify Code for email Authentication
         const expiryDate = getExpiryDate();
 
-        console.log("Email exists but not verified!", existingSellerByEmail);
-        await client.seller.update({
-          where: { email: userDetails.email },
+        const createNewSeller = await client.seller.create({
           data: {
             firstName: "",
             lastName: "",
             nurseryName: userDetails.nurseryName,
+            email: userDetails.email,
             phoneNumber: userDetails.phoneNumber,
             password: "",
             verifyCode: verifyCode,
@@ -391,7 +507,15 @@ export async function storeDataInExcel(
           },
         });
 
-        // Send verification email for the unverified seller
+        if (!createNewSeller) {
+          console.error("New Seller cannot be created");
+          return {
+            success: false,
+            error: "New Seller cannot be created in the database",
+          };
+        }
+
+        //Send a successful collaboration mail to the end user
         const emailResponse = await successfulCollaboration(
           userDetails.nurseryName,
           userDetails.fullName,
@@ -407,109 +531,20 @@ export async function storeDataInExcel(
         }
 
         console.log("email success message:", emailResponse);
-        // If success in sending email
         return {
           success: true,
-          message: "Email verification mail send to the seller successsfully!",
+          message: "Form submitted successfully",
+          status: response.statusText,
         };
       }
-    } else {
-      //If the Seller Email address is unique then first store the details of the seller in the google spread sheet
-
-      // Load credentials from environment variables or a secure config
-      const credentials = {
-        email: process.env.GOOGLE_SERVICE_ACCOUNT_EMAIL,
-        key: process.env.GOOGLE_PRIVATE_KEY?.replace(/\\n/g, "\n"),
-        scopes: ["https://www.googleapis.com/auth/spreadsheets"],
-      };
-
-      // Authenticate with Google
-      const auth = new JWT({
-        email: credentials.email,
-        key: credentials.key,
-        scopes: credentials.scopes,
-      });
-
-      const sheets = google.sheets({ version: "v4", auth });
-
-      // Spreadsheet ID from your Google Sheet URL
-      const spreadsheetId = process.env.SPREADSHEET_ID;
-
-      // Prepare the data to be inserted
-      const values = [
-        [
-          userDetails.fullName,
-          userDetails.phoneNumber,
-          userDetails.email,
-          userDetails.nurseryName,
-          userDetails.city,
-        ],
-      ];
-
-      // Append data to the spreadsheet
-      const response = await sheets.spreadsheets.values.append({
-        spreadsheetId,
-        range: "Sheet1!A:D", // Adjust range based on your sheet structure
-        valueInputOption: "USER_ENTERED",
-        requestBody: {
-          values,
-        },
-      });
-
-      //After Storing the seller's data in the spread sheet, then store the data in the db
-      console.log("Current Date is:", getCurrentFormattedDate());
-      const verifyCode = generateVerifyCode(); //Generate the verify Code for email Authentication
-      const expiryDate = getExpiryDate();
-
-      const createNewSeller = await client.seller.create({
-        data: {
-          firstName: "",
-          lastName: "",
-          nurseryName: userDetails.nurseryName,
-          email: userDetails.email,
-          phoneNumber: userDetails.phoneNumber,
-          password: "",
-          verifyCode: verifyCode,
-          verifyCodeExpiry: expiryDate,
-        },
-      });
-
-      if (!createNewSeller) {
-        console.error("New Seller cannot be created");
-        return {
-          success: false,
-          error: "New Seller cannot be created in the database",
-        };
-      }
-
-      //Send a successful collaboration mail to the end user
-      const emailResponse = await successfulCollaboration(
-        userDetails.nurseryName,
-        userDetails.fullName,
-        getCurrentFormattedDate(),
-        userDetails.email,
-        verifyCode
-      );
-
-      // If error while sending email
-      if (!emailResponse.success) {
-        console.log("email not send message:", emailResponse.message);
-        return { success: false, message: emailResponse.message };
-      }
-
-      console.log("email success message:", emailResponse);
+    } catch (error) {
+      console.error("Error submitting form:", error);
       return {
-        success: true,
-        message: "Form submitted successfully",
-        status: response.statusText,
+        success: false,
+        error:
+          error instanceof Error ? error.message : "Unknown error occurred",
+        status: "error",
       };
     }
-  } catch (error) {
-    console.error("Error submitting form:", error);
-    return {
-      success: false,
-      error: error instanceof Error ? error.message : "Unknown error occurred",
-      status: "error",
-    };
   }
 }

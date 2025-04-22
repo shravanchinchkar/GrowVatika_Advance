@@ -1,7 +1,7 @@
 import { redirect } from "next/navigation";
 import { NEXT_AUTH } from "@/app/lib/auth";
 import { getServerSession } from "next-auth";
-import { Sign_In } from "../../../components/sign-in";
+import { Sign_In } from "../../../components/user-signin";
 
 export default async function Signin() {
   const session = await getServerSession(NEXT_AUTH);

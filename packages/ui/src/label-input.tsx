@@ -60,7 +60,7 @@ export const LabelInput = ({
           {legendName}
         </legend>
         <input
-          className={`${legendName === "Password" ? "w-[130%]" : readonly ? "cursor-not-allowed w-[100%]" : "w-[100%]"} pl-[0.4rem] bg-transparent text-[#0B1320] outline-none text-[1.25rem] font-normal  rounded-l-full rounded-r-full`}
+          className={`${legendName === "Password" ? "w-[130%]" : readonly ? "cursor-not-allowed w-[100%]" : "w-[100%]"} pl-[0.4rem] bg-transparent text-[#0B1320] outline-none text-[1.1rem] font-normal  rounded-l-full rounded-r-full`}
           type={
             legendName === "Phone Number"
               ? "tel"
@@ -80,7 +80,8 @@ export const LabelInput = ({
           {...props}
         />
 
-        {legendName.includes("Password") || legendName === "Confirm Password" ? (
+        {legendName.includes("Password") ||
+        legendName === "Confirm Password" ? (
           <button
             type="button"
             className="w-[3rem] h-[2rem] relative border-none outline-none"

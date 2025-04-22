@@ -3,7 +3,7 @@ import Skeleton from "../../loading";
 import { NEXT_AUTH } from "../../lib/auth";
 import { redirect } from "next/navigation";
 import { getServerSession } from "next-auth";
-import { SellerSignin } from "../../../components/sign-in";
+import { SellerSignin } from "../../../components/seller-signin";
 
 export default async function SellerSigninPage() {
   const session = await getServerSession(NEXT_AUTH);

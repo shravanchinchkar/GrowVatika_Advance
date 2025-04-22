@@ -11,11 +11,14 @@ import { SiteLogo } from "@repo/ui/brand-logo";
 import { AuthButton } from "@repo/ui/auth-button";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { resetPasswordEmail } from "@/app/actions/auth";
-import { toastStyle } from "@repo/shared/utilfunctions";
 import { ButtonLoadingSign } from "@repo/ui/loading-sign";
 import { FormType, LabelInput } from "@repo/ui/label-input";
 import { SignInInputs, SignInSchema } from "@repo/common-types/types";
 import AuthImage from "../public/assets/images/AuthImages/AuthImages.png";
+import {
+  toastStyle,
+  limitExhaustedToastStyle,
+} from "@repo/shared/utilfunctions";
 
 export const Sign_In = () => {
   const router = useRouter();
@@ -53,8 +56,10 @@ export const Sign_In = () => {
         error?: string;
         status?: string;
       };
-      console.log("signin  error :", errorResponse);
-      toast.error("Signin Failed", toastStyle);
+      toast.error(errorResponse.error || "", {
+        ...toastStyle,
+        position: "bottom-left",
+      });
     } else if (res?.ok) {
       // Check session to determine verification status
       setValue("email", "");
@@ -65,7 +70,10 @@ export const Sign_In = () => {
 
       if (session?.user?.isVerified) {
         console.log("Email already Verified signin successful!");
-        toast.success("Signin successful!", toastStyle);
+        toast.success("Signin successful!", {
+          ...toastStyle,
+          position: "bottom-left",
+        });
         router.push("/");
       } else {
         console.log("Email not verified, redirecting to verify!");
@@ -89,15 +97,21 @@ export const Sign_In = () => {
           result.error === "AccessDenied"
             ? "Access denied. Please check your credentials."
             : "Sign-in failed. Please try again.",
-          toastStyle
+          { ...toastStyle, position: "bottom-left" }
         );
       } else if (result?.ok) {
-        toast.success("Sign-in Successful", toastStyle);
+        toast.success("Sign-in Successful", {
+          ...toastStyle,
+          position: "bottom-left",
+        });
         router.push("/");
       }
     } catch (error) {
       console.error("Sign-in error:", error);
-      toast.error("An unexpected error occurred during sign-in", toastStyle);
+      toast.error("An unexpected error occurred during sign-in", {
+        ...toastStyle,
+        position: "bottom-left",
+      });
     }
   }
 
@@ -106,14 +120,17 @@ export const Sign_In = () => {
     setResetPasswordLoading(true);
     const email = getValues("email");
     if (email === "") {
-      toast.error("Invalid email", toastStyle);
+      toast.error("Invalid email", { ...toastStyle, position: "bottom-left" });
       setResetPasswordLoading(false);
     } else {
       const res = await resetPasswordEmail(email);
       console.log("Reset Password response:", res);
       setResetPasswordLoading(false);
       if (res.error) {
-        toast.error(res.error.toString(), toastStyle);
+        toast.error(res.error.toString(), {
+          ...toastStyle,
+          position: "bottom-left",
+        });
         console.error("Error While sending reset password mail:", res.error);
       } else {
         router.push(`/resetpasswordmessage?email=${email}`);

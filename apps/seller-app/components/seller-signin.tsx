@@ -41,8 +41,6 @@ export const SellerSignin = () => {
       password: data.password,
       redirect: false,
     });
-
-    console.log("Seller signin response:", res);
     setLoading(false);
 
     if (res?.error) {
@@ -52,7 +50,6 @@ export const SellerSignin = () => {
         error?: string;
         status?: string;
       };
-      console.log("Signin Error Response:", errorResponse);
       toast.error(
         errorResponse.error?.toString() || "Signin Failed",
         toastStyle

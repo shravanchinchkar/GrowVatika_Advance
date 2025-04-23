@@ -44,7 +44,6 @@ export const SellerRegister = () => {
   // Get Data of the seller
   async function getData() {
     const res = await getSellerData(searchParamsEmail);
-    console.log("Seller Data:", res);
     if (res.error) {
       toast.error(res.error.toString(), toastStyle);
     } else {
@@ -73,7 +72,6 @@ export const SellerRegister = () => {
     // If both the passwords are correct then execute the following below block
     else {
       const res: SignupResponse = await sellerRegistration(data);
-      console.log("Seller Registration response:", res);
       setLoading(false);
       if (res.errors) {
         console.error("Error While registrating the seller:", res.errors);

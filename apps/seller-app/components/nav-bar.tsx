@@ -11,13 +11,11 @@ export const SellerNavbar = () => {
   const [loading,setLoading]=useState(false);
 
   function handleSignIn() {
-    console.log("Hello signin!");
     setLoading(true)
     router.push("/signin");
     setLoading(false);
   }
   async function handleSignOut() {
-    console.log("Signed Out Called!");
     await signOut();
   }
 

@@ -4,7 +4,7 @@ import Link from "next/link";
 export const SiteLogo = () => {
   return (
     <Link
-      href={"https://growvatika.live/"}
+      href={"/"}
       className="z-10 lg:w-[14rem] lg:h-[4rem] xl:w-[16.3rem] xl:h-[3.8125rem] flex items-center lg:justify-between cursor-pointer"
     >
       {/* Following div consist of logo */}

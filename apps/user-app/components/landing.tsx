@@ -1,20 +1,24 @@
-import { ExploreSection } from "./explore-section";
-import { HeroSection } from "./hero-section";
 import { Navbar } from "./nav-section";
-import { AboutUsSection } from "./about-us";
-import { FeatureSection } from "./feature-section";
-import { TestmonialSection } from "./testimonial-section";
-import { Header } from "./header-section";
 import { Footer } from "./footer-section";
-import { ContactForm } from "./get-started-from";
 import { LandingPot } from "./landing-pot";
+import { Header } from "./header-section";
+import { AboutUsSection } from "./about-us";
+import { HeroSection } from "./hero-section";
+import { ContactForm } from "./get-started-from";
+import { ExploreSection } from "./explore-section";
+import { FeatureSection } from "./feature-section";
+import { UserAuthButton } from "./user-auth-button";
+import { TestmonialSection } from "./testimonial-section";
 
-export const LandingPage=()=>{
+export const LandingPage = () => {
   return (
     <div className="flex flex-col bg-[#FFF6F4]">
       <header className="relative flex flex-col items-center gap-[1rem] pt-[2rem] h-screen">
         <Header />
-        <Navbar />
+        <div className="2xl:w-[82.1875rem] lg:w-[60rem] xl:w-[70rem] flex justify-between items-center z-10 font-[Poppins]">
+          <Navbar />
+          <UserAuthButton />
+        </div>
         <HeroSection />
         <LandingPot />
       </header>

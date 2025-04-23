@@ -7,7 +7,6 @@ import { SellerSignin } from "../../../components/seller-signin";
 
 export default async function SellerSigninPage() {
   const session = await getServerSession(NEXT_AUTH);
-  console.log("session", session);
   if (session?.user) {
     redirect("/");
   } else {

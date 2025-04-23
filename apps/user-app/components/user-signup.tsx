@@ -43,14 +43,12 @@ export const Sign_Up = () => {
   const handleSignup: SubmitHandler<SignUpInputs> = async (
     data: SignUpInputs
   ) => {
-    console.log("Data is:", data);
     setLoading(true);
     if (data.password !== data.confirmPassword) {
       toast.error("Password Dose Not Match", toastStyle);
       setLoading(false);
     } else {
       const res: SignupResponse = await signup(data); //here signup() is the server action function
-      console.log("Signup Response:", res);
       setLoading(false);
 
       // If Error during Signup then executed the following below block

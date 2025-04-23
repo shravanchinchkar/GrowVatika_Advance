@@ -45,8 +45,6 @@ export const Sign_In = () => {
       password: data.password,
       redirect: false,
     });
-
-    console.log("Signin Response:", res);
     setLoading(false);
 
     if (res?.error) {
@@ -66,17 +64,14 @@ export const Sign_In = () => {
       setValue("password", "");
       const sessionResponse = await fetch("/api/auth/session");
       const session = await sessionResponse.json();
-      console.log("session in signin:", session);
 
       if (session?.user?.isVerified) {
-        console.log("Email already Verified signin successful!");
         toast.success("Signin successful!", {
           ...toastStyle,
           position: "bottom-left",
         });
         router.push("/");
       } else {
-        console.log("Email not verified, redirecting to verify!");
         router.push(`/verify?email=${data.email}`);
       }
     }
@@ -85,7 +80,6 @@ export const Sign_In = () => {
   // Handle Login with google
   async function handleLoginWithGoogle() {
     try {
-      console.log("Google hit!");
       setLoadingGoogleLogin(true);
       const result = await signIn("google", {
         callbackUrl: "/",
@@ -124,7 +118,6 @@ export const Sign_In = () => {
       setResetPasswordLoading(false);
     } else {
       const res = await resetPasswordEmail(email);
-      console.log("Reset Password response:", res);
       setResetPasswordLoading(false);
       if (res.error) {
         toast.error(res.error.toString(), {

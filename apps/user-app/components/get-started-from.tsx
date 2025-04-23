@@ -39,10 +39,8 @@ export const ContactForm = () => {
   const handleGetStartedForm: SubmitHandler<GetStartedFromInput> = async (
     data: GetStartedFromInput
   ) => {
-    console.log("Get Started form details are:", data);
     setLoading(true);
     const res = await storeDataInExcel(data);
-    console.log("Get Started form response:", res);
     setLoading(false);
 
     if (res.error) {

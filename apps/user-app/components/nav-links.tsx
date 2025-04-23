@@ -28,7 +28,7 @@ export const NavLinks = ({
     >
       <div className="">
         <Link
-          href="#"
+          href="/"
           className="text-white h-[100%] flex items-center font-Poppins lg:text-[16px] xl:text-[19.63px] leading-[29.44px] tracking-wider"
         >
           {linkName}

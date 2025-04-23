@@ -57,12 +57,13 @@ export const ExplorePlantsBySeller = () => {
             <div className="w-[39.375rem] h-[58.1875rem] flex flex-col items-center gap-[1rem] shrink-0 bg-[#fff] rounded-[1.8rem]">
               {/* Following div consist of images */}
               <div className="w-[90%]  h-max grid grid-cols-[60%_40%] rounded-[1.8rem] overflow-hidden cursor-pointer mt-[1.5rem]">
-                <div className="relative rounded-[1.8rem] overflow-hidden border-[3px] border-[#56A430] bg-red-500">
+                <div className="relative rounded-[1.8rem] overflow-hidden border-[3px] border-[#56A430]">
                   <Image
                     className="object-cover"
                     alt="plant-img-1"
                     src="/assets/images/ProductImages/explore-by-seller-img1.jpg"
                     fill
+                    placeholder="blur"
                   />
                 </div>
 
@@ -73,6 +74,7 @@ export const ExplorePlantsBySeller = () => {
                       alt="plant-img-2"
                       src="/assets/images/ProductImages/explore-by-seller-img2.jpg"
                       fill
+                      placeholder="blur"
                     />
                   </div>
                   <div className="relative overflow-hidden w-[11.8125rem] h-[11.8125rem] border-[3px] rounded-[1.5625rem] border-[#56A430] ">
@@ -81,6 +83,7 @@ export const ExplorePlantsBySeller = () => {
                       alt="plant-img-2"
                       src="/assets/images/ProductImages/explore-by-seller-img2.jpg"
                       fill
+                      placeholder="blur"
                     />
                   </div>
                 </div>

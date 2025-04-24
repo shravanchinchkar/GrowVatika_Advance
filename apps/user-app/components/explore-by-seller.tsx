@@ -1,10 +1,13 @@
 import Image from "next/image";
-import { Header } from "./header-section";
 import { Navbar } from "./nav-section";
+import { Footer } from "./footer-section";
+import { Header } from "./header-section";
 import { ProductPageButton } from "./product-page-button";
 import { ExploreProductDropDown } from "./explore-product-dropdown";
 import { ProductSearchBar, SearchBarWorkType } from "./product-search-bar";
-import { Footer } from "./footer-section";
+import plantImage1 from '../public/assets/images/ProductImages/explore-by-seller-img1.jpg';
+import plantImage2 from '../public/assets/images/ProductImages/explore-by-seller-img2.jpg';
+
 
 export const ExplorePlantsBySeller = () => {
   const productPageButton = ["Most Popular", "Newly Added", "NearBy Seller"];
@@ -56,12 +59,13 @@ export const ExplorePlantsBySeller = () => {
           <div className="justify-self-center flex justify-center w-[100%] mb-[2rem]">
             <div className="w-[39.375rem] h-[58.1875rem] flex flex-col items-center gap-[1rem] shrink-0 bg-[#fff] rounded-[1.8rem]">
               {/* Following div consist of images */}
+
               <div className="w-[90%]  h-max grid grid-cols-[60%_40%] rounded-[1.8rem] overflow-hidden cursor-pointer mt-[1.5rem]">
                 <div className="relative rounded-[1.8rem] overflow-hidden border-[3px] border-[#56A430]">
                   <Image
                     className="object-cover"
                     alt="plant-img-1"
-                    src="/assets/images/ProductImages/explore-by-seller-img1.jpg"
+                    src={plantImage1}
                     fill
                     placeholder="blur"
                   />
@@ -72,7 +76,7 @@ export const ExplorePlantsBySeller = () => {
                     <Image
                       className="object-cover"
                       alt="plant-img-2"
-                      src="/assets/images/ProductImages/explore-by-seller-img2.jpg"
+                      src={plantImage2}
                       fill
                       placeholder="blur"
                     />
@@ -81,7 +85,7 @@ export const ExplorePlantsBySeller = () => {
                     <Image
                       className="object-cover"
                       alt="plant-img-2"
-                      src="/assets/images/ProductImages/explore-by-seller-img2.jpg"
+                      src={plantImage2}
                       fill
                       placeholder="blur"
                     />

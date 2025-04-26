@@ -6,9 +6,10 @@ import {
   SignupResponse,
   ApiResponseType,
   SignUpSchema,
+  EmailOnlySchema,
 } from "@repo/common-types/types";
-import { authRateLimit } from "../lib/rate-limit";
 import { getIp } from "../helper/get-ip-address";
+import { authRateLimit } from "../lib/rate-limit";
 import { sendVerificationEmail } from "../helper/sendVerificationMail";
 import { generateVerifyCode, getExpiryDate } from "@repo/shared/utilfunctions";
 
@@ -142,39 +143,6 @@ export async function sellerRegistration(
         success: false,
       };
     }
-  }
-}
-
-// Get the data of the seller
-export async function getSellerData(email: string): Promise<ApiResponseType> {
-  try {
-    const existingSellerData = await client.seller.findUnique({
-      where: {
-        email: email,
-      },
-      select: {
-        nurseryName: true,
-        email: true,
-        phoneNumber: true,
-      },
-    });
-    if (!existingSellerData) {
-      console.error("Seller not found");
-      return {
-        success: false,
-        error: "Seller not found",
-      };
-    } else {
-      console.log("Seller data found!");
-      return {
-        success: true,
-        message: "Seller Data found!",
-        sellerData: existingSellerData,
-      };
-    }
-  } catch (err) {
-    console.error("Error while getting the data of the seller", err);
-    return { success: false, error: "Error while getting seller data" };
   }
 }
 

@@ -1,17 +1,18 @@
 "use client";
 
+import axios from "axios";
 import Link from "next/link";
 import { toast } from "react-hot-toast";
-import { useRouter } from "next/navigation";
 import { useState, useEffect } from "react";
+import { useRouter } from "next/navigation";
 import { SiteLogo } from "@repo/ui/brand-logo";
 import { AuthButton } from "@repo/ui/auth-button";
 import { useSearchParams } from "next/navigation";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { sellerRegistration} from "../app/actions/auth";
 import { toastStyle } from "@repo/shared/utilfunctions";
 import { useForm, SubmitHandler } from "react-hook-form";
 import { LabelInput, FormType } from "@repo/ui/label-input";
-import { sellerRegistration, getSellerData } from "../app/actions/auth";
 import {
   SignUpInputs,
   SignupResponse,
@@ -43,13 +44,16 @@ export const SellerRegister = () => {
 
   // Get Data of the seller
   async function getData() {
-    const res = await getSellerData(searchParamsEmail);
-    if (res.error) {
-      toast.error(res.error.toString(), toastStyle);
+    const res = await axios.get(
+      `/api/getsellerdata?email=${encodeURIComponent(searchParamsEmail)}`
+    );
+    console.log("Seller Data is:", res.data.sellerData);
+    if (res.data.error) {
+      toast.error(res.data.error.toString(), toastStyle);
     } else {
-      setValue("nurseryName", res.sellerData?.nurseryName);
-      setValue("email", res.sellerData?.email || "");
-      setValue("phoneNumber", res.sellerData?.phoneNumber);
+      setValue("nurseryName", res.data.sellerData?.nurseryName);
+      setValue("email", res.data.sellerData?.email || "");
+      setValue("phoneNumber", res.data.sellerData?.phoneNumber);
     }
   }
   async function main() {

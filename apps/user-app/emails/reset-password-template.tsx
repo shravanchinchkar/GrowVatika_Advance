@@ -2,10 +2,16 @@ import React from "react";
 import { Section } from "@react-email/components";
 
 const ResetPasswordMailTemplate = ({ email }: { email: string }) => {
+  // Access environment variable to determine environment
+  const isProduction = process.env.NODE_ENV === "production";
 
-  const resetUrl = `https://growvatika.live/resetpassword?email=${encodeURIComponent(email)}`;//Production
-  // const resetUrl = `http://localhost:3000/resetpassword?email=${encodeURIComponent(email)}`; //development
-  
+  // Build the reset URL based on environment
+  const baseUrl = isProduction
+    ? process.env.RESET_PASSWORD_DEVELOPMENT_URL
+    : process.env.RESET_PASSWORD_PRODUCTION_URL;
+
+  const resetUrl = `${baseUrl}/resetpassword?email=${encodeURIComponent(email)}`;
+
   const brandTitle = {
     fontSize: "30px",
     fontFamily: "'Impact', 'Poppins', sans-serif",

@@ -29,6 +29,16 @@ export const NurseryCollaborationEmail = ({
   email,
   verifyCode,
 }: SuccessfulEmailProp) => {
+  // Access environment variable to determine environment
+  const isProduction = process.env.NODE_ENV === "production";
+
+  // Build the reset URL based on environment
+  const baseUrl = isProduction
+    ? process.env.SUCCESSFUL_COLLABORATION_DEVELOPMENT_URL
+    : process.env.SUCCESSFUL_COLLABORATION_PRODUCTION_URL;
+
+  const verificationUrl = `${baseUrl}/verify?email=${encodeURIComponent(email)}`;
+
   const main = {
     backgroundColor: "#f6f9fc",
     fontFamily: "Arial, sans-serif",
@@ -87,8 +97,6 @@ export const NurseryCollaborationEmail = ({
   };
   const mainColor = "#2e7d32"; // Forest green color
 
-  // const verificationUrl = `https://seller.growvatika.live/verify?email=${encodeURIComponent(email)}&seller=${true}`; //for production
-  const verificationUrl = `http://localhost:3001/verify?email=${encodeURIComponent(email)}`; //for development
   return (
     <Html>
       <Head></Head>

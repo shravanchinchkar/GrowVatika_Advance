@@ -5,10 +5,10 @@ const ResetPasswordMailTemplate = ({ email }: { email: string }) => {
   // Access environment variable to determine environment
   const isProduction = process.env.NODE_ENV === "production";
 
-  // Build the reset URL based on environment
-  const baseUrl = isProduction
-    ? process.env.RESET_PASSWORD_DEVELOPMENT_URL
-    : process.env.RESET_PASSWORD_PRODUCTION_URL;
+  const baseUrl =
+    isProduction === false
+      ? process.env.RESET_PASSWORD_DEVELOPMENT_URL
+      : process.env.RESET_PASSWORD_PRODUCTION_URL;
 
   const resetUrl = `${baseUrl}/resetpassword?email=${encodeURIComponent(email)}`;
 

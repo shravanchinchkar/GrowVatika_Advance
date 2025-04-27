@@ -32,10 +32,10 @@ export const NurseryCollaborationEmail = ({
   // Access environment variable to determine environment
   const isProduction = process.env.NODE_ENV === "production";
 
-  // Build the reset URL based on environment
-  const baseUrl = isProduction
-    ? process.env.SUCCESSFUL_COLLABORATION_DEVELOPMENT_URL
-    : process.env.SUCCESSFUL_COLLABORATION_PRODUCTION_URL;
+  const baseUrl =
+    isProduction === false
+      ? process.env.SUCCESSFUL_COLLABORATION_DEVELOPMENT_URL
+      : process.env.SUCCESSFUL_COLLABORATION_PRODUCTION_URL;
 
   const verificationUrl = `${baseUrl}/verify?email=${encodeURIComponent(email)}`;
 

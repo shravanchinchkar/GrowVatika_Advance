@@ -3,7 +3,7 @@ import Image from "next/image";
 
 export const SellerHeroSection = () => {
   return (
-    <div className="w-[100%] flex justify-between">
+    <div className="flex justify-between">
       <div className="w-[20rem] h-[20rem] relative">
         <Image
           src={"/assets/images/FooterImages/sellerLandingFooterLeft.png"}

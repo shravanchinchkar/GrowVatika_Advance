@@ -4,8 +4,7 @@ import Image from "next/image";
 export const SellerHeroSection = () => {
   return (
     <div className="w-[100%] flex justify-between">
-
-      <div className="w-[23.8125rem] h-[23.8125rem] mt-[7rem] relative">
+      <div className="w-[20rem] h-[20rem] relative">
         <Image
           src={"/assets/images/FooterImages/sellerLandingFooterLeft.png"}
           alt="image1"
@@ -14,7 +13,7 @@ export const SellerHeroSection = () => {
         />
       </div>
 
-      <div className="w-[50%] flex flex-col items-center gap-[4rem] pt-[2rem]">
+      <div className="w-max flex flex-col items-center gap-[3rem]">
         {/* Description and button */}
         <div className="flex flex-col items-center gap-[1.5rem]">
           {/* Hero Description text */}
@@ -22,7 +21,7 @@ export const SellerHeroSection = () => {
             <div className="text-[#171717] font-bold text-[2rem]">
               Grow with Us. Sell with Ease.
             </div>
-            <div className="w-[45.8125rem] text-center text-[#606060] text-[1.5rem] font-semibold">
+            <div className="w-[55rem] text-center text-[#606060] text-[1.2rem] font-semibold">
               Join a thriving community of plant lovers and nursery businesses.
               At GrowVatika, we connect verified nursery sellers with customers
               who care about greenery just like you do.
@@ -44,11 +43,11 @@ export const SellerHeroSection = () => {
         </div>
       </div>
 
-      <div className="w-[22.7525rem] h-[22.7525rem] mt-[8rem] relative">
+      <div className="w-[20rem] h-[20rem] relative">
         <Image
           src={"/assets/images/FooterImages/sellerLandingFooterRight.png"}
           alt="image1"
-          className="object-cover"
+          className="object-contain"
           fill
         />
       </div>

@@ -33,7 +33,7 @@ export const Footer = () => {
               <p>Testimonials</p>
               <p>terms & Co.</p>
               <p>more search</p>
-              <p>provacy policy</p>
+              <p>privacy policy</p>
             </div>
           </div>
 

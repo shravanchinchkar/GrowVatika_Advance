@@ -3,7 +3,7 @@ import Image from "next/image";
 
 export const SellerHeroSection = () => {
   return (
-    <div className="flex justify-between">
+    <div className="flex justify-between items-end">
       {/* Bottomm Left Image */}
       <div className="w-[20rem] h-[20rem] relative">
         <Image
@@ -15,7 +15,7 @@ export const SellerHeroSection = () => {
       </div>
 
       {/* Center Content */}
-      <div className="w-max flex flex-col items-center gap-[3rem]">
+      <div className="w-max h-[100%] flex flex-col items-center gap-[3rem]">
         {/* Description and button */}
         <div className="flex flex-col items-center gap-[1.5rem]">
           {/* Hero Description text */}

@@ -20,7 +20,7 @@ export const SellerNavbar = () => {
   }
 
   return (
-    <nav className="w-[100%] h-max flex justify-between items-center">
+    <nav className="w-[100%] h-[10%] flex justify-between items-center">
       <div className="ml-[2rem]">
         <SiteLogo />
       </div>

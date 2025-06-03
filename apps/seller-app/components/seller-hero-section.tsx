@@ -4,7 +4,6 @@ import Image from "next/image";
 export const SellerHeroSection = () => {
   return (
     <div className="w-[100%] h-[100%] flex justify-between items-end">
-
       {/* Bottomm Left Image */}
       <div className="w-[19.5rem] h-[19.5rem] relative">
         <Image
@@ -14,7 +13,6 @@ export const SellerHeroSection = () => {
           fill
         />
       </div>
-
       {/* Center Content */}
       <div className="w-max h-[100%] flex flex-col items-center gap-[3rem]">
         {/* Description and button */}
@@ -30,13 +28,11 @@ export const SellerHeroSection = () => {
               who care about greenery just like you do.
             </div>
           </div>
-
           {/* Hero Button */}
           <button className="w-[17rem] h-[4rem] text-[#FFF6F4] text-center font-normal uppercase  bg-gradient-to-r from-[#73735A] to-[#445A4A] rounded-[5rem] border-[3px] border-white shadow-lg text-[1.22869rem] transition-transform duration-300 ease-in-out hover:bg-[#123524] hover:bg-none hover:font-bold hover:border-none">
             Start Selling Now !
           </button>
         </div>
-
         {/* Login Message */}
         <div className="text-[#123524] text-[1rem] font-normal flex text-center justify-between gap-[0.5rem]">
           <p>Already have a Seller account?</p>
@@ -44,8 +40,7 @@ export const SellerHeroSection = () => {
             Log in
           </Link>
         </div>
-      </div> 
-
+      </div>
       {/* Bottom right Image */}
       <div className="w-[19.5rem] h-[19.5rem] relative">
         <Image

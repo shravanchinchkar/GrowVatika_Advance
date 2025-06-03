@@ -4,7 +4,7 @@ import { SellerHeroSection } from "../components/seller-hero-section";
 export default function Home() {
   return (
     // bg-[#FFF6F4]
-    <div className="text-2xl bg-[#FFF6F4] flex items-center flex-col gap-[2.4rem] font-[Poppins]">
+    <div className="h-screen text-2xl bg-[#FFF6F4] flex items-center flex-col gap-[2.4rem] font-[Poppins]">
       <SellerHeaderSection/>
       <SellerHeroSection/>
     </div>

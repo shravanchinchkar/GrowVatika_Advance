@@ -3,7 +3,7 @@ import Image from "next/image";
 
 export const SellerHeroSection = () => {
   return (
-    <div className="border-[2px] border-red-500 flex justify-between items-end">
+    <div className="h-max flex justify-between items-end border-[2px] border-red-500">
 
       {/* Bottomm Left Image */}
       <div className="w-[20rem] h-[20rem] relative">
@@ -44,7 +44,7 @@ export const SellerHeroSection = () => {
             Log in
           </Link>
         </div>
-      </div>
+      </div> 
 
       {/* Bottom right Image */}
       <div className="w-[21rem] h-[20rem] relative">

@@ -4,6 +4,7 @@ import Image from "next/image";
 export const SellerHeroSection = () => {
   return (
     <div className="flex justify-between">
+      {/* Bottomm Left Image */}
       <div className="w-[20rem] h-[20rem] relative">
         <Image
           src={"/assets/images/FooterImages/sellerLandingFooterLeft.png"}
@@ -13,6 +14,7 @@ export const SellerHeroSection = () => {
         />
       </div>
 
+      {/* Center Content */}
       <div className="w-max flex flex-col items-center gap-[3rem]">
         {/* Description and button */}
         <div className="flex flex-col items-center gap-[1.5rem]">
@@ -43,11 +45,12 @@ export const SellerHeroSection = () => {
         </div>
       </div>
 
-      <div className="w-[20rem] h-[20rem] relative">
+      {/* Bottom right Image */}
+      <div className="w-[21rem] h-[20rem] relative">
         <Image
           src={"/assets/images/FooterImages/sellerLandingFooterRight.png"}
           alt="image1"
-          className="object-contain"
+          className="object-cover"
           fill
         />
       </div>

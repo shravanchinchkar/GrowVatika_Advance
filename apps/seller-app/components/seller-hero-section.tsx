@@ -3,17 +3,17 @@ import Image from "next/image";
 
 export const SellerHeroSection = () => {
   return (
-    <div className="h-[100%] flex justify-between items-end border-[2px]">
+    <div className="w-[100%] h-[100%] flex justify-between items-end">
 
       {/* Bottomm Left Image */}
-      {/* <div className="w-[20rem] h-[20rem] relative">
+      <div className="w-[19.5rem] h-[19.5rem] relative">
         <Image
           src={"/assets/images/FooterImages/sellerLandingFooterLeft.png"}
           alt="image1"
           className="object-cover"
           fill
         />
-      </div> */}
+      </div>
 
       {/* Center Content */}
       <div className="w-max h-[100%] flex flex-col items-center gap-[3rem]">
@@ -47,14 +47,14 @@ export const SellerHeroSection = () => {
       </div> 
 
       {/* Bottom right Image */}
-      {/* <div className="w-[21rem] h-[20rem] relative">
+      <div className="w-[19.5rem] h-[19.5rem] relative">
         <Image
           src={"/assets/images/FooterImages/sellerLandingFooterRight.png"}
           alt="image1"
           className="object-cover"
           fill
         />
-      </div> */}
+      </div>
     </div>
   );
 };

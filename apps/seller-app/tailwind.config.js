@@ -8,10 +8,8 @@ export default {
   ],
   theme: {
     extend: {
-      boxShadow: {
-        "box-shadow": "var(--box-shadow)",
-        "button-hover": "var(--button-hover)",
-        "card-shadow": "var(--card-shadow)",
+       boxShadow: {
+        'seller-header-custom': '0px 4px 4px 0px rgba(0, 0, 0, 0.25)',
       },
       backgroundImage: {
         "custom-bg":

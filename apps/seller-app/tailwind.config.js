@@ -9,12 +9,14 @@ export default {
   theme: {
     extend: {
       backgroundImage: {
-        "custom-gradient":
-          "linear-gradient(90deg, #56A430 0%, #C4CD90 89.47%, #DBD5A4 100%)",
+        "custom-bg":
+          "linear-gradient(90deg, #56A430 34.13%, #8EB961 62.02%, #B6C783 83.17%, #C4CD90 99.99%, #DBD5A4 100%)",
       },
-      boxShadow: {
-        'custom': '0px 4px 4px 0px rgba(0, 0, 0, 0.25)',
-      }
+
+      fontFamily: {
+        Poppins: ["Poppins", "sans-serif"],
+        Unbounded: ["Unbounded", "sans-serif"],
+      },
     },
   },
   plugins: [],

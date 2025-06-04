@@ -195,9 +195,17 @@ export const BusinessInfoSection = () => {
             Rare Plants
           </span>
         </button>
-        <button className="w-[10.46094rem] h-[3.0625rem] flex-shrink-0 border border-[#56A430] rounded-full">
+        <button className="w-[10.46094rem] h-[3.0625rem] flex items-center justify-center gap-2 border border-[#56A430] rounded-full">
+          <div className="w-[1.5rem] h-[1.5rem] relative flex-shrink-0">
+            <Image
+              src="/assets/images/BusinessInformationImage/addMoreIcon.svg"
+              alt="business hours"
+              fill
+              className="object-cover"
+            />
+          </div>
           <span className="text-[#6CE530] text-center font-[Poppins] text-[1.22669rem] font-medium not-italic leading-none">
-            + Add more
+            Add more
           </span>
         </button>
       </div>

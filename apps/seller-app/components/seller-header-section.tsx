@@ -20,7 +20,7 @@ export const SellerHeaderSection = () => {
           <div className="w-[21rem] h-[17.5rem] relative">
             <Image
               className="w-[100%] h-[100%] object-cover"
-              src={"/assets/images/HeaderImages/sellerdashboardheaderImg.png"}
+              src={"/assets/images/HeaderImages/sellerDashboardHeaderImg.png"}
               alt="sellerheaderImage"
               fill
             />

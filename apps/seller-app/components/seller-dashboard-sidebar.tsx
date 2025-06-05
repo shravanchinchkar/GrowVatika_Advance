@@ -16,7 +16,7 @@ export const SellerDashboardSideBar = () => {
     }
   };
   return (
-    <div className="w-[20.625rem] h-[100%] bg-custom-bg rounded-[1.88rem] flex-col border-[1px]">
+    <div className="h-[100%] bg-custom-bg rounded-[1.88rem] flex-col border-[1px] overflow-hidden">
       {/* Top div logo and main section */}
       <div className="h-max flex-col">
         {/* following div consist of log */}

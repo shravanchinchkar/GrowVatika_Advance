@@ -10,12 +10,7 @@ export const SellerDashboardCard = () => {
       </div>
 
       {/* Right Column that consist of navbar and other section */}
-      <div
-        className="flex flex-col max-h-100 overflow-y-auto
-  [&::-webkit-scrollbar]:w-2
-  [&::-webkit-scrollbar-track]:bg-[#fff]
-  [&::-webkit-scrollbar-thumb]:bg-[#FFF]"
-      >
+      <div className="flex flex-col max-h-100 overflow-y-auto [&::-webkit-scrollbar]:w-2 [&::-webkit-scrollbar-track]:bg-[#fff] [&::-webkit-scrollbar-thumb]:bg-[#FFF]">
         <SellerDashboardNavBar />
         <SellerDashboardMainSection />
       </div>

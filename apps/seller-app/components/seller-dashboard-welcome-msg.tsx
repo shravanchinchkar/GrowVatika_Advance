@@ -2,7 +2,7 @@ import Image from "next/image";
 
 export const SellerDashboardWelcomeMsg = () => {
   return (
-    <div className="p-6 border-[2px] bg-custom-bg rounded-[1.25rem] h-[9.313rem] w-[100%]">
+    <div className="p-6 bg-custom-bg rounded-[1.25rem] h-[9.313rem] w-[100%]">
       <div className="text-white w-[45.8125rem] font-bold text-[2rem] capitalize font-[Unbounded]">
         Welcome Back, Evergreen Garden
       </div>

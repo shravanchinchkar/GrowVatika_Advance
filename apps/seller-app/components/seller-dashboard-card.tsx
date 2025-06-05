@@ -3,14 +3,19 @@ import { SellerDashboardSideBar } from "./seller-dashboard-sidebar";
 import { SellerDashboardMainSection } from "./seller-dashboard-main-section";
 export const SellerDashboardCard = () => {
   return (
-    <div className="w-[98%] h-[98%] rounded-[1.88rem] bg-custom-fill drop-shadow-custom backdrop-blur-xl grid grid-cols-[20.625%_79.375%] overflow-hidden">
+    <div className="relative w-[98%] h-[98%] rounded-[1.88rem] bg-[#FFF6F4] drop-shadow-custom backdrop-blur-xl grid grid-cols-[20.625%_79.375%] overflow-hidden pb-[0.5rem]">
       {/* Left Column that consist of side bar */}
-      <div>
+      <div className="relative">
         <SellerDashboardSideBar />
       </div>
 
       {/* Right Column that consist of navbar and other section */}
-      <div className="flex flex-col">
+      <div
+        className="flex flex-col max-h-100 overflow-y-auto
+  [&::-webkit-scrollbar]:w-2
+  [&::-webkit-scrollbar-track]:bg-[#fff]
+  [&::-webkit-scrollbar-thumb]:bg-[#FFF]"
+      >
         <SellerDashboardNavBar />
         <SellerDashboardMainSection />
       </div>

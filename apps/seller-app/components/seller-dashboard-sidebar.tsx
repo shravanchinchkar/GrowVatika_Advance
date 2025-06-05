@@ -15,109 +15,90 @@ export const SellerDashboardSideBar = () => {
       setDisplay(false);
     }
   };
+
+  const SideBarMainSectionList = [
+    "dashboard",
+    "products",
+    "collections",
+    "orders",
+  ];
+  const SideBarSettingSectionList = ["setting", "help center"];
   return (
-    <div className="h-[100%] bg-custom-bg rounded-[1.88rem] flex flex-col">
+    <div className="fixed top-0 left-0 h-[100%] bg-custom-bg rounded-[1.88rem] flex flex-col">
       {/* Top div logo and main section */}
       <div className="h-max flex-col">
-
         {/* following div consist of log */}
         <div className="w-[15.9375rem] h-[4.0625rem] rounded-[24px] flex justify-start items-center m-[1rem] bg-[#fff] overflow-hidden">
           <SellerDashboardSiteLogo />
         </div>
 
-        {/* Following div consist of Sidebar Menu Section */}
-        <ul className=" text-[#fff] pl-[1.5rem]">
-          <li className="text-[11px]">Main</li>
-          <div className="flex flex-col gap-[1rem] text-[19.63px] mt-[1rem]">
-            <li className="flex gap-[1rem] cursor-pointer">
-              <div className="relative w-[24px] h-[24px]">
-                <Image
-                  className="object-cover"
-                  src={"/assets/images/SellerDashboardImages/dashboardIcon.svg"}
-                  alt="dashboardIcon"
-                  fill
-                />
-              </div>
-              <p>Dashboard</p>
-            </li>
-
-            <li className="flex gap-[1rem] cursor-pointer">
-              <div className="relative w-[24px] h-[24px]">
-                <Image
-                  className="object-cover"
-                  src={"/assets/images/SellerDashboardImages/productsIcon.svg"}
-                  alt="productIcon"
-                  fill
-                />
-              </div>
-              <p>Products</p>
-            </li>
-
-            <li className="flex gap-[1rem] cursor-pointer">
-              <div className="relative w-[24px] h-[24px]">
-                <Image
-                  className="object-cover"
-                  src={
-                    "/assets/images/SellerDashboardImages/collectionsIcon.svg"
-                  }
-                  alt="collectionsIcon"
-                  fill
-                />
-              </div>
-              <p>Collections</p>
-            </li>
-
-            <li className="flex gap-[1rem] cursor-pointer">
-              <div className="relative w-[24px] h-[24px]">
-                <Image
-                  className="object-cover"
-                  src={"/assets/images/SellerDashboardImages/ordersIcon.svg"}
-                  alt="ordersIcon"
-                  fill
-                />
-              </div>
-              <p>Orders</p>
-            </li>
+        {/* Sidebar Menu Sectiom */}
+        <ul className="flex flex-col text-[#fff]">
+          <li className="text-[11px] pl-[1.5rem]">Main</li>
+          <div className="flex flex-col  text-[19.63px] font-medium capitalize">
+            {SideBarMainSectionList.map((item, index) => {
+              return (
+                <li
+                  className="group flex items-center gap-[1rem] cursor-pointer pl-[1.5rem] py-[0.5rem] hover:bg-[#FFF6F4] transition-colors duration-300 hover:text-[#56A430]"
+                  key={index}
+                >
+                  <div className="relative w-[24px] h-[24px]">
+                    <Image
+                      className="object-cover group-hover:opacity-0 transition-opacity duration-300"
+                      src={`/assets/images/SellerDashboardImages/${item}Icon.svg`}
+                      alt={`${item}Icon`}
+                      fill
+                    />
+                    <Image
+                      className="object-cover opacity-0 group-hover:opacity-100 transition-opacity duration-200 absolute inset-0"
+                      src={`/assets/images/SellerDashboardImages/${item}IconHover.svg`}
+                      alt="dashboardIcon"
+                      fill
+                    />
+                  </div>
+                  <p>{item}</p>
+                </li>
+              );
+            })}
           </div>
         </ul>
       </div>
 
-      {/* Middle div setting section */}
-      <div className="mt-[1rem]">
-        <ul className="text-[#fff] pl-[1.5rem]">
-          <li className="text-[11px]">Settings</li>
-          <div className="flex flex-col gap-[1rem] text-[19.63px] mt-[1rem]">
-            <li className="flex gap-[1rem] cursor-pointer">
-              <div className="relative w-[24px] h-[24px]">
-                <Image
-                  className="object-cover"
-                  src={"/assets/images/SellerDashboardImages/settingsIcon.svg"}
-                  alt="settingsIcon"
-                  fill
-                />
-              </div>
-              <p>Settings</p>
-            </li>
-
-            <li className="flex gap-[1rem] cursor-pointer">
-              <div className="relative w-[24px] h-[24px]">
-                <Image
-                  className="object-cover"
-                  src={
-                    "/assets/images/SellerDashboardImages/helpcenterIcon.svg"
-                  }
-                  alt="helpcenterIcon"
-                  fill
-                />
-              </div>
-              <p>Help Center</p>
-            </li>
+      {/* Sidebar Setting Section */}
+      <div className="mt-[0.5rem]">
+        <ul className="text-[#fff]">
+          <li className="text-[11px] pl-[1.5rem]">Settings</li>
+          <div className="flex flex-col text-[19.63px] font-medium capitalize">
+            {SideBarSettingSectionList.map((item, index) => {
+              return (
+                <li
+                  className="group flex items-center gap-[1rem] cursor-pointer pl-[1.5rem] py-[0.5rem] hover:bg-[#FFF6F4] transition-colors duration-300 hover:text-[#56A430]"
+                  key={index}
+                >
+                  <div className="relative w-[24px] h-[24px]">
+                    <Image
+                      className="object-cover group-hover:opacity-0 transition-opacity duration-300"
+                      src={`/assets/images/SellerDashboardImages/${item}Icon.svg`}
+                      alt={`${item}Icon`}
+                      fill
+                    />
+                    <Image
+                      className="object-cover opacity-0 group-hover:opacity-100 transition-opacity duration-200 absolute inset-0"
+                      src={`/assets/images/SellerDashboardImages/${item}IconHover.svg`}
+                      alt="dashboardIcon"
+                      fill
+                    />
+                  </div>
+                  <p>{item}</p>
+                </li>
+              );
+            })}
           </div>
         </ul>
       </div>
 
       {/* Seller Profile Section */}
-      <div className="relative w-[100%]  border-t-[2px] border-[#FFFFFF8C] flex flex-col items-center mt-[8rem] mx-auto">
+      <div className="relative w-[100%]  border-t-[2px] border-[#FFFFFF8C] flex flex-col items-center mt-[6.5rem] mx-auto">
         {/* Logout and Profile Section */}
         <div
           className={
@@ -170,16 +151,18 @@ export const SellerDashboardSideBar = () => {
           </div>
           <div className="flex items-center gap-[1rem]">
             <div className="font-medium capitalize">
-              <h1 className="text-[#123524] text-[1rem]">
-                Evergreen Gardens
-              </h1>
+              <h1 className="text-[#123524] text-[1rem]">Evergreen Gardens</h1>
               <h3 className="text-[#697F75] text-[0.6875rem]">
                 Seller account
               </h3>
             </div>
 
             <button
-              className={display===true?"w-[1rem] h-[1rem] relative":"w-[1rem] h-[1rem] relative rotate-180"}
+              className={
+                display === true
+                  ? "w-[1rem] h-[1rem] relative"
+                  : "w-[1rem] h-[1rem] relative rotate-180"
+              }
               onClick={handleLogoutLogin}
             >
               <Image

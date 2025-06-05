@@ -2,7 +2,7 @@ import Image from "next/image";
 
 export const SellerDashboardNavBar = () => {
   return (
-    <div className="h-[87px] bg-white flex justify-between items-center p-[1rem]">
+    <div className="h-[87px] bg-white flex justify-between items-center p-[1rem] rounded-[1.25rem] mx-[1rem] mt-[1rem]">
       <div className="text-[32px] ml-[1.5rem] font-semibold">
         Seller Dashboard
       </div>

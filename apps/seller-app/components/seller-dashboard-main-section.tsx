@@ -6,7 +6,7 @@ import { SellerDashboardWelcomeMsg } from "./seller-dashboard-welcome-msg";
 
 export const SellerDashboardMainSection = () => {
   return (
-    <div className="w-[100%] p-[1rem] flex flex-col gap-[1rem] justify-center">
+    <div className="w-[100%] p-[1rem] flex flex-col gap-[1.5rem] justify-center">
 
       {/* Following is the welcome back message div */}
       <SellerDashboardWelcomeMsg/>

@@ -67,7 +67,7 @@ export const SellerDashboardProductSection = () => {
       </div>
 
       {/* product middle div */}
-      <div className="w-[95%] h-[2.9375rem] text-[1.22669rem] text-[#697F75] flex items-center">
+      <div className="w-[95%] h-[2.9375rem] text-[1.22669rem]  flex items-center">
         <div className="h-[2.9375rem] w-[9.1875rem] text-[#171717] font-medium bg-white shadow-[0px_0px_7px_0px_rgba(0,0,0,0.25)] rounded-[0.3125rem] flex justify-center items-center ">
           <div>All Products</div>
         </div>
@@ -78,8 +78,8 @@ export const SellerDashboardProductSection = () => {
       </div>
 
       {/* product bottom div */}
-      <div className="h-[20.8125rem] w-[95%] rounded-[1.25rem] bg-[#FFF] flex flex-col border-[2px] mb-[1rem]">
-        <div className="h-[4.16rem] flex items-center gap-[23.44rem] border-b-[0.0625rem] border-b-black-[10]">
+      <div className="h-max w-[95%] rounded-[1.25rem] bg-[#FFF] flex flex-col">
+        <div className="h-[4.16rem] flex items-center gap-[23.44rem] border-b-[2px]">
           <div>
             <div className="ml-[1rem] flex items-center">
               <input className="h-[1.25rem] w-[1.25rem]" type="checkbox" />
@@ -110,62 +110,67 @@ export const SellerDashboardProductSection = () => {
                 Duplicate
               </p>
             </div>
-            <div className="text-[1.1875rem] text-[#697F75]">23 Products</div>
+            <div className="text-[1.1875rem] ">23 Products</div>
           </div>
-        </div>
-        <div className="h-[4.16rem] text-[1.22669rem] text-[#697F75] border-b-[0.0625rem] border-b-black-[10] grid grid-cols-4 justify-items-center">
-          <p className="border-[2px]">Products</p>
-          <p className=" border-[2px]">Collection</p>
-          <p className=" border-[2px]">Price</p>
-          <p className=" border-[2px]">Inventory</p>
         </div>
 
-        {/* Row 1 */}
-        <div className="h-[4.16rem] ml-[1rem] text-[1.22669rem] font-medium items-center border-b-[0.0625rem] border-b-black-[10] flex">
-          <div>
-            <input className="h-[1.25rem] w-[1.25rem]" type="checkbox" />
+        <div className="grid grid-rows-4 text-center">
+          {/* Header Section */}
+          <div className="grid grid-cols-[3rem_15rem_15rem_15rem_15rem] border-b-[2px] text-[#697F75] align-middle">
+            <div className="self-center"></div>
+            <div className="self-center">Products</div>
+            <div className="self-center">Collections</div>
+            <div className="self-center">Price</div>
+            <div className="self-center">Inventory</div>
           </div>
-          <div className="ml-[1.63rem]">
-            <p>Golden Money Plant</p>
-            <p className="text-[0.9375rem] text-[#697F75]">10" Pot</p>
+
+          {/* Row 1 */}
+          <div className="border-b-[2px] grid grid-cols-[3rem_15rem_15rem_15rem_15rem]">
+            <div className="py-[0.5rem]">
+              <input className="h-[1.25rem] w-[1.25rem]" type="checkbox" />
+            </div>
+            <div className="py-[0.5rem] flex flex-col justify-start">
+              <p className="w-max">Golden Money Plant</p>
+              <p className="text-[0.9375rem] w-max">10" Pot</p>
+            </div>
+            <div className="self-center">Indoor Plants</div>
+            <div className="self-center">
+              <p>₹ 119</p>
+              <p className="text-[0.9375rem] line-through">₹200</p>
+            </div>
+            <div className="self-center">27 in stock</div>
           </div>
-          <div className="ml-[7.2rem]">Indoor plants</div>
-          <div className="ml-[6rem]">
-            <p>₹ 119</p>
-            <p className="text-[0.9375rem] text-[#697F75] line-through">₹200</p>
+
+          {/* Row 2 */}
+          <div className="border-b-[2px] grid grid-cols-[3rem_15rem_15rem_15rem_15rem]">
+            <div className="py-[0.5rem]">
+              <input className="h-[1.25rem] w-[1.25rem]" type="checkbox" />
+            </div>
+            <div className="py-[0.5rem] flex flex-col justify-start w-max self-center">Ceramic Pot X1</div>
+            <div className="self-center">Indoor Pots</div>
+            <div className="self-center">
+              <p>₹ 249</p>
+              <p className="text-[0.9375rem]  line-through">₹400</p>
+            </div>
+            <div className="self-center">58 in stock</div>
           </div>
-          <div className="ml-[9.86rem]">27 in stock</div>
-        </div>
-        {/* Row 2 */}
-        <div className="h-[4.16rem] ml-[1rem] text-[1.22669rem] font-medium items-center border-b-[0.0625rem] border-b-black-[10] flex">
-          <div>
-            <input className="h-[1.25rem] w-[1.25rem]" type="checkbox" />
+
+          {/* Row 3 */}
+          <div className="border-b-[2px] grid grid-cols-[3rem_15rem_15rem_15rem_15rem]">
+            <div className="py-[0.5rem]">
+              <input className="h-[1.25rem] w-[1.25rem]" type="checkbox" />
+            </div>
+            <div className="py-[0.5rem] flex flex-col justify-start">
+              <p className="w-max">Rex Begonia</p>
+              <p className="text-[0.9375rem] w-max">6" Pot</p>
+            </div>
+            <div className="self-center">Outdoor Plants</div>
+            <div className="self-center">
+              <p>₹ 99</p>
+              <p className="text-[0.9375rem]  line-through">₹150</p>
+            </div>
+            <div className="self-center text-[#FF4B4B]">9 in stock</div>
           </div>
-          <div className="ml-[1.63rem]">
-            <p>Ceramic Pot X1</p>
-          </div>
-          <div className="ml-[10.3rem]">Indoor Pots</div>
-          <div className="ml-[7.31rem]">
-            <p>₹ 249</p>
-            <p className="text-[0.9375rem] text-[#697F75] line-through">₹400</p>
-          </div>
-          <div className="ml-[9.1rem]">58 in stock</div>
-        </div>
-        {/* Row 3*/}
-        <div className="h-[4.16rem] ml-[1rem] text-[1.22669rem] font-medium items-center border-b-[0.0625rem] border-b-black-[10] flex">
-          <div>
-            <input className="h-[1.25rem] w-[1.25rem]" type="checkbox" />
-          </div>
-          <div className="ml-[1.63rem]">
-            <p>Rex Begonia</p>
-            <p className="text-[0.9375rem] text-[#697F75]">6" Pot</p>
-          </div>
-          <div className="ml-[11.9rem]">Outdoor plants</div>
-          <div className="ml-[5rem]">
-            <p>₹ 99</p>
-            <p className="text-[0.9375rem] text-[#697F75] line-through">₹150</p>
-          </div>
-          <div className="ml-[9.86rem] text-[#FF4B4B]">9 in stock</div>
         </div>
       </div>
     </div>

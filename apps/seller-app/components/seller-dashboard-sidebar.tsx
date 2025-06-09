@@ -5,7 +5,9 @@ import { useState } from "react";
 import { SellerDashboardSiteLogo } from "./seller-dashboard-sitelogo";
 
 export const SellerDashboardSideBar = () => {
+  const [active, setActive] = useState(true);
   const [display, setDisplay] = useState(false);
+  const [activeSideBarSection, setactiveSideBarSection] = useState("Dashboard");
 
   const handleLogoutLogin = () => {
     console.log("Hello");
@@ -17,12 +19,19 @@ export const SellerDashboardSideBar = () => {
   };
 
   const SideBarMainSectionList = [
-    "dashboard",
-    "products",
-    "collections",
-    "orders",
+    "Dashboard",
+    "Products",
+    "Collections",
+    "Orders",
   ];
   const SideBarSettingSectionList = ["setting", "help center"];
+
+  const handleSideBarNavigation = (e: any) => {
+    const targetSideBar = e.target.innerText;
+    setactiveSideBarSection(targetSideBar);
+    console.log("Active Side bar main section:", activeSideBarSection);
+  };
+
   return (
     <div className="fixed top-0 left-0 h-[100%] bg-custom-bg rounded-[1.88rem] flex flex-col">
       {/* Top div logo and main section */}
@@ -35,29 +44,43 @@ export const SellerDashboardSideBar = () => {
         {/* Sidebar Menu Sectiom */}
         <ul className="flex flex-col text-[#fff]">
           <li className="text-[11px] pl-[1.5rem]">Main</li>
-          <div className="flex flex-col  text-[19.63px] font-medium capitalize">
+          <div className="flex flex-col text-[19.63px] font-medium capitalize">
             {SideBarMainSectionList.map((item, index) => {
               return (
-                <li
-                  className="group flex items-center gap-[1rem] cursor-pointer pl-[1.5rem] py-[0.5rem] hover:bg-[#FFF6F4] transition-colors duration-300 hover:text-[#56A430]"
+                <button
+                  className="capitalize"
                   key={index}
+                  id={item}
+                  onClick={handleSideBarNavigation}
                 >
-                  <div className="relative w-[24px] h-[24px]">
-                    <Image
-                      className="object-cover group-hover:opacity-0 transition-opacity duration-300"
-                      src={`/assets/images/SellerDashboardImages/${item}Icon.svg`}
-                      alt={`${item}Icon`}
-                      fill
-                    />
-                    <Image
-                      className="object-cover opacity-0 group-hover:opacity-100 transition-opacity duration-200 absolute inset-0"
-                      src={`/assets/images/SellerDashboardImages/${item}IconHover.svg`}
-                      alt="dashboardIcon"
-                      fill
-                    />
-                  </div>
-                  <p>{item}</p>
-                </li>
+                  <li
+                    className={
+                      activeSideBarSection === item
+                        ? "group flex items-center gap-[1rem] cursor-pointer pl-[1.5rem] py-[0.5rem] bg-[#FFF6F4] transition-colors duration-300 text-[#56A430]"
+                        : "group flex items-center gap-[1rem] cursor-pointer pl-[1.5rem] py-[0.5rem] hover:bg-[#FFF6F4] transition-colors duration-300 hover:text-[#56A430]"
+                    }
+                  >
+                    <div className="relative w-[24px] h-[24px]">
+                      <Image
+                        className="object-cover group-hover:opacity-0 transition-opacity duration-300"
+                        src={`/assets/images/SellerDashboardImages/${item}Icon.svg`}
+                        alt={`${item}Icon`}
+                        fill
+                      />
+                      <Image
+                        className={
+                          activeSideBarSection === item
+                            ? "object-cover opacity-100 group-hover:opacity-100 transition-opacity duration-200 absolute inset-0"
+                            : "object-cover opacity-0 group-hover:opacity-100 transition-opacity duration-200 absolute inset-0"
+                        }
+                        src={`/assets/images/SellerDashboardImages/${item}IconHover.svg`}
+                        alt="dashboardIcon"
+                        fill
+                      />
+                    </div>
+                    <p>{item}</p>
+                  </li>
+                </button>
               );
             })}
           </div>

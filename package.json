@@ -24,8 +24,9 @@
     "packages/*"
   ],
   "dependencies": {
+    "@tailwindcss/forms": "^0.5.0",
     "autoprefixer": "^10.4.21",
     "postcss": "^8.5.4",
-    "tailwindcss": "^4.1.8"
+    "tailwindcss": "^3.4.0"
   }
 }

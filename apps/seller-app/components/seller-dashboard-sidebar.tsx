@@ -19,12 +19,12 @@ export const SellerDashboardSideBar = () => {
   };
 
   const SideBarMainSectionList = [
-    "Dashboard",
-    "Products",
-    "Collections",
-    "Orders",
+    "dashboard",
+    "products",
+    "collections",
+    "orders",
   ];
-  const SideBarSettingSectionList = ["setting", "help center"];
+  const SideBarSettingSectionList = ["settings", "help center"];
 
   const handleSideBarNavigation = (e: any) => {
     const targetSideBar = e.target.innerText;
@@ -55,7 +55,7 @@ export const SellerDashboardSideBar = () => {
                 >
                   <li
                     className={
-                      activeSideBarSection === item
+                      activeSideBarSection == item
                         ? "group flex items-center gap-[1rem] cursor-pointer pl-[1.5rem] py-[0.5rem] bg-[#FFF6F4] transition-colors duration-300 text-[#56A430]"
                         : "group flex items-center gap-[1rem] cursor-pointer pl-[1.5rem] py-[0.5rem] hover:bg-[#FFF6F4] transition-colors duration-300 hover:text-[#56A430]"
                     }
@@ -69,7 +69,7 @@ export const SellerDashboardSideBar = () => {
                       />
                       <Image
                         className={
-                          activeSideBarSection === item
+                          activeSideBarSection == item
                             ? "object-cover opacity-100 group-hover:opacity-100 transition-opacity duration-200 absolute inset-0"
                             : "object-cover opacity-0 group-hover:opacity-100 transition-opacity duration-200 absolute inset-0"
                         }

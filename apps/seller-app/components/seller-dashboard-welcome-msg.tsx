@@ -1,6 +1,14 @@
+"use client";
 import Image from "next/image";
+import { displayAddProductSectionStore } from "../store/displayAddProductSection";
 
 export const SellerDashboardWelcomeMsg = () => {
+  const updatedisplayAddProductSection = displayAddProductSectionStore(
+    (state: any) => state.updateDisplayAddProductSectionStore
+  );
+  const handleDisplayAddProductPage = () => {
+    updatedisplayAddProductSection(true);
+  };
   return (
     <div className="p-6 bg-custom-bg rounded-[1.25rem] h-[9.313rem] w-[100%]">
       <div className="text-white w-[45.8125rem] font-bold text-[2rem] capitalize font-[Unbounded]">
@@ -12,7 +20,10 @@ export const SellerDashboardWelcomeMsg = () => {
           visitors today.
         </div>
 
-        <button className="w-[14.1875rem] h-[3.1875rem] rounded-[0.625rem] bg-white text-[#697F75] text-[1.2267rem] capitalize font-[Poppins] font-normal text-center leading-normal shrink-0 flex justify-center items-center gap-[0.5rem]">
+        <button
+          className="w-[14.1875rem] h-[3.1875rem] rounded-[0.625rem] bg-white text-[#697F75] text-[1.2267rem] capitalize font-[Poppins] font-normal text-center leading-normal shrink-0 flex justify-center items-center gap-[0.5rem] animate-bg-bounce-in"
+          onClick={handleDisplayAddProductPage}
+        >
           <div className="relative w-[1.5rem] h-[1.5rem]">
             <Image
               src={

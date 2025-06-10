@@ -8,8 +8,8 @@ export default {
   ],
   theme: {
     extend: {
-       boxShadow: {
-        'seller-header-custom': '0px 4px 4px 0px rgba(0, 0, 0, 0.25)',
+      boxShadow: {
+        "seller-header-custom": "0px 4px 4px 0px rgba(0, 0, 0, 0.25)",
       },
       backgroundImage: {
         "custom-bg":
@@ -20,12 +20,46 @@ export default {
         Poppins: ["Poppins", "sans-serif"],
         Unbounded: ["Unbounded", "sans-serif"],
       },
-       colors: {
-        'custom-fill': '#FFF6F4',
+      colors: {
+        "custom-fill": "#FFF6F4",
       },
       dropShadow: {
-        'custom': '0px 3.2px 15px rgba(0, 0, 0, 0.25)',
-      }
+        custom: "0px 3.2px 15px rgba(0, 0, 0, 0.25)",
+      },
+      keyframes: {
+        "bg-bounce-in": {
+          "0%": {
+            backgroundColor: "#FFF6F4",
+            transform: "translateY(-10px)",
+          },
+          "50%": {
+            backgroundColor: "#FFF6F4",
+            transform: "translateY(5px)",
+          },
+          "100%": {
+            backgroundColor: "#FFF6F4",
+            transform: "translateY(0)",
+          },
+        },
+        "bg-bounce-in-new-2": {
+          "0%": {
+            backgroundColor: "#56A430",
+            transform: "translateY(-10px)",
+          },
+          "50%": {
+            backgroundColor: "#56A430",
+            transform: "translateY(5px)",
+          },
+          "100%": {
+            backgroundColor: "#56A430",
+            transform: "translateY(0)",
+          },
+        },
+      },
+      animation: {
+        "bg-bounce-in": "bg-bounce-in 0.5s ease-out 1",
+        "bg-bounce-in-2":"bg-bounce-in-new-2 0.5s ease-out 1"
+      },
     },
   },
   plugins: [],

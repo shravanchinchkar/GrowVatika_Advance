@@ -5,9 +5,8 @@ import { useState } from "react";
 import { SellerDashboardSiteLogo } from "./seller-dashboard-sitelogo";
 
 export const SellerDashboardSideBar = () => {
-  const [active, setActive] = useState(true);
   const [display, setDisplay] = useState(false);
-  const [activeSideBarSection, setactiveSideBarSection] = useState("Dashboard");
+  const [activeSideBarSection, setactiveSideBarSection] = useState("dashboard");
 
   const handleLogoutLogin = () => {
     console.log("Hello");
@@ -27,9 +26,8 @@ export const SellerDashboardSideBar = () => {
   const SideBarSettingSectionList = ["settings", "help center"];
 
   const handleSideBarNavigation = (e: any) => {
-    const targetSideBar = e.target.innerText;
+    const targetSideBar = e.target.innerText.toLowerCase();
     setactiveSideBarSection(targetSideBar);
-    console.log("Active Side bar main section:", activeSideBarSection);
   };
 
   return (
@@ -46,6 +44,10 @@ export const SellerDashboardSideBar = () => {
           <li className="text-[11px] pl-[1.5rem]">Main</li>
           <div className="flex flex-col text-[19.63px] font-medium capitalize">
             {SideBarMainSectionList.map((item, index) => {
+              console.log("item", item);
+              if (activeSideBarSection == item) {
+                console.log("true");
+              }
               return (
                 <button
                   className="capitalize"

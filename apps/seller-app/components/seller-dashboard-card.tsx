@@ -2,6 +2,7 @@ import { SellerDashboardNavBar } from "./seller-dashboard-navbar";
 import { SellerDashboardSideBar } from "./seller-dashboard-sidebar";
 import { SellerDashboardMainSection } from "./seller-dashboard-main-section";
 import { SellerDashboardProductSection } from "./seller-dashboard-product-section";
+import { SellerDashboardAddProductSection } from "./seller-dashboard-add-product-section";
 export const SellerDashboardCard = () => {
   return (
     <div className="relative w-[98%] h-[98%] rounded-[1.88rem] bg-[#FFF6F4] drop-shadow-custom backdrop-blur-xl grid grid-cols-[20.625%_79.375%] overflow-hidden pb-[0.5rem]">
@@ -14,7 +15,8 @@ export const SellerDashboardCard = () => {
       <div className="flex flex-col max-h-100 overflow-y-auto [&::-webkit-scrollbar]:w-2 [&::-webkit-scrollbar-track]:bg-[#fff] [&::-webkit-scrollbar-thumb]:bg-[#FFF]">
         <SellerDashboardNavBar />
         {/* <SellerDashboardMainSection /> */}
-        <SellerDashboardProductSection/>
+        {/* <SellerDashboardProductSection/> */}
+        <SellerDashboardAddProductSection/>
       </div>
     </div>
   );

@@ -33,7 +33,7 @@ export const SellerDashboardSideBar = () => {
   };
 
   const handleSideBarNavigation = (e: any) => {
-    const targetSideBar = e.target.innerText.toLowerCase();
+    const targetSideBar = e.currentTarget.id.toLowerCase();
     updateActiveSideBar(targetSideBar);
   };
 
@@ -52,9 +52,6 @@ export const SellerDashboardSideBar = () => {
 
           <div className="flex flex-col text-[19.63px] font-medium capitalize">
             {SideBarMainSectionList.map((item, index) => {
-              if (currentActiveSideBar == item) {
-                console.log("true");
-              }
               return (
                 <button
                   className="capitalize"
@@ -71,7 +68,7 @@ export const SellerDashboardSideBar = () => {
                   >
                     <div className="relative w-[24px] h-[24px]">
                       <Image
-                        className={"object-cover"}
+                        className={"object-cover pointer-events-none"}
                         src={`/assets/images/SellerDashboardImages/${item}Icon.svg`}
                         alt={`${item}Icon`}
                         fill
@@ -79,8 +76,8 @@ export const SellerDashboardSideBar = () => {
                       <Image
                         className={
                           currentActiveSideBar == item
-                            ? "object-cover opacity-100 group-hover:opacity-100 transition-opacity duration-200 absolute inset-0"
-                            : "object-cover opacity-0 absolute inset-0"
+                            ? "object-cover opacity-100 group-hover:opacity-100 transition-opacity duration-200 absolute inset-0 pointer-events-none"
+                            : "object-cover opacity-0 absolute inset-0 pointer-events-none"
                         }
                         src={`/assets/images/SellerDashboardImages/${item}IconHover.svg`}
                         alt="dashboardIcon"
@@ -93,6 +90,7 @@ export const SellerDashboardSideBar = () => {
               );
             })}
           </div>
+          
         </ul>
       </div>
 

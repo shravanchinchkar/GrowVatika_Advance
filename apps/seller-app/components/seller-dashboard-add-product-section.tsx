@@ -13,9 +13,9 @@ export const SellerDashboardAddProductSection = () => {
     (state: any) => state.updateDisplayAddProductSectionStore
   );
 
-  const handleDisplaySellerDashboardMainSection=()=>{
+  const hideAddProductSection=()=>{
     updateVisibility(false);
-    
+    // alert("Hello")
   }
 
   if (displayAddProductSection) {
@@ -28,7 +28,7 @@ export const SellerDashboardAddProductSection = () => {
             {/* Left Arrow Image */}
             <button
               className="relative h-[1.5rem] w-[1.5rem]"
-              onClick={handleDisplaySellerDashboardMainSection}
+              onClick={hideAddProductSection}
             >
               <Image
                 src="/assets/images/AddProductSectionImages/leftarrow.svg"

@@ -6,7 +6,7 @@ export const SellerDashboardWelcomeMsg = () => {
   const updatedisplayAddProductSection = displayAddProductSectionStore(
     (state: any) => state.updateDisplayAddProductSectionStore
   );
-  const handleDisplayAddProductPage = () => {
+  const handleDisplayAddProductSection = () => {
     updatedisplayAddProductSection(true);
   };
   return (
@@ -22,7 +22,7 @@ export const SellerDashboardWelcomeMsg = () => {
 
         <button
           className="w-[14.1875rem] h-[3.1875rem] rounded-[0.625rem] bg-white text-[#697F75] text-[1.2267rem] capitalize font-[Poppins] font-normal text-center leading-normal shrink-0 flex justify-center items-center gap-[0.5rem] animate-bg-bounce-in"
-          onClick={handleDisplayAddProductPage}
+          onClick={handleDisplayAddProductSection}
         >
           <div className="relative w-[1.5rem] h-[1.5rem]">
             <Image

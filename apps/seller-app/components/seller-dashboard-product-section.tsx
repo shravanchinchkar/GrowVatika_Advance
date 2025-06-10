@@ -2,11 +2,24 @@
 
 import Image from "next/image";
 import { activeSideBarStore } from "../store/activeSideBar";
+import { displayAddProductSectionStore } from "../store/displayAddProductSection";
 
 export const SellerDashboardProductSection = () => {
   const activeSideBar = activeSideBarStore((state: any) => state.activeSideBar);
 
-  if (activeSideBar == "products") {
+  const displayAddProductSection = displayAddProductSectionStore(
+    (state: any) => state.displayAddProductSection
+  );
+
+  const updateVisibility = displayAddProductSectionStore(
+    (state: any) => state.updateDisplayAddProductSectionStore
+  );
+
+  const handelDisplayofAddProductSection=()=>{
+    updateVisibility(true)
+  }
+
+  if (activeSideBar == "products" && displayAddProductSection===false) {
     return (
       <div className="flex flex-col items-center gap-[1rem] pt-[0.5rem] mx-[1rem]">
         {/* product top div */}
@@ -24,7 +37,10 @@ export const SellerDashboardProductSection = () => {
             </div>
 
             {/* Add Product Button */}
-            <button className="h-[3.1875rem] w-[12.4375rem] rounded-[0.625rem] flex items-center justify-center gap-[1rem] bg-[#56A430] animate-bg-bounce-in-2">
+            <button
+              className="h-[3.1875rem] w-[12.4375rem] rounded-[0.625rem] flex items-center justify-center gap-[1rem] bg-[#56A430] animate-bg-bounce-in-2"
+              onClick={handelDisplayofAddProductSection}
+            >
               <div className="relative h-[1.5rem] w-[1.5rem]">
                 <Image
                   src="/assets/images/productSectionImages/addProductIcon.svg"

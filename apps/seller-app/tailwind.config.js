@@ -27,7 +27,7 @@ export default {
         custom: "0px 3.2px 15px rgba(0, 0, 0, 0.25)",
       },
       keyframes: {
-        "bg-bounce-in": {
+        "bg-bounce-in-1": {
           "0%": {
             backgroundColor: "#FFF6F4",
             transform: "translateY(-10px)",
@@ -41,6 +41,7 @@ export default {
             transform: "translateY(0)",
           },
         },
+
         "bg-bounce-in-new-2": {
           "0%": {
             backgroundColor: "#56A430",
@@ -57,7 +58,7 @@ export default {
         },
       },
       animation: {
-        "bg-bounce-in": "bg-bounce-in 0.5s ease-out 1",
+        "bg-bounce-in": "bg-bounce-in-1 0.5s ease-out 1",
         "bg-bounce-in-2":"bg-bounce-in-new-2 0.5s ease-out 1"
       },
     },

@@ -3,7 +3,6 @@ import { SellerDashboardSideBar } from "./seller-dashboard-sidebar";
 import { SellerDashboardMainSection } from "./seller-dashboard-main-section";
 import { SellerDashboardProductSection } from "./seller-dashboard-product-section";
 import { SellerDashboardAddProductSection } from "./seller-dashboard-add-product-section";
-import { SellerDashboardMediaProductSection } from "./seller-dashboard-media-product-section";
 
 export const SellerDashboardCard = () => {
   return (
@@ -18,8 +17,7 @@ export const SellerDashboardCard = () => {
         <SellerDashboardNavBar />
         <SellerDashboardMainSection />
         <SellerDashboardProductSection />
-        {/* <SellerDashboardAddProductSection /> */}
-        {/* <SellerDashboardMediaProductSection /> */}
+        <SellerDashboardAddProductSection />
       </div>
     </div>
   );

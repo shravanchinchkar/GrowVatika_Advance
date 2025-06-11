@@ -38,64 +38,64 @@ export const SellerDashboardSideBar = () => {
   };
 
   return (
-    <div className="fixed top-0 left-0 h-[100%] bg-custom-bg rounded-[1.88rem] flex flex-col">
-      {/* Top div logo and main section */}
-      <div className="h-max flex-col">
-        {/* following div consist of log */}
-        <div className="w-[15.9375rem] h-[4.0625rem] rounded-[24px] flex justify-start items-center m-[1rem] bg-[#fff] overflow-hidden">
-          <SellerDashboardSiteLogo />
+    <div className="fixed top-0 left-0 h-[100%] bg-custom-bg rounded-[1.88rem] flex flex-col justify-between overflow-hidden">
+      {/* Following div consist of Logo, Main Section and setting section */}
+      <div className="flex flex-col gap-[0.5rem]">
+        {/* Top div logo and main section */}
+        <div className="h-max flex-col">
+          {/* following div consist of log */}
+          <div className="w-[15.9375rem] h-[4.0625rem] rounded-[24px] flex justify-start items-center m-[1rem] bg-[#fff] overflow-hidden">
+            <SellerDashboardSiteLogo />
+          </div>
+
+          {/* Sidebar Menu Sectiom */}
+          <ul className="flex flex-col text-[#fff]">
+            <li className="text-[11px] pl-[1.5rem]">Main</li>
+
+            <div className="flex flex-col text-[19.63px] font-medium capitalize">
+              {SideBarMainSectionList.map((item, index) => {
+                return (
+                  <button
+                    className="capitalize"
+                    key={index}
+                    id={item}
+                    onClick={handleSideBarNavigation}
+                  >
+                    <li
+                      className={
+                        currentActiveSideBar == item
+                          ? "flex items-center gap-[1rem] cursor-pointer pl-[1.5rem] py-[0.5rem] bg-[#FFF6F4] text-[#56A430] animate-bg-bounce-in"
+                          : "flex items-center gap-[1rem] cursor-pointer pl-[1.5rem] py-[0.5rem]"
+                      }
+                    >
+                      <div className="relative w-[24px] h-[24px]">
+                        <Image
+                          className={"object-cover pointer-events-none"}
+                          src={`/assets/images/SellerDashboardImages/${item}Icon.svg`}
+                          alt={`${item}Icon`}
+                          fill
+                        />
+                        <Image
+                          className={
+                            currentActiveSideBar == item
+                              ? "object-cover opacity-100 group-hover:opacity-100 transition-opacity duration-200 absolute inset-0 pointer-events-none"
+                              : "object-cover opacity-0 absolute inset-0 pointer-events-none"
+                          }
+                          src={`/assets/images/SellerDashboardImages/${item}IconHover.svg`}
+                          alt="dashboardIcon"
+                          fill
+                        />
+                      </div>
+                      <p>{item}</p>
+                    </li>
+                  </button>
+                );
+              })}
+            </div>
+          </ul>
         </div>
 
-        {/* Sidebar Menu Sectiom */}
-        <ul className="flex flex-col text-[#fff]">
-          <li className="text-[11px] pl-[1.5rem]">Main</li>
-
-          <div className="flex flex-col text-[19.63px] font-medium capitalize">
-            {SideBarMainSectionList.map((item, index) => {
-              return (
-                <button
-                  className="capitalize"
-                  key={index}
-                  id={item}
-                  onClick={handleSideBarNavigation}
-                >
-                  <li
-                    className={
-                      currentActiveSideBar == item
-                        ? "flex items-center gap-[1rem] cursor-pointer pl-[1.5rem] py-[0.5rem] bg-[#FFF6F4] text-[#56A430] animate-bg-bounce-in"
-                        : "flex items-center gap-[1rem] cursor-pointer pl-[1.5rem] py-[0.5rem]"
-                    }
-                  >
-                    <div className="relative w-[24px] h-[24px]">
-                      <Image
-                        className={"object-cover pointer-events-none"}
-                        src={`/assets/images/SellerDashboardImages/${item}Icon.svg`}
-                        alt={`${item}Icon`}
-                        fill
-                      />
-                      <Image
-                        className={
-                          currentActiveSideBar == item
-                            ? "object-cover opacity-100 group-hover:opacity-100 transition-opacity duration-200 absolute inset-0 pointer-events-none"
-                            : "object-cover opacity-0 absolute inset-0 pointer-events-none"
-                        }
-                        src={`/assets/images/SellerDashboardImages/${item}IconHover.svg`}
-                        alt="dashboardIcon"
-                        fill
-                      />
-                    </div>
-                    <p>{item}</p>
-                  </li>
-                </button>
-              );
-            })}
-          </div>
-          
-        </ul>
-      </div>
-
-      {/* Sidebar Setting Section */}
-      <div className="mt-[0.5rem]">
+        {/* Sidebar Setting Section */}
         <ul className="text-[#fff]">
           <li className="text-[11px] pl-[1.5rem]">Settings</li>
           <div className="flex flex-col text-[19.63px] font-medium capitalize">
@@ -145,7 +145,7 @@ export const SellerDashboardSideBar = () => {
       </div>
 
       {/* Seller Profile Section */}
-      <div className="relative w-[100%]  border-t-[2px] border-[#FFFFFF8C] flex flex-col items-center mt-[6.5rem] mx-auto">
+      <div className="relative w-[100%] border-t-[2px] border-[#FFFFFF8C] flex flex-col items-center mx-auto">
         {/* Logout and Profile Section */}
         <div
           className={

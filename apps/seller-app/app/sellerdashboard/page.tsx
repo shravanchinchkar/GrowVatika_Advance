@@ -5,9 +5,8 @@ import { SellerDashboardCard } from "../../components/seller-dashboard-card";
 
 export default async function SellerDashboard() {
   const session = await getServerSession(NEXT_AUTH);
+  console.log("Seller session is:", session);
   if (session?.user) {
-    redirect("/signin");
-  } else {
     return (
       <div className="bg-[#FFF6F4] w-screen h-screen flex justify-center items-center font-[Poppins]">
         <div className="w-[95%] h-[95%] border-[2px] border-[#1235244D] rounded-[40px] overflow-hidden p-[1rem] flex justify-center items-center">
@@ -15,5 +14,7 @@ export default async function SellerDashboard() {
         </div>
       </div>
     );
+  } else {
+    redirect("/signin");
   }
 }

@@ -2,6 +2,7 @@
 
 import Image from "next/image";
 import { useState } from "react";
+import { signOut } from "next-auth/react";
 import { activeSideBarStore } from "../store/activeSideBar";
 import { SellerDashboardSiteLogo } from "./seller-dashboard-sitelogo";
 
@@ -35,6 +36,10 @@ export const SellerDashboardSideBar = () => {
   const handleSideBarNavigation = (e: any) => {
     const targetSideBar = e.currentTarget.id.toLowerCase();
     updateActiveSideBar(targetSideBar);
+  };
+
+  const handleSellerLogout = async () => {
+    await signOut();
   };
 
   return (
@@ -150,12 +155,12 @@ export const SellerDashboardSideBar = () => {
         <div
           className={
             display === true
-              ? "absolute top-[-6rem] rounded-[1.5rem] w-[15.9375rem] h-[11.0625rem] py-[1.2rem] px-[2rem] bg-[#fff] border-[2px] border-[#697F75]"
+              ? "absolute top-[-6rem] rounded-[1.5rem] w-[15.9375rem] h-[11.0625rem] py-[1.2rem]  bg-[#fff] border-[2px] border-[#697F75]"
               : "hidden"
           }
         >
           <ul className="flex flex-col gap-[1rem]">
-            <li className="text-[#56A430] text-[1.1875rem] font-medium capitalize flex gap-[1rem] items-center cursor-pointer">
+            <li className="text-[#56A430] text-[1.1875rem] font-medium capitalize flex gap-[1rem] items-center cursor-pointer pl-[2rem]">
               <div className="relative w-[1.5rem] h-[1.5rem]">
                 <Image
                   src={
@@ -169,7 +174,10 @@ export const SellerDashboardSideBar = () => {
               <h2>Profile</h2>
             </li>
 
-            <li className="text-[#FF4B4B] text-[1.1875rem] font-medium capitalize flex gap-[1rem] items-center cursor-pointer">
+            <li
+              className="text-[#FF4B4B] text-[1.1875rem] font-medium capitalize flex gap-[1rem] items-center cursor-pointer  pl-[2rem]"
+              onClick={handleSellerLogout}
+            >
               <div className="relative w-[1.5rem] h-[1.5rem]">
                 <Image
                   src={

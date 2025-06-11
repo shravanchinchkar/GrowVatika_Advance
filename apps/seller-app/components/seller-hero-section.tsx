@@ -1,7 +1,16 @@
+"use client"
 import Link from "next/link";
 import Image from "next/image";
+import { useRouter } from "next/navigation";
+
 
 export const SellerHeroSection = () => {
+  const router=useRouter();
+
+  const handleStartSellingNow=()=>{
+    router.push("/sellerdashboard")
+  }
+
   return (
     <div className="w-[100%] h-[100%] flex justify-between items-end">
       {/* Bottomm Left Image */}
@@ -29,7 +38,8 @@ export const SellerHeroSection = () => {
             </div>
           </div>
           {/* Hero Button */}
-          <button className="w-[17rem] h-[4rem] text-[#FFF6F4] text-center font-normal uppercase  bg-gradient-to-r from-[#73735A] to-[#445A4A] rounded-[5rem] border-[3px] border-white shadow-lg text-[1.22869rem] transition-transform duration-300 ease-in-out hover:bg-[#123524] hover:bg-none hover:font-bold hover:border-none">
+          <button className="w-[17rem] h-[4rem] text-[#FFF6F4] text-center font-normal uppercase  bg-gradient-to-r from-[#73735A] to-[#445A4A] rounded-[5rem] border-[3px] border-white shadow-lg text-[1.22869rem] transition-transform duration-300 ease-in-out hover:bg-[#123524] hover:bg-none hover:font-bold hover:border-none"
+          onClick={handleStartSellingNow}>
             Start Selling Now !
           </button>
         </div>

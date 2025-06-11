@@ -22,6 +22,7 @@ BE FINAL YEAR PROJECT
 - NextAuth For Authentication
 - Postgres Database
 - Prisma as ORM
+- Zustand for state management
 
 
 ## Following are the live links of the project

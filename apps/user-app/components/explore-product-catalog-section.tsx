@@ -69,13 +69,9 @@ export const ExploreProductCatalogSection = () => {
       </div>
 
       {/* Filter Section and Product Card */}
-      <div className="flex w-[82.1875rem] gap-6 font-[Poppins]">
+      <div className="flex justify-between w-[82.1875rem] gap-6 font-[Poppins]">
         {/* Sidebar */}
-        <div className="w-[18.8125rem] flex-shrink-0 rounded-[1.25rem] bg-white p-6">
-          <p className="text-lg font-semibold text-[#171717]">
-            <ProductFilterSection/>
-          </p>
-        </div>
+        <ProductFilterSection/>
 
         {/* Main Section */}
         <div className="w-[80%] flex flex-col gap-[1rem] rounded-[1.25rem] mb-[1rem]">

@@ -1,9 +1,9 @@
-import { ProductFilterSection } from "@/components/product-filter-section";
+import { ExploreProductCatalogSection } from "@/components/explore-product-catalog-section";
 
 export default function Explore() {
   return (
     <div>
-      <ProductFilterSection />
+      <ExploreProductCatalogSection />
     </div>
   );
 }

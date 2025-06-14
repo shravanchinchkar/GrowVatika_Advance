@@ -9,7 +9,7 @@ import { SiteLogo } from "@repo/ui/brand-logo";
 import { AuthButton } from "@repo/ui/auth-button";
 import { useSearchParams } from "next/navigation";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { sellerRegistration} from "../app/actions/auth";
+import { sellerRegistration } from "../app/actions/auth";
 import { toastStyle } from "@repo/shared/utilfunctions";
 import { useForm, SubmitHandler } from "react-hook-form";
 import { LabelInput, FormType } from "@repo/ui/label-input";
@@ -43,25 +43,70 @@ export const SellerRegister = () => {
   });
 
   // Get Data of the seller
-  async function getData() {
-    const res = await axios.get(
-      `/api/getsellerdata?email=${encodeURIComponent(searchParamsEmail)}`
-    );
-    console.log("Seller Data is:", res.data.sellerData);
-    if (res.data.error) {
-      toast.error(res.data.error.toString(), toastStyle);
-    } else {
-      setValue("nurseryName", res.data.sellerData?.nurseryName);
-      setValue("email", res.data.sellerData?.email || "");
-      setValue("phoneNumber", res.data.sellerData?.phoneNumber);
-    }
-  }
-  async function main() {
-    await getData();
-  }
+  // async function getData() {
+  //   const res = await axios.get(
+  //     `/api/getsellerdata?email=${encodeURIComponent(searchParamsEmail)}`
+  //   );
+  //   console.log("Seller Data is:", res.data.sellerData);
+  //   if (res.data.error) {
+  //     toast.error(res.data.error.toString(), toastStyle);
+  //   } else {
+  //     setValue("nurseryName", res.data.sellerData?.nurseryName);
+  //     setValue("email", res.data.sellerData?.email || "");
+  //     setValue("phoneNumber", res.data.sellerData?.phoneNumber);
+  //   }
+  // }
+  // async function main() {
+  //   await getData();
+  // }
+  // useEffect(() => {
+  //   main();
+  // }, [main]);
+
   useEffect(() => {
-    main();
-  }, [main]);
+    if (!searchParamsEmail) return;
+
+    let isCancelled = false; // Cleanup flag
+
+    const fetchData = async () => {
+      setLoading(true);
+      try {
+        const res = await axios.get(
+          `/api/getsellerdata?email=${encodeURIComponent(searchParamsEmail)}`
+        );
+
+        // Don't update state if component unmounted
+        if (isCancelled) return;
+
+        console.log("Seller Data is:", res.data.sellerData);
+
+        if (res.data.error) {
+          toast.error(res.data.error.toString(), toastStyle);
+        } else {
+          const { sellerData } = res.data;
+          setValue("nurseryName", sellerData?.nurseryName || "");
+          setValue("email", sellerData?.email || "");
+          setValue("phoneNumber", sellerData?.phoneNumber || "");
+        }
+      } catch (error) {
+        if (!isCancelled) {
+          console.error("Error fetching seller data:", error);
+          toast.error("Failed to fetch seller data", toastStyle);
+        }
+      } finally {
+        if (!isCancelled) {
+          setLoading(false);
+        }
+      }
+    };
+
+    fetchData();
+
+    // Cleanup function
+    return () => {
+      isCancelled = true;
+    };
+  }, [searchParamsEmail, setValue, toast, toastStyle]);
 
   // Handle Seller Registration
   const handelSellerRegistration: SubmitHandler<SignUpInputs> = async (
@@ -137,8 +182,8 @@ export const SellerRegister = () => {
 
           {/* Following div consist of signup form , and signup message */}
           <div className="flex flex-col items-center">
-            {/* Seller Registration Form */}
 
+            {/* Seller Registration Form */}
             <form
               className="flex flex-col items-start gap-[1rem] lg:mt-[0.5rem]"
               onSubmit={handleSubmit(handelSellerRegistration)}

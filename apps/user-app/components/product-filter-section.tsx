@@ -6,16 +6,9 @@ import { UserAuthButton } from "./user-auth-button";
 export const ProductFilterSection = () => {
   return (
     <div className="flex flex-col items-center bg-[#FFF6F4] h-max">
-      <div className="flex flex-col gap-[1rem] pt-[2rem]">
-        <Header />
-        <div className="flex justify-between">
-          <Navbar />
-          <UserAuthButton />
-        </div>
-      </div>
 
       {/* Filter Section */}
-      <div className="h-[77.125rem] w-[18.8125rem] ml-[6.87rem] pl-[2rem] pr-[2rem] pt-[1rem] font-[Poppins] bg-white rounded-[1.25rem] border-[2px] border-red-500">
+      <div className="h-[77.125rem] w-[18.8125rem] ml-[6.87rem] pl-[2rem] pr-[2rem] pt-[1rem] font-[Poppins] bg-white rounded-[1.25rem] ">
         {/* Filter Top Section */}
         <div className="flex justify-between items-center">
           <div className="text-[1.5rem] font-medium">Filter</div>

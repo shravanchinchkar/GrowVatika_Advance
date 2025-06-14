@@ -5,9 +5,11 @@ import { useState } from "react";
 import { signOut } from "next-auth/react";
 import { activeSideBarStore } from "../store/activeSideBar";
 import { SellerDashboardSiteLogo } from "./seller-dashboard-sitelogo";
+import { sellerDataStore } from "../store/sellerData";
 
 export const SellerDashboardSideBar = () => {
   const [display, setDisplay] = useState(false);
+  const sellerData=sellerDataStore((state)=>state.sellerData);
 
   const currentActiveSideBar = activeSideBarStore(
     (state: any) => state.activeSideBar
@@ -204,9 +206,11 @@ export const SellerDashboardSideBar = () => {
               fill
             />
           </div>
+          
           <div className="flex items-center gap-[1rem]">
+
             <div className="font-medium capitalize">
-              <h1 className="text-[#123524] text-[1rem]">Evergreen Gardens</h1>
+              <h1 className="text-[#123524] text-[0.85rem]">{sellerData.nurseryName}</h1>
               <h3 className="text-[#697F75] text-[0.6875rem]">
                 Seller account
               </h3>
@@ -229,6 +233,7 @@ export const SellerDashboardSideBar = () => {
                 className="object-contain"
               />
             </button>
+
           </div>
         </div>
       </div>

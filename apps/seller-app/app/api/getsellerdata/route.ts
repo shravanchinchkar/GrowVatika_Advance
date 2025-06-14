@@ -1,6 +1,6 @@
 import client from "@repo/db/client";
 import { NextRequest, NextResponse } from "next/server";
-import { ApiResponseType, EmailOnlySchema } from "@repo/common-types/types";
+import { EmailOnlySchema } from "@repo/common-types/types";
 
 export async function GET(req: NextRequest) {
   const { searchParams } = new URL(req.url);
@@ -46,5 +46,4 @@ export async function GET(req: NextRequest) {
       });
     }
   }
-  return { success: true };
 }

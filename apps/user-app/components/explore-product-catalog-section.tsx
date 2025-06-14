@@ -4,6 +4,7 @@ import Image from "next/image";
 import { Header } from "./header-section";
 import { Navbar } from "./nav-section";
 import { UserAuthButton } from "./user-auth-button";
+import { ProductFilterSection } from "./product-filter-section";
 
 export const ExploreProductCatalogSection = () => {
   const filterTags = ["Indoor Plants", "Large (24–48”)", "2 star & up"];
@@ -71,7 +72,9 @@ export const ExploreProductCatalogSection = () => {
       <div className="flex w-[82.1875rem] gap-6 font-[Poppins]">
         {/* Sidebar */}
         <div className="w-[18.8125rem] flex-shrink-0 rounded-[1.25rem] bg-white p-6">
-          <p className="text-lg font-semibold text-[#171717]">Filters</p>
+          <p className="text-lg font-semibold text-[#171717]">
+            <ProductFilterSection/>
+          </p>
         </div>
 
         {/* Main Section */}

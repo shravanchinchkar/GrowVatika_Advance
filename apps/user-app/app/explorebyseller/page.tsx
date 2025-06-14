@@ -1,10 +1,9 @@
 import { ExplorePlantsBySeller } from "@/components/explore-by-seller";
 
 export default function ExploreBySeller() {
-  return(
+  return (
     <div className="overflow-x-hidden">
       <ExplorePlantsBySeller />
     </div>
-  )
-   ;
+  );
 }

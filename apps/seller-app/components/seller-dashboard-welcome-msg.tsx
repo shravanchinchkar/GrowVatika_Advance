@@ -1,23 +1,35 @@
 "use client";
 import Image from "next/image";
+import { activeSideBarStore } from "../store/activeSideBar";
 import { displayAddProductSectionStore } from "../store/displayAddProductSection";
 
-export const SellerDashboardWelcomeMsg = () => {
+export const SellerDashboardWelcomeMsg = ({
+  nurseryName,
+}: {
+  nurseryName: string;
+}) => {
+  // Following is the zustan state management code
   const updatedisplayAddProductSection = displayAddProductSectionStore(
     (state: any) => state.updateDisplayAddProductSectionStore
   );
+
+  const updateActiveSideBar = activeSideBarStore(
+    (state: any) => state.updateActiveSideBar
+  );
   const handleDisplayAddProductSection = () => {
     updatedisplayAddProductSection(true);
+    updateActiveSideBar("products");
   };
   return (
     <div className="p-6 bg-custom-bg rounded-[1.25rem] h-[9.313rem] w-[100%]">
-      <div className="text-white w-[45.8125rem] font-bold text-[2rem] capitalize font-[Unbounded]">
-        Welcome Back, Evergreen Garden
+      <div className="text-white font-bold text-[2rem] capitalize font-[Unbounded]">
+        {`Welcome back,${nurseryName}`}
       </div>
+
       <div className="flex justify-between items-center mt-2">
+        {/* following div consist of Daily summary of the nursery  */}
         <div className="text-white w-[29.375rem] text-[1.25rem] font-medium leading-[1.625rem] font-[Poppins]">
-          Your store is performing well. You have 3 new orders and 12 new
-          visitors today.
+          {`No Daily Summary Message to display`}
         </div>
 
         <button

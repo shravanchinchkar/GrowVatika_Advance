@@ -2,19 +2,15 @@
 import Link from "next/link";
 import { useState } from "react";
 import { toast } from "react-hot-toast";
+import { useForm } from "react-hook-form";
 import { signIn } from "next-auth/react";
 import { useRouter } from "next/navigation";
 import { SiteLogo } from "@repo/ui/brand-logo";
 import { AuthButton } from "@repo/ui/auth-button";
 import { zodResolver } from "@hookform/resolvers/zod";
-import {
-  limitExhaustedToastStyle,
-  toastStyle,
-} from "@repo/shared/utilfunctions";
-import { useForm } from "react-hook-form";
+import { toastStyle } from "@repo/shared/utilfunctions";
 import { LabelInput, FormType } from "@repo/ui/label-input";
 import { SignInInputs, SignInSchema } from "@repo/common-types/types";
-import { compareSync } from "bcrypt";
 
 export const SellerSignin = () => {
   const router = useRouter();

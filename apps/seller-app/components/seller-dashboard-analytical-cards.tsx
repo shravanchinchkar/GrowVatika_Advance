@@ -22,7 +22,7 @@ export const AnaylticalCards = () => {
         </div>
 
         <div className="text-[2rem] font-[Poppins] font-bold leading-[1.3] text-[#171717]">
-          ₹1,20,589
+          ₹0
         </div>
         <div className="text-[0.6875rem] font-[Poppins] font-medium leading-[1.3] text-[#56A430] flex gap-[0.5rem]">
           <div className="w-[0.69506rem] h-[0.69506rem] relative">
@@ -33,7 +33,7 @@ export const AnaylticalCards = () => {
               className="object-contain"
             />
           </div>
-          <p>+25% from last month</p>
+          <p>+0% from last month</p>
         </div>
       </div>
 
@@ -56,7 +56,7 @@ export const AnaylticalCards = () => {
         </div>
 
         <div className="text-[2rem] font-[Poppins] font-bold leading-[1.3] text-[#171717]">
-          501
+          0
         </div>
         <div className="text-[0.6875rem] font-[Poppins] font-medium leading-[1.3] text-[#56A430] flex gap-[0.5rem]">
           <div className="w-[0.69506rem] h-[0.69506rem] relative">
@@ -67,7 +67,7 @@ export const AnaylticalCards = () => {
               className="object-contain"
             />
           </div>
-          <p>+8.2% from last month</p>
+          <p>+0% from last month</p>
         </div>
       </div>
 
@@ -90,7 +90,7 @@ export const AnaylticalCards = () => {
         </div>
 
         <div className="text-[2rem] font-[Poppins] font-bold leading-[1.3] text-[#171717]">
-          67
+        0
         </div>
         <div className="text-[0.6875rem] font-[Poppins] font-medium leading-[1.3] text-[#56A430] flex gap-[0.5rem]">
           <div className="w-[0.69506rem] h-[0.69506rem] relative">
@@ -103,7 +103,7 @@ export const AnaylticalCards = () => {
               className="object-contain"
             />
           </div>
-          <p>15 low in stock</p>
+          <p>0 low in stock</p>
         </div>
       </div>
 
@@ -125,7 +125,7 @@ export const AnaylticalCards = () => {
           </div>
         </div>
         <div className="text-[2rem] font-[Poppins] font-bold leading-[1.3] text-[#171717]">
-          10,517
+          0
         </div>
         <div className="text-[0.6875rem] font-[Poppins] font-medium leading-[1.3] text-[#56A430] flex gap-[0.5rem]">
           <div className="w-[0.69506rem] h-[0.69506rem] relative">
@@ -138,7 +138,7 @@ export const AnaylticalCards = () => {
               className="object-contain"
             />
           </div>
-          <p>+18.3% from last month</p>
+          <p>+0% from last month</p>
         </div>
       </div>
     </div>

@@ -41,7 +41,6 @@ export default {
             transform: "translateY(0)",
           },
         },
-
         "bg-bounce-in-new-2": {
           "0%": {
             backgroundColor: "#56A430",
@@ -56,10 +55,44 @@ export default {
             transform: "translateY(0)",
           },
         },
+        "glow-pulse": {
+          "0%": {
+            "box-shadow": "0 0 5px #ef4444, 0 0 10px #ef4444, 0 0 15px #ef4444",
+            "border-color": "#ef4444",
+          },
+          "100%": {
+            "box-shadow":
+              "0 0 10px #dc2626, 0 0 20px #dc2626, 0 0 30px #dc2626, 0 0 40px #dc2626",
+            "border-color": "#dc2626",
+          },
+        },
+        "text-blink": {
+          "0%, 50%": {
+            color: "#ef4444",
+            opacity: "1",
+          },
+          "51%, 100%": {
+            color: "#dc2626",
+            opacity: "0.3",
+          },
+        },
+        "border-blink": {
+          "0%, 50%": {
+            borderColor: "#ef4444",
+            opacity: "1",
+          },
+          "51%, 100%": {
+            borderColor: "#dc2626",
+            opacity: "0.3",
+          },
+        },
       },
       animation: {
         "bg-bounce-in": "bg-bounce-in-1 0.5s ease-out 1",
-        "bg-bounce-in-2":"bg-bounce-in-new-2 0.5s ease-out 1"
+        "bg-bounce-in-2": "bg-bounce-in-new-2 0.5s ease-out 1",
+        "glow-pulse": "glow-pulse 2s ease-in-out infinite alternate",
+        "text-blink": "text-blink 1s linear infinite",
+        "border-blink": "border-blink 1s linear infinite",
       },
     },
   },

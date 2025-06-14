@@ -5,7 +5,6 @@ import { SellerDashboardCard } from "../../components/seller-dashboard-card";
 
 export default async function SellerDashboard() {
   const session = await getServerSession(NEXT_AUTH);
-  console.log("Seller session is:", session);
   if (session?.user) {
     return (
       <div className="bg-[#FFF6F4] w-screen h-screen flex justify-center items-center font-[Poppins]">

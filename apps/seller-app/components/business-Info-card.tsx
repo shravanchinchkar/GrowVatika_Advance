@@ -115,7 +115,7 @@ export const BusinessInfoCard: React.FC<BusinessInfoCardProps> = ({
 
   // Handle Add More Button
   const handleAddMoreButton = () => {
-    setDisplaySaveButton(!displaySaveButton)
+    setDisplaySaveButton(displaySaveButton)
     setDisplayAddMoreButton(!displayAddMoreButton);
   };
   return (

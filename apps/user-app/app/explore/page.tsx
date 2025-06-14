@@ -1,3 +1,9 @@
+import { ProductFilterSection } from "@/components/product-filter-section";
+
 export default function Explore() {
-  return <div>Explore Product Section Underconstruction!</div>;
+  return (
+    <div>
+      <ProductFilterSection />
+    </div>
+  );
 }

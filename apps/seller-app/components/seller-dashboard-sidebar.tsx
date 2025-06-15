@@ -153,6 +153,7 @@ export const SellerDashboardSideBar = () => {
 
       {/* Seller Profile Section */}
       <div className="relative w-[100%] border-t-[2px] border-[#FFFFFF8C] flex flex-col items-center mx-auto">
+
         {/* Logout and Profile Section */}
         <div
           className={
@@ -207,7 +208,7 @@ export const SellerDashboardSideBar = () => {
             />
           </div>
           
-          <div className="flex items-center gap-[1rem]">
+          <div className="flex items-center gap-[1rem]"> 
 
             <div className="font-medium capitalize">
               <h1 className="text-[#123524] text-[0.85rem]">{sellerData.nurseryName}</h1>
@@ -236,7 +237,9 @@ export const SellerDashboardSideBar = () => {
 
           </div>
         </div>
+        
       </div>
+
     </div>
   );
 };

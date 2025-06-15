@@ -23,19 +23,19 @@ export const ProductFilterSection = () => {
             </li>
             <div className="text-[1.22669rem] pt-[0.75rem]">
               <li className="flex items-center gap-[0.5rem]">
-                <input type="checkbox" className="h-[1.25rem] w-[1.25rem]" />
+                <input type="checkbox" className="h-[1.25rem] w-[1.25rem] accent-[#000]" />
                 <p>Indoor Plants</p>
               </li>
               <li className="flex items-center gap-[0.5rem]">
-                <input type="checkbox" className="h-[1.25rem] w-[1.25rem]" />
+                <input type="checkbox" className="h-[1.25rem] w-[1.25rem] accent-[#000]" />
                 <p>Outdoor Plants</p>
               </li>
               <li className="flex items-center gap-[0.5rem]">
-                <input type="checkbox" className="h-[1.25rem] w-[1.25rem]" />
+                <input type="checkbox" className="h-[1.25rem] w-[1.25rem] accent-[#000]" />
                 <p>Flowering Plants</p>
               </li>
               <li className="flex items-center gap-[0.5rem]">
-                <input type="checkbox" className="h-[1.25rem] w-[1.25rem]" />
+                <input type="checkbox" className="h-[1.25rem] w-[1.25rem] accent-[#000]" />
                 <p>Tropical Plants</p>
               </li>
             </div>
@@ -53,19 +53,19 @@ export const ProductFilterSection = () => {
             <li className="text-[1.25rem] text-[#171717] font-medium">Size</li>
             <div className="text-[1.22669rem] pt-[1rem]">
               <li className="flex items-center gap-[0.5rem]">
-                <input type="checkbox" className="h-[1.25rem] w-[1.25rem]" />
+                <input type="checkbox" className="h-[1.25rem] w-[1.25rem] accent-[#000]" />
                 <p>Small (under 12")</p>
               </li>
               <li className="flex items-center gap-[0.5rem]">
-                <input type="checkbox" className="h-[1.25rem] w-[1.25rem]" />
+                <input type="checkbox" className="h-[1.25rem] w-[1.25rem] accent-[#000]" />
                 <p>Medium (12-24")</p>
               </li>
               <li className="flex items-center gap-[0.5rem]">
-                <input type="checkbox" className="h-[1.25rem] w-[1.25rem]" />
+                <input type="checkbox" className="h-[1.25rem] w-[1.25rem] accent-[#000]" />
                 <p>Large (24-48")</p>
               </li>
               <li className="flex items-center gap-[0.5rem]">
-                <input type="checkbox" className="h-[1.25rem] w-[1.25rem]" />
+                <input type="checkbox" className="h-[1.25rem] w-[1.25rem] accent-[#000]" />
                 <p>X-Large (over 48")</p>
               </li>
             </div>
@@ -80,7 +80,7 @@ export const ProductFilterSection = () => {
             </li>
             <div className="text-[1.22669rem] pt-[1rem]">
               <li className="flex items-center gap-[0.5rem]">
-                <input type="checkbox" className="h-[1.25rem] w-[1.25rem]" />
+                <input type="checkbox" className="h-[1.25rem] w-[1.25rem] accent-[#000]" />
                 <div className="flex items-center gap-0">
                   <img
                     src="/assets/images/ProductPageImages/yellowStarIcon.svg"
@@ -111,7 +111,7 @@ export const ProductFilterSection = () => {
                 <p>& up</p>
               </li>
               <li className="flex items-center gap-[0.5rem]">
-                <input type="checkbox" className="h-[1.25rem] w-[1.25rem]" />
+                <input type="checkbox" className="h-[1.25rem] w-[1.25rem] accent-[#000]" />
                 <div className="flex items-center gap-0">
                   <img
                     src="/assets/images/ProductPageImages/yellowStarIcon.svg"
@@ -142,7 +142,7 @@ export const ProductFilterSection = () => {
                 <p>& up</p>
               </li>
               <li className="flex items-center gap-[0.5rem]">
-                <input type="checkbox" className="h-[1.25rem] w-[1.25rem]" />
+                <input type="checkbox" className="h-[1.25rem] w-[1.25rem] accent-[#000]" />
                 <div className="flex items-center gap-0">
                   <img
                     src="/assets/images/ProductPageImages/yellowStarIcon.svg"

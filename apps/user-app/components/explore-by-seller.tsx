@@ -2,23 +2,38 @@ import Image from "next/image";
 import { Navbar } from "./nav-section";
 import { Footer } from "./footer-section";
 import { Header } from "./header-section";
+import { ShoppingCartIcon } from "./cart-icon";
+import { CustomSelectTag } from "./custom-select-tag";
+import { UserProfileIcon } from "./user-profile-icon";
 import { ProductPageButton } from "./product-page-button";
-import { ExploreProductDropDown } from "./explore-product-dropdown";
 import { ProductSearchBar, SearchBarWorkType } from "./product-search-bar";
-import plantImage1 from '../public/assets/images/ProductImages/explore-by-seller-img1.jpg';
-import plantImage2 from '../public/assets/images/ProductImages/explore-by-seller-img2.jpg';
-
+import plantImage1 from "../public/assets/images/ProductImages/explore-by-seller-img1.jpg";
+import plantImage2 from "../public/assets/images/ProductImages/explore-by-seller-img2.jpg";
 
 export const ExplorePlantsBySeller = () => {
   const productPageButton = ["Most Popular", "Newly Added", "NearBy Seller"];
   const availableProducts = ["Indoor Plants", "Gardening tools", "Rare Plants"];
   return (
     <div className="w-screen h-max flex flex-col items-center bg-[#FFF6F4] font-[Poppins]">
+      {/* Heder and Navbar */}
       <div className="2xl:w-[82.1875rem] lg:w-[60rem] xl:w-[70rem] h-max flex flex-col items-center gap-[1rem] pt-[2rem]">
-        <Header />
+        <div className="2xl:w-[82.1875rem] lg:w-[60rem] xl:w-[70rem] h-max flex justify-between">
+          <Header />
+          <div className="w-[12rem] flex justify-between items-center">
+            <UserProfileIcon />
+            <ShoppingCartIcon />
+          </div>
+        </div>
+
         <div className="w-[100%] flex justify-between">
           <Navbar />
-          <ExploreProductDropDown />
+          <div className="h-[4.05rem] w-[22.5rem] flex justify-between">
+            <CustomSelectTag
+              activeValue="Explore by seller"
+              values={["Explore", "Explore by seller"]}
+              explore={false}
+            />
+          </div>
         </div>
       </div>
 

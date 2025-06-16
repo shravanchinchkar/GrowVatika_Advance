@@ -16,10 +16,12 @@ export const SellerDashboardWelcomeMsg = ({
   const updateActiveSideBar = activeSideBarStore(
     (state: any) => state.updateActiveSideBar
   );
+
   const handleDisplayAddProductSection = () => {
     updatedisplayAddProductSection(true);
     updateActiveSideBar("products");
   };
+  
   return (
     <div className="p-6 bg-custom-bg rounded-[1.25rem] h-[9.313rem] w-[100%]">
       <div className="text-white font-bold text-[2rem] capitalize font-[Unbounded]">

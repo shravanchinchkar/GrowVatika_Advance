@@ -6,16 +6,21 @@ import { signOut } from "next-auth/react";
 import { activeSideBarStore } from "../store/activeSideBar";
 import { SellerDashboardSiteLogo } from "./seller-dashboard-sitelogo";
 import { sellerDataStore } from "../store/sellerData";
+import { displayAddProductSectionStore } from "../store/displayAddProductSection";
 
 export const SellerDashboardSideBar = () => {
   const [display, setDisplay] = useState(false);
-  const sellerData=sellerDataStore((state)=>state.sellerData);
+  const sellerData = sellerDataStore((state) => state.sellerData);
 
   const currentActiveSideBar = activeSideBarStore(
     (state: any) => state.activeSideBar
   );
   const updateActiveSideBar = activeSideBarStore(
     (state: any) => state.updateActiveSideBar
+  );
+
+  const updateVisibility = displayAddProductSectionStore(
+    (state: any) => state.updateDisplayAddProductSectionStore
   );
 
   const SideBarMainSectionList = [
@@ -35,9 +40,27 @@ export const SellerDashboardSideBar = () => {
     }
   };
 
-  const handleSideBarNavigation = (e: any) => {
+  const handleSideBarNavigation = (e: React.MouseEvent<HTMLElement>) => {
     const targetSideBar = e.currentTarget.id.toLowerCase();
-    updateActiveSideBar(targetSideBar);
+
+    // Define valid sidebar options
+    const validSidebarOptions = [
+      "products",
+      "dashboard",
+      "collections",
+      "orders",
+      "settings",
+      "help center",
+    ];
+
+    // Only proceed if it's a valid sidebar option
+    if (validSidebarOptions.includes(targetSideBar)) {
+      updateVisibility(false);
+      updateActiveSideBar(targetSideBar);
+      console.log("targetSideBar:", targetSideBar);
+    } else {
+      console.warn(`Invalid sidebar option: ${targetSideBar}`);
+    }
   };
 
   const handleSellerLogout = async () => {
@@ -153,7 +176,6 @@ export const SellerDashboardSideBar = () => {
 
       {/* Seller Profile Section */}
       <div className="relative w-[100%] border-t-[2px] border-[#FFFFFF8C] flex flex-col items-center mx-auto">
-
         {/* Logout and Profile Section */}
         <div
           className={
@@ -207,11 +229,12 @@ export const SellerDashboardSideBar = () => {
               fill
             />
           </div>
-          
-          <div className="flex items-center gap-[1rem]"> 
 
+          <div className="flex items-center gap-[1rem]">
             <div className="font-medium capitalize">
-              <h1 className="text-[#123524] text-[0.85rem]">{sellerData.nurseryName}</h1>
+              <h1 className="text-[#123524] text-[0.85rem]">
+                {sellerData.nurseryName}
+              </h1>
               <h3 className="text-[#697F75] text-[0.6875rem]">
                 Seller account
               </h3>
@@ -234,12 +257,9 @@ export const SellerDashboardSideBar = () => {
                 className="object-contain"
               />
             </button>
-
           </div>
         </div>
-        
       </div>
-
     </div>
   );
 };

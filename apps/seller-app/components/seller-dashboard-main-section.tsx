@@ -4,7 +4,7 @@ import axios from "axios";
 import toast from "react-hot-toast";
 import { useEffect, useState } from "react";
 import { useSession } from "next-auth/react";
-import { SellerData, SellerDataSchema } from "@repo/common-types/types";
+import { sellerDataStore } from "../store/sellerData";
 import { toastStyle } from "@repo/shared/utilfunctions";
 import { BusinessInfoCard } from "./business-Info-card";
 import { activeSideBarStore } from "../store/activeSideBar";
@@ -12,7 +12,6 @@ import { SellerDashboardLoader } from "./seller-dashboard-loader";
 import { AnaylticalCards } from "./seller-dashboard-analytical-cards";
 import { SellerDashboardWelcomeMsg } from "./seller-dashboard-welcome-msg";
 import { displayAddProductSectionStore } from "../store/displayAddProductSection";
-import { sellerDataStore } from "../store/sellerData";
 
 export const SellerDashboardMainSection = () => {
   const { data: session, status } = useSession();

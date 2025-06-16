@@ -115,7 +115,7 @@ export const BusinessInfoCard: React.FC<BusinessInfoCardProps> = ({
 
   // Handle Add More Button
   const handleAddMoreButton = () => {
-    setDisplaySaveButton(displaySaveButton)
+    setDisplaySaveButton(displaySaveButton);
     setDisplayAddMoreButton(!displayAddMoreButton);
   };
   return (
@@ -180,7 +180,7 @@ export const BusinessInfoCard: React.FC<BusinessInfoCardProps> = ({
       {/* Following div consist of Profile Picture,Nursery Name,description and Rating Section */}
       <div className="flex justify-between items-center">
         {/* Profile Picture,Nursery Name,description */}
-        <div className="w-[50%] flex items-center gap-4">
+        <div className="w-[50%] h-max  flex items-center gap-[1rem]">
           <div className="w-[4.363rem] h-[4.363rem] rounded-full bg-center bg-cover relative">
             <Image
               src={
@@ -191,7 +191,6 @@ export const BusinessInfoCard: React.FC<BusinessInfoCardProps> = ({
               className="object-contain"
             />
           </div>
-
           {/* Nursery Name and Bio */}
           <div className="w-[100%]">
             <p className="text-[#171717] text-[1.2rem] font-semibold">

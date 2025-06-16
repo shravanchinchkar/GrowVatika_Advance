@@ -45,7 +45,13 @@ export const SellerDashboardMediaProductSection = () => {
 
         {/* Upload Button */}
         <div>
-          <button className="w-[14.5rem] h-[3.1875rem] flex items-center justify-center gap-3 rounded-[0.625rem] bg-[#56A430] text-white text-center font-[Poppins] text-[1.22669rem] font-normal capitalize">
+          {/* <button
+            className="w-[14.5rem] h-[3.1875rem] flex items-center justify-center gap-3 rounded-[0.625rem] bg-[#56A430] text-white text-center font-[Poppins] text-[1.22669rem] font-normal capitalize border-[2px]"
+            type="button"
+            onClick={() => {
+              alert("Hello");
+            }}
+          >
             <Image
               src="/assets/images/SellerDashboardMediaImages/uploadImageIcon.svg"
               alt="upload icon"
@@ -54,7 +60,32 @@ export const SellerDashboardMediaProductSection = () => {
               className="mt-[2px]"
             />
             Upload Images
-          </button>
+          </button> */}
+
+          <div>
+            <label htmlFor="image" className="block text-gray-300 mb-1">
+              Upload Product Image
+            </label>
+            <div className="relative">
+              {/* <Image
+                fill
+                className="absolute left-3 top-2.5 text-gray-400"
+              /> */}
+              <input
+                type="file"
+                id="image"
+                name="image"
+                accept="image/*"
+                // onChange={handleChange} // New handler
+                required
+                className="w-full pl-10 pr-4 py-2 rounded bg-[#56A430] border border-[#fff] text-black focus:outline-none focus:border-[#56A430] file:bg-[#fff] file:border-0 file:py-1 file:px-3 file:text-black file:rounded"
+              />
+            </div>
+            <p className="text-xs text-gray-400 mt-1">
+              Upload an image of your restaurant. Recommended size: 1200x800
+              pixels.
+            </p>
+          </div>
         </div>
 
         {/* File Format Note */}

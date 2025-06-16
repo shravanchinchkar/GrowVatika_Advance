@@ -1,15 +1,17 @@
 "use client";
 
+import { Cart } from "./cart";
 import Image from "next/image";
 import { useState } from "react";
+import { WishList } from "./wishlist";
 import { Navbar } from "./nav-section";
 import { Header } from "./header-section";
+import { Footer } from "./footer-section";
 import { ShoppingCartIcon } from "./cart-icon";
 import { CustomSelectTag } from "./custom-select-tag";
 import { UserProfileIcon } from "./user-profile-icon";
 import { LikeProductIcon } from "./like-product-icon";
 import { ProductFilterSection } from "./product-filter-section";
-import { Footer } from "./footer-section";
 
 export const ExploreProductCatalogSection = () => {
   const filterTags = ["Indoor Plants", "Large (24–48”)", "2 star & up"];
@@ -20,12 +22,14 @@ export const ExploreProductCatalogSection = () => {
   };
 
   return (
-    <div className="flex flex-col items-center bg-[#FFF6F4] min-h-screen font-[Poppins]">
+    <div className="relative flex flex-col items-center bg-[#FFF6F4] min-h-screen font-[Poppins] ">
+      <Cart />
+      <WishList/>
 
       <div className="flex flex-col gap-[2rem]">
-        {/* Header & Nav */}
+        {/* Header,Navbar, and all other buttons */}
         <div className="2xl:w-[82.1875rem] lg:w-[60rem] xl:w-[70rem] h-max flex flex-col items-center gap-[1rem] pt-[2rem]">
-          <div className="2xl:w-[82.1875rem] lg:w-[60rem] xl:w-[70rem] h-max flex justify-between">
+          <div className="2xl:w-[82.1875rem] lg:w-[60rem] xl:w-[70rem] h-max flex justify-between z-0">
             <Header />
             <div className="w-[18rem] flex justify-between items-center">
               <UserProfileIcon />
@@ -34,7 +38,7 @@ export const ExploreProductCatalogSection = () => {
             </div>
           </div>
 
-          <div className="w-[100%] flex justify-between ">
+          <div className="w-[100%] flex justify-between z-10">
             <Navbar />
 
             <div className="h-[4.05rem] w-[22.5rem] flex justify-between">
@@ -88,7 +92,7 @@ export const ExploreProductCatalogSection = () => {
               Search
             </button>
 
-            <div className="relative w-[8.375rem] h-[3.0625rem]">
+            <div className="relative w-[8.375rem] h-[3.0625rem] z-0">
               {/* Sort Button */}
               <button
                 className="absolute top-0 flex items-center justify-center gap-2 w-[100%] h-[3.0625rem] rounded-full border-[1.6px] bg-[#fff] border-[#56A430] text-[#171717] text-[1.22669rem] font-poppins capitalize"

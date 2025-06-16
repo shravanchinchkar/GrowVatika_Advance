@@ -3,24 +3,124 @@
 import Image from "next/image";
 import { SellerDashboardMediaProductSection } from "./seller-dashboard-media-product-section";
 import { displayAddProductSectionStore } from "../store/displayAddProductSection";
+import { useForm, SubmitHandler } from "react-hook-form";
+import { useState } from "react";
+import { ProductSchema, TProductSchema } from "@repo/common-types/types";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { CustomSellerDashboardDropDown } from "./custom-seller-dashboard-dropdown";
 
 export const SellerDashboardAddProductSection = () => {
+  // Zustand Code
   const displayAddProductSection = displayAddProductSectionStore(
     (state: any) => state.displayAddProductSection
   );
-
   const updateVisibility = displayAddProductSectionStore(
     (state: any) => state.updateDisplayAddProductSectionStore
   );
 
-  const hideAddProductSection=()=>{
+  const hideAddProductSection = () => {
     updateVisibility(false);
     // alert("Hello")
-  }
+  };
 
-  if (displayAddProductSection) {
+  // Following state and functions are for Collection dropdown
+  const [collection, setCollection] = useState("");
+  const [displayCollectionDropDown, setDisplayCollectionDropDown] =
+    useState(false);
+  const handleCollection = () => {
+    if (!displayCollectionDropDown) {
+      setDisplayCollectionDropDown(true);
+    } else {
+      setDisplayCollectionDropDown(false);
+    }
+  };
+  const selectCollections = (collection: string) => {
+    setCollection(collection);
+    console.log("collection is:", collection);
+    setDisplayCollectionDropDown(false);
+  };
+
+  // Following state and functions are for Category dropdown
+  const [category, setCategory] = useState("");
+  const [displayCategoryDropDown, setDisplayCategoryDropDown] = useState(false);
+  const handleCategory = () => {
+    if (!displayCategoryDropDown) {
+      setDisplayCategoryDropDown(true);
+    } else {
+      setDisplayCategoryDropDown(false);
+    }
+  };
+  const selectCategory = (category: string) => {
+    setCategory(category);
+    console.log("collection is:", category);
+    setDisplayCategoryDropDown(false);
+  };
+
+  // Following State and functions are for Product Status dropdpwn
+  const [productStatus, setProductStatus] = useState("Active");
+  const [displayProductStatusDropDown, setDisplayProductStatusDropDown] =
+    useState(false);
+
+  const handleProductStatus = () => {
+    if (!displayProductStatusDropDown) {
+      setDisplayProductStatusDropDown(true);
+    } else {
+      setDisplayProductStatusDropDown(false);
+    }
+  };
+
+  const selectProductStatus = (status: string) => {
+    setProductStatus(status);
+    setDisplayProductStatusDropDown(false);
+  };
+
+  // Following State and functions are for Visibility dropdpwn
+  const [visibilityStatus, setVisibilityStatus] = useState("Public");
+  const [displayVisibilityStatusDropDown, setDisplayVisibilityStatusDropDown] =
+    useState(false);
+
+  const handleVisibilityStatus = () => {
+    if (!displayVisibilityStatusDropDown) {
+      setDisplayVisibilityStatusDropDown(true);
+    } else {
+      setDisplayVisibilityStatusDropDown(false);
+    }
+  };
+
+  const selectVisibilityStatus = (status: string) => {
+    setVisibilityStatus(status);
+    setDisplayVisibilityStatusDropDown(false);
+  };
+
+  const {
+    register,
+    reset,
+    formState: { errors },
+    handleSubmit,
+  } = useForm<TProductSchema>({
+    resolver: zodResolver(ProductSchema),
+  });
+
+  const handlePublishProduct = () => {
+    alert("Hello");
+  };
+
+  const Collections = [
+    "Indoor",
+    "Outdoor",
+    "Flowering Plants",
+    "Tropical Plants",
+  ];
+
+  const Category = ["Plants", "Pots", "Soil", "Fertilizers"];
+
+  const ProductStatus = ["Active", "Draft"];
+
+  const Visibility = ["Public", "Hidden"];
+
+  if (displayAddProductSection === true) {
     return (
-      <div className="flex flex-col items-center mx-[1rem] pt-[1rem]">
+      <form className="flex flex-col items-center mx-[1rem] pt-[1rem]">
         {/* Add Product header section */}
         <div className="w-[98%] flex justify-between">
           {/* Following div consist of left arrow image and title */}
@@ -29,6 +129,7 @@ export const SellerDashboardAddProductSection = () => {
             <button
               className="relative h-[1.5rem] w-[1.5rem]"
               onClick={hideAddProductSection}
+              type="button"
             >
               <Image
                 src="/assets/images/AddProductSectionImages/leftarrow.svg"
@@ -47,7 +148,11 @@ export const SellerDashboardAddProductSection = () => {
 
           {/* Following div consist of Cancle and Publish Product Button */}
           <div className="flex items-center gap-5">
-            <button className="rounded-[0.625rem] h-[3.1875rem] w-[10rem] border-[1.5px] border-[#CBD0D3] bg-white flex justify-center items-center gap-4">
+            {/* Cancle Button */}
+            <button
+              className="rounded-[0.625rem] h-[3.1875rem] w-[10rem] border-[1.5px] border-[#CBD0D3] bg-white flex justify-center items-center gap-4"
+              type="button"
+            >
               <div className="relative h-[1.5rem] w-[1.5rem]">
                 <Image
                   src="/assets/images/AddProductSectionImages/cancelIcon.svg"
@@ -58,7 +163,12 @@ export const SellerDashboardAddProductSection = () => {
               <div>Cancel</div>
             </button>
 
-            <button className="rounded-[0.625rem] h-[3.1875rem] w-[14.5rem] bg-[#56A430] flex justify-center items-center gap-4">
+            {/* Publish Product Button */}
+            <button
+              className="rounded-[0.625rem] h-[3.1875rem] w-[14.5rem] bg-[#56A430] flex justify-center items-center gap-4"
+              type="button"
+              onClick={handlePublishProduct}
+            >
               <div className="relative h-[1.5rem] w-[1.5rem]">
                 <Image
                   src="/assets/images/AddProductSectionImages/publishProductIcon.svg"
@@ -74,10 +184,12 @@ export const SellerDashboardAddProductSection = () => {
         {/* Add Product Bottom div */}
         <div className="w-[98%] flex justify-between pt-[1rem]">
           {/* Following div consist of Business Information section and Media Section  */}
+
           <div>
             {/* Business Information section */}
             <div className="w-[41rem] h-max p-6 bg-white rounded-xl">
               {/* Heading */}
+
               <div className="w-[22.08575rem] mb-1.5">
                 <h1 className="text-[#171717] font-[Poppins] text-[2rem] font-semibold leading-[2.6rem]">
                   Business Information
@@ -89,6 +201,7 @@ export const SellerDashboardAddProductSection = () => {
                   Add the basic information about your product
                 </p>
               </div>
+
               {/* Product Name */}
               <div className="mb-2">
                 <label className="text-[#171717] font-[Poppins] text-[1.22669rem] font-medium">
@@ -100,9 +213,11 @@ export const SellerDashboardAddProductSection = () => {
                   type="text"
                   placeholder="e.g. Monstera Deliciosa"
                   className="w-[37.0625rem] h-[3.1875rem] rounded-[0.625rem] border border-[#CBD0D3] bg-white 
-            placeholder:text-[#697F75] placeholder:font-[Poppins] placeholder:text-[1.22669rem] placeholder:font-normal px-4"
+                  placeholder:text-[#697F75] placeholder:font-[Poppins] placeholder:text-[1.22669rem] placeholder:font-normal px-4   outline-none"
+                  {...register("name", { required: true })}
                 />
               </div>
+
               {/* Price & Compare-at Price */}
               <div className="grid grid-cols-2 gap-6 mb-6">
                 {/* Price */}
@@ -115,7 +230,8 @@ export const SellerDashboardAddProductSection = () => {
                       type="text"
                       placeholder="$ 0.00"
                       className="w-full h-[3.1875rem] rounded-[0.625rem] border-[1.5px] border-[#CBD0D3] bg-white 
-                text-[#697F75] text-[1.22669rem] font-poppins font-normal pl-4 pr-10"
+                    text-[#697F75] text-[1.22669rem] font-poppins font-normal pl-4 pr-10 outline-none"
+                      {...register("price", { required: true })}
                     />
                     <Image
                       src="/assets/images/productSectionImages/upDownIcon.svg"
@@ -137,7 +253,8 @@ export const SellerDashboardAddProductSection = () => {
                       type="text"
                       placeholder="$ 0.00"
                       className="w-full h-[3.1875rem] rounded-[0.625rem] border-[1.5px] border-[#CBD0D3] bg-white 
-                text-[#697F75] text-[1.22669rem] font-poppins font-normal pl-4 pr-10"
+                    text-[#697F75] text-[1.22669rem] font-poppins font-normal pl-4 pr-10 outline-none"
+                      {...register("compareAt", { required: true })}
                     />
                     <Image
                       src="/assets/images/productSectionImages/upDownIcon.svg"
@@ -149,6 +266,7 @@ export const SellerDashboardAddProductSection = () => {
                   </div>
                 </div>
               </div>
+
               {/* Description */}
               <div className="grid gap-2 mb-4">
                 <label className="text-[#171717] font-[Poppins] text-[1.22669rem] font-medium">
@@ -157,7 +275,8 @@ export const SellerDashboardAddProductSection = () => {
                 <textarea
                   placeholder="Describe your product in detail..."
                   className="w-full min-h-[6rem] rounded-[0.625rem] border-[1.5px] border-[#CBD0D3] bg-white 
-            text-[#697F75] text-[1.22669rem] font-poppins font-normal px-4 py-2"
+                  text-[#697F75] text-[1.22669rem] font-poppins font-normal px-4 py-2 outline-none"
+                  {...register("description", { required: true })}
                 ></textarea>
               </div>
             </div>
@@ -173,45 +292,34 @@ export const SellerDashboardAddProductSection = () => {
               <div className="flex flex-col gap-12">
                 <div className="text-[2rem] font-semibold">Organization</div>
                 <div className="flex flex-col gap-6">
-                  <div className="flex flex-col gap-2">
-                    <div className="text-[1.22669rem]">Collection</div>
-                    <div className="h-[3.1875rem] w-[15.9375rem] border-[1.5px] border-[#CBD0D3] rounded-[0.625rem] flex items-center justify-between">
-                      <div className="text-[1.22669rem] ml-3">
-                        Select collection
-                      </div>
-                      <div className="relative h-[1.5rem] w-[1.5rem] mr-3">
-                        <Image
-                          src="/assets/images/AddProductSectionImages/dropdownIcon.svg"
-                          alt="dropdownIcon"
-                          fill
-                        />
-                      </div>
-                    </div>
-                  </div>
+                  {/* Collection DropDown */}
+                  <CustomSellerDashboardDropDown
+                    label="Collection"
+                    placeholder="Select Collection"
+                    options={Collections}
+                    value={collection}
+                    onChange={setCollection}
+                  />
 
-                  <div className="flex flex-col gap-2">
-                    <div className="text-[1.22669rem]">Category</div>
-                    <div className="h-[3.1875rem] w-[15.9375rem] border-[1.5px] border-[#CBD0D3] rounded-[0.625rem] flex items-center justify-between">
-                      <div className="text-[1.22669rem] ml-3">
-                        Select category
-                      </div>
-                      <div className="relative h-[1.5rem] w-[1.5rem] mr-3">
-                        <Image
-                          src="/assets/images/AddProductSectionImages/dropdownIcon.svg"
-                          alt="dropdownIcon"
-                          fill
-                        />
-                      </div>
-                    </div>
-                  </div>
+                  {/* Category DropDown */}
+                  <CustomSellerDashboardDropDown
+                    label="Category"
+                    placeholder="Select Category"
+                    options={Category}
+                    value={category}
+                    onChange={setCategory}
+                  />
 
-                  <div className="flex flex-col gap-2">
+                  {/* Add Tag Section */}
+                  <div className="flex flex-col gap-2 ">
                     <div className="text-[1.22669rem]">Tags</div>
                     <div className="flex gap-2">
-                      <div className="h-[3.1875rem] w-[13rem] border-[1.5px] border-[#CBD0D3] rounded-[0.625rem] flex items-center">
-                        <p className="ml-3">Add tag</p>
-                      </div>
-                      <div className="h-[3.1875rem] w-[2.375rem] border-[1.5px] border-[#CBD0D3] rounded-[0.625rem] flex justify-center items-center">
+                      <input
+                        type="text"
+                        placeholder="Add tag"
+                        className="h-[3.1875rem] w-[13rem] border-[1.5px] border-[#CBD0D3] rounded-[0.625rem] flex items-center pl-[0.5rem] outline-none"
+                      />
+                      <button className="h-[3.1875rem] w-[2.375rem] border-[1.5px] border-[#CBD0D3] rounded-[0.625rem] flex justify-center items-center">
                         <div className="relative h-[1.5rem] w-[1.5rem]">
                           <Image
                             src="/assets/images/AddProductSectionImages/addTagIcon.svg"
@@ -219,7 +327,7 @@ export const SellerDashboardAddProductSection = () => {
                             fill
                           />
                         </div>
-                      </div>
+                      </button>
                     </div>
                   </div>
                 </div>
@@ -227,26 +335,34 @@ export const SellerDashboardAddProductSection = () => {
             </div>
 
             {/* Status & Visibility Section */}
-            <div className="h-[21.125rem] w-[19.875rem] bg-white rounded-[1.25rem] pl-[2rem] pt-[1.5rem] flex flex-col gap-5 ">
-              <div className="text-[2rem] font-semibold">
+            <div className="h-[34.8125rem] w-[19.875rem] bg-white rounded-[1.25rem] pl-[2rem] pt-[1.5rem] flex flex-col gap-5">
+              <div className="text-[2rem] font-semibold w-[10rem]">
                 Status & Visibility
               </div>
-              <div>
-                <div className="text-[1.22669rem]">Visibility *</div>
-                <div className="h-[3.1875rem] w-[15.9375rem] border-[1.5px] border-[#CBD0D3] rounded-[0.625rem] flex items-center justify-between">
-                  <div className="text-[1.22669rem] ml-3">Public</div>
-                  <div className="relative h-[1.5rem] w-[1.5rem] mr-3">
-                    <Image
-                      src="/assets/images/AddProductSectionImages/dropdownIcon.svg"
-                      alt="dropdownIcon"
-                      fill
-                    />
-                  </div>
-                </div>
-              </div>
-              <div className="flex gap-2">
+
+              {/* Product Status dropdown */}
+              <CustomSellerDashboardDropDown
+                label="Product Status"
+                placeholder="Select Status"
+                options={ProductStatus}
+                value={productStatus}
+                onChange={setProductStatus}
+                required={true}
+              />
+
+              {/* Visibility dropdown */}
+              <CustomSellerDashboardDropDown
+                label="Visibility"
+                placeholder="Select Visibility"
+                options={Visibility}
+                value={visibilityStatus}
+                onChange={setVisibilityStatus}
+                required={true}
+              />
+
+              <div className="flex items-center gap-2">
                 <div>
-                  <input className="h-[1.25rem] w-[1.25rem]" type="checkbox" />
+                  <input className="h-[1.25rem] w-[1.25rem] accent-[#000]" type="checkbox" />
                 </div>
                 <div className="w-[10.5rem] h-[3.625rem] text-[1.2rem] ml-2">
                   Mark as featured product
@@ -255,7 +371,7 @@ export const SellerDashboardAddProductSection = () => {
             </div>
           </div>
         </div>
-      </div>
+      </form>
     );
   }
 };

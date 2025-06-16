@@ -34,4 +34,16 @@ model Seller {
   verifyCode       String?
   verifyCodeExpiry DateTime?
   isVerified       Boolean   @default(false)
+  products         Product[]
+}
+
+model Product {
+  id          String @id @default(uuid())
+  seller      Seller @relation(fields: [sellerId], references: [id])
+  sellerId    String
+  name        String
+  price       String
+  compareAt   String
+  description String
+  imageURL    String
 }

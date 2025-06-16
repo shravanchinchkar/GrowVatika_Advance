@@ -1,6 +1,9 @@
+"use client";
+
 import Image, { StaticImageData } from "next/image";
 import { SiteButton } from "./shop-button";
 import { v4 as uuidv4 } from "uuid";
+import { useRouter } from "next/navigation";
 
 type CardData = {
   id: string;
@@ -13,6 +16,11 @@ type ExploreCardProps = {
 };
 
 export const ExploreCard: React.FC<ExploreCardProps> = ({ cardData }) => {
+  const router=useRouter();
+
+  const handleNavigation = () => {
+    router.push("/explore")
+  };
   return (
     <div
       key={cardData.id}
@@ -63,7 +71,7 @@ export const ExploreCard: React.FC<ExploreCardProps> = ({ cardData }) => {
         </div>
 
         <div className="ml-[1.5rem] lg:mt-[1rem]">
-          <SiteButton buttonName={"Explore"} />
+          <SiteButton buttonName={"Explore"} onClick={handleNavigation} />
         </div>
       </div>
     </div>

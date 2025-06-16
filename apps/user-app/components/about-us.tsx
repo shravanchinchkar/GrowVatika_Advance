@@ -31,7 +31,7 @@ export const AboutUsSection = () => {
             we connect plant lovers with trusted nurseries, offering a diverse
             range of
             <span className="font-bold">
-              plants, gardening tools, soil, fertilizers, pots, and garden décor
+              {" "}plants, gardening tools, soil, fertilizers, pots, and garden décor
             </span>
             —all in one place!
           </p>
@@ -46,7 +46,7 @@ export const AboutUsSection = () => {
             . Whether you're an experienced gardener or just starting,
             GrowVatika helps you
             <span className="font-bold">
-              explore nearby nurseries, discover top-rated sellers, and shop
+              {" "}explore nearby nurseries, discover top-rated sellers, and shop
               fresh plants and essentials with ease.
             </span>
           </p>

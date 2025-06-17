@@ -13,7 +13,7 @@ export async function GET(req: NextRequest) {
     try {
       const existingSellerData = await client.seller.findUnique({
         where: {
-          email: email || "",
+          email: validateInput.data?.email || "",
         },
         select: {
           nurseryName: true,
@@ -30,7 +30,6 @@ export async function GET(req: NextRequest) {
         });
       } else {
         console.log("Seller data found!");
-
         return NextResponse.json({
           success: true,
           message: "Seller Data found!",
@@ -39,7 +38,6 @@ export async function GET(req: NextRequest) {
       }
     } catch (err) {
       console.error("Error while getting the data of the seller", err);
-
       return NextResponse.json({
         success: false,
         error: "Error while getting seller data",

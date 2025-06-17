@@ -1,20 +1,24 @@
 "use client";
 import Link from "next/link";
 import Image from "next/image";
-import { useRouter } from "next/navigation";
 import { use, useState } from "react";
 import Skeleton from "../app/loading";
+import { useRouter } from "next/navigation";
+import { useSession } from "next-auth/react";
 
 export const SellerHeroSection = () => {
+  const {data:session}=useSession();
+  const sellerId = session?.user?.id;
+
+  console.log("Seller Session details:", session);
   const router = useRouter();
   const [loading, setLoading] = useState(false);
 
   const handleStartSellingNow = () => {
     setLoading(true);
-    router.push("/sellerdashboard");
+    router.push(`/sellerdashboard?id=${sellerId}`);
     setLoading(false);
   };
-
   if (loading) {
     return <Skeleton />;
   }

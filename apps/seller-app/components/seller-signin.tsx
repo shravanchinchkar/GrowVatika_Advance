@@ -57,9 +57,11 @@ export const SellerSignin = () => {
       // Check session to determine verification status
       const sessionResponse = await fetch("/api/auth/session");
       const session = await sessionResponse.json();
+      const sellerId=session.user.id;
       if (session?.user?.isVerified) {
+        console.log("Seller Details after signin:",session.user)
         toast.success("Signin successful!", toastStyle);
-        router.push("/");
+        router.push(`/sellerdashboard?id=${sellerId}`);
       } else {
         router.push(`/verify?email=${data.email}`);
       }

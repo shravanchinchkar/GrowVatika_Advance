@@ -48,9 +48,9 @@ export const NEXT_AUTH = {
           );
         } else {
           try {
-            console.log("remaining:",remaining)
+            console.log("remaining:", remaining);
             //extract the email and password send by the user
-            const { email, password } = credentials;
+            const { email, password } = inputResult.data;
             //check if the user with the entered email already exists in db
             const sellerExists = await client.seller.findFirst({
               where: {
@@ -121,7 +121,7 @@ export const NEXT_AUTH = {
     },
     // The session callback helps in displaying the  userId in client component
     session: ({ session, token }: any) => {
-      if (session.user) {
+      if (session && session.user) {
         session.user.id = token.id as string;
         session.user.isVerified = token.isVerified as boolean; // Pass isVerified to the session
       }

@@ -22,6 +22,8 @@ import {
   GetStartedFromInput,
   GetStartedFromSchema,
   SignInInputs,
+  TEmailOnlySchema,
+  SignInSchema,
 } from "@repo/common-types/types";
 
 interface VerifyCodeProps {
@@ -63,7 +65,7 @@ export async function signup(
       //check if the user already exists
       const existingUserByEmail = await client.user.findUnique({
         where: {
-          email: signupCredentials.email,
+          email: result.data.email,
         },
       });
 
@@ -81,11 +83,11 @@ export async function signup(
         else {
           console.log("Email exists but not verified!", existingUserByEmail);
           const hashPassword = await bcrypt.hash(
-            signupCredentials.confirmPassword || "",
+            result.data.confirmPassword || "",
             10
           );
           await client.user.update({
-            where: { email: signupCredentials.email },
+            where: { email: result.data.email },
             data: {
               password: hashPassword,
               verifyCode: verifyCode,
@@ -95,8 +97,8 @@ export async function signup(
 
           // Send verification email for the unverified user
           const emailResponse = await sendVerificationEmail(
-            signupCredentials.name || "",
-            signupCredentials.email,
+            result.data.name || "",
+            result.data.email,
             verifyCode
           );
           // If error while sending email
@@ -115,13 +117,13 @@ export async function signup(
       } else {
         // If the user doesn't exists create the new fresh user
         const hashPassword = await bcrypt.hash(
-          signupCredentials.confirmPassword || "",
+          result.data.confirmPassword || "",
           10
         );
         const newUser = await client.user.create({
           data: {
-            name: signupCredentials.name || "",
-            email: signupCredentials.email,
+            name: result.data.name || "",
+            email: result.data.email,
             password: hashPassword,
             verifyCode: verifyCode,
             verifyCodeExpiry: expiryDate,
@@ -172,7 +174,7 @@ export async function signup(
 
 //Following is the server action that sends reset password email
 export async function resetPasswordEmail(
-  email: string
+  email: TEmailOnlySchema
 ): Promise<ApiResponseType> {
   //Validate the input type
   const validateInput = EmailOnlySchema.safeParse(email);
@@ -180,7 +182,7 @@ export async function resetPasswordEmail(
     return { success: false, error: "Invalid Email" };
   } else {
     try {
-      const emailResponse = await sendResendPasswordMail(email);
+      const emailResponse = await sendResendPasswordMail(validateInput.data?.email || "");
       // If error while sending email
       if (!emailResponse.success) {
         console.log("Can't send reset password link", emailResponse.message);
@@ -205,8 +207,9 @@ export async function resetPasswordEmail(
 export async function resetPassword(
   resetPasswordData: SignInInputs
 ): Promise<ApiResponseType> {
+  console.log("Reset password inputs:",resetPasswordData)
   //Validate input
-  const validateInput = EmailOnlySchema.safeParse(resetPasswordData);
+  const validateInput = SignInSchema.safeParse(resetPasswordData);
   if (!validateInput) {
     return { success: false, error: "Invalid Data" };
   }
@@ -215,8 +218,10 @@ export async function resetPassword(
     try {
       // Check if the user exists in the User table
       const existingUser = await client.user.findUnique({
-        where: { email: resetPasswordData.email },
+        where: { email: validateInput.data?.email },
       });
+
+      console.log("Reset Password input result:",validateInput)
       // If the user dose not exists return the error message
       if (!existingUser) {
         return { success: false, error: "User Not Found" };
@@ -224,7 +229,7 @@ export async function resetPassword(
       // If the user exists, then hash the new password and store it in db
       else {
         const hashPassword = await bcrypt.hash(
-          resetPasswordData.confirmPassword || "",
+          validateInput.data?.confirmPassword || "",
           10
         );
         const updateExistingUser = await client.user.update({
@@ -372,7 +377,7 @@ export async function storeDataInExcel(
     return { success: false, error: "Invalid Inputs" };
   }
 
-  //If the form request count goes beyond 3 within 5 minutes,the block the user for 5 minutes
+  //If the form request count goes beyond 5 within 5 minutes,the block the user for 5 minutes
   const IpAddress = await getIp(); //get the Ip address of the user
   console.log("Ip address is:", IpAddress);
   const { success, pending, limit, reset, remaining } =
@@ -391,7 +396,7 @@ export async function storeDataInExcel(
     try {
       console.log("User Details:", userDetails);
       const existingSellerByEmail = await client.seller.findUnique({
-        where: { email: userDetails.email },
+        where: { email: validateInput.data.email },
       });
 
       //If the seller already exists then evaluate the seller as follows:
@@ -411,12 +416,12 @@ export async function storeDataInExcel(
 
           console.log("Email exists but not verified!", existingSellerByEmail);
           await client.seller.update({
-            where: { email: userDetails.email },
+            where: { email: validateInput.data.email },
             data: {
               firstName: "",
               lastName: "",
-              nurseryName: userDetails.nurseryName,
-              phoneNumber: userDetails.phoneNumber,
+              nurseryName: validateInput.data.nurseryName,
+              phoneNumber: validateInput.data.phoneNumber,
               password: "",
               verifyCode: verifyCode,
               verifyCodeExpiry: expiryDate,
@@ -425,8 +430,8 @@ export async function storeDataInExcel(
 
           // Send verification email for the unverified seller
           const emailResponse = await successfulCollaboration(
-            userDetails.nurseryName,
-            userDetails.fullName,
+            validateInput.data.nurseryName,
+            validateInput.data.fullName,
             getCurrentFormattedDate(),
             userDetails.email,
             verifyCode
@@ -471,11 +476,11 @@ export async function storeDataInExcel(
         // Prepare the data to be inserted
         const values = [
           [
-            userDetails.fullName,
-            userDetails.phoneNumber,
-            userDetails.email,
-            userDetails.nurseryName,
-            userDetails.city,
+            validateInput.data.fullName,
+            validateInput.data.phoneNumber,
+            validateInput.data?.email,
+            validateInput.data.nurseryName,
+            validateInput.data.city,
           ],
         ];
 
@@ -498,9 +503,9 @@ export async function storeDataInExcel(
           data: {
             firstName: "",
             lastName: "",
-            nurseryName: userDetails.nurseryName,
-            email: userDetails.email,
-            phoneNumber: userDetails.phoneNumber,
+            nurseryName: validateInput.data.nurseryName,
+            email: validateInput.data.email,
+            phoneNumber: validateInput.data.phoneNumber,
             password: "",
             verifyCode: verifyCode,
             verifyCodeExpiry: expiryDate,
@@ -517,8 +522,8 @@ export async function storeDataInExcel(
 
         //Send a successful collaboration mail to the end user
         const emailResponse = await successfulCollaboration(
-          userDetails.nurseryName,
-          userDetails.fullName,
+          validateInput.data.nurseryName,
+          validateInput.data.fullName,
           getCurrentFormattedDate(),
           userDetails.email,
           verifyCode

@@ -51,3 +51,4 @@ export const EmailOnlySchema = zod.object({
 //Following zod schema is used for frontend purpose
 export type SignUpInputs = zod.infer<typeof SignUpSchema>;
 export type SignInInputs = zod.infer<typeof SignInSchema>;
+export type TEmailOnlySchema=zod.infer<typeof EmailOnlySchema>

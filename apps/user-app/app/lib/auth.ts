@@ -56,7 +56,7 @@ export const NEXT_AUTH = {
           try {
             console.log("remaining:", remaining);
             //extract the email and password send by the user
-            const { email, password } = credentials;
+            const { email, password } = inputResult.data;
             //check if the user with the entered email already exists in db
             const userExists = await client.user.findFirst({
               where: {
@@ -246,7 +246,6 @@ export const NEXT_AUTH = {
         session.user.id = token.id as string;
         session.user.isVerified = token.isVerified as boolean; // Pass isVerified to the session
       }
-
       return session;
     },
   },

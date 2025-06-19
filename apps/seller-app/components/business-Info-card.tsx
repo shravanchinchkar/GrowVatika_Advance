@@ -56,13 +56,6 @@ export const BusinessInfoCard: React.FC<BusinessInfoCardProps> = ({
   useEffect(() => {
     const allDataPresent = isAllDataPresent(sellerData);
     setBlinking(!allDataPresent);
-    console.log("Seller Data in Business-Info-Section:", sellerData);
-    console.log(
-      "All data present:",
-      allDataPresent,
-      "Blinking:",
-      !allDataPresent
-    );
   }, [sellerData]);
 
   useEffect(() => {
@@ -90,9 +83,7 @@ export const BusinessInfoCard: React.FC<BusinessInfoCardProps> = ({
     data: SellerData
   ) => {
     setLoading(true);
-    console.log("Data going to BE:", data);
     const res: ApiResponseType = await saveSellerBusinessInfo(data);
-    console.log("Response of Seller Data on FE:", res);
     setLoading(false);
     setSellerData(data);
     setEnableEditing(false);

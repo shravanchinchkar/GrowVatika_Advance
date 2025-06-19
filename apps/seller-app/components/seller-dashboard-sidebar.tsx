@@ -32,7 +32,6 @@ export const SellerDashboardSideBar = () => {
   const SideBarSettingSectionList = ["settings", "help center"];
 
   const handleLogoutLogin = () => {
-    console.log("Hello");
     if (display === false) {
       setDisplay(true);
     } else {
@@ -57,7 +56,6 @@ export const SellerDashboardSideBar = () => {
     if (validSidebarOptions.includes(targetSideBar)) {
       updateVisibility(false);
       updateActiveSideBar(targetSideBar);
-      console.log("targetSideBar:", targetSideBar);
     } else {
       console.warn(`Invalid sidebar option: ${targetSideBar}`);
     }
@@ -130,9 +128,6 @@ export const SellerDashboardSideBar = () => {
           <li className="text-[11px] pl-[1.5rem]">Settings</li>
           <div className="flex flex-col text-[19.63px] font-medium capitalize">
             {SideBarSettingSectionList.map((item, index) => {
-              if (currentActiveSideBar == item) {
-                console.log("true");
-              }
               return (
                 <button
                   className="capitalize"

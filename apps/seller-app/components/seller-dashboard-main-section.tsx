@@ -29,7 +29,6 @@ export const SellerDashboardMainSection = () => {
         const res = await axios.get(
           `/api/getdataforsellerdashboard?id=${encodeURIComponent(sellerId)}`
         );
-        console.log("Seller Dashboard Data:", res.data.sellerData);
         updateSellerData({
           email: res.data.sellerData.email,
           address: res.data.sellerData.address,
@@ -41,7 +40,6 @@ export const SellerDashboardMainSection = () => {
           businesshours: res.data.sellerData.business_hours,
         });
         setIsDataLoaded(true);
-        console.log("sellerData State:", sellerData);
       } catch (error) {
         console.error(
           "Error while getting data of seller in seller dashboard:",

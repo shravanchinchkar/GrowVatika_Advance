@@ -38,12 +38,42 @@ model Seller {
 }
 
 model Product {
-  id          String @id @default(uuid())
-  seller      Seller @relation(fields: [sellerId], references: [id])
-  sellerId    String
-  name        String
-  price       String
-  compareAt   String
-  description String
-  imageURL    String
+  id            String        @id @default(uuid())
+  seller        Seller        @relation(fields: [sellerId], references: [id])
+  sellerId      String
+  name          String
+  price         String
+  compareAt     String
+  description   String
+  imageURL      String
+  collection    String
+  category      String
+  tags          String? // Assuming this is a string field
+  productStatus String
+  visibility    String
 }
+
+// Define the enums first
+// enum Collection {
+//   INDOOR
+//   OUTDOOR
+//   FLOWERING_PLANTS
+//   TROPICAL_PLANTS
+// }
+
+// enum Category {
+//   PLANTS
+//   POTS
+//   SOIL
+//   FERTILIZERS
+// }
+
+// enum ProductStatus {
+//   ACTIVE
+//   DRAFT
+// }
+
+// enum Visibility {
+//   PUBLIC
+//   HIDDEN
+// }

@@ -10,4 +10,5 @@ export interface ApiResponseType {
   error?: string;
   status?: string;
   sellerData?: SellerData;
+  responseData?:any
 }

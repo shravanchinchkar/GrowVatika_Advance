@@ -1,4 +1,9 @@
 import { LandingPage } from "../components/landing";
 export default function Home() {
-  return <LandingPage />;
+  return (
+    <>
+      Hello from Siddhi
+      <LandingPage />
+    </>
+  );
 }

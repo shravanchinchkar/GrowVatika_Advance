@@ -77,7 +77,6 @@ export const SellerDashboardMediaUploadSection = ({
                 {error.message}
               </div>
             )}
-            <label className="block text-gray-300">Product Image</label>
             <div>
               <input
                 type="file"

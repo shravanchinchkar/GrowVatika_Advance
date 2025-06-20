@@ -4,7 +4,14 @@ import Image from "next/image";
 import { useEffect, useState } from "react";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm, SubmitHandler } from "react-hook-form";
-import { ProductSchema, TProductSchema } from "@repo/common-types/types";
+import {
+  ApiResponseType,
+  TClientProductSchema,
+  ClientProductSchema,
+} from "@repo/common-types/types";
+import toast from "react-hot-toast";
+import { toastStyle } from "@repo/shared/utilfunctions";
+import { uploadProduct } from "../app/actions/uploadProduct";
 import { displayAddProductSectionStore } from "../store/displayAddProductSection";
 import { CustomSellerDashboardDropDown } from "./custom-seller-dashboard-dropdown";
 import { SellerDashboardMediaUploadSection } from "./seller-dashboard-media-upload-section";
@@ -24,12 +31,16 @@ export const SellerDashboardAddProductSection = () => {
 
   // Following state are for Collection dropdown
   const [collection, setCollection] = useState("");
+
   // Following state are for Category dropdown
   const [category, setCategory] = useState("");
+
   // Following State are for Product Status dropdpwn
   const [productStatus, setProductStatus] = useState("Active");
+
   // Following State for Visibility dropdpwn
   const [visibilityStatus, setVisibilityStatus] = useState("Public");
+  const [loading, setLoading] = useState(false);
 
   const {
     register,
@@ -37,13 +48,12 @@ export const SellerDashboardAddProductSection = () => {
     setValue,
     formState: { errors },
     handleSubmit,
-  } = useForm<TProductSchema>({
-    resolver: zodResolver(ProductSchema),
+  } = useForm<TClientProductSchema>({
+    resolver: zodResolver(ClientProductSchema),
     defaultValues: {
-      collection: "",
-      category: "",
       productStatus: "Active",
       visibility: "Public",
+      featured: false,
     },
   });
 
@@ -63,10 +73,44 @@ export const SellerDashboardAddProductSection = () => {
     setValue("visibility", visibilityStatus);
   }, [visibilityStatus, setValue]);
 
-  const handlePublishProduct = (data: TProductSchema) => {
-    console.log("Product Details are:", data);
-    const imageData=data.image;
-    console.log("Image data is:",imageData)
+  const handlePublishProduct: SubmitHandler<TClientProductSchema> = async (
+    data
+  ) => {
+    console.log("Product Data is:", data);
+    setLoading(true);
+    // Create FormData object
+    const formData = new FormData();
+
+    // Append all form fields to FormData
+    formData.append("name", data.name);
+    formData.append("price", data.price.toString());
+    formData.append("compareAt", data.compareAt.toString());
+    formData.append("description", data.description);
+    formData.append("collection", data.collection);
+    formData.append("category", data.category);
+    formData.append("productStatus", data.productStatus);
+    formData.append("visibility", data.visibility);
+    formData.append("featured", (data.featured || false).toString());
+
+    // Append the image file - with better error checking
+    if (data.image && data.image.length > 0 && data.image[0]) {
+      const imageFile = data.image[0];
+      console.log("Appending image:", imageFile.name, imageFile.size); // Debug log
+      formData.append("image", imageFile);
+    } else {
+      console.log("No image found in data"); // Debug log
+    }
+
+    // Hit the backend for product upload
+    const res: ApiResponseType = await uploadProduct(formData);
+    console.log("Upload Product Response:", res);
+    setLoading(false);
+
+    if (res.success) {
+      toast.success("Product Upload Successfully!", toastStyle);
+    } else if (!res.success) {
+      toast.error("Error while uploading product!", toastStyle);
+    }
   };
 
   const Collections = [
@@ -85,7 +129,7 @@ export const SellerDashboardAddProductSection = () => {
         className="flex flex-col items-center mx-[1rem] pt-[1rem]"
         onSubmit={handleSubmit(handlePublishProduct)}
       >
-        {/* Add Product header section */}
+        {/* Header Section Consist of Cancle and PublishProduct Button*/}
         <div className="w-[98%] flex justify-between">
           {/* Following div consist of left arrow image and title */}
           <div className="flex items-center gap-4">
@@ -129,17 +173,24 @@ export const SellerDashboardAddProductSection = () => {
 
             {/* Publish Product Button */}
             <button
-              className="rounded-[0.625rem] h-[3.1875rem] w-[14.5rem] bg-[#56A430] flex justify-center items-center gap-4"
+              className={`rounded-[0.625rem] h-[3.1875rem] w-[14.5rem] bg-[#56A430] flex justify-center items-center gap-4 ${!loading ? "cursor-pointer" : "cursor-not-allowed"}`}
               type="submit"
+              disabled={loading}
             >
-              <div className="relative h-[1.5rem] w-[1.5rem]">
-                <Image
-                  src="/assets/images/AddProductSectionImages/publishProductIcon.svg"
-                  alt="publishProductIcon"
-                  fill
-                />
-              </div>
-              <p className="text-white">Publish Product</p>
+              {!loading ? (
+                <>
+                  <div className="relative h-[1.5rem] w-[1.5rem]">
+                    <Image
+                      src="/assets/images/AddProductSectionImages/publishProductIcon.svg"
+                      alt="publishProductIcon"
+                      fill
+                    />
+                  </div>
+                  <p className="text-white">Publish Product</p>
+                </>
+              ) : (
+                <p className="text-white">Loading...</p>
+              )}
             </button>
           </div>
         </div>
@@ -174,7 +225,7 @@ export const SellerDashboardAddProductSection = () => {
                 </label>
                 <input
                   type="text"
-                  placeholder="e.g. Monstera Deliciosa"
+                  placeholder="Name of your product "
                   className="w-[37.0625rem] h-[3.1875rem] rounded-[0.625rem] border border-[#CBD0D3] bg-white 
                   placeholder:text-[#697F75] placeholder:font-[Poppins] placeholder:text-[1.22669rem] placeholder:font-normal px-4   outline-none"
                   {...register("name", { required: true })}
@@ -194,10 +245,14 @@ export const SellerDashboardAddProductSection = () => {
                     Price<span className="text-[#FF4B4B]"> *</span>
                   </label>
                   <input
-                    type="text"
-                    placeholder="$ 0.00"
-                    className="outline-none w-[17.3125rem] h-[3.1875rem] rounded-[0.625rem] border-[1.5px] border-[#CBD0D3] bg-white text-[#697F75] text-[1.22669rem] font-poppins font-normaloutline-none flex justify-between items-center pl-[1rem]"
-                    {...register("price", { required: true })}
+                    type="number"
+                    placeholder="0.00 Rs."
+                    className="w-[17.3125rem] h-[3.1875rem] rounded-[0.625rem] border-[1.5px] border-[#CBD0D3] bg-white 
+                    text-[#697F75] text-[1.22669rem] font-poppins font-normal flex justify-between items-center px-[1rem] outline-none"
+                    {...register("price", {
+                      required: true,
+                      valueAsNumber: true,
+                    })}
                   />
                 </div>
 
@@ -214,9 +269,12 @@ export const SellerDashboardAddProductSection = () => {
                   <input
                     className="w-[17.3125rem] h-[3.1875rem] rounded-[0.625rem] border-[1.5px] border-[#CBD0D3] bg-white 
                     text-[#697F75] text-[1.22669rem] font-poppins font-normal flex justify-between items-center px-[1rem] outline-none"
-                    type="text"
-                    placeholder="$ 0.00"
-                    {...register("compareAt", { required: true })}
+                    type="number"
+                    placeholder="0.00 Rs."
+                    {...register("compareAt", {
+                      required: true,
+                      valueAsNumber: true,
+                    })}
                   />
                 </div>
               </div>
@@ -240,13 +298,15 @@ export const SellerDashboardAddProductSection = () => {
               </div>
             </div>
 
-            {/* Photo Upload Section */}
-            <SellerDashboardMediaUploadSection {...register("image",{required:true})} error={errors.image}/>
+            {/* Product Photo Upload Section */}
+            <SellerDashboardMediaUploadSection
+              {...register("image", { required: true })}
+              error={errors.image}
+            />
           </div>
 
           {/* Organization,Status & Visibility Section */}
           <div className="flex flex-col gap-5">
-
             {/* Organization Section */}
             <div className="h-[30.8125rem] w-[19.875rem] bg-white rounded-[1.25rem] pl-[2rem] pt-[1.5rem] flex flex-col">
               <div className="flex flex-col gap-12">
@@ -355,7 +415,7 @@ export const SellerDashboardAddProductSection = () => {
                   <input
                     className="h-[1.25rem] w-[1.25rem] accent-[#000]"
                     type="checkbox"
-                    {...register("featured", { required: true })}
+                    {...register("featured")}
                   />
                 </div>
                 <div className="w-[10.5rem] h-[3.625rem] text-[1.2rem] ml-2">
@@ -363,7 +423,6 @@ export const SellerDashboardAddProductSection = () => {
                 </div>
               </div>
             </div>
-
           </div>
         </div>
       </form>

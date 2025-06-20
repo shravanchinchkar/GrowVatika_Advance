@@ -2,18 +2,20 @@
 import client from "@repo/db/client";
 import { NEXT_AUTH } from "../lib/auth";
 import { getServerSession } from "next-auth";
-import { ApiResponseType } from "@repo/common-types/types";
-import { ProductSchema, TProductSchema } from "@repo/common-types/types";
-import { upload } from "../lib/multer";
+import { ApiResponseType} from "@repo/common-types/types";
+import { formDataToObject, validateServerProduct } from "../lib/validation";
 
-export default async function saveProduct(
-  data: TProductSchema
+export async function uploadProduct(
+  formData: FormData
+  // data:TProductSchema
 ): Promise<ApiResponseType> {
+  // Checks whether the seller is signin or not
   const session = await getServerSession(NEXT_AUTH);
   if (!session.user) {
     return { success: false, error: "Invalid Seller" };
   }
   try {
+    // Checks whether the seller exists or not
     const sellerId = await client.seller.findFirst({
       where: {
         email: session.user.email,
@@ -25,31 +27,17 @@ export default async function saveProduct(
     if (!sellerId) {
       return { success: false, error: "No seller found" };
     }
-    const parsedProduct = ProductSchema.safeParse(data);
-    if (!parsedProduct.success) {
-      return { success: false, message: "Invalid Product Data" };
-    }
-    upload.fields([
-      {
-        name: "productImage",
-        maxCount: 1,
-      },
-    ]);
-    await client.product.create({
-      data: {
-        sellerId: sellerId.id,
-        name: parsedProduct.data.name,
-        price: parsedProduct.data.price,
-        compareAt: parsedProduct.data.compareAt,
-        description: parsedProduct.data.description,
-        imageURL:
-          "https://images.unsplash.com/photo-1463320898484-cdee8141c787?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
-        collection: parsedProduct.data.collection,
-        category: parsedProduct.data.category,
-        productStatus: parsedProduct.data.productStatus,
-        visibility: parsedProduct.data.visibility,
-      },
-    });
+    console.log("Product Data in backend is:", formData);
+
+    // Convert FormData to object and validate with existing schema
+    const productData = formDataToObject(formData);
+    console.log("Converted product data:", productData);
+
+    // Validate using existing ProductSchema
+    const parsedProduct = validateServerProduct(productData);
+    console.log("Validated product data:", parsedProduct.data);
+
+
     return { success: true };
   } catch (error) {
     console.log("Error While uploading Product:", error);

@@ -3,7 +3,7 @@ import { SiteLogo } from "@repo/ui/brand-logo";
 import { ProductSearchBar, SearchBarWorkType } from "./product-search-bar";
 
 export const Header = () => {
-  return (
+  return ( 
     <div className="2xl:w-[82.1875rem] lg:w-[60rem] xl:w-[70rem] h-max flex items-center">
       {/* Following div consist of logo,Site-Name,search-bar */}
 

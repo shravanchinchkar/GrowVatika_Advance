@@ -15,7 +15,6 @@ export const LandingPage = () => {
   return (
     <div className="flex flex-col bg-[#FFF6F4]">
       <header className="relative flex flex-col items-center gap-[1rem] pt-[2rem] h-screen">
-
         <div className="2xl:w-[82.1875rem] lg:w-[60rem] xl:w-[70rem] h-max flex justify-between">
           <Header />
           <ShoppingCartIcon />

@@ -36,6 +36,7 @@ export default {
         "testinomial-custom": "0px 4px 9.9px 0px rgba(0, 0, 0, 0.44)",
       },
       screens: {
+        "new-sm": "320px",
         "new-xl": "1330px",
         "new-xl-2": "1400px",
       },

@@ -1,5 +1,6 @@
-import React, { useState } from "react";
+import React, { useState, useId, useEffect } from "react";
 import Image from "next/image";
+import { useDropdownStore } from "../store/dropdownStore";
 
 interface DropdownOption {
   value: string;
@@ -15,6 +16,7 @@ interface ReusableDropdownProps {
   required?: boolean;
   className?: string;
   disabled?: boolean;
+  customKey: string;
 }
 
 export const CustomSellerDashboardDropDown: React.FC<ReusableDropdownProps> = ({
@@ -26,19 +28,50 @@ export const CustomSellerDashboardDropDown: React.FC<ReusableDropdownProps> = ({
   required = false,
   className = "",
   disabled = false,
+  customKey,
 }) => {
-  const [isOpen, setIsOpen] = useState(false);
+  const { openDropdown, setOpenDropdown } = useDropdownStore();
+  const isOpen = openDropdown === customKey;
 
-  const handleToggle = () => {
+  const handleToggle = (e: React.MouseEvent<HTMLElement>) => {
     if (!disabled) {
-      setIsOpen(!isOpen);
+      if (isOpen) {
+        setOpenDropdown(null); // Close this dropdown
+      } else {
+        setOpenDropdown(customKey); // Open this dropdown (closes others)
+      }
     }
   };
 
   const handleSelect = (selectedValue: string) => {
     onChange(selectedValue);
-    setIsOpen(false);
+    setOpenDropdown(null); // Close dropdown after selection
   };
+
+  // Close dropdown when clicking outside
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      const target = event.target as HTMLElement;
+      // Check if the click is inside the dropdown container
+      const dropdownContainer = target.closest(`[data-key="${customKey}"]`);
+
+      if (!dropdownContainer && isOpen) {
+        setOpenDropdown(null);
+      }
+    };
+
+    if (isOpen) {
+      // Use a small delay to ensure click events on dropdown items are processed first
+      const timeoutId = setTimeout(() => {
+        document.addEventListener("mousedown", handleClickOutside);
+      },500);
+
+      return () => {
+        clearTimeout(timeoutId);
+        document.removeEventListener("mousedown", handleClickOutside);
+      };
+    }
+  }, [isOpen, customKey, setOpenDropdown]);
 
   // Normalize options to always have value and label
   const normalizedOptions = options.map((option) => {
@@ -51,23 +84,27 @@ export const CustomSellerDashboardDropDown: React.FC<ReusableDropdownProps> = ({
   const displayValue = value || placeholder;
 
   return (
-    <div className={`relative w-[15.9375rem] h-[6rem] flex flex-col gap-2 ${className}`}>
+    <div
+      className={`relative w-[15.9375rem] h-[6rem] flex flex-col gap-2  ${className}`}
+    >
       {/* Label */}
-      <div className="text-[1.22669rem]">
-        {label}
-        {required && <span className="text-[#FF4B4B]"> *</span>}
-      </div>
+      <div className="text-[1.2rem] font-medium">{label}</div>
 
       {/* Dropdown Button */}
       <button
         className={`h-[3.1875rem] w-[100%] border-[1.5px] border-[#CBD0D3] rounded-[0.625rem] flex items-center justify-between px-[1rem] ${
-          disabled ? "bg-gray-100 cursor-not-allowed" : "bg-white cursor-pointer"
+          disabled
+            ? "bg-gray-100 cursor-not-allowed"
+            : "bg-white cursor-pointer"
         }`}
         onClick={handleToggle}
         type="button"
         disabled={disabled}
+        data-key={customKey}
       >
-        <div className={`text-[1.22669rem] ${!value ? "text-[#697F75]" : "text-[#171717]"}`}>
+        <div
+          className={`text-[1.2rem] ${!value ? "text-[#697F75]" : "text-[#171717]"}`}
+        >
           {displayValue}
         </div>
         <div className="relative h-[1.5rem] w-[1.5rem]">
@@ -90,9 +127,13 @@ export const CustomSellerDashboardDropDown: React.FC<ReusableDropdownProps> = ({
       >
         {normalizedOptions.map((option, index) => (
           <li
-            className="h-[2.4375rem] bg-[#FFF6F4] rounded-[0.625rem] px-[1rem] flex items-center cursor-pointer hover:bg-[#FFE8E3] transition-colors duration-150"
+            className="h-[2.4375rem] bg-[#FFF6F4] rounded-[0.625rem] px-[1rem] flex items-center cursor-pointer hover:bg-[#FFE8E3] transition-colors duration-150 text-[1rem]"
             key={index}
-            onClick={() => handleSelect(option.value)}
+            onMouseDown={(e) => {
+              // Prevent the mousedown event from bubbling up
+              e.preventDefault();
+              handleSelect(option.value);
+            }}
           >
             {option.label}
           </li>

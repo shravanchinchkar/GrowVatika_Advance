@@ -15,18 +15,20 @@ export const LandingPage = () => {
   return (
     <div className="flex flex-col bg-[#FFF6F4]">
       <header className="relative flex flex-col items-center gap-[1rem] pt-[2rem] h-screen">
-        <div className="2xl:w-[82.1875rem] lg:w-[60rem] xl:w-[70rem] h-max flex justify-between">
+        <div className="lg:w-[60rem] xl:w-[70rem] 2xl:w-[82.1875rem] h-max flex justify-between ">
           <Header />
           <ShoppingCartIcon />
         </div>
-
+        
         <div className="2xl:w-[82.1875rem] lg:w-[60rem] xl:w-[70rem] flex justify-between items-center z-10 font-[Poppins]">
           <Navbar />
           <UserAuthButton />
         </div>
+
         <HeroSection />
         <LandingPot />
       </header>
+
       <main className="flex flex-col gap-[3rem]">
         <ExploreSection />
         <AboutUsSection />
@@ -34,6 +36,7 @@ export const LandingPage = () => {
         <TestmonialSection />
         <ContactForm />
       </main>
+
       <footer>
         <Footer />
       </footer>

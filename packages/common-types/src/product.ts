@@ -27,10 +27,17 @@ const BaseProductSchema = zod.object({
     .min(10, { message: "Description must have at least 10 characters" })
     .max(1000, { message: "Description must not exceed 1000 characters" }),
 
+  productSize: zod
+    .number({
+      required_error: "Size is required",
+      invalid_type_error: "Size must be a number",
+    })
+    .positive({ message: "Size must be greater than 0" }),
+
   collection: zod.string().min(1, { message: "Collection is required" }),
 
   category: zod.string().min(1, { message: "Category is required" }),
-  productStatus: zod.string().min(1, { message: "Product status is required" }),  //validation for product status dropdown
+  productStatus: zod.string().min(1, { message: "Product status is required" }), //validation for product status dropdown
   visibility: zod.string().min(1, { message: "Visibility is required" }), //validation for product visibility
 
   featured: zod.boolean(),
@@ -46,9 +53,9 @@ export const ClientProductSchema = BaseProductSchema.extend({
     .refine(
       (fileList) => {
         const file = fileList?.[0];
-        return file && file.size <= 5 * 1024 * 1024; // 5MB
+        return file && file.size <= 300 * 1024; // 300KB
       },
-      { message: "Image size must be less than 5MB" }
+      { message: "Image size must be less than 300KB" }
     )
     .refine(
       (fileList) => {

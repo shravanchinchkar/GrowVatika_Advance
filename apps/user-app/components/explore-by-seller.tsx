@@ -2,6 +2,7 @@
 
 import axios from "axios";
 import Image from "next/image";
+import { Cart } from "./cart";
 import toast from "react-hot-toast";
 import Skeleton from "@/app/loading";
 import { Navbar } from "./nav-section";
@@ -50,7 +51,8 @@ export const ExplorePlantsBySeller = () => {
     return <Skeleton />;
   }
   return (
-    <div className="w-screen h-max flex flex-col items-center bg-[#FFF6F4] font-[Poppins] border-[2px]">
+    <div className="h-max flex flex-col items-center bg-[#FFF6F4] font-[Poppins]">
+      <Cart />
       {/* Heder and Navbar */}
       <div className="2xl:w-[82.1875rem] lg:w-[60rem] xl:w-[70rem] h-max flex flex-col items-center gap-[1rem] pt-[2rem]">
         <div className="2xl:w-[82.1875rem] lg:w-[60rem] xl:w-[70rem] h-max flex justify-between">

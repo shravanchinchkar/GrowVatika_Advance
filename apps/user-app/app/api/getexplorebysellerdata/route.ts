@@ -1,7 +1,7 @@
-import { NextRequest, NextResponse } from "next/server";
 import client from "@repo/db/client";
+import { NextResponse } from "next/server";
 
-export async function GET(req: NextRequest) {
+export async function GET() {
   try {
     const sellers = await client.seller.findMany({
       select: {

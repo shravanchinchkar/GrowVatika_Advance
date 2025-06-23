@@ -15,6 +15,7 @@ import { uploadProduct } from "../app/actions/uploadProduct";
 import { displayAddProductSectionStore } from "../store/displayAddProductSection";
 import { CustomSellerDashboardDropDown } from "./custom-seller-dashboard-dropdown";
 import { SellerDashboardMediaUploadSection } from "./seller-dashboard-media-upload-section";
+import { ButtonLoadingSign } from "@repo/ui/loading-sign";
 
 export const SellerDashboardAddProductSection = () => {
   // Zustand Code
@@ -35,11 +36,16 @@ export const SellerDashboardAddProductSection = () => {
   // Following state are for Category dropdown
   const [category, setCategory] = useState("");
 
+  // Following state are for Tags dropdown
+  const [tags, setTags] = useState("");
+
   // Following State are for Product Status dropdpwn
   const [productStatus, setProductStatus] = useState("Active");
 
   // Following State for Visibility dropdpwn
   const [visibilityStatus, setVisibilityStatus] = useState("Public");
+
+
   const [loading, setLoading] = useState(false);
 
   const {
@@ -86,6 +92,7 @@ export const SellerDashboardAddProductSection = () => {
     formData.append("price", data.price.toString());
     formData.append("compareAt", data.compareAt.toString());
     formData.append("description", data.description);
+    formData.append("productSize", data.productSize.toString());
     formData.append("collection", data.collection);
     formData.append("category", data.category);
     formData.append("productStatus", data.productStatus);
@@ -101,15 +108,40 @@ export const SellerDashboardAddProductSection = () => {
       console.log("No image found in data"); // Debug log
     }
 
-    // Hit the backend for product upload
-    const res: ApiResponseType = await uploadProduct(formData);
-    console.log("Upload Product Response:", res);
-    setLoading(false);
+    try {
+      // Hit the backend for product upload
+      const res: ApiResponseType = await uploadProduct(formData);
+      console.log("Upload Product Response:", res);
+      if (res.success) {
+        // Reset React Hook Form
+        reset({
+          name: "",
+          price: 0,
+          compareAt: 0,
+          description: "",
+          productSize: 0,
+          collection: "",
+          category: "",
+          productStatus: "Active",
+          visibility: "Public",
+          featured: false,
+          image: undefined,
+        });
 
-    if (res.success) {
-      toast.success("Product Upload Successfully!", toastStyle);
-    } else if (!res.success) {
+        // Reset local state variables
+        setCollection("");
+        setCategory("");
+        setProductStatus("Active");
+        setVisibilityStatus("Public");
+        toast.success("Product Upload Successfully!", toastStyle);
+      } else if (!res.success) {
+        toast.error("Error while uploading product!", toastStyle);
+      }
+    } catch (error) {
+      console.error("Error uploading product:", error);
       toast.error("Error while uploading product!", toastStyle);
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -120,8 +152,9 @@ export const SellerDashboardAddProductSection = () => {
     "Tropical Plants",
   ];
   const Category = ["Plants", "Pots", "Soil", "Fertilizers"];
-  const ProductStatus = ["Active", "Draft"];
-  const Visibility = ["Public", "Hidden"];
+  const ProductStatus = ["Active", "Draft", "Hidden"];
+  const Visibility = ["Public", "Private"];
+  const Tags=["Best Seller","Easy To Care","Pet Friendly","Air Purifying","Fast Growing"]
 
   if (displayAddProductSection === true) {
     return (
@@ -147,8 +180,8 @@ export const SellerDashboardAddProductSection = () => {
             </button>
 
             <div>
-              <div className="text-[2rem] font-semibold">Add Product</div>
-              <div className="text-[1.1875rem] text-[#8C8C8C] leading-4">
+              <div className="text-[1.7rem] font-semibold">Add Product</div>
+              <div className="text-[1.15rem] text-[#8C8C8C] leading-4">
                 Create the product listing
               </div>
             </div>
@@ -158,7 +191,7 @@ export const SellerDashboardAddProductSection = () => {
           <div className="flex items-center gap-5">
             {/* Cancle Button */}
             <button
-              className="rounded-[0.625rem] h-[3.1875rem] w-[10rem] border-[1.5px] border-[#CBD0D3] bg-white flex justify-center items-center gap-4"
+              className="rounded-[0.625rem] h-[3.1875rem] w-[10rem] border-[1.5px] border-[#CBD0D3] bg-white flex justify-center items-center gap-4 animate-bg-bounce-in"
               type="button"
             >
               <div className="relative h-[1.5rem] w-[1.5rem]">
@@ -173,7 +206,7 @@ export const SellerDashboardAddProductSection = () => {
 
             {/* Publish Product Button */}
             <button
-              className={`rounded-[0.625rem] h-[3.1875rem] w-[14.5rem] bg-[#56A430] flex justify-center items-center gap-4 ${!loading ? "cursor-pointer" : "cursor-not-allowed"}`}
+              className={`rounded-[0.625rem] h-[3.1875rem] w-[14.5rem] bg-[#56A430] flex justify-center items-center gap-4 animate-bg-bounce-in-2 ${!loading ? "cursor-pointer" : "cursor-not-allowed"}`}
               type="submit"
               disabled={loading}
             >
@@ -189,7 +222,9 @@ export const SellerDashboardAddProductSection = () => {
                   <p className="text-white">Publish Product</p>
                 </>
               ) : (
-                <p className="text-white">Loading...</p>
+                <div className="text-white text-[1.2rem]">
+                  <ButtonLoadingSign />
+                </div>
               )}
             </button>
           </div>
@@ -200,15 +235,15 @@ export const SellerDashboardAddProductSection = () => {
           {/* Following div consist of Business Information section and Media Section  */}
 
           {/* Add Product Form */}
-          <div>
+          <div className="pb-[1rem]">
             {/* Form to add Product Name,Price,Compare Price and Description */}
-            <div className="w-[41rem] flex flex-col gap-[1rem] h-max p-[2rem] bg-white rounded-xl">
+            <div className="w-[41rem] flex flex-col gap-[1rem] h-max p-[2rem] bg-white rounded-xl shadow-md">
               {/* Heading */}
               <div>
-                <h1 className="text-[#171717] font-[Poppins] text-[2rem] font-semibold leading-[2.6rem]">
+                <h1 className="text-[#171717] font-[Poppins] text-[1.7rem] font-semibold leading-[2.6rem]">
                   Product Information
                 </h1>
-                <p className="text-[#8C8C8C] font-[Poppins] text-[1.1875rem] font-medium leading-[1.54375rem]">
+                <p className="text-[#8C8C8C] font-[Poppins] text-[1.15rem] font-medium leading-[1.54375rem]">
                   Add the basic information about your product
                 </p>
               </div>
@@ -220,14 +255,14 @@ export const SellerDashboardAddProductSection = () => {
                     {errors.name.message}
                   </div>
                 )}
-                <label className="text-[#171717] font-[Poppins] text-[1.22669rem] font-medium">
+                <label className="text-[#171717] font-[Poppins] text-[1.2rem] font-medium">
                   Product Name<span className="text-[#FF4B4B]"> *</span>
                 </label>
                 <input
                   type="text"
                   placeholder="Name of your product "
-                  className="w-[37.0625rem] h-[3.1875rem] rounded-[0.625rem] border border-[#CBD0D3] bg-white 
-                  placeholder:text-[#697F75] placeholder:font-[Poppins] placeholder:text-[1.22669rem] placeholder:font-normal px-4   outline-none"
+                  className="w-[37.0625rem] h-[3.1875rem] rounded-[0.625rem] border border-[#CBD0D3] bg-white  text-[1.2rem]
+                  placeholder:text-[#697F75] placeholder:font-[Poppins] placeholder:text-[1.2rem] placeholder:font-normal px-4   outline-none"
                   {...register("name", { required: true })}
                 />
               </div>
@@ -241,14 +276,14 @@ export const SellerDashboardAddProductSection = () => {
                       {errors.price.message}
                     </div>
                   )}
-                  <label className="text-[#171717] font-[Poppins] text-[1.22669rem] font-medium">
+                  <label className="text-[#171717] font-[Poppins] text-[1.2rem] font-medium">
                     Price<span className="text-[#FF4B4B]"> *</span>
                   </label>
                   <input
                     type="number"
                     placeholder="0.00 Rs."
-                    className="w-[17.3125rem] h-[3.1875rem] rounded-[0.625rem] border-[1.5px] border-[#CBD0D3] bg-white 
-                    text-[#697F75] text-[1.22669rem] font-poppins font-normal flex justify-between items-center px-[1rem] outline-none"
+                    className="w-[17.3125rem] h-[3.1875rem] rounded-[0.625rem] border-[1.5px] border-[#CBD0D3] bg-white
+                    text-[#697F75] text-[1.2rem] font-poppins font-normal flex justify-between items-center px-[1rem] outline-none"
                     {...register("price", {
                       required: true,
                       valueAsNumber: true,
@@ -263,12 +298,12 @@ export const SellerDashboardAddProductSection = () => {
                       {errors.compareAt.message}
                     </div>
                   )}
-                  <label className="text-[#171717] font-[Poppins] text-[1.22669rem] font-medium">
+                  <label className="text-[#171717] font-[Poppins] text-[1.2rem] font-medium">
                     Compare-at Price<span className="text-[#FF4B4B]"> *</span>
                   </label>
                   <input
                     className="w-[17.3125rem] h-[3.1875rem] rounded-[0.625rem] border-[1.5px] border-[#CBD0D3] bg-white 
-                    text-[#697F75] text-[1.22669rem] font-poppins font-normal flex justify-between items-center px-[1rem] outline-none"
+                    text-[#697F75] text-[1.2rem] font-poppins font-normal flex justify-between items-center px-[1rem] outline-none"
                     type="number"
                     placeholder="0.00 Rs."
                     {...register("compareAt", {
@@ -279,22 +314,52 @@ export const SellerDashboardAddProductSection = () => {
                 </div>
               </div>
 
-              {/* Description */}
-              <div className="grid gap-2 mb-4">
-                {errors.description && (
-                  <div className="text-red-500 font-bold text-start">
-                    {errors.description.message}
+              {/*  */}
+              <div className="flex justify-between gap-[1rem]">
+                {/* Description */}
+                <div>
+                  {errors.description && (
+                    <div className="text-red-500 font-bold text-start">
+                      {errors.description.message}
+                    </div>
+                  )}
+                  <label className="text-[#171717] font-[Poppins] text-[1.2rem] font-medium">
+                    Description<span className="text-[#FF4B4B]"> *</span>
+                  </label>
+                  <textarea
+                    placeholder="Describe your product in detail..."
+                    className="w-full min-h-[6rem] rounded-[0.625rem] border-[1.5px] border-[#CBD0D3] bg-white 
+                  text-[#697F75] text-[1.2rem] font-poppins font-normal px-4 py-2 outline-none"
+                    {...register("description", { required: true })}
+                  ></textarea>
+                </div>
+
+                {/* Product Size */}
+                <div>
+                  {errors.productSize && (
+                    <div className="text-red-500 font-bold text-start">
+                      {errors.productSize.message}
+                    </div>
+                  )}
+                  <label className="text-[#171717] font-[Poppins] text-[1.2rem] font-medium">
+                    Product Size<span className="text-[#FF4B4B]"> *</span>
+                  </label>
+                  <div className="flex gap-[0.2rem]">
+                    <input
+                      type="number"
+                      placeholder="0.00 Rs."
+                      className="w-[14rem] h-[3.1875rem] rounded-l-[0.625rem] border-[1.5px] border-[#CBD0D3] bg-white
+                    text-[#697F75] text-[1.2rem] font-poppins font-normal flex justify-between items-center px-[1rem] outline-none"
+                      {...register("productSize", {
+                        required: true,
+                        valueAsNumber: true,
+                      })}
+                    />
+                    <div className="h-[3.1875rem] flex justify-center items-center px-[1rem] border-[1.5px] border-[#CBD0D3] rounded-r-[0.625rem] bg-[#fff] text-[1.2rem] text-[#697F75]">
+                      in
+                    </div>
                   </div>
-                )}
-                <label className="text-[#171717] font-[Poppins] text-[1.22669rem] font-medium">
-                  Description<span className="text-[#FF4B4B]"> *</span>
-                </label>
-                <textarea
-                  placeholder="Describe your product in detail..."
-                  className="w-full min-h-[6rem] rounded-[0.625rem] border-[1.5px] border-[#CBD0D3] bg-white 
-                  text-[#697F75] text-[1.22669rem] font-poppins font-normal px-4 py-2 outline-none"
-                  {...register("description", { required: true })}
-                ></textarea>
+                </div>
               </div>
             </div>
 
@@ -306,11 +371,13 @@ export const SellerDashboardAddProductSection = () => {
           </div>
 
           {/* Organization,Status & Visibility Section */}
-          <div className="flex flex-col gap-5">
+          <div className="flex flex-col justify-between gap-5 pb-[1rem]">
             {/* Organization Section */}
-            <div className="h-[30.8125rem] w-[19.875rem] bg-white rounded-[1.25rem] pl-[2rem] pt-[1.5rem] flex flex-col">
-              <div className="flex flex-col gap-12">
-                <div className="text-[2rem] font-semibold">Organization</div>
+            <div className="h-[30rem] w-[19.875rem] bg-white rounded-[1.25rem]  pt-[1.5rem] flex flex-col shadow-md">
+              <div className="flex flex-col items-center gap-[1rem]">
+                <div className="w-[100%] text-[1.7rem]  font-semibold pl-[1.5rem]">
+                  Organization
+                </div>
 
                 <div
                   className={
@@ -331,6 +398,7 @@ export const SellerDashboardAddProductSection = () => {
                     options={Collections}
                     value={collection}
                     onChange={setCollection}
+                    customKey={"Collection"}
                   />
 
                   {errors.category && (
@@ -345,38 +413,26 @@ export const SellerDashboardAddProductSection = () => {
                     options={Category}
                     value={category}
                     onChange={setCategory}
+                    customKey={"Category"}
                   />
 
                   {/* Add Tag Section */}
-                  <div className="flex flex-col gap-2 ">
-                    <div className="text-[1.22669rem]">Tags</div>
-                    <div className="flex gap-2">
-                      <input
-                        type="text"
-                        placeholder="Add tag"
-                        className="h-[3.1875rem] w-[13rem] border-[1.5px] border-[#CBD0D3] rounded-[0.625rem] flex items-center pl-[0.5rem] outline-none"
-                      />
-                      <button
-                        className="h-[3.1875rem] w-[2.375rem] border-[1.5px] border-[#CBD0D3] rounded-[0.625rem] flex justify-center items-center"
-                        type="button"
-                      >
-                        <div className="relative h-[1.5rem] w-[1.5rem]">
-                          <Image
-                            src="/assets/images/AddProductSectionImages/addTagIcon.svg"
-                            alt="addTagIcon"
-                            fill
-                          />
-                        </div>
-                      </button>
-                    </div>
-                  </div>
+                  <CustomSellerDashboardDropDown
+                    label="Tags"
+                    placeholder="Add Tags"
+                    options={Tags}
+                    value={tags}
+                    onChange={setTags}
+                    customKey={"Tags"}
+                  />
+
                 </div>
               </div>
             </div>
 
             {/* Status & Visibility Section */}
-            <div className="h-[34.8125rem] w-[19.875rem] bg-white rounded-[1.25rem] pl-[2rem] pt-[1.5rem] flex flex-col gap-5">
-              <div className="text-[2rem] font-semibold w-[10rem]">
+            <div className="h-[33rem] w-[19.875rem]  bg-white rounded-[1.25rem] pl-[2rem] pt-[1.5rem] flex flex-col gap-5 shadow-md">
+              <div className="text-[1.7rem] font-semibold w-[10rem]">
                 Status & Visibility
               </div>
 
@@ -393,6 +449,7 @@ export const SellerDashboardAddProductSection = () => {
                 value={productStatus}
                 onChange={setProductStatus}
                 required={true}
+                customKey={"Product Status"}
               />
 
               {/* Visibility dropdown */}
@@ -408,6 +465,7 @@ export const SellerDashboardAddProductSection = () => {
                 value={visibilityStatus}
                 onChange={setVisibilityStatus}
                 required={true}
+                customKey={"Visibility"}
               />
 
               <div className="flex items-center gap-2">

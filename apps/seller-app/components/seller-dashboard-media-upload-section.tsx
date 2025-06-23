@@ -33,7 +33,7 @@ export const SellerDashboardMediaUploadSection = ({
   };
 
   return (
-    <div className="w-[41rem] h-auto p-6 bg-white rounded-xl mt-5">
+    <div className="w-[41rem] h-[33rem] p-6 bg-white rounded-xl mt-5 shadow-md">
       {/* Media Heading */}
       <div className="w-[22.08575rem] mb-1.5">
         <h1 className="text-[#171717] font-[Poppins] text-[2rem] font-semibold leading-[2.6rem]">

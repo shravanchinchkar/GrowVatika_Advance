@@ -28,7 +28,7 @@ export const NavLinks = ({
     >
       <div className="">
         <Link
-          href="/"
+          href={linkName === "Collections" ? "/explore" : "/"}
           className="text-white w-[10rem] h-[10rem] flex items-center font-Poppins lg:text-[16px] xl:text-[19.63px] leading-[29.44px] tracking-wider  justify-center"
         >
           {linkName}

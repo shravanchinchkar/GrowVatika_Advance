@@ -45,7 +45,6 @@ export const SellerDashboardAddProductSection = () => {
   // Following State for Visibility dropdpwn
   const [visibilityStatus, setVisibilityStatus] = useState("Public");
 
-
   const [loading, setLoading] = useState(false);
 
   const {
@@ -72,6 +71,10 @@ export const SellerDashboardAddProductSection = () => {
   }, [category, setValue]);
 
   useEffect(() => {
+    setValue("tags", tags);
+  }, [tags, setValue]);
+
+  useEffect(() => {
     setValue("productStatus", productStatus);
   }, [productStatus, setValue]);
 
@@ -89,15 +92,17 @@ export const SellerDashboardAddProductSection = () => {
 
     // Append all form fields to FormData
     formData.append("name", data.name);
-    formData.append("price", data.price.toString());
-    formData.append("compareAt", data.compareAt.toString());
-    formData.append("description", data.description);
-    formData.append("productSize", data.productSize.toString());
-    formData.append("collection", data.collection);
+    formData.append("tags", data.tags);
     formData.append("category", data.category);
-    formData.append("productStatus", data.productStatus);
     formData.append("visibility", data.visibility);
+    formData.append("collection", data.collection);
+    formData.append("description", data.description);
+    formData.append("price", data.price.toString()); //number
+    formData.append("productStatus", data.productStatus);
+    formData.append("compareAt", data.compareAt.toString()); //number
+    formData.append("productSize", data.productSize.toString()); //number
     formData.append("featured", (data.featured || false).toString());
+    formData.append("productQuantity", data.productQuantity.toString()); //number
 
     // Append the image file - with better error checking
     if (data.image && data.image.length > 0 && data.image[0]) {
@@ -122,6 +127,7 @@ export const SellerDashboardAddProductSection = () => {
           productSize: 0,
           collection: "",
           category: "",
+          tags: "",
           productStatus: "Active",
           visibility: "Public",
           featured: false,
@@ -131,6 +137,7 @@ export const SellerDashboardAddProductSection = () => {
         // Reset local state variables
         setCollection("");
         setCategory("");
+        setTags("");
         setProductStatus("Active");
         setVisibilityStatus("Public");
         toast.success("Product Upload Successfully!", toastStyle);
@@ -152,9 +159,15 @@ export const SellerDashboardAddProductSection = () => {
     "Tropical Plants",
   ];
   const Category = ["Plants", "Pots", "Soil", "Fertilizers"];
+  const Tags = [
+    "Best Seller",
+    "Easy To Care",
+    "Pet Friendly",
+    "Air Purifying",
+    "Fast Growing",
+  ];
   const ProductStatus = ["Active", "Draft", "Hidden"];
   const Visibility = ["Public", "Private"];
-  const Tags=["Best Seller","Easy To Care","Pet Friendly","Air Purifying","Fast Growing"]
 
   if (displayAddProductSection === true) {
     return (
@@ -314,26 +327,26 @@ export const SellerDashboardAddProductSection = () => {
                 </div>
               </div>
 
-              {/*  */}
-              <div className="flex justify-between gap-[1rem]">
-                {/* Description */}
-                <div>
-                  {errors.description && (
-                    <div className="text-red-500 font-bold text-start">
-                      {errors.description.message}
-                    </div>
-                  )}
-                  <label className="text-[#171717] font-[Poppins] text-[1.2rem] font-medium">
-                    Description<span className="text-[#FF4B4B]"> *</span>
-                  </label>
-                  <textarea
-                    placeholder="Describe your product in detail..."
-                    className="w-full min-h-[6rem] rounded-[0.625rem] border-[1.5px] border-[#CBD0D3] bg-white 
+              {/* Description */}
+              <div>
+                {errors.description && (
+                  <div className="text-red-500 font-bold text-start">
+                    {errors.description.message}
+                  </div>
+                )}
+                <label className="text-[#171717] font-[Poppins] text-[1.2rem] font-medium">
+                  Description<span className="text-[#FF4B4B]"> *</span>
+                </label>
+                <textarea
+                  placeholder="Describe your product in detail..."
+                  className="w-full min-h-[6rem] rounded-[0.625rem] border-[1.5px] border-[#CBD0D3] bg-white 
                   text-[#697F75] text-[1.2rem] font-poppins font-normal px-4 py-2 outline-none"
-                    {...register("description", { required: true })}
-                  ></textarea>
-                </div>
+                  {...register("description", { required: true })}
+                ></textarea>
+              </div>
 
+              {/* Consist of Product Size and Quantity */}
+              <div className="flex justify-between gap-[1rem]">
                 {/* Product Size */}
                 <div>
                   {errors.productSize && (
@@ -360,6 +373,28 @@ export const SellerDashboardAddProductSection = () => {
                     </div>
                   </div>
                 </div>
+
+                {/* Product Quantity */}
+                <div>
+                  {errors.productQuantity && (
+                    <div className="text-red-500 font-bold text-start">
+                      {errors.productQuantity.message}
+                    </div>
+                  )}
+                  <label className="text-[#171717] font-[Poppins] text-[1.2rem] font-medium">
+                    Product Quantity<span className="text-[#FF4B4B]"> *</span>
+                  </label>
+                  <input
+                    type="number"
+                    placeholder="25 in stock"
+                    className="w-[17.3125rem] h-[3.1875rem] rounded-l-[0.625rem] border-[1.5px] border-[#CBD0D3] bg-white
+                    text-[#697F75] text-[1.2rem] font-poppins font-normal flex justify-between items-center px-[1rem] outline-none"
+                    {...register("productQuantity", {
+                      required: true,
+                      valueAsNumber: true,
+                    })}
+                  />
+                </div>
               </div>
             </div>
 
@@ -373,25 +408,21 @@ export const SellerDashboardAddProductSection = () => {
           {/* Organization,Status & Visibility Section */}
           <div className="flex flex-col justify-between gap-5 pb-[1rem]">
             {/* Organization Section */}
-            <div className="h-[30rem] w-[19.875rem] bg-white rounded-[1.25rem]  pt-[1.5rem] flex flex-col shadow-md">
-              <div className="flex flex-col items-center gap-[1rem]">
+            <div className="h-[35.5rem] w-[19.875rem] bg-white rounded-[1.25rem]  pt-[1.5rem] flex flex-col shadow-md">
+              <div className="flex flex-col items-center gap-[2.7rem]">
                 <div className="w-[100%] text-[1.7rem]  font-semibold pl-[1.5rem]">
                   Organization
                 </div>
 
                 <div
-                  className={
-                    errors.collection || errors.category
-                      ? "flex flex-col"
-                      : "flex flex-col gap-6"
-                  }
+                  className={`flex flex-col ${errors.collection || errors.category || errors.tags ? "gap-0" : "gap-[1rem]"}`}
                 >
+                  {/* Collection DropDown */}
                   {errors.collection && (
-                    <div className="text-red-500 font-bold text-start text-sm mt-1">
+                    <div className="text-red-500 font-bold text-start text-sm">
                       {errors.collection.message}
                     </div>
                   )}
-                  {/* Collection DropDown */}
                   <CustomSellerDashboardDropDown
                     label="Collection"
                     placeholder="Select Collection"
@@ -401,12 +432,12 @@ export const SellerDashboardAddProductSection = () => {
                     customKey={"Collection"}
                   />
 
+                  {/* Category DropDown */}
                   {errors.category && (
-                    <div className="text-red-500 font-bold text-start text-sm mt-1">
+                    <div className="text-red-500 font-bold text-start text-sm ">
                       {errors.category.message}
                     </div>
                   )}
-                  {/* Category DropDown */}
                   <CustomSellerDashboardDropDown
                     label="Category"
                     placeholder="Select Category"
@@ -416,7 +447,12 @@ export const SellerDashboardAddProductSection = () => {
                     customKey={"Category"}
                   />
 
-                  {/* Add Tag Section */}
+                  {/* Tags DropDown */}
+                  {errors.tags && (
+                    <div className="text-red-500 font-bold text-start text-sm ">
+                      {errors.tags.message}
+                    </div>
+                  )}
                   <CustomSellerDashboardDropDown
                     label="Tags"
                     placeholder="Add Tags"
@@ -425,7 +461,6 @@ export const SellerDashboardAddProductSection = () => {
                     onChange={setTags}
                     customKey={"Tags"}
                   />
-
                 </div>
               </div>
             </div>

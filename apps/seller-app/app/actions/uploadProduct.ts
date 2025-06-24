@@ -60,7 +60,12 @@ export async function uploadProduct(
 
     // Validate using existing ProductSchema
     const parsedProduct = validateServerProduct(productData);
+    console.log("Validate product data 1 is:", parsedProduct.errors);
     console.log("Validated product data:", parsedProduct.data?.image);
+
+    if (!parsedProduct.success) {
+      return { success: false, error: "Product Input Error" };
+    }
 
     // Extract file for upload
     const file = parsedProduct.data?.image as File | null;
@@ -111,16 +116,18 @@ export async function uploadProduct(
     const uploadProduct = await client.product.create({
       data: {
         sellerId: sellerId.id || "",
-        name: parsedProduct.data?.name || "",
-        price: parsedProduct.data?.price.toString() || "",
-        compareAt: parsedProduct.data?.compareAt.toString() || "",
-        description: parsedProduct.data?.description || "",
-        productSize: parsedProduct.data?.productSize.toString(),
-        collection: parsedProduct.data?.collection || "",
-        category: parsedProduct.data?.category || "",
-        productStatus: parsedProduct.data?.productStatus || "",
-        visibility: parsedProduct.data?.visibility || "",
         imageURL: result.secure_url,
+        name: parsedProduct.data?.name || "",
+        tags: parsedProduct.data?.tags || "",
+        category: parsedProduct.data?.category || "",
+        visibility: parsedProduct.data?.visibility || "",
+        collection: parsedProduct.data?.collection || "",
+        price: parsedProduct.data?.price.toString() || "",
+        description: parsedProduct.data?.description || "",
+        productStatus: parsedProduct.data?.productStatus || "",
+        compareAt: parsedProduct.data?.compareAt.toString() || "",
+        productSize: parsedProduct.data?.productSize.toString() || "",
+        productQuantity: parsedProduct.data?.productQuantity.toString() || "",
       },
     });
     if (!uploadProduct) {
@@ -137,6 +144,6 @@ export async function uploadProduct(
     };
   } catch (error) {
     console.log("Error While uploading Product:", error);
-    return { success: false };
+    return { success: false, responseData: error };
   }
 }

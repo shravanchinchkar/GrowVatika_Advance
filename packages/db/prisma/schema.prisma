@@ -38,18 +38,19 @@ model Seller {
 }
 
 model Product {
-  id            String  @id @default(uuid())
-  seller        Seller  @relation(fields: [sellerId], references: [id])
-  sellerId      String
-  name          String
-  price         String
-  compareAt     String
-  description   String
-  productSize   String  @default("no size available")
-  imageURL      String
-  collection    String
-  category      String
-  tags          String? // Assuming this is a string field
-  productStatus String
-  visibility    String
+  id              String  @id @default(uuid())
+  seller          Seller  @relation(fields: [sellerId], references: [id])
+  sellerId        String
+  name            String
+  price           String
+  compareAt       String
+  description     String
+  productSize     String  
+  productQuantity String
+  imageURL        String
+  collection      String
+  category        String
+  tags            String
+  productStatus   String
+  visibility      String
 }

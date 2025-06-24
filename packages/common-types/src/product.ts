@@ -34,9 +34,16 @@ const BaseProductSchema = zod.object({
     })
     .positive({ message: "Size must be greater than 0" }),
 
-  collection: zod.string().min(1, { message: "Collection is required" }),
+  productQuantity: zod
+    .number({
+      required_error: "Product quantity is required",
+      invalid_type_error: "Product quantity must be a number",
+    })
+    .positive({ message: "Product quantity must be greater than 0" }),
 
-  category: zod.string().min(1, { message: "Category is required" }),
+  collection: zod.string().min(1, { message: "Required" }),
+  category: zod.string().min(1, { message: "Required" }),
+  tags: zod.string().min(1, { message: "Required" }),
   productStatus: zod.string().min(1, { message: "Product status is required" }), //validation for product status dropdown
   visibility: zod.string().min(1, { message: "Visibility is required" }), //validation for product visibility
 

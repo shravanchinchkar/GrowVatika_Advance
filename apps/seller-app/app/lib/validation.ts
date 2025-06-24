@@ -58,7 +58,12 @@ export function formDataToObject(formData: FormData): Record<string, any> {
   for (const [key, value] of formData.entries()) {
     if (key === "image") {
       obj[key] = value; // File object
-    } else if (key === "price" || key === "compareAt") {
+    } else if (
+      key === "price" ||
+      key === "compareAt" ||
+      key === "productSize" ||
+      key === "productQuantity"
+    ) {
       obj[key] = value ? Number(value) : undefined;
     } else if (key === "featured") {
       obj[key] = value === "true";

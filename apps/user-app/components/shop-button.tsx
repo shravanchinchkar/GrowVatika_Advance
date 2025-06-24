@@ -8,13 +8,13 @@ export const SiteButton = ({ buttonName, onClick }: SiteButtonProps) => {
     <button
       className={
         buttonName == "Shop Now"
-          ? "w-[160px] h-[64px] font-[Poppins] tracking-wider bg-gradient-to-r from-[#73735A] to-[#445A4A] text-white lg:mx-[2rem]  2xl:mx-[3rem] lg:mt-[2rem] xl:mt-[1rem] 2xl:mt-[2rem] rounded-full transition-transform duration-300 ease-in-out hover:bg-[#123524] hover:bg-none hover:font-bold outline-[2px] text-[20px] shadow-lg border-[3px] border-white hover:border-none uppercase cursor-pointer"
-          
-          : "lg:w-[80px] xl:w-[120px] lg:h-[40px] xl:h-[55px] font-[Poppins] tracking-wider bg-gradient-to-r from-[#73735A] to-[#445A4A] text-white rounded-full transition-transform duration-300 ease-in-out hover:bg-[#123524] hover:bg-none hover:font-bold outline-[2px] text-[13px] shadow-lg border-[3px] border-white hover:border-none uppercase"
+          ? "w-[160px] h-[64px] lg:mx-[2rem] 2xl:mx-[3rem] lg:mt-[2rem] xl:mt-[1rem] 2xl:mt-[2rem] group border-[2px] hover:border-none rounded-[2.10294rem] bg-[#56A430] hover:bg-[#123524] shadow-button-custom-boxshadow backdrop-blur-[6.408869743347168px] text-[#FFF6F4] text-[1.23044rem] hover:text-[1.33331rem] font-[Poppins] font-normal hover:font-semibold uppercase"
+
+          : "lg:w-[80px] xl:w-[120px] lg:h-[40px] xl:h-[55px] group border-[2px] hover:border-none rounded-[2.10294rem] bg-[#56A430] hover:bg-[#123524] shadow-button-custom-boxshadow backdrop-blur-[6.408869743347168px] text-[#FFF6F4] text-[0.90538rem] hover:text-[1rem] font-[Poppins] font-normal hover:font-semibold uppercase"
       }
       onClick={onClick}
     >
-      {buttonName}
+      <div className="w-[100%] h-[100%] rounded-[2.10294rem] bg-button-custom-gradient group-hover:bg-none flex justify-center items-center">{buttonName}</div>
     </button>
   );
 };

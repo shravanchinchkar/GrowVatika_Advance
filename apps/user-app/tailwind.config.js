@@ -18,6 +18,9 @@ export default {
         "4xl": "0 15px 25px rgba(0, 0, 0, 0.85)",
       },
       backgroundImage: {
+        "button-custom-gradient":
+          "linear-gradient(297deg, rgba(100, 145, 115, 0.53) 14.21%, rgba(219, 213, 164, 0.53) 86.53%)",
+
         "custom-gradient": "linear-gradient(to left, #649173, #DBD5A4)",
         "feature-gradient":
           "linear-gradient(301deg, rgba(100, 145, 115, 0.30) 34.51%, rgba(219, 213, 164, 0.30) 102.82%)",
@@ -32,11 +35,12 @@ export default {
           "linear-gradient(301deg, rgba(100, 145, 115, 0.30) 18.97%, rgba(219, 213, 164, 0.30) 87.28%)",
       },
       boxShadow: {
+        "button-custom-boxshadow":"0px 1.282px 12.818px -0.32px rgba(0, 0, 0, 0.25)",
         "explore-custom": "10px 10px 59px #85A947",
         "testinomial-custom": "0px 4px 9.9px 0px rgba(0, 0, 0, 0.44)",
       },
       screens: {
-        "new-sm":"320px",
+        "new-sm": "320px",
         "new-xl": "1330px",
         "new-xl-2": "1400px",
       },
@@ -46,7 +50,6 @@ export default {
         sm: "calc(var(--radius) - 4px)",
       },
     },
-    
   },
   plugins: [require("tailwindcss-animate")],
 };

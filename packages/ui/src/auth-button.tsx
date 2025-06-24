@@ -14,16 +14,14 @@ export const AuthButton = ({
 }: AuthButtonProp) => {
   return (
     <button
-      className={
-        !loading
-          ? "w-[100%] h-[100%] font-[Poppins] leading-[29.44px] tracking-wider bg-gradient-to-r from-[#73735A] to-[#445A4A] text-white rounded-full transition-transform duration-300 ease-in-out hover:bg-[#123524] hover:bg-none hover:font-bold outline-[2px] text-[1.22869rem] font-normal shadow-lg border-[3px] text-center border-white hover:border-none uppercase"
-          : "w-[100%] h-[100%] font-[Poppins] leading-[29.44px] tracking-wider bg-gradient-to-r from-[#73735A] to-[#445A4A] text-white rounded-full  text-[1.22869rem] font-normal shadow-lg border-[3px] text-center border-white uppercase cursor-not-allowed"
-      }
+      className={`group w-[100%] h-[100%] border-[2px] hover:border-none rounded-[2.10294rem] bg-[#56A430] hover:bg-[#123524] shadow-button-custom-boxshadow backdrop-blur-[6.408869743347168px] text-[#FFF6F4] text-[1.23044rem] hover:text-[1.33331rem] font-[Poppins] font-normal  hover:font-semibold  uppercase ${loading ? "cursor-not-allowed" : "cursor-pointer"}`}
       type={type}
       disabled={loading}
       onClick={onClick}
     >
-      {!loading ? buttonName : <ButtonLoadingSign />}
+      <div className="w-[100%] h-[100%] rounded-[2.10294rem] bg-button-custom-gradient group-hover:bg-none flex justify-center items-center  ">
+        {!loading ? buttonName : <ButtonLoadingSign />}
+      </div>
     </button>
   );
 };

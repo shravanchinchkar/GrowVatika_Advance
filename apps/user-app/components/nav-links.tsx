@@ -1,4 +1,8 @@
+"use client";
+import Skeleton from "@/app/loading";
 import Link from "next/link";
+import { usePathname, useRouter } from "next/navigation";
+import { useState } from "react";
 
 interface NavLinksProps {
   linkName: string;
@@ -14,6 +18,53 @@ export const NavLinks = ({
   onMouseEnter,
   onMouseLeave,
 }: NavLinksProps) => {
+  const router = useRouter();
+  const pathname = usePathname();
+
+  // Function to handle navigation and scrolling
+  const handleNavigation = (e: React.MouseEvent) => {
+    e.preventDefault();
+
+    // Define section mappings
+    const sectionMap: { [key: string]: string } = {
+      "About": "about",
+      "Contact Us": "contact-us",
+      "Offers": "offers",
+      "Home":"/"
+    };
+
+    const sectionId = sectionMap[linkName];
+
+    if (!sectionId) return;
+
+    // If we're already on the home page, just scroll
+    if (pathname === "/") {
+      scrollToSection(sectionId);
+    } else {
+      // Navigate to home page first, then scroll
+      router.push("/");
+      // Use setTimeout to ensure the page has loaded before scrolling
+      setTimeout(() => {
+        scrollToSection(sectionId);
+      }, 2000);
+    }
+  };
+
+  // Function to smoothly scroll to a section
+  const scrollToSection = (sectionId: string) => {
+    const element = document.getElementById(sectionId);
+    if (element) {
+      element.scrollIntoView({
+        behavior: "smooth",
+        block: "start",
+      });
+    }
+  };
+
+  // Determine if this link should handle section scrolling
+  const isSectionLink = ["About", "Contact Us", "Offers", "Home"].includes(
+    linkName
+  );
   return (
     <div
       className={
@@ -26,13 +77,24 @@ export const NavLinks = ({
       onMouseEnter={onMouseEnter}
       onMouseLeave={onMouseLeave}
     >
-      <div className="">
-        <Link
-          href={linkName === "Collections" ? "/explore" : "/"}
-          className="text-white w-[10rem] h-[10rem] flex items-center font-Poppins lg:text-[16px] xl:text-[19.63px] leading-[29.44px] tracking-wider  justify-center"
-        >
-          {linkName}
-        </Link>
+      <div>
+        {isSectionLink ? (
+          // Use button for section navigation
+          <button
+            onClick={handleNavigation}
+            className="text-white w-[10rem] h-[10rem] flex items-center font-Poppins lg:text-[16px] xl:text-[19.63px] leading-[29.44px] tracking-wider justify-center"
+          >
+            {linkName}
+          </button>
+        ) : (
+          // Use Link for regular navigation (Collections)
+          <Link
+            href={linkName === "Collections" ? "/explore" : "/"}
+            className="text-white w-[10rem] h-[10rem] flex items-center font-Poppins lg:text-[16px] xl:text-[19.63px] leading-[29.44px] tracking-wider justify-center"
+          >
+            {linkName}
+          </Link>
+        )}
       </div>
 
       {/* Following is the dropdown */}

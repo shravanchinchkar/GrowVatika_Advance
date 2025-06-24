@@ -3,7 +3,10 @@ import Image from "next/image";
 
 export const Footer = () => {
   return (
-    <div className="flex lg:h-[20rem] xl:h-[22.875rem] bg-feature-gradient mt-[5rem]">
+    <div
+      id="contact-us"
+      className="flex lg:h-[20rem] xl:h-[22.875rem] bg-feature-gradient mt-[5rem]"
+    >
       {/* Following is the left footer div */}
       <div className="w-[29rem] h-[100%] lg:pt-[2.5rem] overflow-hidden">
         <div className="flex justify-center">

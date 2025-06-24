@@ -7,7 +7,7 @@ import { useRouter } from "next/navigation";
 import { useSession } from "next-auth/react";
 
 export const SellerHeroSection = () => {
-  const {data:session}=useSession();
+  const { data: session } = useSession();
   const sellerId = session?.user?.id;
 
   console.log("Seller Session details:", session);
@@ -51,10 +51,12 @@ export const SellerHeroSection = () => {
           </div>
           {/* Hero Button */}
           <button
-            className="w-[17rem] h-[4rem] text-[#FFF6F4] text-center font-normal uppercase  bg-gradient-to-r from-[#73735A] to-[#445A4A] rounded-[5rem] border-[3px] border-white shadow-lg text-[1.22869rem] transition-transform duration-300 ease-in-out hover:bg-[#123524] hover:bg-none hover:font-bold hover:border-none"
+            className="w-[17rem] h-[4rem] group border-[2px] hover:border-none rounded-[2.10294rem] bg-[#56A430] hover:bg-[#123524] shadow-button-custom-boxshadow backdrop-blur-[6.408869743347168px] text-[#FFF6F4] text-[1.23044rem] hover:text-[1.33331rem] font-[Poppins] font-normal  hover:font-semibold  uppercase"
             onClick={handleStartSellingNow}
           >
-            Start Selling Now !
+            <div className="w-[100%] h-[100%] rounded-[2.10294rem] bg-button-custom-gradient group-hover:bg-none flex justify-center items-center">
+              Start Selling Now !
+            </div>
           </button>
         </div>
         {/* Login Message */}

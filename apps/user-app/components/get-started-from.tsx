@@ -63,13 +63,15 @@ export const ContactForm = () => {
 
   return (
     <div
-      className={`lg:w-[60rem] xl:w-[75rem] 2xl:w-[82rem] flex flex-col items-center m-auto rounded-[28px] bg-contact-form pt-[1rem] pb-[1rem] relative ${
-        displayForm ? "h-[40rem] gap-[2rem]" : "h-[12.8125rem] gap-[2rem]"
-      }`}
+      className={`new-sm:w-[100%] md:w-[30rem] lg:w-[60rem] xl:w-[75rem] 2xl:w-[82rem] 
+  flex flex-col items-center m-auto 
+  bg-contact-form pt-[1rem] pb-[1rem] relative 
+  rounded-none md:rounded-[28px] 
+  ${displayForm ? "h-[40rem] gap-[2rem]" : "h-[12.8125rem] gap-[2rem]"}`}
     >
       {/* Following is the title of the form */}
 
-      <div className="text-[#123524] font-[Poppins] lg:text-[2rem] xl:text-[2.25rem] font-medium  text-center mt-[1rem]">
+      <div className="text-[#123524] font-[Poppins] new-sm:text-[0.9375rem] lg:text-[2rem] xl:text-[2.25rem] font-medium  text-center mt-[1rem]">
         Join Our Growing Network of Trusted Sellers!
       </div>
 

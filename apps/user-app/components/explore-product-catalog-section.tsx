@@ -24,6 +24,7 @@ interface ProductData {
   description: string;
   productSize: string;
   collection: string;
+  tags: string;
   imageURL: string;
 }
 
@@ -234,11 +235,12 @@ export const ExploreProductCatalogSection = () => {
                         }}
                       >
                         {/* Following div consist of tag of the product */}
+                        {/* Product Tag */}
                         <div className="w-[50%] flex items-end">
-                          <div className="w-[5.32906rem] h-[1.88088rem] rounded-full bg-[#FFC400] flex items-center justify-center ml-[0.5rem] mb-[0.5rem]">
-                            <span className="text-white text-[0.75rem] font-semibold capitalize">
-                              Best Seller
-                            </span>
+                          <div
+                            className={`min-w-[5.32906rem] max-w-max h-[1.88088rem] rounded-full  flex items-center justify-center ml-[0.5rem] mb-[0.5rem] px-[0.5rem] text-white text-[0.75rem] font-semibold capitalize ${item.tags === "Best Seller" ? "bg-[#FFC400]" : "bg-[#1A9AEF]"}`}
+                          >
+                            {item.tags}
                           </div>
                         </div>
 
@@ -299,7 +301,7 @@ export const ExploreProductCatalogSection = () => {
 
                         {/* Product Description */}
                         <p className="text-[#697F75] text-[0.9375rem] leading-[1.5rem] font-medium ">
-                          {`Product Size: ${item.productSize ===`no size available`?"no size available":`" Pot`}`}
+                          {`Product Size - ${item.productSize === `no size available` ? "no size available" : `${item.productSize}" Pot`}`}
                         </p>
 
                         {/* Price Section */}

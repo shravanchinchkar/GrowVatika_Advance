@@ -4,6 +4,7 @@ import { AuthButton } from "@repo/ui/auth-button";
 import { signOut, useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
+import Skeleton from "../app/loading";
 
 export const SellerNavbar = () => {
   const session = useSession();
@@ -19,6 +20,10 @@ export const SellerNavbar = () => {
     await signOut();
   }
 
+  if(loading){
+    return <Skeleton/>
+  }
+  
   return (
     <nav className="w-[100%] h-[10%] flex justify-between items-center">
       <div className="ml-[2rem]">

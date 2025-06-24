@@ -20,7 +20,7 @@ export const LandingPage = () => {
           <ShoppingCartIcon />
         </div>
 
-        <div className="2xl:w-[82.1875rem] lg:w-[60rem] xl:w-[70rem] flex justify-between items-center z-10 font-[Poppins]">
+        <div className="lg:w-[60rem] xl:w-[70rem] 2xl:w-[82.1875rem] flex justify-between items-center z-10 font-[Poppins]">
           <Navbar />
           <UserAuthButton />
         </div>

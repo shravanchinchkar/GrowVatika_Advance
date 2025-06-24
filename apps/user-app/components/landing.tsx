@@ -1,6 +1,4 @@
-"use client";
 
-import { useEffect } from "react";
 import { Navbar } from "./nav-section";
 import { Header } from "./header-section";
 import { Footer } from "./footer-section";
@@ -9,32 +7,12 @@ import { AboutUsSection } from "./about-us";
 import { HeroSection } from "./hero-section";
 import { ShoppingCartIcon } from "./cart-icon";
 import { ContactForm } from "./get-started-from";
-import { useSearchParams } from "next/navigation";
 import { ExploreSection } from "./explore-section";
 import { FeatureSection } from "./feature-section";
 import { UserAuthButton } from "./user-auth-button";
 import { TestmonialSection } from "./testimonial-section";
 
 export const LandingPage = () => {
-  const searchParams = useSearchParams();
-  const scrollTo = searchParams.get("scrollTo");
-
-  console.log
-
-  useEffect(() => {
-    // Handle scrolling when page loads with scrollTo parameter
-    if (scrollTo) {
-      setTimeout(() => {
-        const element = document.getElementById(scrollTo);
-        if (element) {
-          element.scrollIntoView({
-            behavior: "smooth",
-            block: "start",
-          });
-        }
-      }, 100);
-    }
-  }, [scrollTo]);
   return (
     <div className="flex flex-col bg-[#FFF6F4]">
       {/* Header Section */}

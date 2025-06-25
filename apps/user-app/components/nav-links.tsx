@@ -69,10 +69,10 @@ export const NavLinks = ({
     <div
       className={
         linkNumber === "1"
-          ? "flex flex-col w-[100%] h-[100%] uppercase justify-center items-center transition-all duration-300 ease-in-out hover:bg-[#8FAA83] hover:text-lg hover:font-bold overflow-hidden cursor-pointer rounded-l-full"
+          ? "flex flex-col w-[100%] h-[100%] justify-center items-center transition-all duration-300 ease-in-out hover:bg-[#8FAA83] hover:text-lg hover:font-bold overflow-hidden cursor-pointer rounded-l-full"
           : linkNumber === "5"
-            ? "flex flex-col w-[100%] h-[100%] uppercase justify-center items-center transition-all duration-300 ease-in-out hover:bg-[#8FAA83] hover:text-lg hover:font-bold overflow-hidden cursor-pointer rounded-r-full pr-[1rem]"
-            : "flex flex-col w-[100%] h-[100%] uppercase justify-center items-center transition-all duration-300 ease-in-out hover:bg-[#8FAA83] hover:text-lg  overflow-hidden cursor-pointer hover:font-semibold"
+            ? "flex flex-col w-[100%] h-[100%] justify-center items-center transition-all duration-300 ease-in-out hover:bg-[#8FAA83] hover:text-lg hover:font-bold overflow-hidden cursor-pointer rounded-r-full pr-[1rem]"
+            : "flex flex-col w-[100%] h-[100%] justify-center items-center transition-all duration-300 ease-in-out hover:bg-[#8FAA83] hover:text-lg  overflow-hidden cursor-pointer hover:font-semibold"
       }
       onMouseEnter={onMouseEnter}
       onMouseLeave={onMouseLeave}
@@ -82,7 +82,7 @@ export const NavLinks = ({
           // Use button for section navigation
           <button
             onClick={handleNavigation}
-            className="text-white w-[10rem] h-[10rem] flex items-center font-Poppins lg:text-[16px] xl:text-[19.63px] leading-[29.44px] tracking-wider justify-center"
+            className="text-white w-[10rem] h-[10rem] flex items-center font-Poppins uppercase lg:text-[16px] xl:text-[19.63px] leading-[29.44px] tracking-wider justify-center"
           >
             {linkName}
           </button>
@@ -90,7 +90,7 @@ export const NavLinks = ({
           // Use Link for regular navigation (Collections)
           <Link
             href={linkName === "Collections" ? "/explore" : "/"}
-            className="text-white w-[10rem] h-[10rem] flex items-center font-Poppins lg:text-[16px] xl:text-[19.63px] leading-[29.44px] tracking-wider justify-center"
+            className="text-white w-[10rem] h-[10rem] flex items-center uppercase font-Poppins lg:text-[16px] xl:text-[19.63px] leading-[29.44px] tracking-wider justify-center"
           >
             {linkName}
           </Link>

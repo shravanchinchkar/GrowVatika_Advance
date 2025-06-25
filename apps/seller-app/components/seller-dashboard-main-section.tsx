@@ -6,21 +6,24 @@ import { useEffect, useState } from "react";
 import { useSearchParams } from "next/navigation";
 import { sellerDataStore } from "../store/sellerData";
 import { toastStyle } from "@repo/shared/utilfunctions";
-import { BusinessInfoCard } from "./business-Info-card";
-import { activeSideBarStore } from "../store/activeSideBar";
 import { SellerDashboardLoader } from "./seller-dashboard-loader";
-import { AnaylticalCards } from "./seller-dashboard-analytical-cards";
-import { SellerDashboardWelcomeMsg } from "./seller-dashboard-welcome-msg";
-import { displayAddProductSectionStore } from "../store/displayAddProductSection";
+import { sellerProductDataStore } from "../store/sellerProductData";
+import { SellerDashboardProfileSection } from "./seller-dashboard-profile-section";
+import { SellerDashboardAddProductSection } from "./seller-dashboard-add-product-section";
+import { SellerDashboardProductManagementSection } from "./seller-dashboard-product-management-section";
 
 export const SellerDashboardMainSection = () => {
   const searchParams = useSearchParams();
   const sellerId = searchParams?.get("id") || "";
   const [isDataLoaded, setIsDataLoaded] = useState(false);
 
-  // Following is the Zustand state management code
-  const sellerData = sellerDataStore((state) => state.sellerData);
+  // Following is the Zustand state management code for sellerData
   const updateSellerData = sellerDataStore((state) => state.updateSellerData);
+
+  // Following is the Zustand state management code for seller Product data
+  const updateSellerProductData = sellerProductDataStore(
+    (state) => state.updateSellerProductData
+  );
 
   useEffect(() => {
     setIsDataLoaded(false);
@@ -39,6 +42,7 @@ export const SellerDashboardMainSection = () => {
           specialities: res.data.sellerData.specialities,
           businesshours: res.data.sellerData.business_hours,
         });
+        updateSellerProductData(res.data.sellerProductData)
         setIsDataLoaded(true);
       } catch (error) {
         console.error(
@@ -51,33 +55,18 @@ export const SellerDashboardMainSection = () => {
     fetchData();
   }, [sellerId]);
 
-  // Following is the state management code using zustan
-  const activeSideBar = activeSideBarStore((state: any) => state.activeSideBar);
-  const displayAddProductSection = displayAddProductSectionStore(
-    (state: any) => state.displayAddProductSection
-  );
-
-  if (activeSideBar === "dashboard" && displayAddProductSection === false) {
-    if (isDataLoaded === false) {
-      return (
-        <div className="w-[100%] h-[100%] flex justify-center items-center">
-          <SellerDashboardLoader />
-        </div>
-      );
-    } else {
-      return (
-        <div className="w-[100%] p-[1rem] flex flex-col gap-[1.5rem] justify-center">
-          {/* Following is the welcome back message div */}
-          <SellerDashboardWelcomeMsg nurseryName={sellerData.nurseryName} />
-          {/* Stats Cards */}
-          <AnaylticalCards />
-          {/* Business Information Card */}
-          <BusinessInfoCard
-            sellerData={sellerData}
-            setSellerData={updateSellerData}
-          />
-        </div>
-      );
-    }
+  if (isDataLoaded === false) {
+    return (
+      <div className="w-[100%] h-[100%] flex justify-center items-center">
+        <SellerDashboardLoader />
+      </div>
+    );
   }
+  return (
+    <>
+      <SellerDashboardProfileSection />
+      <SellerDashboardProductManagementSection />
+      <SellerDashboardAddProductSection />
+    </>
+  );
 };

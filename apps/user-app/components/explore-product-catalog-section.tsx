@@ -13,31 +13,15 @@ import { ShoppingCartIcon } from "./cart-icon";
 import { CustomSelectTag } from "./custom-select-tag";
 import { UserProfileIcon } from "./user-profile-icon";
 import { LikeProductIcon } from "./like-product-icon";
+import { SellerProductData } from "@repo/common-types/types";
 import { ProductFilterSection } from "./product-filter-section";
-import { it } from "node:test";
-
-interface ProductData {
-  id: string;
-  name: string;
-  price: string;
-  compareAt: string;
-  description: string;
-  productSize: string;
-  collection: string;
-  tags: string;
-  imageURL: string;
-}
 
 export const ExploreProductCatalogSection = () => {
   const [loading, setLoading] = useState(false);
   const [likeProduct, setLikeProduct] = useState(false);
   const filterTags = ["Indoor Plants", "Large (24–48”)", "2 star & up"];
   const [displaySortDropDown, setDisplaySortDropDown] = useState(false);
-  const [productsData, setProductsData] = useState<ProductData[]>([]);
-
-  function truncateDescription(description: string, wordCount = 6) {
-    return description.split(" ").slice(0, wordCount).join(" ") + "...";
-  }
+  const [productsData, setProductsData] = useState<SellerProductData[]>([]);
 
   useEffect(() => {
     const getProductsData = async () => {
@@ -48,6 +32,7 @@ export const ExploreProductCatalogSection = () => {
         const productsDataFromBE = res.data.productData;
         console.log("value of productsDataFromBE:", productsDataFromBE);
         setProductsData(productsDataFromBE);
+        console.log("Value of productData is:",productsData)
         setLoading(false);
       } catch (error) {
         console.error("Error while getting product data", error);
@@ -221,7 +206,7 @@ export const ExploreProductCatalogSection = () => {
 
               {/* Product Card  */}
               <div className="grid grid-cols-3 gap-8">
-                {productsData.map((item: ProductData) => {
+                {productsData.map((item: SellerProductData) => {
                   return (
                     <div
                       key={item.id}

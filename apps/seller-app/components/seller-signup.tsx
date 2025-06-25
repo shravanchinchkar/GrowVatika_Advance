@@ -72,7 +72,7 @@ export const SellerRegister = () => {
       setLoading(true);
       try {
         const res = await axios.get(
-          `/api/getsellerdata?email=${encodeURIComponent(searchParamsEmail)}`
+          `/api/getsellersignupdata?email=${encodeURIComponent(searchParamsEmail)}`
         );
 
         // Don't update state if component unmounted

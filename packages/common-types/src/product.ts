@@ -95,3 +95,20 @@ export const ServerProductSchema = BaseProductSchema.extend({
 
 export type TClientProductSchema = zod.infer<typeof ClientProductSchema>;
 export type TServerProductSchema = zod.infer<typeof ServerProductSchema>;
+
+export interface SellerProductData {
+  id: string;
+  name: string;
+  tags: string;
+  price: string;
+  imageURL: string;
+  category: string;
+  featured: boolean;
+  compareAt: string;
+  visibility: string;
+  collection: string;
+  productSize: string;
+  description: string;
+  productStatus: string;
+  productQuantity: string;
+}

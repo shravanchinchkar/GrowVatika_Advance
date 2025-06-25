@@ -7,9 +7,9 @@ export async function GET(req: NextRequest) {
   try {
     const { searchParams } = new URL(req.url);
     const sellerId = searchParams.get("id");
-    console.log("Email from Params:", sellerId);
 
-    const existingSeller = await client.seller.findUnique({
+    // get seller data from the database
+    const existingSellerData = await client.seller.findUnique({
       where: {
         id: sellerId || "",
       },
@@ -24,28 +24,57 @@ export async function GET(req: NextRequest) {
         specialities: true,
       },
     });
-    if (!existingSeller) {
+    // Return error if seller data not found
+    if (!existingSellerData) {
       console.error("Seller Not Found!");
       return NextResponse.json({
         success: false,
         error: "Seller not found!",
       });
-    } else {
-      console.log("Seller Data found!");
+    }
+
+    //get seller product data from database
+    const sellerProductData = await client.product.findMany({
+      where: {
+        sellerId: sellerId || "",
+      },
+      select: {
+        id:true,
+        name: true,
+        price: true,
+        compareAt:true,
+        collection: true,
+        productStatus:true,
+        productSize: true,
+        productQuantity: true,
+      },
+    });
+
+    // Return partial error if seller product data is not found
+    if (!sellerProductData) {
+      console.error("Seller Data found but seller has no products to sell");
       return NextResponse.json({
-        success: true,
-        message: "Seller Data found!",
-        sellerData: existingSeller,
+        success: false,
+        error: "Seller Data found but seller has no products to sell",
+        sellerData: existingSellerData,
       });
     }
+
+    // Success if both seller data and their product data is found
+    return NextResponse.json({
+      success: true,
+      message: "Seller Data and Seller Product found!",
+      sellerData: existingSellerData,
+      sellerProductData: sellerProductData,
+    });
   } catch (error) {
     console.error(
-      "Error while getting the data of the seller for seller dashboard",
+      "Error while getting the data of the seller and their products for seller dashboard",
       error
     );
     return NextResponse.json({
       success: false,
-      error: "Error while getting seller data for seller dashboard",
+      error: "Error while getting the data of the seller and their products for seller dashboard",
     });
   }
 }

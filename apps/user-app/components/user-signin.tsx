@@ -117,7 +117,7 @@ export const Sign_In = () => {
       toast.error("Invalid email", { ...toastStyle, position: "bottom-left" });
       setResetPasswordLoading(false);
     } else {
-      const res = await resetPasswordEmail({email});
+      const res = await resetPasswordEmail(email);
       setResetPasswordLoading(false);
       if (res.error) {
         toast.error(res.error.toString(), {

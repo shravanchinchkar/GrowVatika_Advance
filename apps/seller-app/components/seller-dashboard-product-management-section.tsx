@@ -6,6 +6,8 @@ import { activeSideBarStore } from "../store/activeSideBar";
 import { SellerProductData } from "@repo/common-types/types";
 import { sellerProductDataStore } from "../store/sellerProductData";
 import { displayAddProductSectionStore } from "../store/displayAddProductSection";
+import { sellerDataStore } from "../store/sellerData";
+import { stat } from "fs";
 
 export const SellerDashboardProductManagementSection = () => {
   // Following is the Zustand state management code for displaying component depending upon active sidebar
@@ -22,6 +24,9 @@ export const SellerDashboardProductManagementSection = () => {
   const sellerProductData = sellerProductDataStore(
     (state) => state.productData
   );
+
+  // Following is the Zustand state management code for sellerData
+  const sellerData = sellerDataStore((state) => state.sellerData);
 
   const ButtonType = ["All Products", "Active", "Draft", "Hidden"];
 
@@ -80,7 +85,8 @@ export const SellerDashboardProductManagementSection = () => {
 
             {/* Add Product Button */}
             <button
-              className="h-[3.1875rem] w-[12.4375rem] rounded-[0.625rem] flex items-center justify-center gap-[1rem] bg-[#56A430] animate-bg-bounce-in-2"
+              className={`h-[3.1875rem] w-[12.4375rem] rounded-[0.625rem] flex items-center justify-center gap-[1rem] bg-[#56A430] animate-bg-bounce-in-2 ${sellerData.nurseryBio === null ? "cursor-not-allowed" : "cursor-pointer"}`}
+              disabled={sellerData.nurseryBio === null ? true : false}
               onClick={handelDisplayofAddProductSection}
             >
               <div className="relative h-[1.5rem] w-[1.5rem]">
@@ -149,7 +155,9 @@ export const SellerDashboardProductManagementSection = () => {
         </div>
 
         {filterProducts.length === 0 ? (
-          <div className="w-[100%] h-[15rem] flex justify-center items-center text-center my-auto text-[1.5rem] text-[#FF4B4B] uppercase font-medium">No Product to display</div>
+          <div className="w-[100%] h-[15rem] flex justify-center items-center text-center my-auto text-[1.5rem] text-[#FF4B4B] uppercase font-medium">
+            No Product to display
+          </div>
         ) : (
           <>
             {/* Table start from here */}

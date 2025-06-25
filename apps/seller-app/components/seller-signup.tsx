@@ -43,26 +43,6 @@ export const SellerRegister = () => {
   });
 
   // Get Data of the seller
-  // async function getData() {
-  //   const res = await axios.get(
-  //     `/api/getsellerdata?email=${encodeURIComponent(searchParamsEmail)}`
-  //   );
-  //   console.log("Seller Data is:", res.data.sellerData);
-  //   if (res.data.error) {
-  //     toast.error(res.data.error.toString(), toastStyle);
-  //   } else {
-  //     setValue("nurseryName", res.data.sellerData?.nurseryName);
-  //     setValue("email", res.data.sellerData?.email || "");
-  //     setValue("phoneNumber", res.data.sellerData?.phoneNumber);
-  //   }
-  // }
-  // async function main() {
-  //   await getData();
-  // }
-  // useEffect(() => {
-  //   main();
-  // }, [main]);
-
   useEffect(() => {
     if (!searchParamsEmail) return;
 
@@ -77,8 +57,6 @@ export const SellerRegister = () => {
 
         // Don't update state if component unmounted
         if (isCancelled) return;
-
-        console.log("Seller Data is:", res.data.sellerData);
 
         if (res.data.error) {
           toast.error(res.data.error.toString(), toastStyle);
@@ -99,7 +77,6 @@ export const SellerRegister = () => {
         }
       }
     };
-
     fetchData();
 
     // Cleanup function

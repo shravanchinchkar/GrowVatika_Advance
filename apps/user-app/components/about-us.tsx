@@ -15,7 +15,7 @@ export const AboutUsSection = () => {
         />
       </div>
 
-      <div className="w-[55%] h-[88%] absolute top-[10%] right-[14%] z-0 lg:pl-[8rem] lg:pt-[0.7rem]  xl:pl-[12rem] xl:pb-[2rem] flex flex-col justify-center self-center gap-[1rem] font-[Poppins] rounded-[28px] bg-custom-gradient overflow-hidden">
+      <div className="w-[55%] h-[88%] absolute top-[10%] right-[14%] z-0 lg:pl-[8rem] lg:pt-[0.7rem]  xl:pl-[12rem] xl:pb-[2rem] flex flex-col justify-center self-center gap-[1rem] font-poppins rounded-[28px] bg-custom-gradient overflow-hidden">
         <h1 className="lg:text-[1.5rem] xl:text-[2rem] 2xl:text-[2.25rem] text-[#123524] font-medium">
           About GrowVatika
         </h1>

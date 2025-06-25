@@ -9,6 +9,14 @@ export default {
   ],
   theme: {
     extend: {
+       fontFamily: {
+        'nunito-sans': ['Nunito Sans', 'sans-serif'],
+        'outfit': ['Outfit', 'sans-serif'],
+        'poppins': ['Poppins', 'sans-serif'],
+        'roboto': ['Roboto', 'sans-serif'],
+        'ubuntu': ['Ubuntu', 'sans-serif'],
+        'unbounded': ['Unbounded', 'sans-serif'],
+      },
       colors: {
         background: "var(--background)",
         foreground: "var(--foreground)",

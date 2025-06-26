@@ -21,7 +21,6 @@ export async function GET() {
         error: "Error while fetching sellers data",
       });
     }
-    console.log("all seller data is:",sellers)
     return NextResponse.json({
       success: true,
       message: "Successfully got all the sellers data!",

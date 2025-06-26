@@ -44,9 +44,7 @@ export const SignInSchema = zod.object({
     .optional(),
 });
 
-export const EmailOnlySchema = zod.object({
-  email: zod.string().email(),
-});
+export const EmailOnlySchema = zod.string().email();
 
 //Following zod schema is used for frontend purpose
 export type SignUpInputs = zod.infer<typeof SignUpSchema>;

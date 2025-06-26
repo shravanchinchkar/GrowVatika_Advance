@@ -7,7 +7,7 @@ type SellerData = {
 export interface ApiResponseType {
   success: boolean;
   message?: string;
-  error?: string;
+  error?: any;
   status?: string;
   sellerData?: SellerData;
   responseData?:any

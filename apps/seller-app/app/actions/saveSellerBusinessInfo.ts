@@ -8,8 +8,6 @@ import { SellerData, SellerDataSchema } from "@repo/common-types/types";
 export async function saveSellerBusinessInfo(
   sellerData: SellerData
 ): Promise<ApiResponseType> {
-
-  console.log("Business Info Data in BE:",sellerData);
   //validate the Inputs
   const validateInput = SellerDataSchema.safeParse(sellerData);
   if (!validateInput.success) {
@@ -45,7 +43,6 @@ export async function saveSellerBusinessInfo(
           error: "Error While updating seller business Information",
         };
       }
-      console.log("Updated Seller Information:", updateExistingSeller);
       return {
         success: true,
         message: "Seller Business Information added Successfully",

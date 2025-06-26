@@ -23,6 +23,7 @@ BE FINAL YEAR PROJECT
 - Postgres Database
 - Prisma as ORM
 - Zustand for state management
+- Cloudinary for image upload and storage
 
 
 ## Following are the live links of the project

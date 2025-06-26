@@ -23,7 +23,9 @@ export const AuthButton = ({
       disabled={loading}
       onClick={onClick}
     >
-      {!loading ? buttonName : <ButtonLoadingSign />}
+      <div className="w-[100%] h-[100%] rounded-[2.10294rem] bg-button-custom-gradient group-hover:bg-none flex justify-center items-center  ">
+        {!loading ? buttonName : <ButtonLoadingSign />}
+      </div>
     </button>
   );
 };

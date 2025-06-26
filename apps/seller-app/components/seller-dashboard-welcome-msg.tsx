@@ -1,5 +1,6 @@
 "use client";
 import Image from "next/image";
+import { sellerDataStore } from "../store/sellerData";
 import { activeSideBarStore } from "../store/activeSideBar";
 import { displayAddProductSectionStore } from "../store/displayAddProductSection";
 
@@ -21,7 +22,10 @@ export const SellerDashboardWelcomeMsg = ({
     updatedisplayAddProductSection(true);
     updateActiveSideBar("products");
   };
-  
+
+  const sellerData = sellerDataStore((state) => state.sellerData);
+
+  console.log("Seller Data in welcome message:", sellerData);
   return (
     <div className="p-6 bg-custom-bg rounded-[1.25rem] h-[9.313rem] w-[100%]">
       <div className="text-white font-bold text-[2rem] capitalize font-[Unbounded]">
@@ -35,7 +39,8 @@ export const SellerDashboardWelcomeMsg = ({
         </div>
 
         <button
-          className="w-[14.1875rem] h-[3.1875rem] rounded-[0.625rem] bg-white text-[#697F75] text-[1.2267rem] capitalize font-[Poppins] font-normal text-center leading-normal shrink-0 flex justify-center items-center gap-[0.5rem] animate-bg-bounce-in"
+          className={`w-[14.1875rem] h-[3.1875rem] rounded-[0.625rem] bg-white text-[#697F75] text-[1.2267rem] capitalize font-[Poppins] font-normal text-center leading-normal shrink-0 flex justify-center items-center gap-[0.5rem] animate-bg-bounce-in ${sellerData.nurseryBio === null ? "cursor-not-allowed" : "cursor-pointer"}`}
+          disabled={sellerData.nurseryBio === null ? true : false}
           onClick={handleDisplayAddProductSection}
         >
           <div className="relative w-[1.5rem] h-[1.5rem]">

@@ -1,4 +1,8 @@
+"use client";
+import Skeleton from "@/app/loading";
 import Link from "next/link";
+import { usePathname, useRouter } from "next/navigation";
+import { useState } from "react";
 
 interface NavLinksProps {
   linkName: string;
@@ -14,25 +18,83 @@ export const NavLinks = ({
   onMouseEnter,
   onMouseLeave,
 }: NavLinksProps) => {
+  const router = useRouter();
+  const pathname = usePathname();
+
+  // Function to handle navigation and scrolling
+  const handleNavigation = (e: React.MouseEvent) => {
+    e.preventDefault();
+
+    // Define section mappings
+    const sectionMap: { [key: string]: string } = {
+      "About": "about",
+      "Contact Us": "contact-us",
+      "Offers": "offers",
+      "Home":"/"
+    };
+
+    const sectionId = sectionMap[linkName];
+
+    if (!sectionId) return;
+
+    // If we're already on the home page, just scroll
+    if (pathname === "/") {
+      scrollToSection(sectionId);
+    } else {
+      // Navigate to home page first, then scroll
+      router.push("/");
+      // Use setTimeout to ensure the page has loaded before scrolling
+      setTimeout(() => {
+        scrollToSection(sectionId);
+      }, 2000);
+    }
+  };
+
+  // Function to smoothly scroll to a section
+  const scrollToSection = (sectionId: string) => {
+    const element = document.getElementById(sectionId);
+    if (element) {
+      element.scrollIntoView({
+        behavior: "smooth",
+        block: "start",
+      });
+    }
+  };
+
+  // Determine if this link should handle section scrolling
+  const isSectionLink = ["About", "Contact Us", "Offers", "Home"].includes(
+    linkName
+  );
   return (
     <div
       className={
         linkNumber === "1"
-          ? "flex flex-col w-[100%] h-[100%] uppercase justify-center items-center transition-all duration-300 ease-in-out hover:bg-[#8FAA83] hover:text-lg hover:font-bold overflow-hidden cursor-pointer rounded-l-full"
+          ? "flex flex-col w-[100%] h-[100%] justify-center items-center transition-all duration-300 ease-in-out hover:bg-[#8FAA83] hover:text-lg hover:font-bold overflow-hidden cursor-pointer rounded-l-full"
           : linkNumber === "5"
-            ? "flex flex-col w-[100%] h-[100%] uppercase justify-center items-center transition-all duration-300 ease-in-out hover:bg-[#8FAA83] hover:text-lg hover:font-bold overflow-hidden cursor-pointer rounded-r-full pr-[1rem]"
-            : "flex flex-col w-[100%] h-[100%] uppercase justify-center items-center transition-all duration-300 ease-in-out hover:bg-[#8FAA83] hover:text-lg  overflow-hidden cursor-pointer hover:font-semibold"
+            ? "flex flex-col w-[100%] h-[100%] justify-center items-center transition-all duration-300 ease-in-out hover:bg-[#8FAA83] hover:text-lg hover:font-bold overflow-hidden cursor-pointer rounded-r-full pr-[1rem]"
+            : "flex flex-col w-[100%] h-[100%] justify-center items-center transition-all duration-300 ease-in-out hover:bg-[#8FAA83] hover:text-lg  overflow-hidden cursor-pointer hover:font-semibold"
       }
       onMouseEnter={onMouseEnter}
       onMouseLeave={onMouseLeave}
     >
-      <div className="">
-        <Link
-          href="/"
-          className="text-white w-[10rem] h-[10rem] flex items-center font-Poppins lg:text-[16px] xl:text-[19.63px] leading-[29.44px] tracking-wider  justify-center"
-        >
-          {linkName}
-        </Link>
+      <div>
+        {isSectionLink ? (
+          // Use button for section navigation
+          <button
+            onClick={handleNavigation}
+            className="text-white w-[10rem] h-[10rem] flex items-center font-Poppins uppercase lg:text-[16px] xl:text-[19.63px] leading-[29.44px] tracking-wider justify-center"
+          >
+            {linkName}
+          </button>
+        ) : (
+          // Use Link for regular navigation (Collections)
+          <Link
+            href={linkName === "Collections" ? "/explore" : "/"}
+            className="text-white w-[10rem] h-[10rem] flex items-center uppercase font-Poppins lg:text-[16px] xl:text-[19.63px] leading-[29.44px] tracking-wider justify-center"
+          >
+            {linkName}
+          </Link>
+        )}
       </div>
 
       {/* Following is the dropdown */}

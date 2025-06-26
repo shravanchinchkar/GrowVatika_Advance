@@ -3,7 +3,7 @@ import AboutSectionImage from "../public/assets/images/AboutImages/AboutSectionI
 import CornerFlower from "../public/assets/images/CommonImages/CornerFlowerImage.png";
 export const AboutUsSection = () => {
   return (
-    <div className="grid grid-cols-2 relative mt-[2rem] ">
+    <div id="about" className="grid grid-cols-2 relative mt-[2rem]">
       <div className="lg:w-[25rem] lg:h-[25rem] xl:w-[38.96875rem] xl:h-[35.5rem] relative shrink-0 justify-self-center z-10">
         <Image
           className="object-cover"
@@ -15,8 +15,7 @@ export const AboutUsSection = () => {
         />
       </div>
 
-      <div className="w-[55%] h-[88%] absolute top-[10%] right-[14%] z-0 lg:pl-[8rem] lg:pt-[0.7rem]  xl:pl-[12rem] xl:pb-[2rem] flex flex-col justify-center self-center gap-[1rem] font-[Poppins] rounded-[28px] bg-custom-gradient overflow-hidden">
-
+      <div className="w-[55%] h-[88%] absolute top-[10%] right-[14%] z-0 lg:pl-[8rem] lg:pt-[0.7rem]  xl:pl-[12rem] xl:pb-[2rem] flex flex-col justify-center self-center gap-[1rem] font-poppins rounded-[28px] bg-custom-gradient overflow-hidden">
         <h1 className="lg:text-[1.5rem] xl:text-[2rem] 2xl:text-[2.25rem] text-[#123524] font-medium">
           About GrowVatika
         </h1>
@@ -31,7 +30,8 @@ export const AboutUsSection = () => {
             we connect plant lovers with trusted nurseries, offering a diverse
             range of
             <span className="font-bold">
-              {" "}plants, gardening tools, soil, fertilizers, pots, and garden décor
+              {" "}
+              plants, gardening tools, soil, fertilizers, pots, and garden décor
             </span>
             —all in one place!
           </p>
@@ -46,7 +46,8 @@ export const AboutUsSection = () => {
             . Whether you're an experienced gardener or just starting,
             GrowVatika helps you
             <span className="font-bold">
-              {" "}explore nearby nurseries, discover top-rated sellers, and shop
+              {" "}
+              explore nearby nurseries, discover top-rated sellers, and shop
               fresh plants and essentials with ease.
             </span>
           </p>

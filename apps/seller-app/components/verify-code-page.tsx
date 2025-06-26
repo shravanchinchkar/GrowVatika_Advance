@@ -31,7 +31,6 @@ export const VerifyCodePage = () => {
   const handelVerifyCode = async () => {
     setLoading(true);
     const res: SignupResponse = await verifyCode({ email, userVerifyCode });
-    console.log("verify code response to FE", res);
     setLoading(false);
     if (res.errors) {
       if (res.errors === "User not found!") {
@@ -48,13 +47,11 @@ export const VerifyCodePage = () => {
       if (
         res.message === "Seller's Email verified successfully in first step"
       ) {
-        console.log("seller verify response:",res.message);
         toast.success("Email verified!", toastStyle);
         router.push(`/register?email=${encodeURIComponent(email)}`);
       } else if (
         res.message === "Seller's Email verified successfully in 2nd step"
       ) {
-        console.log("seller verify response:",res.message);
         toast.success("Email Verified!", toastStyle);
         router.push("/signin");
       }

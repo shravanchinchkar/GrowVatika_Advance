@@ -1,19 +1,20 @@
 import { Navbar } from "./nav-section";
+import { Header } from "./header-section";
 import { Footer } from "./footer-section";
 import { LandingPot } from "./landing-pot";
-import { Header } from "./header-section";
 import { AboutUsSection } from "./about-us";
 import { HeroSection } from "./hero-section";
+import { ShoppingCartIcon } from "./cart-icon";
 import { ContactForm } from "./get-started-from";
 import { ExploreSection } from "./explore-section";
 import { FeatureSection } from "./feature-section";
 import { UserAuthButton } from "./user-auth-button";
 import { TestmonialSection } from "./testimonial-section";
-import { ShoppingCartIcon } from "./cart-icon";
 
 export const LandingPage = () => {
   return (
     <div className="flex flex-col bg-[#FFF6F4]">
+      {/* Header Section */}
       <header className="relative flex flex-col items-center gap-[1rem] pt-[2rem] h-screen">
         <div className="2xl:w-[82.1875rem] lg:w-[60rem] xl:w-[70rem] h-max flex justify-between">
           <Header />
@@ -24,9 +25,12 @@ export const LandingPage = () => {
           <Navbar />
           <UserAuthButton />
         </div>
+
         <HeroSection />
         <LandingPot />
       </header>
+
+      {/* Main Section */}
       <main className="flex flex-col gap-[3rem]">
         <ExploreSection />
         <AboutUsSection />
@@ -34,6 +38,8 @@ export const LandingPage = () => {
         <TestmonialSection />
         <ContactForm />
       </main>
+
+      {/* Footer Section */}
       <footer>
         <Footer />
       </footer>

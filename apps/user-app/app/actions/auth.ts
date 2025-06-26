@@ -182,7 +182,7 @@ export async function resetPasswordEmail(
     return { success: false, error: "Invalid Email" };
   } else {
     try {
-      const emailResponse = await sendResendPasswordMail(validateInput.data?.email || "");
+      const emailResponse = await sendResendPasswordMail(validateInput.data || "");
       // If error while sending email
       if (!emailResponse.success) {
         console.log("Can't send reset password link", emailResponse.message);

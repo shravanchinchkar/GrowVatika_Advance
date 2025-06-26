@@ -5,15 +5,14 @@ import { EmailOnlySchema } from "@repo/common-types/types";
 export async function GET(req: NextRequest) {
   const { searchParams } = new URL(req.url);
   const email = searchParams.get("email");
-
   const validateInput = EmailOnlySchema.safeParse(email);
-  if (!validateInput) {
+  if (!validateInput.success) {
     return NextResponse.json({ success: false, error: "Invalid Email" });
   } else {
     try {
       const existingSellerData = await client.seller.findUnique({
         where: {
-          email: validateInput.data?.email || "",
+          email: validateInput.data,
         },
         select: {
           nurseryName: true,
@@ -22,14 +21,12 @@ export async function GET(req: NextRequest) {
         },
       });
       if (!existingSellerData) {
-        console.error("Seller not found");
-
+        console.error("Seller not found", existingSellerData);
         return NextResponse.json({
           success: false,
           error: "Seller not found",
         });
       } else {
-        console.log("Seller data found!");
         return NextResponse.json({
           success: true,
           message: "Seller Data found!",

@@ -12,36 +12,41 @@ import { useEffect, useState } from "react";
 import { ShoppingCartIcon } from "./cart-icon";
 import { CustomSelectTag } from "./custom-select-tag";
 import { UserProfileIcon } from "./user-profile-icon";
-import { SellerData } from "@repo/common-types/types";
 import { toastStyle } from "@repo/shared/utilfunctions";
 import { ProductPageButton } from "./product-page-button";
+import { TExploreBySellerData } from "@repo/common-types/types";
 import { ProductSearchBar, SearchBarWorkType } from "./product-search-bar";
 import plantImage1 from "../public/assets/images/ProductImages/explore-by-seller-img1.jpg";
-import plantImage2 from "../public/assets/images/ProductImages/explore-by-seller-img2.jpg";
 
 export const ExplorePlantsBySeller = () => {
   const [loading, setLoading] = useState(false);
-  const [sellerData, setSellerData] = useState<SellerData[]>([]);
   const [isDataPresent, setIsDataPresent] = useState(true);
+  const [sellerData, setSellerData] = useState<TExploreBySellerData[]>([]);
 
   useEffect(() => {
+    console.log("Explore By Seller useEffect");
     // Function that fetch the sellerData
     const fetchSellerData = async () => {
       try {
         setLoading(true);
         const res = await axios.get("api/getexplorebysellerdata");
-        console.log("Explore by seller data response is:", res.data.sellers);
-        console.log("Specialties are:", res.data.sellers[0].specialities);
-        const transformData = res.data.sellers.map((seller: any) => ({
-          ...seller,
-          businesshours: seller.business_hours,
-          specialities: seller.specialities.slice(0, 4),
-        }));
-        const size=transformData.length;
-        if(size===0){
+        console.log(
+          "Explore By seller Response is:",
+          res.data.sellerWithProductData
+        );
+        const transformData = res.data.sellerWithProductData.map(
+          (data: any) => ({
+            ...data,
+            businesshours: data.business_hours,
+            specialities: data.specialities.slice(0, 4),
+            products: data.products.slice(0, 2),
+          })
+        );
+        const size = transformData.length;
+        if (size === 0) {
           setIsDataPresent(false);
           setLoading(false);
-          return
+          return;
         }
         setSellerData(transformData);
         setLoading(false);
@@ -147,29 +152,49 @@ export const ExplorePlantsBySeller = () => {
 
                         {/* Nursery product Photo */}
                         <div className="flex flex-col justify-between">
-                          <div className="relative overflow-hidden w-[7.8rem] h-[8.2rem] border-[3px] rounded-[1.5625rem] border-[#56A430]">
-                            <Image
-                              className="object-cover"
-                              alt="plant-img-2"
-                              src={plantImage2}
-                              fill
-                              placeholder="blur"
-                            />
-                          </div>
-                          <div className="relative overflow-hidden w-[7.8rem] h-[8.2rem] border-[3px] rounded-[1.5625rem] border-[#56A430] ">
-                            <Image
-                              className="object-cover"
-                              alt="plant-img-2"
-                              src={plantImage2}
-                              fill
-                              placeholder="blur"
-                            />
-                          </div>
+                          {item.products.map((image, index) => {
+                            if (index == 1) {
+                              return (
+                                <div
+                                  className="relative overflow-hidden w-[7.8rem] h-[8.2rem] border-[3px] rounded-[1.5625rem] border-[#56A430]"
+                                  key={index}
+                                >
+                                  <Image
+                                    className="object-cover"
+                                    alt="plant-img-2"
+                                    src={image}
+                                    fill
+                                  />
+                                  <div className="w-[100%] h-[100%] absolute top-0 bg-[#00000087] flex justify-center items-center text-[#FFF6F4] font-medium text-[2.25rem] uppercase">
+                                    {`+${item.productCount}`}
+                                  </div>
+                                </div>
+                              );
+                            }
+                            return (
+                              <div
+                                className="relative overflow-hidden w-[7.8rem] h-[8.2rem] border-[3px] rounded-[1.5625rem] border-[#56A430]"
+                                key={index}
+                              >
+                                <Image
+                                  className="object-cover"
+                                  alt="plant-img-2"
+                                  src={image}
+                                  fill
+                                />
+                              </div>
+                            );
+                          })}
+                          {item.productCount === 0 && (
+                            <>
+                              <div className="relative overflow-hidden w-[7.8rem] h-[8.2rem] bg-[#DBD5A4] rounded-[1.5625rem]"></div>
+                              <div className="relative overflow-hidden w-[7.8rem] h-[8.2rem] bg-[#DBD5A4] rounded-[1.5625rem]"></div>
+                            </>
+                          )}
                         </div>
                       </div>
 
                       <div className="w-[98%] min-h-[25rem] max-h-max flex flex-col justify-between">
-
                         {/* Following div consist of Nursery Name and all that */}
                         <div className="w-[100%] max-h-max border-b-[0.0625rem] flex flex-col gap-[1rem] pb-[1rem] border-[#00000033]">
                           {/* Following div consist of Nursery name,distance and address */}

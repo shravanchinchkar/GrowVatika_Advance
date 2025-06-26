@@ -3,8 +3,10 @@ import { NextResponse } from "next/server";
 
 export async function GET() {
   try {
-    const sellers = await client.seller.findMany({
+    // Get sellers with their products in a single query
+    const sellersWithProducts = await client.seller.findMany({
       select: {
+        id: true,
         nurseryName: true,
         address: true,
         nurseryBio: true,
@@ -12,21 +14,42 @@ export async function GET() {
         location: true,
         business_hours: true,
         phoneNumber: true,
+        products: {
+          where: {
+            imageURL: {
+              not: " ",
+            },
+          },
+          select: {
+            imageURL: true,
+          },
+        },
       },
     });
-    if (!sellers) {
-      console.error("Error while fetching sellers data from the database");
+
+    if (!sellersWithProducts) {
+      console.error("Error while getting seller and product data");
       return NextResponse.json({
         success: false,
-        error: "Error while fetching sellers data",
+        error: "Error while getting seller and product data",
       });
     }
+
+    // Transform the data to match your desired structure
+    const sellerWithProductData = sellersWithProducts.map((seller) => ({
+      ...seller,
+      products: seller.products.map((product) => product.imageURL),
+      productCount: seller.products.length,
+    }));
     return NextResponse.json({
       success: true,
-      message: "Successfully got all the sellers data!",
-      sellers: sellers,
+      message: "Successfully got seller and product data!",
+      sellerWithProductData: sellerWithProductData,
     });
   } catch (error) {
-    console.error("Error while getting sellers data:", error);
+    console.error(
+      "Error while getting product data for explore by seller:",
+      error
+    );
   }
 }

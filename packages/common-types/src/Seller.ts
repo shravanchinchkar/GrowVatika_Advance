@@ -38,4 +38,9 @@ export const SellerDataSchema = zod.object({
     .min(1, "Select at least one speciality"),
 });
 
-export type SellerData = zod.infer<typeof SellerDataSchema>;
+export type SellerData = Omit<zod.infer<typeof SellerDataSchema>, "email">;
+
+export type TExploreBySellerData = SellerData & {
+  products: string[];
+  productCount: number;
+};

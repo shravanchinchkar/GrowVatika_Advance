@@ -44,9 +44,8 @@ const BaseProductSchema = zod.object({
   collection: zod.string().min(1, { message: "Required" }),
   category: zod.string().min(1, { message: "Required" }),
   tags: zod.string().min(1, { message: "Required" }),
-  productStatus: zod.string().min(1, { message: "Product status is required" }), //validation for product status dropdown
-  visibility: zod.string().min(1, { message: "Visibility is required" }), //validation for product visibility
-
+  productStatus: zod.string().min(1, { message: "Product status is required" }),
+  visibility: zod.string().min(1, { message: "Visibility is required" }), 
   featured: zod.boolean(),
 });
 

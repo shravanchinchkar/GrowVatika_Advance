@@ -39,3 +39,8 @@ export const SellerDataSchema = zod.object({
 });
 
 export type SellerData = zod.infer<typeof SellerDataSchema>;
+
+export type TExploreBySellerData = SellerData & {
+  products: string[];
+  productCount: number;
+};

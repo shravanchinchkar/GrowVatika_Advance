@@ -94,7 +94,7 @@ export const SellerDashboardMediaUploadSection = ({
 
           {/* File Format Note */}
           <p className="text-[#697F75] text-center font-[Poppins] text-[0.9375rem] font-normal">
-            Supported formats: JPEG, PNG, WebP. Max size: 5MB per image.
+            Supported formats: JPEG, PNG, WebP. Max size: 300kb per image.
           </p>
         </div>
       </div>

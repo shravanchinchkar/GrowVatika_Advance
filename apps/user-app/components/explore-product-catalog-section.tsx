@@ -32,7 +32,7 @@ export const ExploreProductCatalogSection = () => {
         const productsDataFromBE = res.data.productData;
         console.log("value of productsDataFromBE:", productsDataFromBE);
         setProductsData(productsDataFromBE);
-        console.log("Value of productData is:",productsData)
+        console.log("Value of productData is:", productsData);
         setLoading(false);
       } catch (error) {
         console.error("Error while getting product data", error);

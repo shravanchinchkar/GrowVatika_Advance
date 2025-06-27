@@ -29,7 +29,7 @@ export const SellerDashboardWelcomeMsg = ({
   return (
     <div className="p-6 bg-custom-bg rounded-[1.25rem] h-[9.313rem] w-[100%]">
       <div className="text-white font-bold text-[2rem] capitalize font-[Unbounded]">
-        {`Welcome back,${nurseryName}`}
+        {`Welcome back, ${nurseryName}`}
       </div>
 
       <div className="flex justify-between items-center mt-2">

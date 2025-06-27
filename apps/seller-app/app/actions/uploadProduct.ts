@@ -2,9 +2,12 @@
 import client from "@repo/db/client";
 import { NEXT_AUTH } from "../lib/auth";
 import { getServerSession } from "next-auth";
-import { ApiResponseType } from "@repo/common-types/types";
-import { formDataToObject, validateServerProduct } from "../lib/validation";
 import { v2 as cloudinary } from "cloudinary";
+import { ApiResponseType } from "@repo/common-types/types";
+import {
+  formDataToObject,
+  validateServerProduct,
+} from "../lib/product-input-validation";
 
 // Configure Cloudinary
 cloudinary.config({
@@ -20,7 +23,6 @@ interface CloudinaryUploadResult {
 
 export async function uploadProduct(
   formData: FormData
-  // data:TProductSchema
 ): Promise<ApiResponseType> {
   try {
     // Checks whether the seller is signin or not
@@ -52,7 +54,7 @@ export async function uploadProduct(
         status: "400",
       };
     }
-    console.log("Original Form Data from BE:", formData);
+    console.log("Original Form Data at BE:", formData);
 
     // Convert FormData to object to validate the input with the schema
     const productData = formDataToObject(formData);
@@ -75,7 +77,7 @@ export async function uploadProduct(
       return { success: false, error: "File not found", status: "400" };
     }
 
-    //file as a property know as array buffer and that will give you bytes, and from that byte you can create the buffer
+    // file as a property know as array buffer and that will give you bytes, and from that byte you can create the buffer
     const bytes = await file.arrayBuffer(); // converting file into array buffer
     const buffer = Buffer.from(bytes); //create buffer from bytes
 

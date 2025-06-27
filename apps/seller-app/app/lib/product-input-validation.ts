@@ -1,8 +1,6 @@
 import {
-  TClientProductSchema,
-  ClientProductSchema,
-  TServerProductSchema,
-  ServerProductSchema,
+  addProductSchema,
+  TAddProductSchema
 } from "@repo/common-types/types";
 import { ZodError } from "zod";
 
@@ -23,25 +21,11 @@ export function formatZodErrors(error: ZodError): Record<string, string> {
   return errors;
 }
 
-// export function validateClientProduct(
-//   data: unknown
-// ): ValidationResult<TClientProductSchema> {
-//   try {
-//     const result = ClientProductSchema.parse(data);
-//     return { success: true, data: result };
-//   } catch (error) {
-//     if (error instanceof ZodError) {
-//       return { success: false, errors: formatZodErrors(error) };
-//     }
-//     return { success: false, errors: { general: "Validation failed" } };
-//   }
-// }
-
 export function validateServerProduct(
   data: unknown
-): ValidationResult<TServerProductSchema> {
+): ValidationResult<TAddProductSchema> {
   try {
-    const result = ServerProductSchema.parse(data);
+    const result = addProductSchema.parse(data);
     return { success: true, data: result };
   } catch (error) {
     if (error instanceof ZodError) {
@@ -54,7 +38,6 @@ export function validateServerProduct(
 // FormData converter utility
 export function formDataToObject(formData: FormData): Record<string, any> {
   const obj: Record<string, any> = {};
-
   for (const [key, value] of formData.entries()) {
     if (key === "image") {
       obj[key] = value; // File object

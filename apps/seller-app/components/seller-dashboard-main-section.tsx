@@ -67,8 +67,8 @@ export const SellerDashboardMainSection = () => {
     <>
       <SellerDashboardProfileSection />
       <SellerDashboardProductManagementSection />
-      {/* <SellerDashboardAddProductSection /> */}
-      <CustomAddProductForm/>
+      <SellerDashboardAddProductSection />
+      {/* <CustomAddProductForm/> */}
     </>
   );
 };

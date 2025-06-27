@@ -6,10 +6,7 @@ import FlowerPot from "../public/assets/images/HeroImages/LandingPot.svg";
 export const LandingPot = () => {
   return (
     <div className="2xl:w-[82.1875rem] lg:w-[60rem] xl:w-[70rem] h-[42rem] absolute z-0 top-0 grid grid-cols-2 rounded-[28px]">
-
-
       <div className="relative z-10 rounded-l-[28px] h-[100%] grid grid-cols-2">
-
         {/* Following is the Shop now button */}
         <div className="flex justify-start items-end mb-[1rem]">
           <SiteButton buttonName={"Shop Now"} />
@@ -30,7 +27,6 @@ export const LandingPot = () => {
             />
           </div>
         </div>
-
       </div>
 
       <div className="relative flex justify-center rounded-r-[28px]">

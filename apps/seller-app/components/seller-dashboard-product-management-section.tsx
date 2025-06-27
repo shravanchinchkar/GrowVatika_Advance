@@ -65,6 +65,8 @@ export const SellerDashboardProductManagementSection = () => {
 
   const activeButtonStyle =
     "h-[2.9375rem] w-[9.1875rem] text-[#171717] bg-white shadow-[0px_0px_7px_0px_rgba(0,0,0,0.25)] rounded-[0.3125rem] flex justify-center items-center outline-none";
+  const normalStyle =
+    "h-[2.9375rem] w-[9.1875rem] text-[#171717] ml-[0.05rem]";
 
   if (activeSideBar == "products" && displayAddProductSection === false) {
     return (
@@ -143,7 +145,7 @@ export const SellerDashboardProductManagementSection = () => {
             {ButtonType.map((buttonName) => {
               return (
                 <button
-                  className={`${activeButton == buttonName && activeButtonStyle} `}
+                  className={`${activeButton == buttonName? activeButtonStyle:normalStyle} `}
                   onClick={(e) => handleFilterProducts(e, buttonName)}
                   key={buttonName}
                 >

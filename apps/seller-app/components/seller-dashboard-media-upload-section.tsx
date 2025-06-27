@@ -33,45 +33,46 @@ export const SellerDashboardMediaUploadSection = ({
   };
 
   return (
-    <div className="w-[41rem] h-[33rem] p-6 bg-white rounded-xl mt-5 shadow-md">
-      {/* Media Heading */}
-      <div className="w-[22.08575rem] mb-1.5">
-        <h1 className="text-[#171717] font-[Poppins] text-[2rem] font-semibold leading-[2.6rem]">
+    <div className="w-[41rem] h-[33rem] flex flex-col justify-center items-center gap-[1rem] bg-white rounded-xl mt-5 shadow-md border-[2px]">
+      {/* Media Heading Section */}
+      <div className="w-[37.0625rem]">
+        <h1 className="text-[#171717] font-[Poppins] text-[2rem] font-semibold">
           Media
         </h1>
-      </div>
-
-      {/* Subheading */}
-      <div className="mb-6">
-        <p className="text-[#8C8C8C] font-[Poppins] text-[1.1875rem] font-medium leading-[1.54375rem]">
+        <h2 className="text-[#8C8C8C] font-[Poppins] text-[1.1875rem] font-medium">
           Add photos of your product
-        </p>
+        </h2>
       </div>
 
       {/* Upload Section */}
-      <div className="w-[37.0625rem] h-[24.125rem] flex-shrink-0 rounded-[0.625rem] border-[1.5px] border-dashed border-[#CBD0D3] bg-white flex flex-col items-center justify-center px-6 py-4 space-y-4 ">
-        <div className="flex flex-col items-center gap-[1rem]">
-          {/* Icon Box */}
-          <div className="w-[3.3125rem] h-[3.25rem] flex-shrink-0 rounded-[1.25rem] bg-[#EDF2E5] flex items-center justify-center">
-            <Image
-              src="/assets/images/SellerDashboardMediaImages/addMediaImageIcon.svg"
-              alt="upload icon"
-              width={25} // ~1.53325rem
-              height={24} // ~1.5rem
-            />
-          </div>
-          {/* Upload Title */}
-          <h3 className="text-[#171717] text-center font-[Poppins] text-[1.22669rem] font-medium">
-            Upload Product Images
-          </h3>
+      <div className="w-[37.0625rem] h-[24.125rem] flex-shrink-0 rounded-[0.625rem] border-[1.5px] border-dashed border-[#CBD0D3] bg-white flex items-center justify-center">
 
-          {/* Upload Subtext */}
-          <p className="text-[#697F75] text-center font-[Poppins] text-[0.9375rem] font-medium">
-            Drag and drop your images here, or click to browse
-          </p>
+        <div className="flex flex-col items-center gap-[1.5rem]">
+
+          <div className="flex flex-col justify-center items-center">
+            {/* Image Icon Box */}
+            <div className="w-[3.3125rem] h-[3.25rem] flex-shrink-0 rounded-[1.25rem] bg-[#EDF2E5] flex items-center justify-center">
+              <div className="relative w-[1.53325rem] h-[1.53325rem]">
+                <Image
+                  src="/assets/images/SellerDashboardMediaImages/addMediaImageIcon.svg"
+                  alt="upload icon"
+                  className="object-cover"
+                  fill
+                />
+              </div>
+            </div>
+            {/* Upload Title */}
+            <h3 className="text-[#171717] text-center font-[Poppins] text-[1.22669rem] font-medium">
+              Upload Product Images
+            </h3>
+            {/* Upload Subtext */}
+            <p className="text-[#697F75] text-center font-[Poppins] text-[0.9375rem] font-medium">
+              Drag and drop your images here, or click to browse
+            </p>
+          </div>
 
           {/* Upload File Section */}
-          <div>
+          {/* <div>
             {error && (
               <div className="text-red-500 font-bold text-start">
                 {error.message}
@@ -90,7 +91,22 @@ export const SellerDashboardMediaUploadSection = ({
                 {...props}
               />
             </div>
-          </div>
+          </div> */}
+
+          <button
+            className="w-[14.5rem] h-[3.1875rem] rounded-[0.625rem] bg-[#56A430] flex justify-center items-center gap-[1rem] text-[#fff] text-[1.22669rem] capitalize font-normal"
+            type="button"
+          >
+            <div className="w-[1.5rem] h-[1.5rem] relative">
+              <Image
+                src="/assets/images/SellerDashboardMediaImages/uploadImageIcon.svg"
+                alt="uploadImageIcon"
+                fill
+                className="object-cover"
+              />
+            </div>
+            <p>Upload Images</p>
+          </button>
 
           {/* File Format Note */}
           <p className="text-[#697F75] text-center font-[Poppins] text-[0.9375rem] font-normal">
@@ -98,6 +114,7 @@ export const SellerDashboardMediaUploadSection = ({
           </p>
         </div>
       </div>
+      
     </div>
   );
 };

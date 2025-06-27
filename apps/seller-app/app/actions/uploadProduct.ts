@@ -54,16 +54,11 @@ export async function uploadProduct(
         status: "400",
       };
     }
-    console.log("Original Form Data at BE:", formData);
-
     // Convert FormData to object to validate the input with the schema
     const productData = formDataToObject(formData);
-    console.log("Converted form data to object:", productData);
 
     // Validate using existing ProductSchema
     const parsedProduct = validateServerProduct(productData);
-    console.log("Validate product data 1 is:", parsedProduct.errors);
-    console.log("Validated product data:", parsedProduct.data?.image);
 
     if (!parsedProduct.success) {
       return { success: false, error: "Product Input Error" };
@@ -71,7 +66,6 @@ export async function uploadProduct(
 
     // Extract file for upload
     const file = parsedProduct.data?.image as File | null;
-    console.log("Content of file is:", file);
 
     if (!file) {
       return { success: false, error: "File not found", status: "400" };
@@ -98,7 +92,6 @@ export async function uploadProduct(
               console.error("Error while uploading Image:", error);
               reject(error);
             } else {
-              console.log("Image Uploaded successfully on cloudinary:", result);
               resolve(result as CloudinaryUploadResult);
             }
           }
@@ -112,7 +105,6 @@ export async function uploadProduct(
         error: "Error while uploading image to cloudinary",
       };
     }
-    console.log("Cloudinary Image upload response is:", result);
 
     //After uploading Image to cloudinary store all the data of the product into the Database
     const uploadProduct = await client.product.create({
@@ -138,14 +130,13 @@ export async function uploadProduct(
         error: "Error while creating product",
       };
     }
-    console.log("Product Created successfully", uploadProduct);
     return {
       success: true,
       message: "Product Created Successfull!",
       responseData: uploadProduct,
     };
   } catch (error) {
-    console.log("Error While uploading Product:", error);
+    console.error("Error While uploading Product:", error);
     return { success: false, responseData: error };
   }
 }

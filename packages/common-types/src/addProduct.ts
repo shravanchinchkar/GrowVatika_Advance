@@ -1,4 +1,4 @@
-import { z } from "zod";
+import { string, z } from "zod";
 
 // Define the validation schema for adding products
 export const addProductSchema = z
@@ -66,3 +66,9 @@ export const addProductSchema = z
   });
 
 export type TAddProductSchema = z.infer<typeof addProductSchema>;
+
+export type SellerProductData= TAddProductSchema & {
+  id:string,
+  imageURL:string
+}
+

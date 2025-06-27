@@ -37,6 +37,7 @@ export const ExplorePlantsBySeller = () => {
         const transformData = res.data.sellerWithProductData.map(
           (data: any) => ({
             ...data,
+            productCount: data.productCount - 2,
             businesshours: data.business_hours,
             specialities: data.specialities.slice(0, 4),
             products: data.products.slice(0, 2),
@@ -150,9 +151,71 @@ export const ExplorePlantsBySeller = () => {
                           />
                         </div>
 
-                        {/* Nursery product Photo */}
+                        {/* Nursery product Photos */}
                         <div className="flex flex-col justify-between">
-                          {item.products.map((image, index) => {
+                          {item.products.length === 0 ? (
+                            <>
+                              <div className="relative overflow-hidden w-[7.8rem] h-[8.2rem] bg-[#DBD5A4] rounded-[1.5625rem]"></div>
+                              <div className="relative overflow-hidden w-[7.8rem] h-[8.2rem] bg-[#DBD5A4] rounded-[1.5625rem]"></div>
+                            </>
+                          ) : item.products.length === 1 ? (
+                            item.products.map((image, index) => {
+                              return (
+                                <div
+                                  className="relative overflow-hidden w-[7.8rem] h-[8.2rem] border-[3px] rounded-[1.5625rem] border-[#56A430]"
+                                  key={index}
+                                >
+                                  <Image
+                                    className="object-cover"
+                                    alt="plant-img-2"
+                                    src={image}
+                                    fill
+                                  />
+                                </div>
+                              );
+                            })
+                          ) : (
+                            item.products.length >= 2 &&
+                            item.products.map((image, index) => {
+                              if (item.productCount > 0) {
+                                if (index == 1) {
+                                  return (
+                                    <div
+                                      className="relative overflow-hidden w-[7.8rem] h-[8.2rem] border-[3px] rounded-[1.5625rem] border-[#56A430]"
+                                      key={index}
+                                    >
+                                      <Image
+                                        className="object-cover"
+                                        alt="plant-img-2"
+                                        src={image}
+                                        fill
+                                      />
+                                      <div className="w-[100%] h-[100%] absolute top-0 bg-[#00000087] flex justify-center items-center text-[#FFF6F4] font-medium text-[2.25rem] uppercase">
+                                        {`+${item.productCount}`}
+                                      </div>
+                                    </div>
+                                  );
+                                }
+                              }
+                              return (
+                                <div
+                                  className="relative overflow-hidden w-[7.8rem] h-[8.2rem] border-[3px] rounded-[1.5625rem] border-[#56A430]"
+                                  key={index}
+                                >
+                                  <Image
+                                    className="object-cover"
+                                    alt="plant-img-2"
+                                    src={image}
+                                    fill
+                                  />
+                                </div>
+                              );
+                            })
+                          )}
+                          {item.products.length === 1 && (
+                            <div className="relative overflow-hidden w-[7.8rem] h-[8.2rem] bg-[#DBD5A4] rounded-[1.5625rem]"></div>
+                          )}
+                          {/* {item.products.map((image, index) => {
                             if (index == 1) {
                               return (
                                 <div
@@ -184,13 +247,7 @@ export const ExplorePlantsBySeller = () => {
                                 />
                               </div>
                             );
-                          })}
-                          {item.productCount === 0 && (
-                            <>
-                              <div className="relative overflow-hidden w-[7.8rem] h-[8.2rem] bg-[#DBD5A4] rounded-[1.5625rem]"></div>
-                              <div className="relative overflow-hidden w-[7.8rem] h-[8.2rem] bg-[#DBD5A4] rounded-[1.5625rem]"></div>
-                            </>
-                          )}
+                          })} */}
                         </div>
                       </div>
 

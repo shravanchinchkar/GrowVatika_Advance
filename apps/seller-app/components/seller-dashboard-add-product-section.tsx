@@ -23,10 +23,6 @@ export const SellerDashboardAddProductSection = () => {
   const updateVisibility = displayAddProductSectionStore(
     (state: any) => state.updateDisplayAddProductSectionStore
   );
-  const hideAddProductSection = () => {
-    updateVisibility(false);
-    // alert("Hello")
-  };
 
   // Following state are for Collection dropdown
   const [collection, setCollection] = useState("");
@@ -122,6 +118,7 @@ export const SellerDashboardAddProductSection = () => {
           tags: "",
           productStatus: "Active",
           visibility: "Public",
+          productQuantity:0,
           featured: false,
           image: undefined,
         });
@@ -142,6 +139,13 @@ export const SellerDashboardAddProductSection = () => {
     } finally {
       setLoading(false);
     }
+  };
+
+  const hideAddProductSection = () => {
+    updateVisibility(false);
+  };
+  const handleWheel = (e: React.WheelEvent<HTMLInputElement>) => {
+    e.currentTarget.blur();
   };
 
   const Collections = [
@@ -272,6 +276,7 @@ export const SellerDashboardAddProductSection = () => {
                   inputType="number"
                   placeHolder="0.00 Rs."
                   inputWidthHeight="w-[17.3125rem] h-[3.1875rem]"
+                  onWheel={handleWheel}
                   {...register("price", {
                     required: true,
                     valueAsNumber: true,
@@ -285,6 +290,7 @@ export const SellerDashboardAddProductSection = () => {
                   inputType="number"
                   placeHolder="0.00 Rs."
                   inputWidthHeight="w-[18.3rem] h-[3.1875rem]"
+                  onWheel={handleWheel}
                   {...register("compareAt", {
                     required: true,
                     valueAsNumber: true,
@@ -311,6 +317,7 @@ export const SellerDashboardAddProductSection = () => {
                   lableName="Product Size"
                   inputType="number"
                   placeHolder="10 inch"
+                  onWheel={handleWheel}
                   {...register("productSize", {
                     required: true,
                     valueAsNumber: true,
@@ -324,6 +331,7 @@ export const SellerDashboardAddProductSection = () => {
                   inputType="number"
                   placeHolder="25 in stock"
                   inputWidthHeight="w-[18.3rem] h-[3.1875rem]"
+                  onWheel={handleWheel}
                   {...register("productQuantity", {
                     required: true,
                     valueAsNumber: true,

@@ -214,7 +214,7 @@ export const ExploreProductCatalogSection = () => {
                     >
                       {/* Product Image */}
                       <div
-                        className="w-[100%] h-[50%] flex flex-shrink-0  bg-cover bg-[center_top_50%] bg-no-repeat"
+                        className="w-[100%] h-[50%] flex flex-shrink-0 bg-cover bg-[center_top_50%] bg-no-repeat"
                         style={{
                           backgroundImage: `url(${item.imageURL})`,
                         }}
@@ -286,7 +286,7 @@ export const ExploreProductCatalogSection = () => {
 
                         {/* Product Description */}
                         <p className="text-[#697F75] text-[0.9375rem] leading-[1.5rem] font-medium ">
-                          {`Product Size - ${item.productSize === `no size available` ? "no size available" : `${item.productSize}" Pot`}`}
+                          {`Product Size - ${item.productSize}" Pot`}
                         </p>
 
                         {/* Price Section */}

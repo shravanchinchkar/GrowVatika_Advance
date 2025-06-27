@@ -16,8 +16,9 @@ export async function GET() {
         phoneNumber: true,
         products: {
           where: {
+            productStatus: "Active",
             imageURL: {
-              not: " ",
+              not: "",
             },
           },
           select: {

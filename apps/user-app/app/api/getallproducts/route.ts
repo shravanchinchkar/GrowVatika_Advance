@@ -4,6 +4,9 @@ import { NextResponse } from "next/server";
 export async function GET() {
   try {
     const productData = await client.product.findMany({
+      where:{
+        productStatus:"Active",
+      },
       select: {
         id:true,
         name: true,

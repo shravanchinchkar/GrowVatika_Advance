@@ -11,6 +11,7 @@ import { sellerProductDataStore } from "../store/sellerProductData";
 import { SellerDashboardProfileSection } from "./seller-dashboard-profile-section";
 import { SellerDashboardAddProductSection } from "./seller-dashboard-add-product-section";
 import { SellerDashboardProductManagementSection } from "./seller-dashboard-product-management-section";
+import CustomAddProductForm from "./custom-add-product-form";
 
 export const SellerDashboardMainSection = () => {
   const searchParams = useSearchParams();
@@ -66,7 +67,8 @@ export const SellerDashboardMainSection = () => {
     <>
       <SellerDashboardProfileSection />
       <SellerDashboardProductManagementSection />
-      <SellerDashboardAddProductSection />
+      {/* <SellerDashboardAddProductSection /> */}
+      <CustomAddProductForm/>
     </>
   );
 };

@@ -2,7 +2,7 @@ import React from 'react';
 import { useForm, Controller } from 'react-hook-form';
 import { useDropzone } from 'react-dropzone';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { fileUploadSchema, FileUploadFormData } from './schema';
+import { addProductSchema,TAddProductSchema } from '@repo/common-types/types';
 
 const CustomAddProductForm: React.FC = () => {
   const {
@@ -12,11 +12,10 @@ const CustomAddProductForm: React.FC = () => {
     setValue,
     watch,
     reset,
-  } = useForm<FileUploadFormData>({
-    resolver: zodResolver(fileUploadSchema),
+  } = useForm<TAddProductSchema>({
+    resolver: zodResolver(addProductSchema),
     defaultValues: {
       name: '',
-      email: '',
       files: [],
     },
   });
@@ -24,7 +23,7 @@ const CustomAddProductForm: React.FC = () => {
   // Watch the files field to display selected files
   const watchedFiles = watch('files');
 
-  const onSubmit = (data: FileUploadFormData) => {
+  const onSubmit = (data: TAddProductSchema) => {
     console.log('Form submitted:', data);
     // Handle form submission here
     alert(`Form submitted with ${data.files.length} files`);
@@ -64,31 +63,7 @@ const CustomAddProductForm: React.FC = () => {
             <p className="mt-1 text-sm text-red-600">{errors.name.message}</p>
           )}
         </div>
-
-        {/* Email Field */}
-        <div>
-          <label className="block text-sm font-medium text-gray-700 mb-2">
-            Email
-          </label>
-          <Controller
-            name="email"
-            control={control}
-            render={({ field }) => (
-              <input
-                {...field}
-                type="email"
-                className={`w-full px-3 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 ${
-                  errors.email ? 'border-red-500' : 'border-gray-300'
-                }`}
-                placeholder="Enter your email"
-              />
-            )}
-          />
-          {errors.email && (
-            <p className="mt-1 text-sm text-red-600">{errors.email.message}</p>
-          )}
-        </div>
-
+        
         {/* File Upload Field */}
         <div>
           <label className="block text-sm font-medium text-gray-700 mb-2">
@@ -235,4 +210,4 @@ const FileDropzone: React.FC<FileDropzoneProps> = ({
   );
 };
 
-export default FileUploadForm;
+export default CustomAddProductForm;

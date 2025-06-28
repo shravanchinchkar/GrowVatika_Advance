@@ -2,31 +2,29 @@
 
 import Image from "next/image";
 import { useState } from "react";
-import { activeSideBarStore } from "../store/activeSideBar";
+import { useSellerDataStore } from "@repo/shared-store";
+import { useActiveSellerDashboardSideBar } from "@repo/shared-store";
 import { SellerProductData } from "@repo/common-types/types";
-import { sellerProductDataStore } from "../store/sellerProductData";
-import { displayAddProductSectionStore } from "../store/displayAddProductSection";
-import { sellerDataStore } from "../store/sellerData";
-import { stat } from "fs";
-
+import { useDisplayAddProductSectionStore } from "@repo/shared-store";
+import { useSellerProductDataStore } from "@repo/shared-store";
 export const SellerDashboardProductManagementSection = () => {
   // Following is the Zustand state management code for displaying component depending upon active sidebar
-  const activeSideBar = activeSideBarStore((state: any) => state.activeSideBar);
+  const activeSideBar = useActiveSellerDashboardSideBar((state: any) => state.activeSideBar);
 
   // Following is the Zustand state management code for displaying add product section
-  const displayAddProductSection = displayAddProductSectionStore(
+  const displayAddProductSection = useDisplayAddProductSectionStore(
     (state: any) => state.displayAddProductSection
   );
-  const updateVisibility = displayAddProductSectionStore(
+  const updateVisibility = useDisplayAddProductSectionStore(
     (state: any) => state.updateDisplayAddProductSectionStore
   );
   // Following is the Zustand state management code for sellerProductData
-  const sellerProductData = sellerProductDataStore(
+  const sellerProductData = useSellerProductDataStore(
     (state) => state.productData
   );
 
   // Following is the Zustand state management code for sellerData
-  const sellerData = sellerDataStore((state) => state.sellerData);
+  const sellerData = useSellerDataStore((state) => state.sellerData);
 
   const ButtonType = ["All Products", "Active", "Draft", "Hidden"];
 
@@ -65,8 +63,7 @@ export const SellerDashboardProductManagementSection = () => {
 
   const activeButtonStyle =
     "h-[2.9375rem] w-[9.1875rem] text-[#171717] bg-white shadow-[0px_0px_7px_0px_rgba(0,0,0,0.25)] rounded-[0.3125rem] flex justify-center items-center outline-none";
-  const normalStyle =
-    "h-[2.9375rem] w-[9.1875rem] text-[#171717] ml-[0.05rem]";
+  const normalStyle = "h-[2.9375rem] w-[9.1875rem] text-[#171717] ml-[0.05rem]";
 
   if (activeSideBar == "products" && displayAddProductSection === false) {
     return (
@@ -145,7 +142,7 @@ export const SellerDashboardProductManagementSection = () => {
             {ButtonType.map((buttonName) => {
               return (
                 <button
-                  className={`${activeButton == buttonName? activeButtonStyle:normalStyle} `}
+                  className={`${activeButton == buttonName ? activeButtonStyle : normalStyle} `}
                   onClick={(e) => handleFilterProducts(e, buttonName)}
                   key={buttonName}
                 >

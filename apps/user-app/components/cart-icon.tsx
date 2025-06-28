@@ -1,10 +1,10 @@
 "use client";
 
 import { RiShoppingCart2Fill, RiShoppingCart2Line } from "@remixicon/react";
-import { addToCartVisibilityStore } from "@/store/addToCartVisibility";
+import { useAddToCartVisibilityStore } from "@repo/shared-store";
 
 export const ShoppingCartIcon = () => {
-  const updateAddToCartVisibility = addToCartVisibilityStore(
+  const updateAddToCartVisibility = useAddToCartVisibilityStore(
     (state: any) => state.updateAddToCartDropDownVisibility
   );
   const handleAddToCartVisibility = () => {

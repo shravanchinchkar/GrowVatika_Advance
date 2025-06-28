@@ -1,6 +1,6 @@
 import { create } from "zustand";
 
-export const wishListVisibilityStore = create((set) => ({
+export const useWishListVisibilityStore = create((set) => ({
   wishListDropDownVisibility: false,
   updateWishListDropDownVisibility: (newVisibility: boolean) =>
     set({

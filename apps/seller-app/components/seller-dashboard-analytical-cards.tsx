@@ -1,10 +1,10 @@
 "use client";
 
 import Image from "next/image";
-import { sellerProductDataStore } from "../store/sellerProductData";
+import { useSellerProductDataStore } from "@repo/shared-store";
 
 export const AnaylticalCards = () => {
-  const sellerProductData = sellerProductDataStore(
+  const sellerProductData = useSellerProductDataStore(
     (state) => state.productData
   );
   const totalProductCount = sellerProductData.length;
@@ -12,7 +12,7 @@ export const AnaylticalCards = () => {
   const totalProductsLowInStock = sellerProductData.filter((product) => {
     return product.productQuantity < 10;
   }).length;
-  console.log("Low in stock:",totalProductsLowInStock)
+  console.log("Low in stock:", totalProductsLowInStock);
   return (
     <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-4 justify-items-center">
       {/* card 1 */}

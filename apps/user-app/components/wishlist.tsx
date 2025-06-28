@@ -1,14 +1,14 @@
 "use client";
 
 import Image from "next/image";
-import { wishListVisibilityStore } from "@/store/wishListVisibility";
+import { useWishListVisibilityStore } from "@repo/shared-store";
 
 export const WishList = () => {
-  const wishListVisibility = wishListVisibilityStore(
+  const wishListVisibility = useWishListVisibilityStore(
     (state: any) => state.wishListDropDownVisibility
   );
 
-  const updateWishListVisibility = wishListVisibilityStore(
+  const updateWishListVisibility = useWishListVisibilityStore(
     (state: any) => state.updateWishListDropDownVisibility
   );
 

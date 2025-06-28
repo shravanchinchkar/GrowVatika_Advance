@@ -1,13 +1,13 @@
 "use client";
 
 import Image from "next/image";
-import { addToCartVisibilityStore } from "@/store/addToCartVisibility";
+import { useAddToCartVisibilityStore } from "@repo/shared-store";
 
 export const Cart = () => {
-  const addToCartVisibility = addToCartVisibilityStore(
+  const addToCartVisibility = useAddToCartVisibilityStore(
     (state: any) => state.addToCartDropDownVisibility
   );
-  const updateAddToCartVisibility = addToCartVisibilityStore(
+  const updateAddToCartVisibility = useAddToCartVisibilityStore(
     (state: any) => state.updateAddToCartDropDownVisibility
   );
   const iconButton =

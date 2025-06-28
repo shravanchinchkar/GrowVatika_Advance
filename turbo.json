@@ -13,8 +13,29 @@
         "DATABASE_URL",
         "NEXTAUTH_URL",
         "NEXTAUTH_SECRET",
-        "RESEND_API_KEY"
+        "GOOGLE_CLIENT_ID",
+        "GOOGLE_CLIENT_SECRET",
+        "RESEND_API_KEY",
+        "UPSTASH_REDIS_REST_URL",
+        "UPSTASH_REDIS_REST_TOKEN",
+        "GOOGLE_SERVICE_ACCOUNT_EMAIL",
+        "GOOGLE_PRIVATE_KEY",
+        "SPREADSHEET_ID",
+        "NODE_ENV",
+        "RESET_PASSWORD_DEVELOPMENT_URL",
+        "RESET_PASSWORD_PRODUCTION_URL",
+        "SUCCESSFUL_COLLABORATION_DEVELOPMENT_URL",
+        "SUCCESSFUL_COLLABORATION_PRODUCTION_URL",
+        "NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME",
+        "CLOUDINARY_API_KEY",
+        "CLOUDINARY_API_SECRET"
       ]
+    },
+    "@repo/common-types#build": {
+      "outputs": ["dist/**", "lib/**", "build/**"]
+    },
+    "@repo/shared-store#build": {
+      "outputs": ["dist/**"]
     },
     "lint": {
       "dependsOn": ["^lint"]

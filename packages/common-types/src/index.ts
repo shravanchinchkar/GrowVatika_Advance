@@ -1,7 +1,7 @@
-export * from './ApiResponse';
-export * from './Customer';
-export * from './SignupResponse';
-export * from './User';
-export * from './Seller'
-export * from './addProduct'
+export * from './ApiResponse.js';
+export * from './Customer.js';
+export * from './SignupResponse.js';
+export * from './User.js';
+export * from './Seller.js'
+export * from './addProduct.js'
 

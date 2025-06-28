@@ -12,12 +12,13 @@
     "check-types": "tsc --noEmit"
   },
   "dependencies": {
+     "@repo/common-types": "*",
+    "@repo/shared-store": "*",
     "@hookform/resolvers": "^5.0.1",
     "@radix-ui/react-label": "^2.1.2",
     "@radix-ui/react-slot": "^1.1.2",
     "@react-email/components": "0.0.34",
     "@remixicon/react": "^4.6.0",
-    "@repo/common-types": "*",
     "@repo/db": "*",
     "@repo/shared": "*",
     "@repo/ui": "*",

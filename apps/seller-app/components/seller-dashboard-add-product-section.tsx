@@ -1,26 +1,26 @@
 "use client";
 
 import Image from "next/image";
-import { ApiResponseType } from "@repo/common-types/types";
 import toast from "react-hot-toast";
 import { useEffect, useState } from "react";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { toastStyle } from "@repo/shared/utilfunctions";
 import { ButtonLoadingSign } from "@repo/ui/loading-sign";
+import { ApiResponseType } from "@repo/common-types/types";
 import { uploadProduct } from "../app/actions/uploadProduct";
 import { AddProductLabelInput } from "./add-product-label-input";
 import { ProductImageDropZone } from "./product-image-drop-zone";
 import { useForm, SubmitHandler, Controller } from "react-hook-form";
+import { useDisplayAddProductSectionStore } from "@repo/shared-store";
 import { addProductSchema, TAddProductSchema } from "@repo/common-types/types";
-import { displayAddProductSectionStore } from "../store/displayAddProductSection";
 import { CustomSellerDashboardDropDown } from "./custom-seller-dashboard-dropdown";
 
 export const SellerDashboardAddProductSection = () => {
   // Zustand Code
-  const displayAddProductSection = displayAddProductSectionStore(
+  const displayAddProductSection = useDisplayAddProductSectionStore(
     (state: any) => state.displayAddProductSection
   );
-  const updateVisibility = displayAddProductSectionStore(
+  const updateVisibility = useDisplayAddProductSectionStore(
     (state: any) => state.updateDisplayAddProductSectionStore
   );
 

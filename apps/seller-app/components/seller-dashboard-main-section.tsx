@@ -4,10 +4,10 @@ import axios from "axios";
 import toast from "react-hot-toast";
 import { useEffect, useState } from "react";
 import { useSearchParams } from "next/navigation";
-import { sellerDataStore } from "../store/sellerData";
+import { useSellerDataStore } from "@repo/shared-store";
 import { toastStyle } from "@repo/shared/utilfunctions";
 import { SellerDashboardLoader } from "./seller-dashboard-loader";
-import { sellerProductDataStore } from "../store/sellerProductData";
+import { useSellerProductDataStore } from "@repo/shared-store";
 import { SellerDashboardProfileSection } from "./seller-dashboard-profile-section";
 import { SellerDashboardAddProductSection } from "./seller-dashboard-add-product-section";
 import { SellerDashboardProductManagementSection } from "./seller-dashboard-product-management-section";
@@ -18,10 +18,10 @@ export const SellerDashboardMainSection = () => {
   const [isDataLoaded, setIsDataLoaded] = useState(false);
 
   // Following is the Zustand state management code for sellerData
-  const updateSellerData = sellerDataStore((state) => state.updateSellerData);
+  const updateSellerData = useSellerDataStore((state) => state.updateSellerData);
 
   // Following is the Zustand state management code for seller Product data
-  const updateSellerProductData = sellerProductDataStore(
+  const updateSellerProductData = useSellerProductDataStore(
     (state) => state.updateSellerProductData
   );
 
@@ -42,7 +42,7 @@ export const SellerDashboardMainSection = () => {
           specialities: res.data.sellerData.specialities,
           businesshours: res.data.sellerData.business_hours,
         });
-        updateSellerProductData(res.data.sellerProductData)
+        updateSellerProductData(res.data.sellerProductData);
         setIsDataLoaded(true);
       } catch (error) {
         console.error(

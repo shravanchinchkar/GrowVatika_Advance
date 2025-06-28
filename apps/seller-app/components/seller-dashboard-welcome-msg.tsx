@@ -1,8 +1,8 @@
 "use client";
 import Image from "next/image";
-import { sellerDataStore } from "../store/sellerData";
-import { activeSideBarStore } from "../store/activeSideBar";
-import { displayAddProductSectionStore } from "../store/displayAddProductSection";
+import { useSellerDataStore } from "@repo/shared-store";
+import { useActiveSellerDashboardSideBar } from "@repo/shared-store";
+import { useDisplayAddProductSectionStore } from "@repo/shared-store";
 
 export const SellerDashboardWelcomeMsg = ({
   nurseryName,
@@ -10,11 +10,11 @@ export const SellerDashboardWelcomeMsg = ({
   nurseryName: string;
 }) => {
   // Following is the zustan state management code
-  const updatedisplayAddProductSection = displayAddProductSectionStore(
+  const updatedisplayAddProductSection = useDisplayAddProductSectionStore(
     (state: any) => state.updateDisplayAddProductSectionStore
   );
 
-  const updateActiveSideBar = activeSideBarStore(
+  const updateActiveSideBar = useActiveSellerDashboardSideBar(
     (state: any) => state.updateActiveSideBar
   );
 
@@ -23,7 +23,7 @@ export const SellerDashboardWelcomeMsg = ({
     updateActiveSideBar("products");
   };
 
-  const sellerData = sellerDataStore((state) => state.sellerData);
+  const sellerData = useSellerDataStore((state) => state.sellerData);
 
   console.log("Seller Data in welcome message:", sellerData);
   return (

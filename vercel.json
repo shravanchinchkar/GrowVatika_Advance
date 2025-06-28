@@ -3,10 +3,5 @@
     "deploymentEnabled": {
       "main": true
     }
-  },
-  "buildCommand": "npm run build --filter=user-app...",
-  "installCommand": "npm install",
-  "framework": "nextjs",
-  "rootDirectory": "apps/user-app"
-
+  }
 }

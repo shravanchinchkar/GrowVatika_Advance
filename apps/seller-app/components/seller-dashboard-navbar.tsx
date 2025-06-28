@@ -1,10 +1,10 @@
 "use client";
 import Image from "next/image";
-import { activeSideBarStore } from "../store/activeSideBar";
+import { useActiveSellerDashboardSideBar } from "@repo/shared-store";
 
 export const SellerDashboardNavBar = () => {
   const navBarTitle = ["Seller Dashboard", "Product Management"];
-  const activeSideBar = activeSideBarStore((state: any) => state.activeSideBar);
+  const activeSideBar = useActiveSellerDashboardSideBar((state: any) => state.activeSideBar);
 
   return (
     <div className="h-[87px] bg-white flex justify-between items-center p-[1rem] rounded-[1.25rem] mx-[1rem] mt-[1rem]">

@@ -3,23 +3,23 @@
 import Image from "next/image";
 import { useState } from "react";
 import { signOut } from "next-auth/react";
-import { activeSideBarStore } from "../store/activeSideBar";
+import { useSellerDataStore } from "@repo/shared-store";
+import { useActiveSellerDashboardSideBar } from "@repo/shared-store";
 import { SellerDashboardSiteLogo } from "./seller-dashboard-sitelogo";
-import { sellerDataStore } from "../store/sellerData";
-import { displayAddProductSectionStore } from "../store/displayAddProductSection";
+import { useDisplayAddProductSectionStore } from "@repo/shared-store";
 
 export const SellerDashboardSideBar = () => {
   const [display, setDisplay] = useState(false);
-  const sellerData = sellerDataStore((state) => state.sellerData);
+  const sellerData = useSellerDataStore((state) => state.sellerData);
 
-  const currentActiveSideBar = activeSideBarStore(
+  const currentActiveSideBar = useActiveSellerDashboardSideBar(
     (state: any) => state.activeSideBar
   );
-  const updateActiveSideBar = activeSideBarStore(
+  const updateActiveSideBar = useActiveSellerDashboardSideBar(
     (state: any) => state.updateActiveSideBar
   );
 
-  const updateVisibility = displayAddProductSectionStore(
+  const updateVisibility = useDisplayAddProductSectionStore(
     (state: any) => state.updateDisplayAddProductSectionStore
   );
 

@@ -70,7 +70,9 @@ export const LabelInput = ({
                 ? "password"
                 : legendName === "Password" && viewPassword === true
                   ? "text"
-                  : "text"
+                  : legendName === "Business Email"
+                    ? "email"
+                    : "text"
           }
           name={name}
           value={value}

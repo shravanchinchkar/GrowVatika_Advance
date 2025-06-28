@@ -1,34 +1,28 @@
 "use client";
 
 import Image from "next/image";
+import toast from "react-hot-toast";
 import { useEffect, useState } from "react";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { useForm, SubmitHandler } from "react-hook-form";
-import {
-  ApiResponseType,
-  TClientProductSchema,
-  ClientProductSchema,
-} from "@repo/common-types/types";
-import toast from "react-hot-toast";
 import { toastStyle } from "@repo/shared/utilfunctions";
-import { uploadProduct } from "../app/actions/uploadProduct";
-import { displayAddProductSectionStore } from "../store/displayAddProductSection";
-import { CustomSellerDashboardDropDown } from "./custom-seller-dashboard-dropdown";
-import { SellerDashboardMediaUploadSection } from "./seller-dashboard-media-upload-section";
 import { ButtonLoadingSign } from "@repo/ui/loading-sign";
+import { ApiResponseType } from "@repo/common-types/types";
+import { uploadProduct } from "../app/actions/uploadProduct";
+import { AddProductLabelInput } from "./add-product-label-input";
+import { ProductImageDropZone } from "./product-image-drop-zone";
+import { useForm, SubmitHandler, Controller } from "react-hook-form";
+import { useDisplayAddProductSectionStore } from "@repo/shared-store";
+import { addProductSchema, TAddProductSchema } from "@repo/common-types/types";
+import { CustomSellerDashboardDropDown } from "./custom-seller-dashboard-dropdown";
 
 export const SellerDashboardAddProductSection = () => {
   // Zustand Code
-  const displayAddProductSection = displayAddProductSectionStore(
+  const displayAddProductSection = useDisplayAddProductSectionStore(
     (state: any) => state.displayAddProductSection
   );
-  const updateVisibility = displayAddProductSectionStore(
+  const updateVisibility = useDisplayAddProductSectionStore(
     (state: any) => state.updateDisplayAddProductSectionStore
   );
-  const hideAddProductSection = () => {
-    updateVisibility(false);
-    // alert("Hello")
-  };
 
   // Following state are for Collection dropdown
   const [collection, setCollection] = useState("");
@@ -48,13 +42,14 @@ export const SellerDashboardAddProductSection = () => {
   const [loading, setLoading] = useState(false);
 
   const {
+    control,
     register,
     reset,
     setValue,
     formState: { errors },
     handleSubmit,
-  } = useForm<TClientProductSchema>({
-    resolver: zodResolver(ClientProductSchema),
+  } = useForm<TAddProductSchema>({
+    resolver: zodResolver(addProductSchema),
     defaultValues: {
       productStatus: "Active",
       visibility: "Public",
@@ -82,36 +77,29 @@ export const SellerDashboardAddProductSection = () => {
     setValue("visibility", visibilityStatus);
   }, [visibilityStatus, setValue]);
 
-  const handlePublishProduct: SubmitHandler<TClientProductSchema> = async (
+  const handlePublishProduct: SubmitHandler<TAddProductSchema> = async (
     data
   ) => {
     console.log("Product Data is:", data);
     setLoading(true);
     // Create FormData object
     const formData = new FormData();
-
     // Append all form fields to FormData
     formData.append("name", data.name);
     formData.append("tags", data.tags);
+    formData.append("image", data.image);
     formData.append("category", data.category);
-    formData.append("visibility", data.visibility);
     formData.append("collection", data.collection);
+    formData.append("visibility", data.visibility);
+    formData.append("price", data.price.toString()); //number to string
     formData.append("description", data.description);
-    formData.append("price", data.price.toString()); //number
     formData.append("productStatus", data.productStatus);
-    formData.append("compareAt", data.compareAt.toString()); //number
-    formData.append("productSize", data.productSize.toString()); //number
+    formData.append("compareAt", data.compareAt.toString()); //number to string
+    formData.append("productSize", data.productSize.toString()); //number to string
     formData.append("featured", (data.featured || false).toString());
-    formData.append("productQuantity", data.productQuantity.toString()); //number
+    formData.append("productQuantity", data.productQuantity.toString()); //number to string
 
-    // Append the image file - with better error checking
-    if (data.image && data.image.length > 0 && data.image[0]) {
-      const imageFile = data.image[0];
-      console.log("Appending image:", imageFile.name, imageFile.size); // Debug log
-      formData.append("image", imageFile);
-    } else {
-      console.log("No image found in data"); // Debug log
-    }
+    console.log("Final Form Data is:", formData);
 
     try {
       // Hit the backend for product upload
@@ -130,6 +118,7 @@ export const SellerDashboardAddProductSection = () => {
           tags: "",
           productStatus: "Active",
           visibility: "Public",
+          productQuantity:0,
           featured: false,
           image: undefined,
         });
@@ -150,6 +139,13 @@ export const SellerDashboardAddProductSection = () => {
     } finally {
       setLoading(false);
     }
+  };
+
+  const hideAddProductSection = () => {
+    updateVisibility(false);
+  };
+  const handleWheel = (e: React.WheelEvent<HTMLInputElement>) => {
+    e.currentTarget.blur();
   };
 
   const Collections = [
@@ -249,7 +245,7 @@ export const SellerDashboardAddProductSection = () => {
 
           {/* Add Product Form */}
           <div className="pb-[1rem]">
-            {/* Form to add Product Name,Price,Compare Price and Description */}
+            {/* Following div consist of inputs for product name, price, compareAt, description, product Size, product Quantity */}
             <div className="w-[41rem] flex flex-col gap-[1rem] h-max p-[2rem] bg-white rounded-xl shadow-md">
               {/* Heading */}
               <div>
@@ -262,147 +258,118 @@ export const SellerDashboardAddProductSection = () => {
               </div>
 
               {/* Product Name Input*/}
-              <div>
-                {errors.name && (
-                  <div className="text-red-500 font-bold text-start">
-                    {errors.name.message}
-                  </div>
-                )}
-                <label className="text-[#171717] font-[Poppins] text-[1.2rem] font-medium">
-                  Product Name<span className="text-[#FF4B4B]"> *</span>
-                </label>
-                <input
-                  type="text"
-                  placeholder="Name of your product "
-                  className="w-[37.0625rem] h-[3.1875rem] rounded-[0.625rem] border border-[#CBD0D3] bg-white  text-[1.2rem]
-                  placeholder:text-[#697F75] placeholder:font-[Poppins] placeholder:text-[1.2rem] placeholder:font-normal px-4   outline-none"
-                  {...register("name", { required: true })}
-                />
-              </div>
+              <AddProductLabelInput
+                error={errors.name?.message}
+                lableName="Product name"
+                inputType="text"
+                placeHolder="Name of your product"
+                inputWidthHeight="w-[37.0625rem] h-[3.1875rem]"
+                {...register("name", { required: true })}
+              />
 
               {/* Price & Compare-at Price */}
               <div className="flex justify-between gap-[1rem]">
                 {/* Price */}
-                <div>
-                  {errors.price && (
-                    <div className="text-red-500 font-bold text-start">
-                      {errors.price.message}
-                    </div>
-                  )}
-                  <label className="text-[#171717] font-[Poppins] text-[1.2rem] font-medium">
-                    Price<span className="text-[#FF4B4B]"> *</span>
-                  </label>
-                  <input
-                    type="number"
-                    placeholder="0.00 Rs."
-                    className="w-[17.3125rem] h-[3.1875rem] rounded-[0.625rem] border-[1.5px] border-[#CBD0D3] bg-white
-                    text-[#697F75] text-[1.2rem] font-poppins font-normal flex justify-between items-center px-[1rem] outline-none"
-                    {...register("price", {
-                      required: true,
-                      valueAsNumber: true,
-                    })}
-                  />
-                </div>
+                <AddProductLabelInput
+                  error={errors.price?.message}
+                  lableName="Price"
+                  inputType="number"
+                  placeHolder="0.00 Rs."
+                  inputWidthHeight="w-[17.3125rem] h-[3.1875rem]"
+                  onWheel={handleWheel}
+                  {...register("price", {
+                    required: true,
+                    valueAsNumber: true,
+                  })}
+                />
 
                 {/* Compare-at Price */}
-                <div>
-                  {errors.compareAt && (
-                    <div className="text-red-500 font-bold text-start">
-                      {errors.compareAt.message}
-                    </div>
-                  )}
-                  <label className="text-[#171717] font-[Poppins] text-[1.2rem] font-medium">
-                    Compare-at Price<span className="text-[#FF4B4B]"> *</span>
-                  </label>
-                  <input
-                    className="w-[17.3125rem] h-[3.1875rem] rounded-[0.625rem] border-[1.5px] border-[#CBD0D3] bg-white 
-                    text-[#697F75] text-[1.2rem] font-poppins font-normal flex justify-between items-center px-[1rem] outline-none"
-                    type="number"
-                    placeholder="0.00 Rs."
-                    {...register("compareAt", {
-                      required: true,
-                      valueAsNumber: true,
-                    })}
-                  />
-                </div>
+                <AddProductLabelInput
+                  error={errors.compareAt?.message}
+                  lableName="Compare-at Price"
+                  inputType="number"
+                  placeHolder="0.00 Rs."
+                  inputWidthHeight="w-[18.3rem] h-[3.1875rem]"
+                  onWheel={handleWheel}
+                  {...register("compareAt", {
+                    required: true,
+                    valueAsNumber: true,
+                  })}
+                />
               </div>
 
               {/* Description */}
-              <div>
-                {errors.description && (
-                  <div className="text-red-500 font-bold text-start">
-                    {errors.description.message}
-                  </div>
-                )}
-                <label className="text-[#171717] font-[Poppins] text-[1.2rem] font-medium">
-                  Description<span className="text-[#FF4B4B]"> *</span>
-                </label>
-                <textarea
-                  placeholder="Describe your product in detail..."
-                  className="w-full min-h-[6rem] rounded-[0.625rem] border-[1.5px] border-[#CBD0D3] bg-white 
-                  text-[#697F75] text-[1.2rem] font-poppins font-normal px-4 py-2 outline-none"
-                  {...register("description", { required: true })}
-                ></textarea>
-              </div>
+              <AddProductLabelInput
+                tagName="textarea"
+                error={errors.description?.message}
+                lableName="Description"
+                placeHolder="Describe your product in detail..."
+                {...register("description", {
+                  required: true,
+                })}
+              />
 
               {/* Consist of Product Size and Quantity */}
               <div className="flex justify-between gap-[1rem]">
                 {/* Product Size */}
-                <div>
-                  {errors.productSize && (
-                    <div className="text-red-500 font-bold text-start">
-                      {errors.productSize.message}
-                    </div>
-                  )}
-                  <label className="text-[#171717] font-[Poppins] text-[1.2rem] font-medium">
-                    Product Size<span className="text-[#FF4B4B]"> *</span>
-                  </label>
-                  <div className="flex gap-[0.2rem]">
-                    <input
-                      type="number"
-                      placeholder="0.00 Rs."
-                      className="w-[14rem] h-[3.1875rem] rounded-l-[0.625rem] border-[1.5px] border-[#CBD0D3] bg-white
-                    text-[#697F75] text-[1.2rem] font-poppins font-normal flex justify-between items-center px-[1rem] outline-none"
-                      {...register("productSize", {
-                        required: true,
-                        valueAsNumber: true,
-                      })}
-                    />
-                    <div className="h-[3.1875rem] flex justify-center items-center px-[1rem] border-[1.5px] border-[#CBD0D3] rounded-r-[0.625rem] bg-[#fff] text-[1.2rem] text-[#697F75]">
-                      in
-                    </div>
-                  </div>
-                </div>
+                <AddProductLabelInput
+                  error={errors.productSize?.message}
+                  lableName="Product Size"
+                  inputType="number"
+                  placeHolder="10 inch"
+                  onWheel={handleWheel}
+                  {...register("productSize", {
+                    required: true,
+                    valueAsNumber: true,
+                  })}
+                />
 
                 {/* Product Quantity */}
-                <div>
-                  {errors.productQuantity && (
-                    <div className="text-red-500 font-bold text-start">
-                      {errors.productQuantity.message}
-                    </div>
-                  )}
-                  <label className="text-[#171717] font-[Poppins] text-[1.2rem] font-medium">
-                    Product Quantity<span className="text-[#FF4B4B]"> *</span>
-                  </label>
-                  <input
-                    type="number"
-                    placeholder="25 in stock"
-                    className="w-[17.3125rem] h-[3.1875rem] rounded-l-[0.625rem] border-[1.5px] border-[#CBD0D3] bg-white
-                    text-[#697F75] text-[1.2rem] font-poppins font-normal flex justify-between items-center px-[1rem] outline-none"
-                    {...register("productQuantity", {
-                      required: true,
-                      valueAsNumber: true,
-                    })}
-                  />
-                </div>
+                <AddProductLabelInput
+                  error={errors.productQuantity?.message}
+                  lableName="Product Quantity"
+                  inputType="number"
+                  placeHolder="25 in stock"
+                  inputWidthHeight="w-[18.3rem] h-[3.1875rem]"
+                  onWheel={handleWheel}
+                  {...register("productQuantity", {
+                    required: true,
+                    valueAsNumber: true,
+                  })}
+                />
               </div>
             </div>
 
-            {/* Product Photo Upload Section */}
-            <SellerDashboardMediaUploadSection
-              {...register("image", { required: true })}
-              error={errors.image}
-            />
+            {/* Following div consist of drop-zone to upload Images */}
+            <div
+              className={`w-[41rem] h-[33rem] flex flex-col justify-center items-center bg-white rounded-xl mt-5 shadow-md ${errors.image?.message ? "gap-0" : "gap-[1rem]"}`}
+            >
+              {/* Media Heading Section */}
+              <div className="w-[37.0625rem]">
+                <h1 className="text-[#171717] font-[Poppins] text-[2rem] font-semibold">
+                  Media
+                </h1>
+                <h2 className="text-[#8C8C8C] font-[Poppins] text-[1.1875rem] font-medium">
+                  Add photos of your product
+                </h2>
+              </div>
+              <Controller
+                name="image"
+                control={control}
+                render={({ field }) => (
+                  <ProductImageDropZone
+                    className={`w-[37.0625rem] h-[24.125rem] flex-shrink-0 rounded-[0.625rem] border-[1.5px] border-dashed  bg-white flex justify-center items-center cursor-pointer outline-none ${errors.image?.message ? "border-[#FF4B4B]" : "border-[#CBD0D3]"}`}
+                    onDrop={(files: any) => {
+                      if (files.length > 0) {
+                        field.onChange(files[0]);
+                      }
+                    }}
+                    error={errors.image?.message}
+                    file={field.value}
+                  />
+                )}
+              />
+            </div>
           </div>
 
           {/* Organization,Status & Visibility Section */}
@@ -419,7 +386,7 @@ export const SellerDashboardAddProductSection = () => {
                 >
                   {/* Collection DropDown */}
                   {errors.collection && (
-                    <div className="text-red-500 font-bold text-start text-sm">
+                    <div className="font-semibold capitalize text-[#FF4B4B] text-start text-sm">
                       {errors.collection.message}
                     </div>
                   )}
@@ -434,7 +401,7 @@ export const SellerDashboardAddProductSection = () => {
 
                   {/* Category DropDown */}
                   {errors.category && (
-                    <div className="text-red-500 font-bold text-start text-sm ">
+                    <div className="font-semibold capitalize text-[#FF4B4B] text-start text-sm ">
                       {errors.category.message}
                     </div>
                   )}
@@ -449,7 +416,7 @@ export const SellerDashboardAddProductSection = () => {
 
                   {/* Tags DropDown */}
                   {errors.tags && (
-                    <div className="text-red-500 font-bold text-start text-sm ">
+                    <div className="font-semibold capitalize text-[#FF4B4B] text-start text-sm ">
                       {errors.tags.message}
                     </div>
                   )}
@@ -473,7 +440,7 @@ export const SellerDashboardAddProductSection = () => {
 
               {/* Product Status dropdown */}
               {errors.productStatus && (
-                <div className="text-red-500 font-bold text-start text-sm mt-1">
+                <div className="font-semibold capitalize text-[#FF4B4B] text-start text-sm mt-1">
                   {errors.productStatus.message}
                 </div>
               )}
@@ -489,7 +456,7 @@ export const SellerDashboardAddProductSection = () => {
 
               {/* Visibility dropdown */}
               {errors.visibility && (
-                <div className="text-red-500 font-bold text-start text-sm mt-1">
+                <div className="font-semibold capitalize text-[#FF4B4B] text-start text-sm mt-1">
                   {errors.visibility.message}
                 </div>
               )}

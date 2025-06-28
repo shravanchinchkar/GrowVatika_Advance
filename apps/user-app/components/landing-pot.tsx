@@ -14,6 +14,7 @@ export const LandingPot = () => {
 
         {/* Following is the Image */}
         <div className="absolute lg:bottom-[-3rem] xl:bottom-[-4rem] lg:right-[-2rem] xl:right-[-4rem] 2xl:right-[-6rem]">
+
           <div className="relative lg:w-[16rem] lg:h-[16rem] xl:w-[18.1875rem] xl:h-[18.8125rem]  2xl:w-[22.1875rem] 2xl:h-[22.8125rem] justify-self-end drop-shadow-3xl">
             <Image
               className="object-cover"
@@ -29,6 +30,7 @@ export const LandingPot = () => {
       </div>
 
       <div className="relative flex justify-center rounded-r-[28px]">
+
         <div className="absolute w-[25rem] top-0 lg:left-[5%] xl:left-[17%] 2xl:left-[25%]">
           <div className="relative w-[25rem] lg:h-[35rem] drop-shadow-3xl shrink-0">
             <Image
@@ -43,6 +45,7 @@ export const LandingPot = () => {
           </div>
         </div>
       </div>
+
     </div>
   );
 };

@@ -1,4 +1,4 @@
-import { SellerData } from "@repo/common-types/types";
+import {SellerData} from "@repo/common-types"
 import { create } from "zustand";
 
 // Define the interface for your store state
@@ -7,7 +7,7 @@ interface SellerDataStore {
   updateSellerData: (newSellerData: Partial<SellerData>) => void;
 }
 
-export const sellerDataStore = create<SellerDataStore>((set) => ({
+export const useSellerDataStore = create<SellerDataStore>((set) => ({
   sellerData: {
     nurseryName: "",
     nurseryBio: "",

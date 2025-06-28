@@ -6,7 +6,7 @@ interface SellerProductDataStore {
   updateSellerProductData: (newSellerProductData: SellerProductData[]) => void;
 }
 
-export const sellerProductDataStore = create<SellerProductDataStore>((set) => ({
+export const useSellerProductDataStore = create<SellerProductDataStore>((set) => ({
   productData: [],
   updateSellerProductData: (newSellerProductData: SellerProductData[]) =>
     set(() => ({

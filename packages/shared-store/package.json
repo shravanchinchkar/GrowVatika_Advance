@@ -3,18 +3,17 @@
   "version": "0.0.0",
   "private": true,
   "main": "./dist/index.js",
-  "module": "./dist/index.mjs",
   "types": "./dist/index.d.ts",
   "exports": {
     ".": {
       "types": "./dist/index.d.ts",
-      "import": "./dist/index.mjs",
+      "import": "./dist/index.js",
       "require": "./dist/index.js"
     }
   },
   "scripts": {
-    "build": "tsup src/index.ts --format cjs,esm --dts",
-    "dev": "tsup src/index.ts --format cjs,esm --dts --watch",
+    "build": "tsc",
+    "dev": "tsc --watch",
     "lint": "eslint src/",
     "clean": "rm -rf dist"
   },
@@ -27,7 +26,6 @@
     "@repo/typescript-config": "*",
     "@types/node": "^20.10.6",
     "eslint": "^8.56.0",
-    "tsup": "^8.0.1",
     "typescript": "^5.3.3"
   }
 }

@@ -1,6 +1,6 @@
 import React, { useState, useId, useEffect } from "react";
 import Image from "next/image";
-import { useDropdownStore } from "../store/dropdownStore";
+import { useDropdownStore } from "@repo/shared-store";
 
 interface DropdownOption {
   value: string;

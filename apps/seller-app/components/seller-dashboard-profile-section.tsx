@@ -1,23 +1,22 @@
 "use client";
 
-import { sellerDataStore } from "../store/sellerData";
+import { useSellerDataStore } from "@repo/shared-store";
 import { BusinessInfoCard } from "./business-Info-card";
-import { activeSideBarStore } from "../store/activeSideBar";
+import { useActiveSellerDashboardSideBar } from "@repo/shared-store";
+import { useDisplayAddProductSectionStore } from "@repo/shared-store";
 import { AnaylticalCards } from "./seller-dashboard-analytical-cards";
 import { SellerDashboardWelcomeMsg } from "./seller-dashboard-welcome-msg";
-import { displayAddProductSectionStore } from "../store/displayAddProductSection";
 
 export const SellerDashboardProfileSection = () => {
-
   // Following is the Zustand state management code for displaying different section on seller dashboadr
-  const activeSideBar = activeSideBarStore((state: any) => state.activeSideBar);
-  const displayAddProductSection = displayAddProductSectionStore(
+  const activeSideBar = useActiveSellerDashboardSideBar((state: any) => state.activeSideBar);
+  const displayAddProductSection = useDisplayAddProductSectionStore(
     (state: any) => state.displayAddProductSection
   );
 
   // Following is the Zustand state management code for sellerData
-  const sellerData = sellerDataStore((state) => state.sellerData);
-  const updateSellerData = sellerDataStore((state) => state.updateSellerData);
+  const sellerData = useSellerDataStore((state) => state.sellerData);
+  const updateSellerData = useSellerDataStore((state) => state.updateSellerData);
 
   if (activeSideBar === "dashboard" && displayAddProductSection === false) {
     return (

@@ -2,7 +2,7 @@
   "name": "grow-vatika",
   "private": true,
   "scripts": {
-    "build": "turbo run build",
+    "build": "turbo run db:generate && turbo run build",
     "dev": "turbo run dev",
     "lint": "turbo run lint",
     "format": "prettier --write \"**/*.{ts,tsx,md}\"",
@@ -12,6 +12,7 @@
   },
   "devDependencies": {
     "prettier": "^3.5.3",
+    "tsup": "^8.0.1",
     "turbo": "^2.4.4",
     "typescript": "5.8.2"
   },

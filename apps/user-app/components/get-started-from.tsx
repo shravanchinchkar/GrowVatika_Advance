@@ -11,7 +11,7 @@ import { LabelInput, FormType } from "@repo/ui/label-input";
 import {
   GetStartedFromInput,
   GetStartedFromSchema,
-} from "@repo/common-types/types";
+} from "@repo/common-types";
 
 export const ContactForm = () => {
   const [loading, setLoading] = useState(false);

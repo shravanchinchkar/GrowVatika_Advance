@@ -12,9 +12,10 @@
     "check-types": "tsc --noEmit"
   },
   "dependencies": {
+    "@repo/common-types": "*",
+    "@repo/shared-store": "*",
     "@hookform/resolvers": "^5.0.1",
     "@react-email/components": "0.0.34",
-    "@repo/common-types": "*",
     "@repo/db": "*",
     "@repo/shared": "*",
     "@repo/ui": "*",

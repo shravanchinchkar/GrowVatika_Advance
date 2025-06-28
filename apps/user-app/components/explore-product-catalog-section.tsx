@@ -22,6 +22,7 @@ export const ExploreProductCatalogSection = () => {
   const filterTags = ["Indoor Plants", "Large (24–48”)", "2 star & up"];
   const [displaySortDropDown, setDisplaySortDropDown] = useState(false);
   const [productsData, setProductsData] = useState<SellerProductData[]>([]);
+  
 
   useEffect(() => {
     const getProductsData = async () => {
@@ -61,7 +62,7 @@ export const ExploreProductCatalogSection = () => {
         <WishList />
         <div className="flex flex-col gap-[2rem]">
           {/* Header,Navbar, and all other buttons */}
-          <div className="2xl:w-[82.1875rem] lg:w-[60rem] xl:w-[70rem] h-max flex flex-col items-center gap-[1rem] pt-[2rem]">
+          <div className="z-20 2xl:w-[82.1875rem] lg:w-[60rem] xl:w-[70rem] h-max flex flex-col items-center gap-[1rem] pt-[2rem]">
             <div className="2xl:w-[82.1875rem] lg:w-[60rem] xl:w-[70rem] h-max flex justify-between z-0">
               <Header />
               <div className="w-[18rem] flex justify-between items-center">
@@ -91,7 +92,7 @@ export const ExploreProductCatalogSection = () => {
           </div>
 
           {/* Search Input, Search button & Sort Button */}
-          <div className="flex items-start justify-between gap-4 w-[82.1875rem]">
+          <div className="z-10 flex items-start justify-between gap-4 w-[82.1875rem]">
             {/* Search Input */}
             <div className="flex items-center w-[60rem] h-[3.0625rem] rounded-full border border-[#56A430] bg-white px-4">
               <div className="relative w-[1.8rem] h-[1.8rem] flex-shrink-0 mr-3">
@@ -124,7 +125,7 @@ export const ExploreProductCatalogSection = () => {
                 Search
               </button>
 
-              <div className="relative w-[8.375rem] h-[3.0625rem] z-0">
+              <div className="relative w-[8.375rem] h-[3.0625rem]">
                 {/* Sort Button */}
                 <button
                   className="absolute top-0 flex items-center justify-center gap-2 w-[100%] h-[3.0625rem] rounded-full border-[1.6px] bg-[#fff] border-[#56A430] text-[#171717] text-[1.22669rem] font-poppins capitalize"
@@ -142,7 +143,7 @@ export const ExploreProductCatalogSection = () => {
                 </button>
 
                 {displaySortDropDown && (
-                  <ul className="w-[100%] h-[13.9375rem] mt-[1.5rem] pt-[2rem] border-x-[1.6px] border-b-[1.6px] rounded-bl-[2.1875rem] rounded-br-[2.1875rem] border-[#56A430] bg-[#fff] flex flex-col gap-[0.2rem] overflow-hidden">
+                  <ul className="z-10 w-[100%] h-[13.9375rem] mt-[1.5rem] pt-[2rem] border-x-[1.6px] border-b-[1.6px] rounded-bl-[2.1875rem] rounded-br-[2.1875rem] border-[#56A430] bg-[#fff] flex flex-col gap-[0.2rem] overflow-hidden">
                     <li className="cursor-pointer pl-[1.5rem] hover:bg-[#FFF6F4]">
                       Features
                     </li>
@@ -161,18 +162,21 @@ export const ExploreProductCatalogSection = () => {
                   </ul>
                 )}
               </div>
+
             </div>
           </div>
 
           {/* Filter Section and Product Card */}
-          <div className="flex justify-between w-[82.1875rem] gap-6 font-[Poppins]">
+          <div className="z-0 flex justify-between w-[82.1875rem] gap-6 font-[Poppins]">
             {/* Sidebar */}
             <ProductFilterSection />
 
             {/* Main Section */}
             <div className="w-[80%] flex flex-col gap-[1rem] pb-[1rem]">
+
               {/* Filter Tags and Clear all button*/}
               <div className="flex flex-wrap items-center justify-start gap-[5rem]">
+
                 {/* Following div consist of tag button */}
                 <div className="flex flex-wrap gap-[1rem] ml-[1rem]">
                   {filterTags.map((tag, index) => (
@@ -214,7 +218,7 @@ export const ExploreProductCatalogSection = () => {
                     >
                       {/* Product Image */}
                       <div
-                        className="w-[100%] h-[50%] flex flex-shrink-0  bg-cover bg-[center_top_50%] bg-no-repeat"
+                        className="w-[100%] h-[50%] flex flex-shrink-0 bg-cover bg-[center_top_50%] bg-no-repeat"
                         style={{
                           backgroundImage: `url(${item.imageURL})`,
                         }}
@@ -286,7 +290,7 @@ export const ExploreProductCatalogSection = () => {
 
                         {/* Product Description */}
                         <p className="text-[#697F75] text-[0.9375rem] leading-[1.5rem] font-medium ">
-                          {`Product Size - ${item.productSize === `no size available` ? "no size available" : `${item.productSize}" Pot`}`}
+                          {`Product Size - ${item.productSize}" Pot`}
                         </p>
 
                         {/* Price Section */}
@@ -317,8 +321,10 @@ export const ExploreProductCatalogSection = () => {
                   );
                 })}
               </div>
+
             </div>
           </div>
+
         </div>
         <Footer />
       </div>

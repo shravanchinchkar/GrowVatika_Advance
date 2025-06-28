@@ -1,10 +1,10 @@
 "use client";
 
 import { RiHeart3Fill, RiHeart3Line } from "@remixicon/react";
-import { wishListVisibilityStore } from "@/store/wishListVisibility";
+import { useWishListVisibilityStore } from "@repo/shared-store";
 
 export const LikeProductIcon = () => {
-  const wishListVisibility = wishListVisibilityStore(
+  const wishListVisibility = useWishListVisibilityStore(
     (state: any) => state.updateWishListDropDownVisibility
   );
   const handleWishListVisibility = () => {

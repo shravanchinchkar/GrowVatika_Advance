@@ -8,7 +8,7 @@
     "build": {
       "dependsOn": ["^build"],
       "inputs": ["$TURBO_DEFAULT$", ".env*"],
-      "outputs": [".next/**", "!.next/cache/**"],
+      "outputs": [".next/**", "!.next/cache/**", "dist/**"],
       "env": [
         "DATABASE_URL",
         "NEXTAUTH_URL",
@@ -30,12 +30,6 @@
         "CLOUDINARY_API_KEY",
         "CLOUDINARY_API_SECRET"
       ]
-    },
-    "@repo/common-types#build": {
-      "outputs": ["dist/**", "lib/**", "build/**"]
-    },
-    "@repo/shared-store#build": {
-      "outputs": ["dist/**"]
     },
     "lint": {
       "dependsOn": ["^lint"]

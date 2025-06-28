@@ -20,7 +20,7 @@
   },
   "dependencies": {
     "@repo/common-types": "*",
-    "zustand": "^4.4.7"
+    "zustand": "^5.0.5"
   },
   "devDependencies": {
     "@repo/eslint-config": "*",

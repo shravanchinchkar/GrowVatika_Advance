@@ -1,17 +1,17 @@
 "use client";
 
 import { toast } from "react-hot-toast";
-import { useRouter } from "next/navigation";
 import { useForm } from "react-hook-form";
+import { useRouter } from "next/navigation";
+import { useEffect, useState } from "react";
 import { SiteLogo } from "@repo/ui/brand-logo";
+import { AuthButton } from "@repo/ui/auth-button";
 import { useSearchParams } from "next/navigation";
+import { resetPassword } from "@/app/actions/auth";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { toastStyle } from "@repo/shared/utilfunctions";
-import { SignInInputs, SignInSchema } from "@repo/common-types/types";
 import { LabelInput, FormType } from "@repo/ui/label-input";
-import { AuthButton } from "@repo/ui/auth-button";
-import { useEffect, useState } from "react";
-import { resetPassword } from "@/app/actions/auth";
+import { SignInInputs, SignInSchema } from "@repo/common-types";
 
 export const ResetPasswordComponent = () => {
   const searchParams = useSearchParams();

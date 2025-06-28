@@ -6,7 +6,7 @@
     "./client": "./index.ts"
   },
   "scripts": {
-    "prisma:generate": "prisma generate"
+    "db:generate": "prisma generate"
   },
   "keywords": [],
   "author": "",

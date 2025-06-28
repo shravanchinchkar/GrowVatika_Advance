@@ -62,7 +62,7 @@ export const ExploreProductCatalogSection = () => {
         <WishList />
         <div className="flex flex-col gap-[2rem]">
           {/* Header,Navbar, and all other buttons */}
-          <div className="2xl:w-[82.1875rem] lg:w-[60rem] xl:w-[70rem] h-max flex flex-col items-center gap-[1rem] pt-[2rem] z-20">
+          <div className="z-20 2xl:w-[82.1875rem] lg:w-[60rem] xl:w-[70rem] h-max flex flex-col items-center gap-[1rem] pt-[2rem]">
             <div className="2xl:w-[82.1875rem] lg:w-[60rem] xl:w-[70rem] h-max flex justify-between z-0">
               <Header />
               <div className="w-[18rem] flex justify-between items-center">

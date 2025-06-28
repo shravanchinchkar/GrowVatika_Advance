@@ -3,5 +3,7 @@
     "deploymentEnabled": {
       "main": true
     }
-  }
+  },
+  "buildCommand": "cd packages/common-types && npm run build && cd ../shared-store && npm run build && cd ../../apps/user-app && npm run build",
+  "installCommand": "npm install"
 }

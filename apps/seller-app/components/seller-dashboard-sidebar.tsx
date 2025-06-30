@@ -214,9 +214,9 @@ export const SellerDashboardSideBar = () => {
         </div>
 
         {/* border-[#697F75] */}
-        <div className="z-10 w-[15.9375rem] h-[4.0625rem] rounded-[1.5rem] flex justify-around items-center m-[1rem] bg-[#fff] border-[2px] border-[#697F75]">
+        <div className="z-10 w-[15.9375rem] h-[4.0625rem] rounded-[1.5rem] flex justify-center items-center gap-[0.8rem] m-[1rem] bg-[#fff] border-[2px] border-[#697F75]">
           {/* Nursery Profile Photo goes here! */}
-          <div className="relative w-[2.425rem] h-[2.425rem] rounded-full  overflow-hidden bg-[#56A430]">
+          <div className="relative w-[2.425rem] h-[2.425rem] rounded-full overflow-hidden bg-[#56A430]">
             {/* Profile Photo Image  goes here */}
             {sellerData.profilePictureURL && (
               <Image
@@ -259,6 +259,7 @@ export const SellerDashboardSideBar = () => {
             </button>
           </div>
         </div>
+        
       </div>
     </div>
   );

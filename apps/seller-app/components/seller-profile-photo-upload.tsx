@@ -56,7 +56,7 @@ export const SellerProfilePhotoUpload = ({
           !currentImage && enableEditing && !blinking && !isDragActive ? " border-[2px] border-dashed border-[#CBD0D3] cursor-pointer justify-center" : 
           isDragActive ? "border-[2px] border-dashed border-[#56A430] justify-center" : 
           currentImage && !enableEditing ? "border-none h-max justify-start" : 
-          currentImage && enableEditing && "border-[2px] border-dashed border-[#CBD0D3] cursor-pointer"}       
+          currentImage && enableEditing && "border-[2px] justify-center border-dashed border-[#CBD0D3] cursor-pointer"}       
         `}
       {...getRootProps()}
     >

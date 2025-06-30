@@ -1,17 +1,17 @@
 import Image from "next/image";
-import { useEffect, useState } from "react";
-import { zodResolver } from "@hookform/resolvers/zod";
 import {
   ApiResponseType,
   SellerData,
   SellerDataSchema,
 } from "@repo/common-types/types";
+import toast from "react-hot-toast";
+import { useEffect, useState } from "react";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { toastStyle } from "@repo/shared/utilfunctions";
 import { useForm, SubmitHandler, Controller } from "react-hook-form";
 import { SellerProfilePhotoUpload } from "./seller-profile-photo-upload";
 import { BusinessInfoInputSection } from "./business-Info-input-section";
 import { saveSellerBusinessInfo } from "../app/actions/saveSellerBusinessInfo";
-import toast from "react-hot-toast";
-import { toastStyle } from "@repo/shared/utilfunctions";
 
 interface BusinessInfoCardProps {
   sellerData: SellerData;
@@ -28,16 +28,23 @@ export const BusinessInfoCard: React.FC<BusinessInfoCardProps> = ({
   const [enableEditing, setEnableEditing] = useState(false);
   const [displaySaveButton, setDisplaySaveButton] = useState(false);
   const [displayAddMoreButton, setDisplayAddMoreButton] = useState(true);
+  const [newProfilePicture, setNewProfilePicture] = useState<File | undefined>(
+    undefined
+  );
 
   const {
     control,
     register,
     reset,
+    setValue,
     formState: { errors },
     handleSubmit,
+    watch,
   } = useForm<SellerData>({
     resolver: zodResolver(SellerDataSchema),
   });
+
+  console.log("Watch:", watch("profilePicture"));
 
   // Function to check if all required data is present
   const isAllDataPresent = (data: SellerData): boolean => {
@@ -50,7 +57,8 @@ export const BusinessInfoCard: React.FC<BusinessInfoCardProps> = ({
       data.location &&
       data.specialities &&
       data.specialities.length > 0,
-    data.profilePictureURL);
+    // Check for either existing URL, new file, or form field
+    data.profilePictureURL || newProfilePicture || data.profilePicture);
   };
 
   // Check and set blinking state when sellerData changes
@@ -69,8 +77,10 @@ export const BusinessInfoCard: React.FC<BusinessInfoCardProps> = ({
       nurseryName: sellerData.nurseryName || "",
       specialities: sellerData.specialities || [],
       businesshours: sellerData.businesshours || "",
-      profilePicture: sellerData.profilePicture || undefined, // Add profile picture
+      profilePicture: undefined, // Always start with undefined
+      profilePictureURL: sellerData.profilePictureURL || "", // Include existing URL
     });
+    setNewProfilePicture(undefined); // Reset new profile picture state
   }, [sellerData, reset]);
 
   // Handle blinking animation
@@ -85,61 +95,85 @@ export const BusinessInfoCard: React.FC<BusinessInfoCardProps> = ({
     data: SellerData
   ) => {
     setLoading(true);
+    try {
+      // Create new formData
+      const formData = new FormData();
 
-    // Create new formData
-    const formData = new FormData();
+      // Add the new profile picture if user selected one,
+      // or create an empty file if they're keeping existing 
+      // Following is the code for it
 
-    // Add the file if it exists
-    if (data.profilePicture) {
-      formData.append("profilePicture", data.profilePicture);
-    }
+      if (newProfilePicture && newProfilePicture.size > 0) {
+        formData.append("profilePicture", newProfilePicture);
+      } else if (sellerData.profilePictureURL) { 
+        const emptyFile = new File([], "", {     // Create an empty file to indicate no new image but existing image should be kept
+          type: "application/octet-stream",
+        });
+        setValue("profilePicture", emptyFile);
+        formData.append("profilePicture", emptyFile);
+      }
 
-    // Add other fields
-    formData.append("email", data.email);
-    formData.append("address", data.address);
-    formData.append("location", data.location);
-    formData.append("nurseryBio", data.nurseryBio);
-    formData.append("phoneNumber", data.phoneNumber);
-    formData.append("nurseryName", data.nurseryName);
-    formData.append("businesshours", data.businesshours);
+      // Add other fields
+      formData.append("email", data.email);
+      formData.append("address", data.address);
+      formData.append("location", data.location);
+      formData.append("nurseryBio", data.nurseryBio);
+      formData.append("phoneNumber", data.phoneNumber);
+      formData.append("nurseryName", data.nurseryName);
+      formData.append("businesshours", data.businesshours);
 
-    // Handle array data (specialities)
-    data.specialities.forEach((speciality, index) => {
-      formData.append(`specialities[${index}]`, speciality);
-    });
+      // Handle array data (specialities)
+      data.specialities.forEach((speciality, index) => {
+        formData.append(`specialities[${index}]`, speciality);
+      });
 
-    // Optional fields
-    if (data.profilePictureURL) {
-      formData.append("profilePictureURL", data.profilePictureURL);
-    }
+      // Optional fields
+      if (data.profilePictureURL) {
+        console.log("data.profilePicture:",data.profilePicture);
+        formData.append("profilePictureURL", data.profilePictureURL);
+      }
 
-    console.log("Final Business data is:", data);
-    console.log("Final Form data is:", formData);
+      console.log("Final Business data is:", data);
+      console.log("New profile picture:", newProfilePicture);
 
-    const res: ApiResponseType = await saveSellerBusinessInfo(formData);
-    console.log("response :",res)
-    const updatedSellerData = res.responseData;
-    console.log("Update seller Data response is:", updatedSellerData);
-    setLoading(false);
-    setSellerData({
-      ...updatedSellerData,
-      businesshours: updatedSellerData.business_hours,
-    });
-    setEnableEditing(false);
-    setDisplaySaveButton(false);
-    setDisplayAddMoreButton(true);
+      const res: ApiResponseType = await saveSellerBusinessInfo(formData);
+      console.log("response :", res);
 
-    // Check if all data is present after saving and set blinking accordingly
-    const allDataPresent = isAllDataPresent(data);
-    setBlinking(!allDataPresent);
-    if (res.error) {
-      console.error(
-        "Error while updating seller business information:",
-        res.error
-      );
-      toast.error(res.error.toString(), toastStyle);
-    } else {
-      toast.success("Information Updated Successfully!", toastStyle);
+      if (res.success && res.responseData) {
+        const updatedSellerData = res.responseData;
+        console.log("Update seller Data response is:", updatedSellerData);
+
+        setSellerData({
+          ...updatedSellerData,
+          businesshours: updatedSellerData.business_hours,
+        });
+
+        setEnableEditing(false);
+        setDisplaySaveButton(false);
+        setDisplayAddMoreButton(true);
+        setNewProfilePicture(undefined); // Reset new profile picture
+
+        // Check if all data is present after saving and set blinking accordingly
+        const allDataPresent = isAllDataPresent({
+          ...sellerData,
+          ...updatedSellerData,
+          businesshours: updatedSellerData.business_hours,
+        });
+        setBlinking(!allDataPresent);
+
+        toast.success("Information Updated Successfully!", toastStyle);
+      } else {
+        console.error(
+          "Error while updating seller business information:",
+          res.error
+        );
+        toast.error(res.error?.toString() || "Update failed", toastStyle);
+      }
+    } catch (error) {
+      console.error("Error in handleSaveBusinessData:", error);
+      toast.error("Something went wrong", toastStyle);
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -149,7 +183,16 @@ export const BusinessInfoCard: React.FC<BusinessInfoCardProps> = ({
     setDisplayAddMoreButton(!displayAddMoreButton);
   };
 
-  console.log("Seller Data is business Info Section:", sellerData);
+  // Handle profile picture change
+  const handleProfilePictureChange = (files: File[]) => {
+    if (files.length > 0) {
+      setNewProfilePicture(files[0]);
+      setValue("profilePicture", files[0]); // IMPORTANT: Update the form field value as well
+    } else {
+      setNewProfilePicture(undefined); // Handle empty array case
+      setValue("profilePicture", undefined);
+    }
+  };
   return (
     <form
       className="w-[100%] rounded-[1.25rem] border-[1px] border-[#E6E6E6] bg-white p-[1.5rem] shadow-md flex flex-col gap-[1rem]"
@@ -211,20 +254,15 @@ export const BusinessInfoCard: React.FC<BusinessInfoCardProps> = ({
       {/* Following div consist of Profile Picture,Nursery Name,description and Rating Section */}
       <div className="flex justify-between items-center gap-[2rem]">
         {/* Profile Picture,Nursery Name,description */}
-        <div className="w-[75%] h-max flex items-start">
+        <div className="w-[75%] h-max flex items-start gap-[0.8rem]">
           {/* Nursery Profile Photo goes here! */}
           <Controller
-            name="profilePicture"
+            name="profilePictureURL"
             control={control}
             render={({ field }) => (
               <SellerProfilePhotoUpload
-                file={field.value}
-                onDrop={(files: any) => {
-                  if (files.length > 0) {
-                    field.onChange(files[0]);
-                    console.log("onDrop:", files);
-                  }
-                }}
+                file={newProfilePicture} // Use the separate state for new file
+                onDrop={handleProfilePictureChange} // Use separate handler
                 blinking={blinking}
                 enableEditing={enableEditing}
                 error={errors.profilePicture?.message}

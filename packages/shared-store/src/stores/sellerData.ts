@@ -1,5 +1,5 @@
-import {SellerData} from "@repo/common-types"
 import { create } from "zustand";
+import {SellerData} from "@repo/common-types"
 
 // Define the interface for your store state
 interface SellerDataStore {

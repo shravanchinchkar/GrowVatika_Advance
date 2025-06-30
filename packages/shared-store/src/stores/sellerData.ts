@@ -17,6 +17,7 @@ export const useSellerDataStore = create<SellerDataStore>((set) => ({
     businesshours: "",
     location: "",
     specialities: [],
+    profilePictureURL:""
   },
   updateSellerData: (newSellerData: Partial<SellerData>) =>
     set((state) => ({

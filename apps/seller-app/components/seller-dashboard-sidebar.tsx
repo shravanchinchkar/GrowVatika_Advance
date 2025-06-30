@@ -213,21 +213,26 @@ export const SellerDashboardSideBar = () => {
           </ul>
         </div>
 
+        {/* border-[#697F75] */}
         <div className="z-10 w-[15.9375rem] h-[4.0625rem] rounded-[1.5rem] flex justify-around items-center m-[1rem] bg-[#fff] border-[2px] border-[#697F75]">
-          <div className="relative w-[2.425rem] h-[2.425rem] rounded-full  overflow-hidden">
-            <Image
-              src={
-                "/assets/images/SellerDashboardImages/sellerDashboardProfileImage.png"
-              }
-              alt="profileImage"
-              className="object-cover"
-              fill
-              sizes="2.425rem" // Add this - matches your container size
-            />
+          {/* Nursery Profile Photo goes here! */}
+          <div className="relative w-[2.425rem] h-[2.425rem] rounded-full  overflow-hidden bg-[#56A430]">
+            {/* Profile Photo Image  goes here */}
+            {sellerData.profilePictureURL && (
+              <Image
+                src={sellerData.profilePictureURL}
+                alt="profileImage"
+                className="object-cover"
+                fill
+                sizes="2.425rem" // Add this - matches your container size
+              />
+            )}
           </div>
+
           <div className="flex items-center gap-[1rem]">
+            {/* Nursery Name */}
             <div className="font-medium capitalize">
-              <h1 className="text-[#123524] text-[0.85rem]">
+              <h1 className="text-[#123524] text-[0.75rem]">
                 {sellerData.nurseryName}
               </h1>
               <h3 className="text-[#697F75] text-[0.6875rem]">

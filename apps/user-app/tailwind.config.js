@@ -28,7 +28,6 @@ export default {
       backgroundImage: {
         "button-custom-gradient":
           "linear-gradient(297deg, rgba(100, 145, 115, 0.53) 14.21%, rgba(219, 213, 164, 0.53) 86.53%)",
-
         "custom-gradient": "linear-gradient(to left, #649173, #DBD5A4)",
         "feature-gradient":
           "linear-gradient(301deg, rgba(100, 145, 115, 0.30) 34.51%, rgba(219, 213, 164, 0.30) 102.82%)",

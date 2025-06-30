@@ -14,6 +14,7 @@ export async function GET() {
         location: true,
         business_hours: true,
         phoneNumber: true,
+        profilePictureURL:true,
         products: {
           where: {
             productStatus: "Active",

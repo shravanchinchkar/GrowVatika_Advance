@@ -1,6 +1,23 @@
-import zod from "zod";
+import zod, { string } from "zod";
 
 export const SellerDataSchema = zod.object({
+  // Add profile picture field - required
+  profilePicture: zod
+    .instanceof(File, { message: "Required" })
+    .refine((file) => file.size <= 300 * 1024, {
+      // 300kb limit
+      message: "Profile picture must be less than 300kb",
+    })
+    .refine(
+      (file) =>
+        ["image/jpeg", "image/jpg", "image/png", "image/webp"].includes(
+          file.type
+        ),
+      {
+        message: "Profile picture must be a JPEG, PNG, or WebP image",
+      }
+    ),
+  profilePictureURL: zod.string().optional(),
   nurseryName: zod
     .string()
     .min(2, { message: "Nursery name must be atleast of 2 characters" }),

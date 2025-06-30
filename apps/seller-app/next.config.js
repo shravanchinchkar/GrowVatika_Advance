@@ -1,5 +1,8 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
+  images: {
+    domains: ["res.cloudinary.com","growvatika.live"], 
+  },
   reactStrictMode: true,
   typescript: {
     // This will ignore TypeScript errors during build

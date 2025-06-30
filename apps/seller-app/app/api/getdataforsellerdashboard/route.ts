@@ -22,6 +22,7 @@ export async function GET(req: NextRequest) {
         business_hours: true,
         location: true,
         specialities: true,
+        profilePictureURL: true,
       },
     });
     // Return error if seller data not found
@@ -39,12 +40,12 @@ export async function GET(req: NextRequest) {
         sellerId: sellerId || "",
       },
       select: {
-        id:true,
+        id: true,
         name: true,
         price: true,
-        compareAt:true,
+        compareAt: true,
         collection: true,
-        productStatus:true,
+        productStatus: true,
         productSize: true,
         productQuantity: true,
       },
@@ -74,7 +75,8 @@ export async function GET(req: NextRequest) {
     );
     return NextResponse.json({
       success: false,
-      error: "Error while getting the data of the seller and their products for seller dashboard",
+      error:
+        "Error while getting the data of the seller and their products for seller dashboard",
     });
   }
 }

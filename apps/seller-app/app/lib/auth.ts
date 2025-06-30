@@ -4,7 +4,6 @@ import { authRateLimit } from "./rate-limit";
 import { getIp } from "../helper/get-ip-address";
 import { SignInSchema } from "@repo/common-types/types";
 import CredentialsProvider from "next-auth/providers/credentials";
-import { chownSync } from "fs";
 
 export const NEXT_AUTH = {
   providers: [

@@ -5,7 +5,7 @@
   "exports": {
     "./client": "./index.ts"
   },
-  "scripts": {
+ "scripts": {
     "db:generate": "prisma generate"
   },
   "keywords": [],

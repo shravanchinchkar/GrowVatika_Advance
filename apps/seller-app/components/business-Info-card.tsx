@@ -5,9 +5,9 @@ import {
   SellerDataSchema,
 } from "@repo/common-types/types";
 import toast from "react-hot-toast";
-import { useEffect, useState } from "react";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { toastStyle } from "@repo/shared/utilfunctions";
+import { useCallback, useEffect, useMemo, useState } from "react";
 import { useForm, SubmitHandler, Controller } from "react-hook-form";
 import { SellerProfilePhotoUpload } from "./seller-profile-photo-upload";
 import { BusinessInfoInputSection } from "./business-Info-input-section";
@@ -44,29 +44,36 @@ export const BusinessInfoCard: React.FC<BusinessInfoCardProps> = ({
     resolver: zodResolver(SellerDataSchema),
   });
 
-  console.log("Watch:", watch("profilePicture"));
+  // Memoized function to check if all required data is present
+  const isAllDataPresent = useCallback(
+    (data: SellerData): boolean => {
+      return !!(
+        data.nurseryName &&
+        data.nurseryBio &&
+        data.address &&
+        data.phoneNumber &&
+        data.email &&
+        data.businesshours &&
+        data.location &&
+        data.specialities &&
+        data.specialities.length > 0 &&
+        (data.profilePictureURL || newProfilePicture || data.profilePicture)
+      );
+    },
+    [newProfilePicture]
+  );
 
-  // Function to check if all required data is present
-  const isAllDataPresent = (data: SellerData): boolean => {
-    return !!(data.nurseryName &&
-      data.nurseryBio &&
-      data.address &&
-      data.phoneNumber &&
-      data.email &&
-      data.businesshours &&
-      data.location &&
-      data.specialities &&
-      data.specialities.length > 0,
-    // Check for either existing URL, new file, or form field
-    data.profilePictureURL || newProfilePicture || data.profilePicture);
-  };
+  // Memoized blinking calculation
+  const shouldBlink = useMemo(() => {
+    return !isAllDataPresent(sellerData);
+  }, [sellerData, isAllDataPresent]);
 
-  // Check and set blinking state when sellerData changes
+  // Effect for blinking state - only runs when shouldBlink changes
   useEffect(() => {
-    const allDataPresent = isAllDataPresent(sellerData);
-    setBlinking(!allDataPresent);
-  }, [sellerData]);
+    setBlinking(shouldBlink);
+  }, [shouldBlink]);
 
+  // Effect for form reset - optimized with fewer dependencies
   useEffect(() => {
     reset({
       email: sellerData.email || "",
@@ -77,122 +84,98 @@ export const BusinessInfoCard: React.FC<BusinessInfoCardProps> = ({
       nurseryName: sellerData.nurseryName || "",
       specialities: sellerData.specialities || [],
       businesshours: sellerData.businesshours || "",
-      profilePicture: undefined, // Always start with undefined
-      profilePictureURL: sellerData.profilePictureURL || "", // Include existing URL
+      profilePicture: undefined,
+      profilePictureURL: sellerData.profilePictureURL || "",
     });
-    setNewProfilePicture(undefined); // Reset new profile picture state
-  }, [sellerData, reset]);
+    setNewProfilePicture(undefined);
+  }, [sellerData, reset]); // Keep reset as it's stable from react-hook-form
 
-  // Handle blinking animation
-  const handleEditButton = () => {
+  // Memoized event handlers to prevent unnecessary re-renders
+  const handleEditButton = useCallback(() => {
     setBlinking(false);
     setDisplaySaveButton(true);
     setEnableEditing(true);
-  };
+  }, []);
 
-  // Submit Seller data to Backend
-  const handleSaveBusinessData: SubmitHandler<SellerData> = async (
-    data: SellerData
-  ) => {
-    setLoading(true);
-    try {
-      // Create new formData
-      const formData = new FormData();
-
-      // Add the new profile picture if user selected one,
-      // or create an empty file if they're keeping existing 
-      // Following is the code for it
-
-      if (newProfilePicture && newProfilePicture.size > 0) {
-        formData.append("profilePicture", newProfilePicture);
-      } else if (sellerData.profilePictureURL) { 
-        const emptyFile = new File([], "", {     // Create an empty file to indicate no new image but existing image should be kept
-          type: "application/octet-stream",
-        });
-        setValue("profilePicture", emptyFile);
-        formData.append("profilePicture", emptyFile);
-      }
-
-      // Add other fields
-      formData.append("email", data.email);
-      formData.append("address", data.address);
-      formData.append("location", data.location);
-      formData.append("nurseryBio", data.nurseryBio);
-      formData.append("phoneNumber", data.phoneNumber);
-      formData.append("nurseryName", data.nurseryName);
-      formData.append("businesshours", data.businesshours);
-
-      // Handle array data (specialities)
-      data.specialities.forEach((speciality, index) => {
-        formData.append(`specialities[${index}]`, speciality);
-      });
-
-      // Optional fields
-      if (data.profilePictureURL) {
-        console.log("data.profilePicture:",data.profilePicture);
-        formData.append("profilePictureURL", data.profilePictureURL);
-      }
-
-      console.log("Final Business data is:", data);
-      console.log("New profile picture:", newProfilePicture);
-
-      const res: ApiResponseType = await saveSellerBusinessInfo(formData);
-      console.log("response :", res);
-
-      if (res.success && res.responseData) {
-        const updatedSellerData = res.responseData;
-        console.log("Update seller Data response is:", updatedSellerData);
-
-        setSellerData({
-          ...updatedSellerData,
-          businesshours: updatedSellerData.business_hours,
-        });
-
-        setEnableEditing(false);
-        setDisplaySaveButton(false);
-        setDisplayAddMoreButton(true);
-        setNewProfilePicture(undefined); // Reset new profile picture
-
-        // Check if all data is present after saving and set blinking accordingly
-        const allDataPresent = isAllDataPresent({
-          ...sellerData,
-          ...updatedSellerData,
-          businesshours: updatedSellerData.business_hours,
-        });
-        setBlinking(!allDataPresent);
-
-        toast.success("Information Updated Successfully!", toastStyle);
-      } else {
-        console.error(
-          "Error while updating seller business information:",
-          res.error
-        );
-        toast.error(res.error?.toString() || "Update failed", toastStyle);
-      }
-    } catch (error) {
-      console.error("Error in handleSaveBusinessData:", error);
-      toast.error("Something went wrong", toastStyle);
-    } finally {
-      setLoading(false);
-    }
-  };
-
-  // Handle Add More Button
-  const handleAddMoreButton = () => {
-    setDisplaySaveButton(displaySaveButton);
+  const handleAddMoreButton = useCallback(() => {
     setDisplayAddMoreButton(!displayAddMoreButton);
-  };
+  }, [displayAddMoreButton]);
 
-  // Handle profile picture change
-  const handleProfilePictureChange = (files: File[]) => {
-    if (files.length > 0) {
-      setNewProfilePicture(files[0]);
-      setValue("profilePicture", files[0]); // IMPORTANT: Update the form field value as well
-    } else {
-      setNewProfilePicture(undefined); // Handle empty array case
-      setValue("profilePicture", undefined);
-    }
-  };
+  const handleProfilePictureChange = useCallback(
+    (files: File[]) => {
+      if (files.length > 0) {
+        setNewProfilePicture(files[0]);
+        setValue("profilePicture", files[0]);
+      } else {
+        setNewProfilePicture(undefined);
+        setValue("profilePicture", undefined);
+      }
+    },
+    [setValue]
+  );
+
+  // Optimized submit handler
+  const handleSaveBusinessData: SubmitHandler<SellerData> = useCallback(
+    async (data: SellerData) => {
+      setLoading(true);
+
+      try {
+        const formData = new FormData();
+
+        // Handle profile picture logic
+        if (newProfilePicture && newProfilePicture.size > 0) {
+          formData.append("profilePicture", newProfilePicture);
+        } else if (sellerData.profilePictureURL) {
+          const emptyFile = new File([], "", {
+            type: "application/octet-stream",
+          });
+          setValue("profilePicture", emptyFile);
+          formData.append("profilePicture", emptyFile);
+        }
+
+        // Add form fields
+        Object.entries(data).forEach(([key, value]) => {
+          if (key === "specialities" && Array.isArray(value)) {
+            value.forEach((speciality, index) => {
+              formData.append(`specialities[${index}]`, speciality);
+            });
+          } else if (key !== "profilePicture") {
+            formData.append(key, value as string);
+          }
+        });
+
+        if (data.profilePictureURL) {
+          formData.append("profilePictureURL", data.profilePictureURL);
+        }
+
+        const res: ApiResponseType = await saveSellerBusinessInfo(formData);
+
+        if (res.success && res.responseData) {
+          const updatedSellerData = {
+            ...res.responseData,
+            businesshours: res.responseData.business_hours,
+          };
+
+          // Batch all updates together
+          setSellerData(updatedSellerData);
+          setNewProfilePicture(undefined);
+          setEnableEditing(false);
+          setDisplaySaveButton(false);
+          setDisplayAddMoreButton(true);
+
+          toast.success("Information Updated Successfully!", toastStyle);
+        } else {
+          toast.error(res.error?.toString() || "Update failed", toastStyle);
+        }
+      } catch (error) {
+        toast.error("Something went wrong", toastStyle);
+      } finally {
+        setLoading(false);
+      }
+    },
+    [sellerData, newProfilePicture, setValue, setSellerData]
+  );
+
   return (
     <form
       className="w-[100%] rounded-[1.25rem] border-[1px] border-[#E6E6E6] bg-white p-[1.5rem] shadow-md flex flex-col gap-[1rem]"

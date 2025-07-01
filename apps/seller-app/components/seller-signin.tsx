@@ -32,6 +32,7 @@ export const SellerSignin = () => {
   // Function to handle Seller Signin
   async function handleSellerSignin(data: SignInInputs) {
     setLoading(true);
+    console.log("Seller Signin data is:",data)
     const res = await signIn("credentials", {
       email: data.email,
       password: data.password,
@@ -39,6 +40,7 @@ export const SellerSignin = () => {
     });
     setLoading(false);
 
+    console.log("Seller Signin  response is:",res)
     if (res?.error) {
       const errorResponse = JSON.parse(res.error) as {
         success: boolean;

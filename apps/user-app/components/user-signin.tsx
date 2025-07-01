@@ -40,13 +40,14 @@ export const Sign_In = () => {
   // Handle Login with credentials
   async function handleSignIn(data: SignInInputs) {
     setLoading(true);
+    console.log("Signin data is:",data);
     const res = await signIn("credentials", {
       email: data.email,
       password: data.password,
       redirect: false,
     });
     setLoading(false);
-
+    
     if (res?.error) {
       const errorResponse = JSON.parse(res.error) as {
         success: boolean;
@@ -54,6 +55,7 @@ export const Sign_In = () => {
         error?: string;
         status?: string;
       };
+      console.log("error is :",errorResponse.error)
       toast.error(errorResponse.error || "", {
         ...toastStyle,
         position: "bottom-left",

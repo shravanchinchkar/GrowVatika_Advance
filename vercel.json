@@ -4,6 +4,6 @@
       "main": true
     }
   },
-  "buildCommand": "npm run build",
+  "buildCommand": "cd packages/db && npx prisma generate && cd ../.. && turbo run build",
   "installCommand": "npm install"
 }

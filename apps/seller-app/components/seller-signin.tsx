@@ -32,36 +32,46 @@ export const SellerSignin = () => {
   // Function to handle Seller Signin
   async function handleSellerSignin(data: SignInInputs) {
     setLoading(true);
-    console.log("Seller Signin data is:",data)
+    console.log("Seller Signin data is:", data);
     const res = await signIn("credentials", {
       email: data.email,
       password: data.password,
       redirect: false,
     });
     setLoading(false);
+    console.log("Seller Signin  response is:", res);
 
-    console.log("Seller Signin  response is:",res)
+    // If error
     if (res?.error) {
-      const errorResponse = JSON.parse(res.error) as {
-        success: boolean;
-        message?: string;
-        error?: string;
-        status?: string;
-      };
-      toast.error(
-        errorResponse.error?.toString() || "Signin Failed",
-        toastStyle
-      );
-    } else if (res?.ok) {
+      let errorMessage = "Signin Failed";
+      try {
+        const errorResponse = JSON.parse(res.error) as {
+          success: boolean;
+          message?: string;
+          error?: string;
+          status?: string;
+        };
+        errorMessage =
+          errorResponse.error || errorResponse.message || "Signin Failed";
+        console.log("User Signin error response to FE :", errorResponse.error);
+      } catch (parseError) {
+        // If JSON parsing fails, use the raw error message
+        console.log("Seller SignIn error:", res.error);
+        errorMessage = "Internal Server Error!";
+      }
+      toast.error(errorMessage, toastStyle);
+    }
+    //If Successful signin
+    else if (res?.ok) {
       setValue("email", "");
       setValue("password", "");
 
       // Check session to determine verification status
       const sessionResponse = await fetch("/api/auth/session");
       const session = await sessionResponse.json();
-      const sellerId=session.user.id;
+      const sellerId = session.user.id;
       if (session?.user?.isVerified) {
-        console.log("Seller Details after signin:",session.user)
+        console.log("Seller Details after signin:", session.user);
         toast.success("Signin successful!", toastStyle);
         router.push(`/sellerdashboard?id=${sellerId}`);
       } else {

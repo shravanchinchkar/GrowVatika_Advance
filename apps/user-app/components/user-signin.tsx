@@ -40,23 +40,32 @@ export const Sign_In = () => {
   // Handle Login with credentials
   async function handleSignIn(data: SignInInputs) {
     setLoading(true);
-    console.log("Signin data is:",data);
+    console.log("Signin data is:", data);
     const res = await signIn("credentials", {
       email: data.email,
       password: data.password,
       redirect: false,
     });
     setLoading(false);
-    
+
     if (res?.error) {
-      const errorResponse = JSON.parse(res.error) as {
-        success: boolean;
-        message?: string;
-        error?: string;
-        status?: string;
-      };
-      console.log("error is :",errorResponse.error)
-      toast.error(errorResponse.error || "", {
+      let errorMessage = "Signin Failed";
+      try {
+        const errorResponse = JSON.parse(res.error) as {
+          success: boolean;
+          message?: string;
+          error?: string;
+          status?: string;
+        };
+        errorMessage =
+          errorResponse.error || errorResponse.message || "Signin Failed";
+        console.log("User Signin error response to FE :", errorResponse.error);
+      } catch (parseError) {
+        // If JSON parsing fails, use the raw error message
+        console.error("Signin error:",res.error)
+        errorMessage = "Internal Server Error!";
+      }
+      toast.error(errorMessage, {
         ...toastStyle,
         position: "bottom-left",
       });

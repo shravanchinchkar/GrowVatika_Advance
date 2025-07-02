@@ -9,15 +9,15 @@
     "start": "next start",
     "lint": "next lint --max-warnings 0",
     "check-types": "tsc --noEmit",
-    "clean": "rm -rf .next && rm -rf .turbo"
+    "clean": "rimraf .next .turbo"
   },
   "dependencies": {
-    "@repo/common-types": "*",
-    "@repo/shared-store": "*",
     "@hookform/resolvers": "^5.0.1",
     "@react-email/components": "0.0.34",
+    "@repo/common-types": "*",
     "@repo/db": "*",
     "@repo/shared": "*",
+    "@repo/shared-store": "*",
     "@repo/ui": "*",
     "axios": "^1.8.4",
     "bcrypt": "^5.1.1",
@@ -36,6 +36,7 @@
     "zustand": "^5.0.5"
   },
   "devDependencies": {
+    "@prisma/nextjs-monorepo-workaround-plugin": "^6.11.0",
     "@repo/eslint-config": "*",
     "@repo/typescript-config": "*",
     "@types/bcrypt": "^5.0.2",

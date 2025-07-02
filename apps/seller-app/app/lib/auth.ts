@@ -5,6 +5,9 @@ import { getIp } from "../helper/get-ip-address";
 import { SignInSchema } from "@repo/common-types/types";
 import CredentialsProvider from "next-auth/providers/credentials";
 
+console.log("DATABASE_URL:", process.env.DATABASE_URL);
+console.log("NODE_ENV:", process.env.NODE_ENV);
+
 export const NEXT_AUTH = {
   providers: [
     CredentialsProvider({
@@ -46,6 +49,22 @@ export const NEXT_AUTH = {
             })
           );
         } else {
+          try {
+            console.log("Attempting to connect to database...");
+            await client.$connect();
+            console.log("Database connected successfully");
+
+            // Test a simple query
+            const result = await client.$queryRaw`SELECT 1 as test`;
+            console.log("Test query result:", result);
+          } catch (error: any) {
+            console.error("Database connection failed:");
+            console.error("Error name:", error.name);
+            console.error("Error message:", error.message);
+            console.error("Error code:", error.code);
+            console.error("Full error:", error);
+            throw new Error(`Database connection failed: ${error.message}`);
+          }
           console.log("remaining:", remaining);
           //extract the email and password send by the user
           const { email, password } = inputResult.data;

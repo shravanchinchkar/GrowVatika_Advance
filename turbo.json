@@ -38,6 +38,10 @@
     "check-types": {
       "dependsOn": ["^check-types"]
     },
+    "clean": {
+      "cache": false,
+      "outputs": []
+    },
     "dev": {
       "cache": false,
       "persistent": true

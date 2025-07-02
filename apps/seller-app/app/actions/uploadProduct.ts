@@ -42,6 +42,7 @@ export async function uploadProduct(
     if (!sellerId) {
       return { success: false, error: "No seller found" };
     }
+    
     // Check whether the cloudinary Credentials are available or not
     if (
       !process.env.NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME ||

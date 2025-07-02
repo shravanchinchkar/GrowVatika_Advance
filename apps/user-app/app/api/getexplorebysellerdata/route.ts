@@ -1,3 +1,4 @@
+import { TExploreBySellerData } from "@repo/common-types";
 import client from "@repo/db/client";
 import { NextResponse } from "next/server";
 
@@ -14,6 +15,7 @@ export async function GET() {
         location: true,
         business_hours: true,
         phoneNumber: true,
+        profilePictureURL:true,
         products: {
           where: {
             productStatus: "Active",
@@ -37,9 +39,9 @@ export async function GET() {
     }
 
     // Transform the data to match your desired structure
-    const sellerWithProductData = sellersWithProducts.map((seller) => ({
+    const sellerWithProductData = sellersWithProducts.map((seller:any) => ({
       ...seller,
-      products: seller.products.map((product) => product.imageURL),
+      products: seller.products.map((product:any) => product.imageURL),
       productCount: seller.products.length,
     }));
     return NextResponse.json({

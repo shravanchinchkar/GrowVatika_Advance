@@ -118,7 +118,7 @@ export const SellerDashboardAddProductSection = () => {
           tags: "",
           productStatus: "Active",
           visibility: "Public",
-          productQuantity:0,
+          productQuantity: 0,
           featured: false,
           image: undefined,
         });
@@ -353,6 +353,7 @@ export const SellerDashboardAddProductSection = () => {
                   Add photos of your product
                 </h2>
               </div>
+
               <Controller
                 name="image"
                 control={control}
@@ -369,6 +370,7 @@ export const SellerDashboardAddProductSection = () => {
                   />
                 )}
               />
+              
             </div>
           </div>
 

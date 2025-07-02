@@ -1,6 +1,7 @@
 generator client {
-  provider = "prisma-client-js"
-   output   = "../node_modules/@prisma/client"
+  provider      = "prisma-client-js"
+  output        = "../node_modules/@prisma/client"
+  binaryTargets = ["native", "rhel-openssl-3.0.x"]
 }
 
 datasource db {
@@ -20,33 +21,34 @@ model User {
 }
 
 model Seller {
-  id               String    @id @default(uuid())
-  firstName        String
-  lastName         String
-  nurseryName      String
-  email            String    @unique
-  phoneNumber      String
-  password         String
-  nurseryBio       String?
-  address          String?
-  business_hours   String?
-  location         String?
-  specialities     String[]
-  verifyCode       String?
-  verifyCodeExpiry DateTime?
-  isVerified       Boolean   @default(false)
-  products         Product[]
+  id                String    @id @default(uuid())
+  firstName         String
+  lastName          String
+  nurseryName       String
+  email             String    @unique
+  phoneNumber       String
+  password          String
+  nurseryBio        String?
+  address           String?
+  business_hours    String?
+  location          String?
+  specialities      String[]
+  verifyCode        String?
+  verifyCodeExpiry  DateTime?
+  isVerified        Boolean   @default(false)
+  profilePictureURL String?
+  products          Product[]
 }
 
 model Product {
-  id              String  @id @default(uuid())
-  seller          Seller  @relation(fields: [sellerId], references: [id])
+  id              String @id @default(uuid())
+  seller          Seller @relation(fields: [sellerId], references: [id])
   sellerId        String
   name            String
   price           String
   compareAt       String
   description     String
-  productSize     String  
+  productSize     String
   productQuantity String
   imageURL        String
   collection      String

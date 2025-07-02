@@ -3,5 +3,7 @@
     "deploymentEnabled": {
       "main": true
     }
-  }
+  },
+  "buildCommand": "turbo run build",
+  "installCommand": "npm install"
 }

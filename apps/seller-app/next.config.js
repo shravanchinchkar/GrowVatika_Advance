@@ -1,5 +1,10 @@
+import { PrismaPlugin } from "@prisma/nextjs-monorepo-workaround-plugin";
+
 /** @type {import('next').NextConfig} */
 const nextConfig = {
+  images: {
+    domains: ["res.cloudinary.com", "growvatika.live"],
+  },
   reactStrictMode: true,
   typescript: {
     // This will ignore TypeScript errors during build
@@ -19,6 +24,14 @@ const nextConfig = {
   },
   // For Vercel deployment
   output: process.env.NODE_ENV === "production" ? "standalone" : undefined,
+
+  // Add Prisma plugin for monorepo support
+  webpack: (config, { isServer }) => {
+    if (isServer) {
+      config.plugins = [...config.plugins, new PrismaPlugin()];
+    }
+    return config;
+  },
 };
 
 export default nextConfig;

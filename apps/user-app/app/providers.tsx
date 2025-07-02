@@ -1,11 +1,16 @@
 "use client";
-import React from 'react';
+import React from "react";
 import { SessionProvider } from "next-auth/react";
 import { Toaster } from "react-hot-toast";
 
 export function Providers({ children }: { children: React.ReactNode }) {
   return (
-    <SessionProvider>
+    <SessionProvider
+      // Add these props for better session management
+      refetchInterval={5 * 60} // Refetch session every 5 minutes
+      refetchOnWindowFocus={true} // Refetch when window gets focus
+      refetchWhenOffline={false} // Don't refetch when offline
+    >
       <Toaster />
       {children}
     </SessionProvider>

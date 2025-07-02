@@ -16,7 +16,7 @@ type ExploreCardProps = {
 };
 
 export const ExploreCard: React.FC<ExploreCardProps> = ({ cardData }) => {
-  const router=useRouter();
+  const router = useRouter();
 
   const handleNavigation = () => {
     router.push("/explore")
@@ -24,7 +24,7 @@ export const ExploreCard: React.FC<ExploreCardProps> = ({ cardData }) => {
   return (
     <div
       key={cardData.id}
-      className="border-red-500 group border-[2px] relative flex justify-self-center new-sm:w-[9rem] new-sm:h-[8rem] new-sm-1:w-[17rem] new-sm-1:h-[13rem] lg:w-[17rem] lg:h-[13rem] xl:w-[19.6875rem] xl:h-[16.75rem] new-sm:rounded-[0.99rem] new-sm-1:rounded-[28px] overflow-hidden shadow-explore-custom cursor-pointer"
+      className="group border-[2px] relative flex lg:w-[17rem] lg:h-[13em] xl:w-[19.6875rem] xl:h-[16.75rem] rounded-[28px] overflow-hidden shadow-explore-custom cursor-pointer"
     >
       {/* Following div appear by-default */}
       <div className="absolute inset-0 grid grid-cols-2 transform transition-transform duration-300 group-hover:-translate-y-full">
@@ -37,9 +37,7 @@ export const ExploreCard: React.FC<ExploreCardProps> = ({ cardData }) => {
           </div>
         </div>
 
-        <div
-          className={`lg:w-[8rem] xl:w-[9rem] new-xl:w-[10.0452rem]  lg:h-[13rem] xl:h-[16.7419rem] relative`}
-        >
+        <div className="lg:w-[8rem] xl:w-[9rem] new-xl:w-[10.0452rem]  lg:h-[13rem] xl:h-[16.7419rem] relative">
           <Image
             className="object-cover"
             src={cardData.image}

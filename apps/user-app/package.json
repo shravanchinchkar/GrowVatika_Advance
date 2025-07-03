@@ -10,6 +10,7 @@
     "email": "email dev",
     "lint": "next lint --max-warnings 0",
     "check-types": "tsc --noEmit",
+    "prebuild": "cd ../../packages/db && npx prisma generate",
     "clean": "rimraf .next .turbo"
   },
   "dependencies": {

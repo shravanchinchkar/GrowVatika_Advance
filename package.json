@@ -2,16 +2,13 @@
   "name": "grow-vatika",
   "private": true,
   "scripts": {
-    "build": "npm run db:generate && turbo run build",
-    "db:generate": "cd packages/db && npx prisma generate --no-engine",
-    "dev": "npm run db:generate && turbo run dev",
+    "build": "turbo run db:generate && turbo run build",
+    "dev": "turbo run dev",
     "lint": "turbo run lint",
+    "format": "prettier --write \"*/.{ts,tsx,md}\"",
     "check-types": "turbo run check-types",
-    "clean": "rimraf .next .turbo",
-    "db:push": "cd packages/db && npx prisma db push",
-    "db:migrate": "cd packages/db && npx prisma migrate dev",
-    "db:studio": "cd packages/db && npx prisma studio",
-    "postinstall": "npm install --platform=linux --arch=x64 sharp && npm run db:generate"
+    "db:generate": "turbo run db:generate",
+    "postinstall": "npm install --platform=linux --arch=x64 sharp"
   },
   "devDependencies": {
     "prettier": "^3.5.3",

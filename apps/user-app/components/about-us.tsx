@@ -4,7 +4,7 @@ import CornerFlower from "../public/assets/images/CommonImages/CornerFlowerImage
 export const AboutUsSection = () => {
   return (
     <div id="about" className="grid grid-cols-2 relative mt-[2rem]">
-      <div className="lg:w-[25rem] lg:h-[25rem] xl:w-[38.96875rem] xl:h-[35.5rem] relative shrink-0 justify-self-center z-10">
+      <div className="new-sm:w-[5rem] new-sm:h-[5rem] sm:w-[11.13394rem] sm:h-[10.14288rem] md:w-[20rem] md:h-[20rem] lg:w-[25rem] lg:h-[25rem] xl:w-[38.96875rem] xl:h-[35.5rem] relative shrink-0 justify-self-center z-10">
         <Image
           className="object-cover"
           src={AboutSectionImage}

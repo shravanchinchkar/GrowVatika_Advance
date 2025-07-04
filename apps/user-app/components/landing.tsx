@@ -1,5 +1,5 @@
-
 import { Cart } from "./cart";
+
 import { Navbar } from "./nav-section";
 import { Header } from "./header-section";
 import { Footer } from "./footer-section";
@@ -19,12 +19,12 @@ export const LandingPage = () => {
       <Cart/>
       {/* Header Section */}
       <header className="relative flex flex-col items-center gap-[1rem] pt-[2rem] h-screen">
-        <div className="lg:w-[60rem] xl:w-[70rem] 2xl:w-[82.1875rem] h-max flex justify-between ">
+        <div className="2xl:w-[82.1875rem] lg:w-[60rem] xl:w-[70rem] h-max flex justify-between">
           <Header />
           <ShoppingCartIcon />
         </div>
 
-        <div className="2xl:w-[82.1875rem] lg:w-[60rem] xl:w-[70rem] flex justify-between items-center z-10 font-[Poppins]">
+        <div className="lg:w-[60rem] xl:w-[70rem] 2xl:w-[82.1875rem] flex justify-between items-center z-10 font-[Poppins]">
           <Navbar />
           <UserAuthButton />
         </div>

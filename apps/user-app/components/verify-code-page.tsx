@@ -4,7 +4,7 @@ import { toast } from "react-hot-toast";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import { SiteLogo } from "@repo/ui/brand-logo";
-import { verifyCode } from "../app/actions/auth";
+import { verifyCode } from "../actions/auth";
 import { AuthButton } from "@repo/ui/auth-button";
 import { useSearchParams } from "next/navigation";
 import { toastStyle } from "@repo/shared/utilfunctions";
@@ -22,7 +22,7 @@ export const VerifyCodePage = () => {
   let toastId: string;
 
   useEffect(() => {
-    console.log("Verifiy code page useEffect")
+    console.log("Verifiy code page useEffect");
     toastId = toast.loading("Verify Your Email", toastStyle);
     return () => {
       toast.dismiss(toastId);

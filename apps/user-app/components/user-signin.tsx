@@ -10,7 +10,7 @@ import { useRouter } from "next/navigation";
 import { SiteLogo } from "@repo/ui/brand-logo";
 import { AuthButton } from "@repo/ui/auth-button";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { resetPasswordEmail } from "@/app/actions/auth";
+import { resetPasswordEmail } from "@/actions/auth";
 import { ButtonLoadingSign } from "@repo/ui/loading-sign";
 import { FormType, LabelInput } from "@repo/ui/label-input";
 import { SignInInputs, SignInSchema } from "@repo/common-types/types";
@@ -62,7 +62,7 @@ export const Sign_In = () => {
         console.log("User Signin error response to FE :", errorResponse.error);
       } catch (parseError) {
         // If JSON parsing fails, use the raw error message
-        console.error("Signin error:",res.error)
+        console.error("Signin error:", res.error);
         errorMessage = "Internal Server Error!";
       }
       toast.error(errorMessage, {

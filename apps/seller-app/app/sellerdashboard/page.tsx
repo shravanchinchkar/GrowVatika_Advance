@@ -1,4 +1,4 @@
-import { NEXT_AUTH } from "../lib/auth";
+import { NEXT_AUTH } from "../../lib/auth";
 import { redirect } from "next/navigation";
 import { getServerSession } from "next-auth";
 import { SellerDashboardCard } from "../../components/seller-dashboard-card";
@@ -13,7 +13,7 @@ export default async function SellerDashboard() {
         </div>
       </div>
     );
-  } else  {
+  } else {
     redirect("/signin");
   }
 }

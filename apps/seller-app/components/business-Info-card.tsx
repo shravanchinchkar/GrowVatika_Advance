@@ -11,7 +11,7 @@ import { useCallback, useEffect, useMemo, useState } from "react";
 import { useForm, SubmitHandler, Controller } from "react-hook-form";
 import { SellerProfilePhotoUpload } from "./seller-profile-photo-upload";
 import { BusinessInfoInputSection } from "./business-Info-input-section";
-import { saveSellerBusinessInfo } from "../app/actions/saveSellerBusinessInfo";
+import { saveSellerBusinessInfo } from "../actions/saveSellerBusinessInfo";
 
 interface BusinessInfoCardProps {
   sellerData: SellerData;

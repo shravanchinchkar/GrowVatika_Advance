@@ -5,7 +5,6 @@ import { getIp } from "../helper/get-ip-address";
 import { SignInSchema } from "@repo/common-types/types";
 import CredentialsProvider from "next-auth/providers/credentials";
 
-
 export const NEXT_AUTH = {
   providers: [
     CredentialsProvider({

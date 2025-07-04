@@ -7,7 +7,7 @@ import { useEffect, useState } from "react";
 import { SiteLogo } from "@repo/ui/brand-logo";
 import { AuthButton } from "@repo/ui/auth-button";
 import { useSearchParams } from "next/navigation";
-import { resetPassword } from "@/app/actions/auth";
+import { resetPassword } from "@/actions/auth";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { toastStyle } from "@repo/shared/utilfunctions";
 import { LabelInput, FormType } from "@repo/ui/label-input";
@@ -20,7 +20,7 @@ export const ResetPasswordComponent = () => {
   const router = useRouter();
 
   useEffect(() => {
-    console.log("reset password useEffect")
+    console.log("reset password useEffect");
     if (searchPearamsEmail === "") {
       toast.error("Invalid Email", toastStyle);
     }
@@ -47,7 +47,7 @@ export const ResetPasswordComponent = () => {
       setLoading(false);
     } else {
       const response = await resetPassword(data);
-      console.log("Reset Password Response:",response);
+      console.log("Reset Password Response:", response);
       if (response.error) {
         toast.error(response.error.toString(), toastStyle);
         setValue("password", "");

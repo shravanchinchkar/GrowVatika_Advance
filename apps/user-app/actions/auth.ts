@@ -175,7 +175,9 @@ export async function resetPasswordEmail(
     return { success: false, error: "Invalid Email" };
   } else {
     try {
-      const emailResponse = await sendResendPasswordMail(validateInput.data || "");
+      const emailResponse = await sendResendPasswordMail(
+        validateInput.data || ""
+      );
       // If error while sending email
       if (!emailResponse.success) {
         return { success: false, error: emailResponse.message };
@@ -380,7 +382,7 @@ export async function storeDataInExcel(
   }
   // If above everything succeed then execute the following block
   else {
-    console.log("remaining:",remaining);
+    console.log("remaining:", remaining);
     try {
       const existingSellerByEmail = await client.seller.findUnique({
         where: { email: validateInput.data.email },

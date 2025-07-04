@@ -120,7 +120,7 @@ export async function saveSellerBusinessInfo(
       }
 
       // Following is the process of uploading new image to Cloudinary
-      
+
       // file as a property know as array buffer and that will give you bytes, and from that byte you can create the buffer
       const bytes = await file.arrayBuffer(); // converting file into array buffer
       const buffer = Buffer.from(bytes); //create buffer from bytes

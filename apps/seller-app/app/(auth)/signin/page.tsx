@@ -1,7 +1,7 @@
 import { Suspense } from "react";
 import Skeleton from "../../loading";
 import { headers } from "next/headers";
-import { NEXT_AUTH } from "../../lib/auth";
+import { NEXT_AUTH } from "../../../lib/auth";
 import { redirect } from "next/navigation";
 import { getServerSession } from "next-auth";
 import { SellerSignin } from "../../../components/seller-signin";

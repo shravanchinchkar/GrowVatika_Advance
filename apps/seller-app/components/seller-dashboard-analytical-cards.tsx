@@ -12,7 +12,7 @@ export const AnaylticalCards = () => {
   const totalProductsLowInStock = sellerProductData.filter((product) => {
     return product.productQuantity < 10;
   }).length;
-  console.log("Low in stock:", totalProductsLowInStock);
+  
   return (
     <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-4 justify-items-center">
       {/* card 1 */}

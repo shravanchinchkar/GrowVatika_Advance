@@ -37,7 +37,6 @@ export const NEXT_AUTH = {
             })
           );
         }
-
         //If the count of signin request gose beyond 5 wihin 5 minutes then  the user gets blocked for 5 minutes, following is its logic
         const IpAddress = await getIp();
         console.log("Ip address is:", IpAddress);
@@ -53,110 +52,61 @@ export const NEXT_AUTH = {
             })
           );
         } else {
-          try {
-            console.log("remaining:", remaining);
-            //extract the email and password send by the user
-            const { email, password } = inputResult.data;
-            //check if the user with the entered email already exists in db
-            const userExists = await client.user.findFirst({
-              where: {
-                email: email,
-              },
-            });
-            if (!userExists) {
-              console.error("User doesn't exists");
-              throw new Error(
-                JSON.stringify({
-                  success: false,
-                  error: "User doesn't exist",
-                  status: "404",
-                })
-              );
-            } else if (!userExists.isVerified) {
-              // User has signedup but not verified then the below block
-              const passwordValidation = await bcrypt.compare(
-                password,
-                userExists.password
-              );
-              // If Correct Password then execute the below block
-              if (passwordValidation) {
-                const verifyCode = generateVerifyCode(); //Generate the verify Code for email Authentication
-                const expiryDate = getExpiryDate();
+          console.log("remaining:", remaining);
+          //extract the email and password send by the user
+          const { email, password } = inputResult.data;
+          //check if the user with the entered email already exists in db
+          const userExists = await client.user.findFirst({
+            where: {
+              email: email,
+            },
+          });
+          if (!userExists) {
+            console.error("User doesn't exists");
+            throw new Error(
+              JSON.stringify({
+                success: false,
+                error: "User doesn't exist",
+                status: "404",
+              })
+            );
+          }
+          // User has signedup but not verified then the below block
+          else if (!userExists.isVerified) {
+            const passwordValidation = await bcrypt.compare(
+              password,
+              userExists.password
+            );
+            // If Correct Password then execute the below block
+            if (passwordValidation) {
+              const verifyCode = generateVerifyCode(); //Generate the verify Code for email Authentication
+              const expiryDate = getExpiryDate();
 
-                const updateExistingUser = await client.user.update({
-                  where: { email: userExists.email },
-                  data: {
-                    verifyCode: verifyCode,
-                    verifyCodeExpiry: expiryDate,
-                  },
-                });
-                if (updateExistingUser) {
-                  // Send verification email for the unverified user
-                  const emailResponse = await sendVerificationEmail(
-                    userExists.name,
-                    userExists.email,
-                    verifyCode
-                  );
-                  // If error while sending email
-                  if (!emailResponse.success) {
-                    throw new Error(
-                      JSON.stringify({
-                        success: false,
-                        error: emailResponse.message,
-                        status: "500",
-                      })
-                    );
-                  }
-                  // If success in sending email
-                  return {
-                    id: userExists.id.toString(),
-                    name: userExists.name,
-                    email: userExists.email,
-                    isVerified: userExists.isVerified,
-                    customResponse: {
-                      success: true,
-                      message:
-                        "Verification email sent. Please verify your account.",
-                      status: "200",
-                    },
-                  };
-                } else {
-                  return null;
-                }
-              } else {
-                throw new Error(
-                  JSON.stringify({
-                    success: false,
-                    error: "Invalid password",
-                    status: "401",
-                  })
+              const updateExistingUser = await client.user.update({
+                where: { email: userExists.email },
+                data: {
+                  verifyCode: verifyCode,
+                  verifyCodeExpiry: expiryDate,
+                },
+              });
+              if (updateExistingUser) {
+                // Send verification email for the unverified user
+                const emailResponse = await sendVerificationEmail(
+                  userExists.name,
+                  userExists.email,
+                  verifyCode
                 );
-              }
-            }
-            // Initially user has signedin using Google but now the user is signing using credentials then the following code block
-            else if (
-              userExists.isOAuth &&
-              userExists.password === "oauth-no-password"
-            ) {
-              console.error(
-                "OAuth user has not set a password for credential login."
-              );
-              throw new Error(
-                JSON.stringify({
-                  success: false,
-                  error: "OAuth user cannot use credentials login",
-                  status: "403",
-                })
-              );
-            }
-            // Normal use Case
-            else {
-              const passwordValidation = await bcrypt.compare(
-                password,
-                userExists.password
-              );
-
-              if (passwordValidation) {
+                // If error while sending email
+                if (!emailResponse.success) {
+                  throw new Error(
+                    JSON.stringify({
+                      success: false,
+                      error: emailResponse.message,
+                      status: "500",
+                    })
+                  );
+                }
+                // If success in sending email
                 return {
                   id: userExists.id.toString(),
                   name: userExists.name,
@@ -164,30 +114,69 @@ export const NEXT_AUTH = {
                   isVerified: userExists.isVerified,
                   customResponse: {
                     success: true,
-                    message: "Sign-in successful",
+                    message:
+                      "Verification email sent. Please verify your account.",
                     status: "200",
                   },
                 };
               } else {
-                console.error("Invalid Password!");
-                throw new Error(
-                  JSON.stringify({
-                    success: false,
-                    message: "Invalid password",
-                    status: "401",
-                  })
-                );
+                return null;
               }
+            } else {
+              throw new Error(
+                JSON.stringify({
+                  success: false,
+                  error: "Invalid password",
+                  status: "401",
+                })
+              );
             }
-          } catch (error) {
-            console.error("Error while Signing In", error);
+          }
+          // Initially user has signedin using Google but now the user is signing using credentials then the following code block
+          else if (
+            userExists.isOAuth &&
+            userExists.password === "oauth-no-password"
+          ) {
+            console.error(
+              "OAuth user has not set a password for credential login."
+            );
             throw new Error(
               JSON.stringify({
                 success: false,
-                error: "Error while signing in",
-                status: "500",
+                error: "OAuth user cannot use credentials login",
+                status: "403",
               })
             );
+          }
+          // Normal use Case
+          else {
+            const passwordValidation = await bcrypt.compare(
+              password,
+              userExists.password
+            );
+
+            if (passwordValidation) {
+              return {
+                id: userExists.id.toString(),
+                name: userExists.name,
+                email: userExists.email,
+                isVerified: userExists.isVerified,
+                customResponse: {
+                  success: true,
+                  message: "Sign-in successful",
+                  status: "200",
+                },
+              };
+            } else {
+              console.error("Invalid Password!");
+              throw new Error(
+                JSON.stringify({
+                  success: false,
+                  error: "Invalid password",
+                  status: "401",
+                })
+              );
+            }
           }
         }
       },
@@ -204,6 +193,46 @@ export const NEXT_AUTH = {
       },
     }),
   ],
+  // ADD THESE SESSION CONFIGURATION OPTIONS
+  session: {
+    strategy: "jwt" as const,
+    maxAge: 30 * 24 * 60 * 60, // 30 days
+    updateAge: 24 * 60 * 60, // 24 hours
+  },
+  // ADD JWT CONFIGURATION
+  jwt: {
+    maxAge: 30 * 24 * 60 * 60, // 30 days
+  },
+
+  cookies: {
+    sessionToken: {
+      name: `next-auth.session-token`,
+      options: {
+        httpOnly: true,
+        sameSite: "lax",
+        path: "/",
+        secure: process.env.NODE_ENV === "production",
+        maxAge: 30 * 24 * 60 * 60, // 30 days
+      },
+    },
+    callbackUrl: {
+      name: `next-auth.callback-url`,
+      options: {
+        sameSite: "lax",
+        path: "/",
+        secure: process.env.NODE_ENV === "production",
+      },
+    },
+    csrfToken: {
+      name: `next-auth.csrf-token`,
+      options: {
+        httpOnly: true,
+        sameSite: "lax",
+        path: "/",
+        secure: process.env.NODE_ENV === "production",
+      },
+    },
+  },
   secret: process.env.NEXTAUTH_SECRET || "secret",
   callbacks: {
     signIn: async ({ user, account, profile, email, credentials }: any) => {
@@ -236,9 +265,9 @@ export const NEXT_AUTH = {
       if (user) {
         token.id = user.id;
         token.isVerified = user.isVerified; // Pass isVerified to the token
+        token.iat = Math.floor(Date.now() / 1000); // Add timestamp to help with session persistence
       }
-
-      return token;
+      return token; //Always return the token to maintain session
     },
     // The session callback helps in displaying the  userId in client component
     session: ({ session, token }: any) => {
@@ -246,10 +275,13 @@ export const NEXT_AUTH = {
         session.user.id = token.id as string;
         session.user.isVerified = token.isVerified as boolean; // Pass isVerified to the session
       }
+      console.log("User session details are:", session);
       return session;
     },
   },
   pages: {
     signIn: "/signin",
   },
+  // ADD DEBUG MODE FOR DEVELOPMENT
+  debug: process.env.NODE_ENV === "development",
 };

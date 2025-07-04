@@ -4,7 +4,7 @@ import { authRateLimit } from "./rate-limit";
 import { getIp } from "../helper/get-ip-address";
 import { SignInSchema } from "@repo/common-types/types";
 import CredentialsProvider from "next-auth/providers/credentials";
-import { chownSync } from "fs";
+
 
 export const NEXT_AUTH = {
   providers: [
@@ -47,68 +47,97 @@ export const NEXT_AUTH = {
             })
           );
         } else {
-          try {
-            console.log("remaining:", remaining);
-            //extract the email and password send by the user
-            const { email, password } = inputResult.data;
-            //check if the user with the entered email already exists in db
-            const sellerExists = await client.seller.findFirst({
-              where: {
-                email: email,
-              },
-            });
-            if (!sellerExists) {
-              console.error("User doesn't exists");
-              throw new Error(
-                JSON.stringify({
-                  success: false,
-                  message: "User doesn't exist",
-                  status: "404",
-                })
-              );
-            } else {
-              const passwordValidation = await bcrypt.compare(
-                password,
-                sellerExists.password
-              );
-
-              if (passwordValidation) {
-                return {
-                  id: sellerExists.id.toString(),
-                  name: sellerExists.firstName,
-                  email: sellerExists.email,
-                  isVerified: sellerExists.isVerified,
-                  customResponse: {
-                    success: true,
-                    message: "Sign-in successful",
-                    status: "200",
-                  },
-                };
-              } else {
-                console.error("Invalid Password!");
-                throw new Error(
-                  JSON.stringify({
-                    success: false,
-                    message: "Invalid password",
-                    status: "401",
-                  })
-                );
-              }
-            }
-          } catch (error) {
-            console.error("Error while Signing In", error);
+          console.log("remaining:", remaining);
+          //extract the email and password send by the user
+          const { email, password } = inputResult.data;
+          //check if the user with the entered email already exists in db
+          const sellerExists = await client.seller.findFirst({
+            where: {
+              email: email,
+            },
+          });
+          if (!sellerExists) {
+            console.error("User doesn't exists");
             throw new Error(
               JSON.stringify({
                 success: false,
-                message: "Error while signing in",
-                status: "500",
+                error: "User doesn't exist",
+                status: "404",
               })
             );
+          } else {
+            const passwordValidation = await bcrypt.compare(
+              password,
+              sellerExists.password
+            );
+
+            if (passwordValidation) {
+              return {
+                id: sellerExists.id.toString(),
+                name: sellerExists.firstName,
+                email: sellerExists.email,
+                isVerified: sellerExists.isVerified,
+                customResponse: {
+                  success: true,
+                  message: "Sign-in successful",
+                  status: "200",
+                },
+              };
+            } else {
+              console.error("Invalid Password!");
+              throw new Error(
+                JSON.stringify({
+                  success: false,
+                  error: "Invalid password",
+                  status: "401",
+                })
+              );
+            }
           }
         }
       },
     }),
   ],
+  // ADD THESE SESSION CONFIGURATION OPTIONS
+  session: {
+    strategy: "jwt" as const,
+    maxAge: 30 * 24 * 60 * 60, // 30 days
+    updateAge: 24 * 60 * 60, // 24 hours
+  },
+  // ADD JWT CONFIGURATION
+  jwt: {
+    maxAge: 30 * 24 * 60 * 60, // 30 days
+  },
+
+  cookies: {
+    sessionToken: {
+      name: `next-auth.session-token`,
+      options: {
+        httpOnly: true,
+        sameSite: "lax",
+        path: "/",
+        secure: process.env.NODE_ENV === "production",
+        maxAge: 30 * 24 * 60 * 60, // 30 days
+      },
+    },
+    callbackUrl: {
+      name: `next-auth.callback-url`,
+      options: {
+        sameSite: "lax",
+        path: "/",
+        secure: process.env.NODE_ENV === "production",
+      },
+    },
+    csrfToken: {
+      name: `next-auth.csrf-token`,
+      options: {
+        httpOnly: true,
+        sameSite: "lax",
+        path: "/",
+        secure: process.env.NODE_ENV === "production",
+      },
+    },
+  },
   secret: process.env.NEXTAUTH_SECRET || "secret",
   callbacks: {
     async jwt({ token, user }: any) {
@@ -116,8 +145,9 @@ export const NEXT_AUTH = {
       if (user) {
         token.id = user.id;
         token.isVerified = user.isVerified; // Pass isVerified to the token
+        token.iat = Math.floor(Date.now() / 1000); // Add timestamp to help with session persistence
       }
-      return token;
+      return token; //Always return the token to maintain session
     },
     // The session callback helps in displaying the  userId in client component
     session: ({ session, token }: any) => {
@@ -125,10 +155,13 @@ export const NEXT_AUTH = {
         session.user.id = token.id as string;
         session.user.isVerified = token.isVerified as boolean; // Pass isVerified to the session
       }
+      console.log("Seller Session data is:", session);
       return session;
     },
   },
   pages: {
     signIn: "/signin",
   },
+  // ADD DEBUG MODE FOR DEVELOPMENT
+  debug: process.env.NODE_ENV === "development",
 };

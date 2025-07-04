@@ -19,6 +19,7 @@ export const SellerDashboardMainSection = () => {
 
   // Following is the Zustand state management code for sellerData
   const updateSellerData = useSellerDataStore((state) => state.updateSellerData);
+  const sellerData=useSellerDataStore((state)=>state.sellerData);
 
   // Following is the Zustand state management code for seller Product data
   const updateSellerProductData = useSellerProductDataStore(
@@ -41,6 +42,7 @@ export const SellerDashboardMainSection = () => {
           nurseryName: res.data.sellerData.nurseryName,
           specialities: res.data.sellerData.specialities,
           businesshours: res.data.sellerData.business_hours,
+          profilePictureURL:res.data.sellerData.profilePictureURL
         });
         updateSellerProductData(res.data.sellerProductData);
         setIsDataLoaded(true);

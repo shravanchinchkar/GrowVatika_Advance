@@ -22,10 +22,9 @@ export const SellerDashboardWelcomeMsg = ({
     updatedisplayAddProductSection(true);
     updateActiveSideBar("products");
   };
-
+  
   const sellerData = useSellerDataStore((state) => state.sellerData);
 
-  console.log("Seller Data in welcome message:", sellerData);
   return (
     <div className="p-6 bg-custom-bg rounded-[1.25rem] h-[9.313rem] w-[100%]">
       <div className="text-white font-bold text-[2rem] capitalize font-[Unbounded]">

@@ -1,16 +1,17 @@
 import Image from "next/image";
-import toast from "react-hot-toast";
-import { useEffect, useState } from "react";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { toastStyle } from "@repo/shared/utilfunctions";
-import { useForm, SubmitHandler } from "react-hook-form";
-import { BusinessInfoInputSection } from "./business-Info-input-section";
-import { saveSellerBusinessInfo } from "../app/actions/saveSellerBusinessInfo";
 import {
   ApiResponseType,
   SellerData,
   SellerDataSchema,
 } from "@repo/common-types/types";
+import toast from "react-hot-toast";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { toastStyle } from "@repo/shared/utilfunctions";
+import { useCallback, useEffect, useMemo, useState } from "react";
+import { useForm, SubmitHandler, Controller } from "react-hook-form";
+import { SellerProfilePhotoUpload } from "./seller-profile-photo-upload";
+import { BusinessInfoInputSection } from "./business-Info-input-section";
+import { saveSellerBusinessInfo } from "../app/actions/saveSellerBusinessInfo";
 
 interface BusinessInfoCardProps {
   sellerData: SellerData;
@@ -27,37 +28,52 @@ export const BusinessInfoCard: React.FC<BusinessInfoCardProps> = ({
   const [enableEditing, setEnableEditing] = useState(false);
   const [displaySaveButton, setDisplaySaveButton] = useState(false);
   const [displayAddMoreButton, setDisplayAddMoreButton] = useState(true);
+  const [newProfilePicture, setNewProfilePicture] = useState<File | undefined>(
+    undefined
+  );
 
   const {
+    control,
     register,
     reset,
+    setValue,
     formState: { errors },
     handleSubmit,
+    watch,
   } = useForm<SellerData>({
     resolver: zodResolver(SellerDataSchema),
   });
 
-  // Function to check if all required data is present
-  const isAllDataPresent = (data: SellerData): boolean => {
-    return !!(
-      data.nurseryName &&
-      data.nurseryBio &&
-      data.address &&
-      data.phoneNumber &&
-      data.email &&
-      data.businesshours &&
-      data.location &&
-      data.specialities &&
-      data.specialities.length > 0
-    );
-  };
+  // Memoized function to check if all required data is present
+  const isAllDataPresent = useCallback(
+    (data: SellerData): boolean => {
+      return !!(
+        data.nurseryName &&
+        data.nurseryBio &&
+        data.address &&
+        data.phoneNumber &&
+        data.email &&
+        data.businesshours &&
+        data.location &&
+        data.specialities &&
+        data.specialities.length > 0 &&
+        (data.profilePictureURL || newProfilePicture || data.profilePicture)
+      );
+    },
+    [newProfilePicture]
+  );
 
-  // Check and set blinking state when sellerData changes
+  // Memoized blinking calculation
+  const shouldBlink = useMemo(() => {
+    return !isAllDataPresent(sellerData);
+  }, [sellerData, isAllDataPresent]);
+
+  // Effect for blinking state - only runs when shouldBlink changes
   useEffect(() => {
-    const allDataPresent = isAllDataPresent(sellerData);
-    setBlinking(!allDataPresent);
-  }, [sellerData]);
+    setBlinking(shouldBlink);
+  }, [shouldBlink]);
 
+  // Effect for form reset - optimized with fewer dependencies
   useEffect(() => {
     reset({
       email: sellerData.email || "",
@@ -68,54 +84,104 @@ export const BusinessInfoCard: React.FC<BusinessInfoCardProps> = ({
       nurseryName: sellerData.nurseryName || "",
       specialities: sellerData.specialities || [],
       businesshours: sellerData.businesshours || "",
+      profilePicture: undefined,
+      profilePictureURL: sellerData.profilePictureURL || "",
     });
-  }, [sellerData, reset]);
+    setNewProfilePicture(undefined);
+  }, [sellerData, reset]); // Keep reset as it's stable from react-hook-form
 
-  // Handle blinking animaation
-  const handleEditButton = () => {
+  // Memoized event handlers to prevent unnecessary re-renders
+  const handleEditButton = useCallback(() => {
     setBlinking(false);
     setDisplaySaveButton(true);
     setEnableEditing(true);
-  };
+  }, []);
 
-  // Handle Seller Business Data
-  const handleSaveBusinessData: SubmitHandler<SellerData> = async (
-    data: SellerData
-  ) => {
-    setLoading(true);
-    const res: ApiResponseType = await saveSellerBusinessInfo(data);
-    setLoading(false);
-    setSellerData(data);
-    setEnableEditing(false);
-    setDisplaySaveButton(false);
-    setDisplayAddMoreButton(true);
-
-    // Check if all data is present after saving and set blinking accordingly
-    const allDataPresent = isAllDataPresent(data);
-    setBlinking(!allDataPresent);
-    if (res.error) {
-      console.error(
-        "Error while updating seller business information:",
-        res.error
-      );
-      toast.error(res.error.toString(), toastStyle);
-    } else {
-      toast.success("Information Updated Successfully!", toastStyle);
-    }
-  };
-
-  // Handle Add More Button
-  const handleAddMoreButton = () => {
-    setDisplaySaveButton(displaySaveButton);
+  const handleAddMoreButton = useCallback(() => {
     setDisplayAddMoreButton(!displayAddMoreButton);
-  };
+  }, [displayAddMoreButton]);
+
+  const handleProfilePictureChange = useCallback(
+    (files: File[]) => {
+      if (files.length > 0) {
+        setNewProfilePicture(files[0]);
+        setValue("profilePicture", files[0]);
+      } else {
+        setNewProfilePicture(undefined);
+        setValue("profilePicture", undefined);
+      }
+    },
+    [setValue]
+  );
+
+  // Optimized submit handler
+  const handleSaveBusinessData: SubmitHandler<SellerData> = useCallback(
+    async (data: SellerData) => {
+      setLoading(true);
+
+      try {
+        const formData = new FormData();
+
+        // Handle profile picture logic
+        if (newProfilePicture && newProfilePicture.size > 0) {
+          formData.append("profilePicture", newProfilePicture);
+        } else if (sellerData.profilePictureURL) {
+          const emptyFile = new File([], "", {
+            type: "application/octet-stream",
+          });
+          setValue("profilePicture", emptyFile);
+          formData.append("profilePicture", emptyFile);
+        }
+
+        // Add form fields
+        Object.entries(data).forEach(([key, value]) => {
+          if (key === "specialities" && Array.isArray(value)) {
+            value.forEach((speciality, index) => {
+              formData.append(`specialities[${index}]`, speciality);
+            });
+          } else if (key !== "profilePicture") {
+            formData.append(key, value as string);
+          }
+        });
+
+        if (data.profilePictureURL) {
+          formData.append("profilePictureURL", data.profilePictureURL);
+        }
+
+        const res: ApiResponseType = await saveSellerBusinessInfo(formData);
+
+        if (res.success && res.responseData) {
+          const updatedSellerData = {
+            ...res.responseData,
+            businesshours: res.responseData.business_hours,
+          };
+
+          // Batch all updates together
+          setSellerData(updatedSellerData);
+          setNewProfilePicture(undefined);
+          setEnableEditing(false);
+          setDisplaySaveButton(false);
+          setDisplayAddMoreButton(true);
+
+          toast.success("Information Updated Successfully!", toastStyle);
+        } else {
+          toast.error(res.error?.toString() || "Update failed", toastStyle);
+        }
+      } catch (error) {
+        toast.error("Something went wrong", toastStyle);
+      } finally {
+        setLoading(false);
+      }
+    },
+    [sellerData, newProfilePicture, setValue, setSellerData]
+  );
+
   return (
     <form
       className="w-[100%] rounded-[1.25rem] border-[1px] border-[#E6E6E6] bg-white p-[1.5rem] shadow-md flex flex-col gap-[1rem]"
       onSubmit={handleSubmit(handleSaveBusinessData)}
     >
       {/* Card Title and Edit Button */}
-
       <div className="flex justify-between items-center">
         <div className="flex flex-col">
           <h1 className="text-[#171717] font-[Poppins] text-[1.5rem] font-semibold leading-[1.5rem]">
@@ -130,7 +196,7 @@ export const BusinessInfoCard: React.FC<BusinessInfoCardProps> = ({
         <div className="flex gap-[2rem]">
           {/* Edit Button */}
           <button
-            className={`w-[6.875rem] h-[3.1875rem] flex justify-center items-center gap-[1rem] px-4 py-2 rounded-[0.625rem] text-[#000000] font-[Poppins] text-[1.3rem] font-normal border-[1.5px] capitalize ${blinking ? " animate-glow-pulse" : "border-[#CBD0D3]"}`}
+            className={`w-[6.875rem] h-[3.1875rem] flex justify-center items-center gap-[1rem] px-4 py-2 rounded-[0.625rem] text-[#000000] font-[Poppins] text-[1.3rem] font-normal border-[1.5px] capitalize outline-none ${blinking ? " animate-glow-pulse" : "border-[#CBD0D3]"}`}
             onClick={handleEditButton}
             type="button"
           >
@@ -147,7 +213,7 @@ export const BusinessInfoCard: React.FC<BusinessInfoCardProps> = ({
 
           {/* Save Button */}
           <button
-            className={`rounded-[0.625rem] h-[3.1875rem] w-[8rem] bg-[#56A430] flex justify-center items-center gap-4 text-white text-[1.3rem] ${displaySaveButton === true ? "block" : "hidden"} ${loading ? "cursor-not-allowed" : "cursor-pointer"}`}
+            className={`rounded-[0.625rem] h-[3.1875rem] w-[8rem] bg-[#56A430] flex justify-center items-center gap-4 text-white text-[1.3rem] outline-none ${displaySaveButton === true ? "block" : "hidden"} ${loading ? "cursor-not-allowed" : "cursor-pointer"}`}
             type="submit"
           >
             {loading ? (
@@ -169,28 +235,34 @@ export const BusinessInfoCard: React.FC<BusinessInfoCardProps> = ({
       </div>
 
       {/* Following div consist of Profile Picture,Nursery Name,description and Rating Section */}
-      <div className="flex justify-between items-center">
+      <div className="flex justify-between items-center gap-[2rem]">
         {/* Profile Picture,Nursery Name,description */}
-        <div className="w-[50%] h-max  flex items-center gap-[1rem]">
-          <div className="w-[4.363rem] h-[4.363rem] rounded-full bg-center bg-cover relative">
-            <Image
-              src={
-                "/assets/images/SellerDashboardMainImages/businessInfoProfile.svg"
-              }
-              alt="profilepicture"
-              fill
-              className="object-contain"
-            />
-          </div>
+        <div className="w-[75%] h-max flex items-start gap-[0.8rem]">
+          {/* Nursery Profile Photo goes here! */}
+          <Controller
+            name="profilePictureURL"
+            control={control}
+            render={({ field }) => (
+              <SellerProfilePhotoUpload
+                file={newProfilePicture} // Use the separate state for new file
+                onDrop={handleProfilePictureChange} // Use separate handler
+                blinking={blinking}
+                enableEditing={enableEditing}
+                error={errors.profilePicture?.message}
+                currentImage={sellerData.profilePictureURL}
+              />
+            )}
+          />
+
           {/* Nursery Name and Bio */}
-          <div className="w-[100%]">
+          <div className="min-w-[50%] flex flex-col">
             <p className="text-[#171717] text-[1.2rem] font-semibold">
               {sellerData.nurseryName}
             </p>
             {sellerData.nurseryBio && sellerData.nurseryBio !== "" ? (
               !enableEditing ? (
                 <>
-                  <p className="text-[#8C8C8C] text-[1rem] font-medium">
+                  <p className="text-[#8C8C8C] text-[0.9rem] font-medium text-justify leading-[1.3rem]">
                     {sellerData.nurseryBio}
                   </p>
                 </>
@@ -200,21 +272,18 @@ export const BusinessInfoCard: React.FC<BusinessInfoCardProps> = ({
                     lengendName="Nursery Bio"
                     blinking={blinking}
                     {...register("nurseryBio", { required: true })}
+                    error={errors.nurseryBio?.message}
                   />
                 </>
               )
             ) : (
               <>
-                {errors.nurseryBio && (
-                  <div className="ml-[1rem] text-red-500 font-bold text-start">
-                    {errors.nurseryBio.message}
-                  </div>
-                )}
                 <BusinessInfoInputSection
                   lengendName="Nursery Bio"
                   placeHolder="Add your nursery bio here"
                   blinking={blinking}
                   {...register("nurseryBio", { required: true })}
+                  error={errors.nurseryBio?.message}
                 />
               </>
             )}
@@ -267,21 +336,18 @@ export const BusinessInfoCard: React.FC<BusinessInfoCardProps> = ({
                       lengendName="Address"
                       blinking={blinking}
                       {...register("address", { required: true })}
+                      error={errors.address?.message}
                     />
                   </>
                 )
               ) : (
                 <>
-                  {errors.address && (
-                    <div className="ml-[1rem] text-red-500 font-bold text-start">
-                      {errors.address.message}
-                    </div>
-                  )}
                   <BusinessInfoInputSection
                     lengendName="Address"
                     placeHolder="Add your nursery address here"
                     blinking={blinking}
                     {...register("address", { required: true })}
+                    error={errors.address?.message}
                   />
                 </>
               )}
@@ -355,21 +421,18 @@ export const BusinessInfoCard: React.FC<BusinessInfoCardProps> = ({
                       lengendName="Business Hours"
                       blinking={blinking}
                       {...register("businesshours", { required: true })}
+                      error={errors.businesshours?.message}
                     />
                   </>
                 )
               ) : (
                 <>
-                  {errors.businesshours && (
-                    <div className="ml-[1rem] text-red-500 font-bold text-start">
-                      {errors.businesshours.message}
-                    </div>
-                  )}
                   <BusinessInfoInputSection
                     lengendName="Business Hours"
                     placeHolder="Mon-Sat: 9AM-6PM, Sun: 10AM-4PM"
                     blinking={blinking}
                     {...register("businesshours", { required: true })}
+                    error={errors.businesshours?.message}
                   />
                 </>
               )}
@@ -401,24 +464,21 @@ export const BusinessInfoCard: React.FC<BusinessInfoCardProps> = ({
                 ) : (
                   <>
                     <BusinessInfoInputSection
-                      lengendName="Location"
+                      lengendName="Location (Google Map Link)"
                       blinking={blinking}
                       {...register("location", { required: true })}
+                      error={errors.location?.message}
                     />
                   </>
                 )
               ) : (
                 <>
-                  {errors.location && (
-                    <div className="ml-[1rem] text-red-500 font-bold text-start">
-                      {errors.location.message}
-                    </div>
-                  )}
                   <BusinessInfoInputSection
-                    lengendName="Location"
+                    lengendName="Location (Google Map Link)"
                     placeHolder="Add URL of your nursery location"
                     blinking={blinking}
                     {...register("location", { required: true })}
+                    error={errors.location?.message}
                   />
                 </>
               )}

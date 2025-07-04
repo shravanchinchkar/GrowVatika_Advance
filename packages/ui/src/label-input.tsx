@@ -44,7 +44,7 @@ export const LabelInput = ({
           useType == FormType.Seller
             ? "w-[100%] h-[100%] px-[2rem] border-[2px] border-[#fff] rounded-[6.5625rem] flex gap-[1rem] pb-[0.5rem]"
             : useType == FormType.AUTH
-              ? `w-[100%] h-[100%] px-[1rem]  border-[2px] text-[#8C8C8C] border-[#8C8C8C] rounded-[6.5625rem] flex items-center gap-[1rem] pb-[0.5rem] ${readonly ? "cursor-not-allowed" : "cursor-default"}`
+              ? `w-[100%] h-[100%] px-[1rem] border-[2px] text-[#8C8C8C] border-[#8C8C8C] rounded-[6.5625rem] flex items-center gap-[1rem] pb-[0.5rem] ${readonly ? "cursor-not-allowed" : "cursor-default"}`
               : ""
         }
       >
@@ -60,7 +60,7 @@ export const LabelInput = ({
           {legendName}
         </legend>
         <input
-          className={`${legendName === "Password" ? "w-[130%]" : readonly ? "cursor-not-allowed w-[100%]" : "w-[100%]"} pl-[0.4rem] bg-transparent text-[#0B1320] outline-none text-[1.1rem] font-normal  rounded-l-full rounded-r-full`}
+          className={`${legendName === "Password" ? "w-[130%]" : readonly ? "cursor-not-allowed w-[100%]" : "w-[100%]"} pl-[0.4rem]  text-[#0B1320] outline-none text-[1.1rem] font-normal  rounded-l-full rounded-r-full bg-transparent`}
           type={
             legendName === "Phone Number"
               ? "tel"

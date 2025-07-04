@@ -1,3 +1,5 @@
+import { Cart } from "./cart";
+
 import { Navbar } from "./nav-section";
 import { Header } from "./header-section";
 import { Footer } from "./footer-section";
@@ -10,7 +12,6 @@ import { ExploreSection } from "./explore-section";
 import { FeatureSection } from "./feature-section";
 import { UserAuthButton } from "./user-auth-button";
 import { TestmonialSection } from "./testimonial-section";
-import { Cart } from "./cart";
 
 export const LandingPage = () => {
   return (

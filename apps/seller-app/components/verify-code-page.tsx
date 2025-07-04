@@ -26,7 +26,7 @@ export const VerifyCodePage = () => {
     return () => {
       toast.dismiss(toastId);
     };
-  }, []);
+  }, [email]);
 
   const handelVerifyCode = async () => {
     setLoading(true);

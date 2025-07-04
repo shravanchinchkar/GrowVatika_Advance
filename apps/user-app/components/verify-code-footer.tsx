@@ -13,6 +13,7 @@ export const VerifyCodeFooter = ({ email }: { email: string }) => {
   const [disableResendMail, setdisableResendMail] = useState(true);
 
   useEffect(() => {
+    console.log("Verify code footer useEffect")
     if (timeLeft <= 0) {
       setdisableResendMail(false);
       return;

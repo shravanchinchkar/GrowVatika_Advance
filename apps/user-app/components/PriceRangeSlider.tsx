@@ -47,6 +47,7 @@ export default function PriceRangeSlider() {
 
   // Add global mouse event listeners
   React.useEffect(() => {
+    console.log("Price Range Side bar")
     if (isDragging) {
       document.addEventListener("mousemove", handleMouseMove);
       document.addEventListener("mouseup", handleMouseUp);

@@ -19,7 +19,6 @@ export const SellerDashboardMainSection = () => {
 
   // Following is the Zustand state management code for sellerData
   const updateSellerData = useSellerDataStore((state) => state.updateSellerData);
-  const sellerData=useSellerDataStore((state)=>state.sellerData);
 
   // Following is the Zustand state management code for seller Product data
   const updateSellerProductData = useSellerProductDataStore(
@@ -27,6 +26,7 @@ export const SellerDashboardMainSection = () => {
   );
 
   useEffect(() => {
+    console.log("useEffect")
     setIsDataLoaded(false);
     const fetchData = async () => {
       try {

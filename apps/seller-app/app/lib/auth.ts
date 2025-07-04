@@ -99,45 +99,46 @@ export const NEXT_AUTH = {
     }),
   ],
   // ADD THESE SESSION CONFIGURATION OPTIONS
-  session: {
-    strategy: "jwt" as const,
-    maxAge: 30 * 24 * 60 * 60, // 30 days
-    updateAge: 24 * 60 * 60, // 24 hours
-  },
-  // ADD JWT CONFIGURATION
-  jwt: {
-    maxAge: 30 * 24 * 60 * 60, // 30 days
-  },
+  // session: {
+  //   strategy: "jwt" as const,
+  //   maxAge: 30 * 24 * 60 * 60, // 30 days
+  //   updateAge: 24 * 60 * 60, // 24 hours
+  // },
+  // // ADD JWT CONFIGURATION
+  // jwt: {
+  //   maxAge: 30 * 24 * 60 * 60, // 30 days
+  // },
 
-  cookies: {
-    sessionToken: {
-      name: `next-auth.session-token`,
-      options: {
-        httpOnly: true,
-        sameSite: "lax",
-        path: "/",
-        secure: process.env.NODE_ENV === "production",
-        maxAge: 30 * 24 * 60 * 60, // 30 days
-      },
-    },
-    callbackUrl: {
-      name: `next-auth.callback-url`,
-      options: {
-        sameSite: "lax",
-        path: "/",
-        secure: process.env.NODE_ENV === "production",
-      },
-    },
-    csrfToken: {
-      name: `next-auth.csrf-token`,
-      options: {
-        httpOnly: true,
-        sameSite: "lax",
-        path: "/",
-        secure: process.env.NODE_ENV === "production",
-      },
-    },
-  },
+  // cookies: {
+  //   sessionToken: {
+  //     name: `next-auth.session-token`,
+  //     options: {
+  //       httpOnly: true,
+  //       sameSite: "lax",
+  //       path: "/",
+  //       secure: process.env.NODE_ENV === "production",
+  //       maxAge: 30 * 24 * 60 * 60, // 30 days
+  //     },
+  //   },
+  //   callbackUrl: {
+  //     name: `next-auth.callback-url`,
+  //     options: {
+  //       sameSite: "lax",
+  //       path: "/",
+  //       secure: process.env.NODE_ENV === "production",
+  //     },
+  //   },
+  //   csrfToken: {
+  //     name: `next-auth.csrf-token`,
+  //     options: {
+  //       httpOnly: true,
+  //       sameSite: "lax",
+  //       path: "/",
+  //       secure: process.env.NODE_ENV === "production",
+  //     },
+  //   },
+  // },
+
   secret: process.env.NEXTAUTH_SECRET || "secret",
   callbacks: {
     async jwt({ token, user }: any) {
@@ -155,7 +156,6 @@ export const NEXT_AUTH = {
         session.user.id = token.id as string;
         session.user.isVerified = token.isVerified as boolean; // Pass isVerified to the session
       }
-      console.log("Seller Session data is:", session);
       return session;
     },
   },

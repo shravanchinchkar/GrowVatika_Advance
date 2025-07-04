@@ -20,6 +20,7 @@ export const ResetPasswordComponent = () => {
   const router = useRouter();
 
   useEffect(() => {
+    console.log("reset password useEffect")
     if (searchPearamsEmail === "") {
       toast.error("Invalid Email", toastStyle);
     }

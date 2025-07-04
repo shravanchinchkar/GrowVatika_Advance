@@ -214,11 +214,13 @@ export const SellerDashboardSideBar = () => {
         </div>
 
         {/* border-[#697F75] */}
-        <div className="z-10 w-[15.9375rem] h-[4.0625rem] rounded-[1.5rem] flex justify-center items-center gap-[0.8rem] m-[1rem] bg-[#fff] border-[2px] border-[#697F75]">
-          {/* Nursery Profile Photo goes here! */}
-          <div className="relative w-[2.425rem] h-[2.425rem] rounded-full overflow-hidden bg-[#56A430]">
-            {/* Profile Photo Image  goes here */}
-            {sellerData.profilePictureURL && (
+        <div className="z-10 w-[15.9375rem] h-[4.0625rem] rounded-[1.5rem] flex justify-center items-center px-[1rem] gap-[0.8rem] m-[1rem] bg-[#fff] border-[1.5px] border-[#697F75]">
+          {/* 697F75 */}
+          <div className="w-[100%] flex justify-between">
+            {/* Nursery Profile Photo goes here! */}
+            <div className="relative w-[2.425rem] h-[2.425rem] rounded-full overflow-hidden bg-[#56A430]">
+              {/* Profile Photo Image  goes here */}
+              {sellerData.profilePictureURL && (
               <Image
                 src={sellerData.profilePictureURL}
                 alt="profileImage"
@@ -227,39 +229,41 @@ export const SellerDashboardSideBar = () => {
                 sizes="2.425rem" // Add this - matches your container size
               />
             )}
-          </div>
-
-          <div className="flex items-center gap-[1rem]">
-            {/* Nursery Name */}
-            <div className="font-medium capitalize">
-              <h1 className="text-[#123524] text-[0.75rem]">
-                {sellerData.nurseryName}
-              </h1>
-              <h3 className="text-[#697F75] text-[0.6875rem]">
-                Seller account
-              </h3>
             </div>
 
-            <button
-              className={
-                display === true
-                  ? "w-[1rem] h-[1rem] relative"
-                  : "w-[1rem] h-[1rem] relative rotate-180"
-              }
-              onClick={handleLogoutLogin}
-            >
-              <Image
-                src={
-                  "/assets/images/SellerDashboardImages/sellerDashboardDownArrow.svg"
+            <div className="w-[77%] flex justify-between items-center gap-[1rem]">
+              {/* Nursery Name */}
+
+              <div className="flex flex-col  font-medium capitalize h-[100%]">
+                <h1 className="text-[#123524] text-[0.75rem] h-[50%]">
+                  {sellerData.nurseryName}
+                </h1>
+                <h3 className="text-[#697F75] text-[0.6875rem] h-[50%]">
+                  Seller account
+                </h3>
+              </div>
+
+              <button
+                className={
+                  display === true
+                    ? "w-[1rem] h-[1rem] relative"
+                    : "w-[1rem] h-[1rem] relative rotate-180"
                 }
-                alt="downarow"
-                fill
-                className="object-contain"
-              />
-            </button>
+                onClick={handleLogoutLogin}
+              >
+                <Image
+                  src={
+                    "/assets/images/SellerDashboardImages/sellerDashboardDownArrow.svg"
+                  }
+                  alt="downarow"
+                  fill
+                  className="object-contain"
+                />
+              </button>
+            </div>
+
           </div>
         </div>
-        
       </div>
     </div>
   );

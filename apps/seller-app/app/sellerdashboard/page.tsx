@@ -13,7 +13,7 @@ export default async function SellerDashboard() {
         </div>
       </div>
     );
-  } else {
+  } else  {
     redirect("/signin");
   }
 }

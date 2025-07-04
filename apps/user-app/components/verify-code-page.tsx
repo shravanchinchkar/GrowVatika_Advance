@@ -22,6 +22,7 @@ export const VerifyCodePage = () => {
   let toastId: string;
 
   useEffect(() => {
+    console.log("Verifiy code page useEffect")
     toastId = toast.loading("Verify Your Email", toastStyle);
     return () => {
       toast.dismiss(toastId);

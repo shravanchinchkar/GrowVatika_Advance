@@ -25,6 +25,7 @@ export const ExploreProductCatalogSection = () => {
   
 
   useEffect(() => {
+    console.log("Explore-product-catalog-section useEffect")
     const getProductsData = async () => {
       try {
         setLoading(true);

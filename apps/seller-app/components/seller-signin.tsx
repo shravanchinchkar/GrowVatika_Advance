@@ -1,20 +1,29 @@
 "use client";
 import Link from "next/link";
-import { useState } from "react";
 import { toast } from "react-hot-toast";
 import { useForm } from "react-hook-form";
-import { signIn } from "next-auth/react";
-import { useRouter } from "next/navigation";
+import { useEffect, useState } from "react";
 import { SiteLogo } from "@repo/ui/brand-logo";
 import { AuthButton } from "@repo/ui/auth-button";
+import { signIn, useSession } from "next-auth/react";
+import { redirect,useRouter } from "next/navigation";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { toastStyle } from "@repo/shared/utilfunctions";
 import { LabelInput, FormType } from "@repo/ui/label-input";
 import { SignInInputs, SignInSchema } from "@repo/common-types/types";
 
 export const SellerSignin = () => {
+  const { data: session } = useSession();
   const router = useRouter();
   const [loading, setLoading] = useState(false);
+
+  useEffect(() => {
+    if (session?.user) {
+      console.log("Hello")
+      const sellerId = session.user.id;
+      redirect(`/sellerdashboard?id=${sellerId}`);
+    }
+  }, []);
 
   const {
     register,
@@ -31,6 +40,7 @@ export const SellerSignin = () => {
 
   // Function to handle Seller Signin
   async function handleSellerSignin(data: SignInInputs) {
+    console.log("Function");
     setLoading(true);
     console.log("Seller Signin data is:", data);
     const res = await signIn("credentials", {

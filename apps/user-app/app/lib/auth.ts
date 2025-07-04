@@ -194,45 +194,46 @@ export const NEXT_AUTH = {
     }),
   ],
   // ADD THESE SESSION CONFIGURATION OPTIONS
-  session: {
-    strategy: "jwt" as const,
-    maxAge: 30 * 24 * 60 * 60, // 30 days
-    updateAge: 24 * 60 * 60, // 24 hours
-  },
-  // ADD JWT CONFIGURATION
-  jwt: {
-    maxAge: 30 * 24 * 60 * 60, // 30 days
-  },
+  // session: {
+  //   strategy: "jwt" as const,
+  //   maxAge: 30 * 24 * 60 * 60, // 30 days
+  //   updateAge: 24 * 60 * 60, // 24 hours
+  // },
+  // // ADD JWT CONFIGURATION
+  // jwt: {
+  //   maxAge: 30 * 24 * 60 * 60, // 30 days
+  // },
 
-  cookies: {
-    sessionToken: {
-      name: `next-auth.session-token`,
-      options: {
-        httpOnly: true,
-        sameSite: "lax",
-        path: "/",
-        secure: process.env.NODE_ENV === "production",
-        maxAge: 30 * 24 * 60 * 60, // 30 days
-      },
-    },
-    callbackUrl: {
-      name: `next-auth.callback-url`,
-      options: {
-        sameSite: "lax",
-        path: "/",
-        secure: process.env.NODE_ENV === "production",
-      },
-    },
-    csrfToken: {
-      name: `next-auth.csrf-token`,
-      options: {
-        httpOnly: true,
-        sameSite: "lax",
-        path: "/",
-        secure: process.env.NODE_ENV === "production",
-      },
-    },
-  },
+  // cookies: {
+  //   sessionToken: {
+  //     name: `next-auth.session-token`,
+  //     options: {
+  //       httpOnly: true,
+  //       sameSite: "lax",
+  //       path: "/",
+  //       secure: process.env.NODE_ENV === "production",
+  //       maxAge: 30 * 24 * 60 * 60, // 30 days
+  //     },
+  //   },
+  //   callbackUrl: {
+  //     name: `next-auth.callback-url`,
+  //     options: {
+  //       sameSite: "lax",
+  //       path: "/",
+  //       secure: process.env.NODE_ENV === "production",
+  //     },
+  //   },
+  //   csrfToken: {
+  //     name: `next-auth.csrf-token`,
+  //     options: {
+  //       httpOnly: true,
+  //       sameSite: "lax",
+  //       path: "/",
+  //       secure: process.env.NODE_ENV === "production",
+  //     },
+  //   },
+  // },
+
   secret: process.env.NEXTAUTH_SECRET || "secret",
   callbacks: {
     signIn: async ({ user, account, profile, email, credentials }: any) => {

@@ -32,8 +32,8 @@ export const ProductSearchBar = ({
         <input
           className={
             UseType === SearchBarWorkType.PRODUCTSEARCH
-              ? "lg:w-[11rem] xl:w-[17.3125rem] h-[1.8125rem] font-[Poppins] outline-none font-normal lg:text-[1rem] xl:text-[1.22669rem] text-[#CBD0D3]"
-              : "w-[7.875rem] h-[1.8125rem] font-[Poppins] text-[1.22669rem] text-[#CBD0D3] font-normal border-none outline-none"
+              ? "lg:w-[11rem] xl:w-[17.3125rem] h-[1.8125rem] font-[Poppins] outline-none font-normal lg:text-[1rem] xl:text-[1.22669rem] placeholder:text-[#CBD0D3] text-[#8C8C8C]"
+              : "w-[7.875rem] h-[1.8125rem] font-[Poppins] text-[1.22669rem] placeholder:text-[#CBD0D3] text-[#8C8C8C] font-normal border-none outline-none"
           }
           type="text"
           placeholder={placeholder}

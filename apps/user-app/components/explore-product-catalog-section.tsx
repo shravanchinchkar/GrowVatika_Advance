@@ -30,11 +30,8 @@ export const ExploreProductCatalogSection = () => {
       try {
         setLoading(true);
         const res = await axios.get("api/getallproducts");
-        console.log("All Products data is:", res.data.productData);
         const productsDataFromBE = res.data.productData;
-        console.log("value of productsDataFromBE:", productsDataFromBE);
         setProductsData(productsDataFromBE);
-        console.log("Value of productData is:", productsData);
         setLoading(false);
       } catch (error) {
         console.error("Error while getting product data", error);

@@ -5,6 +5,7 @@ import { getIp } from "../helper/get-ip-address";
 import { SignInSchema } from "@repo/common-types/types";
 import CredentialsProvider from "next-auth/providers/credentials";
 
+console.log("NextAuth Secret in seller-app:",process.env.NEXTAUTH_SECRET);
 export const NEXT_AUTH = {
   providers: [
     CredentialsProvider({
@@ -97,55 +98,14 @@ export const NEXT_AUTH = {
       },
     }),
   ],
-  // ADD THESE SESSION CONFIGURATION OPTIONS
-  // session: {
-  //   strategy: "jwt" as const,
-  //   maxAge: 30 * 24 * 60 * 60, // 30 days
-  //   updateAge: 24 * 60 * 60, // 24 hours
-  // },
-  // // ADD JWT CONFIGURATION
-  // jwt: {
-  //   maxAge: 30 * 24 * 60 * 60, // 30 days
-  // },
-
-  // cookies: {
-  //   sessionToken: {
-  //     name: `next-auth.session-token`,
-  //     options: {
-  //       httpOnly: true,
-  //       sameSite: "lax",
-  //       path: "/",
-  //       secure: process.env.NODE_ENV === "production",
-  //       maxAge: 30 * 24 * 60 * 60, // 30 days
-  //     },
-  //   },
-  //   callbackUrl: {
-  //     name: `next-auth.callback-url`,
-  //     options: {
-  //       sameSite: "lax",
-  //       path: "/",
-  //       secure: process.env.NODE_ENV === "production",
-  //     },
-  //   },
-  //   csrfToken: {
-  //     name: `next-auth.csrf-token`,
-  //     options: {
-  //       httpOnly: true,
-  //       sameSite: "lax",
-  //       path: "/",
-  //       secure: process.env.NODE_ENV === "production",
-  //     },
-  //   },
-  // },
-
-  secret: process.env.NEXTAUTH_SECRET || "secret",
+  secret: process.env.NEXTAUTH_SECRET || "sellerappSecret",
   callbacks: {
     async jwt({ token, user }: any) {
       // When the user signs in, `user` contains the object returned by `authorize`
       if (user) {
         token.id = user.id;
         token.isVerified = user.isVerified; // Pass isVerified to the token
-        token.iat = Math.floor(Date.now() / 1000); // Add timestamp to help with session persistence
+        // token.iat = Math.floor(Date.now() / 1000); // Add timestamp to help with session persistence
       }
       return token; //Always return the token to maintain session
     },
@@ -161,6 +121,4 @@ export const NEXT_AUTH = {
   pages: {
     signIn: "/signin",
   },
-  // ADD DEBUG MODE FOR DEVELOPMENT
-  debug: process.env.NODE_ENV === "development",
 };

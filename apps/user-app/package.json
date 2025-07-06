@@ -9,7 +9,8 @@
     "start": "next start",
     "email": "email dev",
     "lint": "next lint --max-warnings 0",
-    "check-types": "tsc --noEmit"
+    "check-types": "tsc --noEmit",
+    "prebuild": "cd ../../packages/db && npx prisma generate"
   },
   "dependencies": {
     "@repo/common-types": "*",

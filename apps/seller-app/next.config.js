@@ -17,6 +17,9 @@ const nextConfig = {
     optimizeCss: true,
     scrollRestoration: true,
   },
+  images: {
+    domains: ["res.cloudinary.com"],
+  },
   // For Vercel deployment
   output: process.env.NODE_ENV === "production" ? "standalone" : undefined,
 };

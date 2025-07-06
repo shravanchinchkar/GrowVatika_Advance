@@ -2,11 +2,8 @@
   "$schema": "https://turbo.build/schema.json",
   "ui": "tui",
   "tasks": {
-    "prisma:generate": {
-      "cache": false
-    },
     "build": {
-      "dependsOn": ["^build"],
+      "dependsOn": ["^build","@repo/db#db:generate"],
       "inputs": ["$TURBO_DEFAULT$", ".env*"],
       "outputs": [".next/**", "!.next/cache/**", "dist/**"],
       "env": [
@@ -36,6 +33,10 @@
     },
     "check-types": {
       "dependsOn": ["^check-types"]
+    },
+    "clean": {
+      "cache": false,
+      "outputs": []
     },
     "dev": {
       "cache": false,

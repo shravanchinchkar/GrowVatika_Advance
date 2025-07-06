@@ -4,7 +4,7 @@ import { toast } from "react-hot-toast";
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import { SiteLogo } from "@repo/ui/brand-logo";
-import { verifyCode } from "../app/actions/auth";
+import { verifyCode } from "../actions/auth";
 import { useSearchParams } from "next/navigation";
 import { AuthButton } from "@repo/ui/auth-button";
 import { toastStyle } from "@repo/shared/utilfunctions";
@@ -26,7 +26,7 @@ export const VerifyCodePage = () => {
     return () => {
       toast.dismiss(toastId);
     };
-  }, []);
+  }, [email]);
 
   const handelVerifyCode = async () => {
     setLoading(true);

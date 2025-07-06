@@ -1,20 +1,29 @@
 "use client";
 import Link from "next/link";
-import { useState } from "react";
 import { toast } from "react-hot-toast";
 import { useForm } from "react-hook-form";
-import { signIn } from "next-auth/react";
-import { useRouter } from "next/navigation";
+import { useEffect, useState } from "react";
 import { SiteLogo } from "@repo/ui/brand-logo";
 import { AuthButton } from "@repo/ui/auth-button";
+import { signIn, useSession } from "next-auth/react";
+import { redirect,useRouter } from "next/navigation";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { toastStyle } from "@repo/shared/utilfunctions";
 import { LabelInput, FormType } from "@repo/ui/label-input";
 import { SignInInputs, SignInSchema } from "@repo/common-types/types";
 
 export const SellerSignin = () => {
+  const { data: session } = useSession();
   const router = useRouter();
   const [loading, setLoading] = useState(false);
+
+  useEffect(() => {
+    if (session?.user) {
+      console.log("Hello")
+      const sellerId = session.user.id;
+      redirect(`/sellerdashboard?id=${sellerId}`);
+    }
+  }, []);
 
   const {
     register,
@@ -31,35 +40,48 @@ export const SellerSignin = () => {
 
   // Function to handle Seller Signin
   async function handleSellerSignin(data: SignInInputs) {
+    console.log("Function");
     setLoading(true);
+    console.log("Seller Signin data is:", data);
     const res = await signIn("credentials", {
       email: data.email,
       password: data.password,
       redirect: false,
     });
     setLoading(false);
+    console.log("Seller Signin  response is:", res);
 
+    // If error
     if (res?.error) {
-      const errorResponse = JSON.parse(res.error) as {
-        success: boolean;
-        message?: string;
-        error?: string;
-        status?: string;
-      };
-      toast.error(
-        errorResponse.error?.toString() || "Signin Failed",
-        toastStyle
-      );
-    } else if (res?.ok) {
+      let errorMessage = "Signin Failed";
+      try {
+        const errorResponse = JSON.parse(res.error) as {
+          success: boolean;
+          message?: string;
+          error?: string;
+          status?: string;
+        };
+        errorMessage =
+          errorResponse.error || errorResponse.message || "Signin Failed";
+        console.log("User Signin error response to FE :", errorResponse.error);
+      } catch (parseError) {
+        // If JSON parsing fails, use the raw error message
+        console.log("Seller SignIn error:", res.error);
+        errorMessage = "Internal Server Error!";
+      }
+      toast.error(errorMessage, toastStyle);
+    }
+    //If Successful signin
+    else if (res?.ok) {
       setValue("email", "");
       setValue("password", "");
 
       // Check session to determine verification status
       const sessionResponse = await fetch("/api/auth/session");
       const session = await sessionResponse.json();
-      const sellerId=session.user.id;
+      const sellerId = session.user.id;
       if (session?.user?.isVerified) {
-        console.log("Seller Details after signin:",session.user)
+        console.log("Seller Details after signin:", session.user);
         toast.success("Signin successful!", toastStyle);
         router.push(`/sellerdashboard?id=${sellerId}`);
       } else {
@@ -69,7 +91,7 @@ export const SellerSignin = () => {
   }
 
   return (
-    <div className="w-screen h-screen bg-[#FFF6F4] flex font-[Poppins]">
+    <div className="w-screen min-h-screen max-h-max bg-[#FFF6F4] flex font-[Poppins]">
       {/* Following is the left side div which consist of Image */}
       <div className="w-[50%] flex justify-center items-center">
         <div className="lg:w-[30rem] lg:h-[30rem] xl:w-[31rem] xl:h-[31rem] 2xl:w-[42rem] 2xl:h-[42rem] shrink-0 rounded-[28px] overflow-hidden bg-[url(/assets/images/AuthImages/seller-signin.png)] bg-cover bg-no-repeat border-[1px] border-[#8C8C8C]">

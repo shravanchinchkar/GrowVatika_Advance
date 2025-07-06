@@ -4,8 +4,8 @@ import { authRateLimit } from "./rate-limit";
 import { getIp } from "../helper/get-ip-address";
 import { SignInSchema } from "@repo/common-types/types";
 import CredentialsProvider from "next-auth/providers/credentials";
-import { chownSync } from "fs";
 
+console.log("NextAuth Secret in seller-app:",process.env.NEXTAUTH_SECRET);
 export const NEXT_AUTH = {
   providers: [
     CredentialsProvider({
@@ -47,77 +47,67 @@ export const NEXT_AUTH = {
             })
           );
         } else {
-          try {
-            console.log("remaining:", remaining);
-            //extract the email and password send by the user
-            const { email, password } = inputResult.data;
-            //check if the user with the entered email already exists in db
-            const sellerExists = await client.seller.findFirst({
-              where: {
-                email: email,
-              },
-            });
-            if (!sellerExists) {
-              console.error("User doesn't exists");
-              throw new Error(
-                JSON.stringify({
-                  success: false,
-                  message: "User doesn't exist",
-                  status: "404",
-                })
-              );
-            } else {
-              const passwordValidation = await bcrypt.compare(
-                password,
-                sellerExists.password
-              );
-
-              if (passwordValidation) {
-                return {
-                  id: sellerExists.id.toString(),
-                  name: sellerExists.firstName,
-                  email: sellerExists.email,
-                  isVerified: sellerExists.isVerified,
-                  customResponse: {
-                    success: true,
-                    message: "Sign-in successful",
-                    status: "200",
-                  },
-                };
-              } else {
-                console.error("Invalid Password!");
-                throw new Error(
-                  JSON.stringify({
-                    success: false,
-                    message: "Invalid password",
-                    status: "401",
-                  })
-                );
-              }
-            }
-          } catch (error) {
-            console.error("Error while Signing In", error);
+          console.log("remaining:", remaining);
+          //extract the email and password send by the user
+          const { email, password } = inputResult.data;
+          //check if the user with the entered email already exists in db
+          const sellerExists = await client.seller.findFirst({
+            where: {
+              email: email,
+            },
+          });
+          if (!sellerExists) {
+            console.error("User doesn't exists");
             throw new Error(
               JSON.stringify({
                 success: false,
-                message: "Error while signing in",
-                status: "500",
+                error: "User doesn't exist",
+                status: "404",
               })
             );
+          } else {
+            const passwordValidation = await bcrypt.compare(
+              password,
+              sellerExists.password
+            );
+
+            if (passwordValidation) {
+              return {
+                id: sellerExists.id.toString(),
+                name: sellerExists.firstName,
+                email: sellerExists.email,
+                isVerified: sellerExists.isVerified,
+                customResponse: {
+                  success: true,
+                  message: "Sign-in successful",
+                  status: "200",
+                },
+              };
+            } else {
+              console.error("Invalid Password!");
+              throw new Error(
+                JSON.stringify({
+                  success: false,
+                  error: "Invalid password",
+                  status: "401",
+                })
+              );
+            }
           }
         }
       },
     }),
   ],
-  secret: process.env.NEXTAUTH_SECRET || "secret",
+  secret: process.env.NEXTAUTH_SECRET || "sellerappSecret",
   callbacks: {
     async jwt({ token, user }: any) {
       // When the user signs in, `user` contains the object returned by `authorize`
       if (user) {
         token.id = user.id;
         token.isVerified = user.isVerified; // Pass isVerified to the token
+        // token.iat = Math.floor(Date.now() / 1000); // Add timestamp to help with session persistence
       }
-      return token;
+      return token; //Always return the token to maintain session
     },
     // The session callback helps in displaying the  userId in client component
     session: ({ session, token }: any) => {

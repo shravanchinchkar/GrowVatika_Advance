@@ -1,3 +1,4 @@
+import { Cart } from "./cart";
 import { Navbar } from "./nav-section";
 import { Header } from "./header-section";
 import { Footer } from "./footer-section";
@@ -9,18 +10,21 @@ import { ContactForm } from "./get-started-from";
 import { ExploreSection } from "./explore-section";
 import { FeatureSection } from "./feature-section";
 import { UserAuthButton } from "./user-auth-button";
+import { UserProfileIcon } from "./user-profile-icon";
 import { TestmonialSection } from "./testimonial-section";
-import { Cart } from "./cart";
 
 export const LandingPage = () => {
   return (
     <div className="relative flex flex-col bg-[#FFF6F4]">
-      <Cart/>
+      <Cart />
       {/* Header Section */}
       <header className="relative flex flex-col items-center gap-[1rem] pt-[2rem] h-screen">
-        <div className="lg:w-[60rem] xl:w-[70rem] 2xl:w-[82.1875rem] h-max flex justify-between ">
+        <div className="lg:w-[60rem] xl:w-[70rem] 2xl:w-[82.1875rem] h-max flex justify-between">
           <Header />
-          <ShoppingCartIcon />
+          <div className="flex items-center gap-[2.5rem]">
+            <UserProfileIcon/>
+            <ShoppingCartIcon />
+          </div>
         </div>
 
         <div className="2xl:w-[82.1875rem] lg:w-[60rem] xl:w-[70rem] flex justify-between items-center z-10 font-[Poppins]">

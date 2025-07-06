@@ -40,6 +40,7 @@ export const ProductImageDropZone = ({
 
           {fileRejections.length > 0 ? (
             <div className="flex justify-center items-center">
+              {/* display the error while uploading file */}
               {fileRejections.map(({ file, errors }) => (
                 <div className="flex flex-col gap-[1rem]" key={file.name}>
                   <div>
@@ -66,6 +67,7 @@ export const ProductImageDropZone = ({
               ))}
             </div>
           ) : file ? (
+            // Shows the preview of the uploaded file
             <div className="w-[45%] h-[90%] flex flex-col justify-center items-center gap-[1rem]">
               <img
                 src={URL.createObjectURL(file)}

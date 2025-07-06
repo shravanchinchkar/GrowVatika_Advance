@@ -9,8 +9,6 @@ import { useSession } from "next-auth/react";
 export const SellerHeroSection = () => {
   const { data: session } = useSession();
   const sellerId = session?.user?.id;
-
-  console.log("Seller Session details:", session);
   const router = useRouter();
   const [loading, setLoading] = useState(false);
 

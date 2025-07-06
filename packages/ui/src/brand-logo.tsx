@@ -5,7 +5,7 @@ export const SiteLogo = () => {
   return (
     <Link
       href={"/"}
-      className="z-10 lg:w-[14rem] lg:h-[4rem] xl:w-[16.3rem] xl:h-[3.8125rem] flex items-center lg:justify-between cursor-pointer"
+      className="z-10 lg:w-[14rem] lg:h-[4rem] xl:w-[16.3rem] xl:h-[3.8125rem] flex items-center lg:justify-between cursor-pointer outline-none"
     >
       {/* Following div consist of logo */}
       <div className="relative lg:w-[4rem] lg:h-[3rem] xl:w-[4.75rem] xl:h-[3.35rem]">

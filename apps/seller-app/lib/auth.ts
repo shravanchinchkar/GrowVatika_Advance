@@ -100,7 +100,7 @@ export const NEXT_AUTH = {
       },
     }),
   ],
-  secret: process.env.NEXTAUTH_SECRET || "sellerapp-SkSa",
+  secret: process.env.NEXTAUTH_SECRET,
   callbacks: {
     async jwt({ token, user }: any) {
       // When the user signs in, `user` contains the object returned by `authorize`

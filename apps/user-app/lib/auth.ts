@@ -196,7 +196,7 @@ export const NEXT_AUTH = {
       },
     }),
   ],
-  secret: process.env.NEXTAUTH_SECRET || "userapp-SkSa",
+  secret: process.env.NEXTAUTH_SECRET,
   callbacks: {
     signIn: async ({ user, account, profile, email, credentials }: any) => {
       if (account.provider === "google") {

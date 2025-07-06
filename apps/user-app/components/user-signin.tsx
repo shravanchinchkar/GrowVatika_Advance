@@ -143,7 +143,7 @@ export const Sign_In = () => {
   };
 
   return (
-    <div className="w-screen h-screen bg-[#FFF6F4] flex font-[Poppins]">
+    <div className="w-screen min-h-screen max-h-max bg-[#FFF6F4] flex font-[Poppins]">
       <div className="w-[50%] flex flex-col gap-[1rem]">
         {/* Following div consist of site logo */}
         <div className="flex flex-col items-start gap-[2rem] pl-[2rem] pt-[1rem]">

@@ -91,7 +91,7 @@ export const SellerSignin = () => {
   }
 
   return (
-    <div className="w-screen h-screen bg-[#FFF6F4] flex font-[Poppins]">
+    <div className="w-screen min-h-screen max-h-max bg-[#FFF6F4] flex font-[Poppins]">
       {/* Following is the left side div which consist of Image */}
       <div className="w-[50%] flex justify-center items-center">
         <div className="lg:w-[30rem] lg:h-[30rem] xl:w-[31rem] xl:h-[31rem] 2xl:w-[42rem] 2xl:h-[42rem] shrink-0 rounded-[28px] overflow-hidden bg-[url(/assets/images/AuthImages/seller-signin.png)] bg-cover bg-no-repeat border-[1px] border-[#8C8C8C]">

@@ -197,6 +197,18 @@ export const NEXT_AUTH = {
     }),
   ],
   secret: process.env.NEXTAUTH_SECRET,
+  // following code is imp because it prevent conflict between the user and seller local signin
+  cookies: {
+    sessionToken: {
+      name: "userapp-nextauth.session-token",
+      options: {
+        httpOnly: true,
+        sameSite: "lax",
+        path: "/",
+        secure: process.env.NODE_ENV === "production",
+      },
+    },
+  },
   callbacks: {
     signIn: async ({ user, account, profile, email, credentials }: any) => {
       if (account.provider === "google") {
@@ -226,7 +238,7 @@ export const NEXT_AUTH = {
     async jwt({ token, user }: any) {
       // When the user signs in, `user` contains the object returned by `authorize`
       if (user) {
-        console.log("user is:",user);
+        console.log("user is:", user);
         token.id = user.id;
         token.isVerified = user.isVerified; // Pass isVerified to the token
       }
@@ -234,12 +246,12 @@ export const NEXT_AUTH = {
     },
     // The session callback helps in displaying the  userId in client component
     session: ({ session, token }: any) => {
-      console.log("User Token is:",token);
+      console.log("User Token is:", token);
       if (session.user) {
         session.user.id = token.id as string;
         session.user.isVerified = token.isVerified as boolean; // Pass isVerified to the session
       }
-      console.log("User session details are:", session,token);
+      console.log("User session details are:", session, token);
       return session;
     },
   },

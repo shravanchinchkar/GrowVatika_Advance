@@ -4,8 +4,9 @@ import { authRateLimit } from "./rate-limit";
 import { getIp } from "../helper/get-ip-address";
 import { SignInSchema } from "@repo/common-types/types";
 import CredentialsProvider from "next-auth/providers/credentials";
+import { cookies } from "next/headers";
 
-console.log("NextAuth Secret in seller-app:",process.env.NEXTAUTH_SECRET);
+console.log("NextAuth Secret in seller-app:", process.env.NEXTAUTH_SECRET);
 export const NEXT_AUTH = {
   providers: [
     CredentialsProvider({
@@ -19,7 +20,7 @@ export const NEXT_AUTH = {
         password: { label: "Password", type: "password" },
       },
       async authorize(credentials: any) {
-        console.log("credential in seller are:",credentials);
+        console.log("credential in seller are:", credentials);
 
         //validate the user Input
         const inputResult = SignInSchema.safeParse(credentials);
@@ -101,6 +102,18 @@ export const NEXT_AUTH = {
     }),
   ],
   secret: process.env.NEXTAUTH_SECRET,
+  // following code is imp because it prevent conflict between the user and seller local signin
+  cookies: {
+    sessionToken: {
+      name: "sellerapp-nextauth.session-token",
+      options: {
+        httpOnly: true,
+        sameSite: "lax",
+        path: "/",
+        secure: process.env.NODE_ENV === "production",
+      },
+    },
+  },
   callbacks: {
     async jwt({ token, user }: any) {
       // When the user signs in, `user` contains the object returned by `authorize`

@@ -19,6 +19,8 @@ export const NEXT_AUTH = {
         password: { label: "Password", type: "password" },
       },
       async authorize(credentials: any) {
+        console.log("credential in seller are:",credentials);
+
         //validate the user Input
         const inputResult = SignInSchema.safeParse(credentials);
         if (!inputResult.success) {
@@ -98,7 +100,7 @@ export const NEXT_AUTH = {
       },
     }),
   ],
-  secret: process.env.NEXTAUTH_SECRET || "sellerappSecret",
+  secret: process.env.NEXTAUTH_SECRET || "sellerapp-SkSa",
   callbacks: {
     async jwt({ token, user }: any) {
       // When the user signs in, `user` contains the object returned by `authorize`

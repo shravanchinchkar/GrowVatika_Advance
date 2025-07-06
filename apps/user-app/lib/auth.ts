@@ -1,7 +1,7 @@
 import bcrypt from "bcrypt";
 import client from "@repo/db/client";
-import { getIp } from "../helper/get-ip-address";
 import { authRateLimit } from "./rate-limit";
+import { getIp } from "../helper/get-ip-address";
 import GoogleProvider from "next-auth/providers/google";
 import { SignInSchema } from "@repo/common-types/types";
 import { getExpiryDate } from "@repo/shared/utilfunctions";
@@ -9,8 +9,7 @@ import { generateVerifyCode } from "@repo/shared/utilfunctions";
 import CredentialsProvider from "next-auth/providers/credentials";
 import { sendVerificationEmail } from "../helper/sendVerificationMail";
 
-
-console.log("NextAuth Secret in user-app:",process.env.NEXTAUTH_SECRET);
+console.log("NextAuth Secret in user-app:", process.env.NEXTAUTH_SECRET);
 export const NEXT_AUTH = {
   providers: [
     CredentialsProvider({
@@ -24,8 +23,10 @@ export const NEXT_AUTH = {
         },
       },
       async authorize(credentials: any) {
+        console.log("credentials are:", credentials);
         //validate the user Input
         const inputResult = SignInSchema.safeParse(credentials);
+        console.log("Input Result is:", inputResult.data);
         if (!inputResult.success) {
           console.error(
             "Input Error:",
@@ -195,7 +196,19 @@ export const NEXT_AUTH = {
       },
     }),
   ],
-  secret: process.env.NEXTAUTH_SECRET || "userappSecret",
+  secret: process.env.NEXTAUTH_SECRET,
+  // following code is imp because it prevent conflict between the user and seller local signin
+  cookies: {
+    sessionToken: {
+      name: "userapp-nextauth.session-token",
+      options: {
+        httpOnly: true,
+        sameSite: "lax",
+        path: "/",
+        secure: process.env.NODE_ENV === "production",
+      },
+    },
+  },
   callbacks: {
     signIn: async ({ user, account, profile, email, credentials }: any) => {
       if (account.provider === "google") {
@@ -225,19 +238,20 @@ export const NEXT_AUTH = {
     async jwt({ token, user }: any) {
       // When the user signs in, `user` contains the object returned by `authorize`
       if (user) {
+        console.log("user is:", user);
         token.id = user.id;
         token.isVerified = user.isVerified; // Pass isVerified to the token
-        // token.iat = Math.floor(Date.now() / 1000); // Add timestamp to help with session persistence
       }
       return token; //Always return the token to maintain session
     },
     // The session callback helps in displaying the  userId in client component
     session: ({ session, token }: any) => {
+      console.log("User Token is:", token);
       if (session.user) {
         session.user.id = token.id as string;
         session.user.isVerified = token.isVerified as boolean; // Pass isVerified to the session
       }
-      console.log("User session details are:", session);
+      console.log("User session details are:", session, token);
       return session;
     },
   },

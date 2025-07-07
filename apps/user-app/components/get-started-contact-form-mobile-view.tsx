@@ -23,7 +23,7 @@ const InputField = ({
 
 export const GetStartedContactFormMobileView = () => {
   return (
-    <div className="w-full min-h-screen flex items-center justify-center bg-[#00000040] font-[Poppins]">
+    <div className="absolute new-sm:block md:hidden w-full min-h-screen flex items-center justify-center bg-[#00000040] font-[Poppins]">
       <div className="relative bg-white p-6 rounded-[1.5625rem] flex flex-col items-center">
         {/* Close Icon */}
         <Image

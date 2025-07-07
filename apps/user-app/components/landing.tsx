@@ -15,9 +15,9 @@ import { Cart } from "./cart";
 export const LandingPage = () => {
   return (
     <div className="relative flex flex-col bg-[#FFF6F4]">
-      <Cart/>
+      <Cart />
       {/* Header Section */}
-      <header className="relative flex flex-col items-center gap-[1rem] pt-[2rem] h-screen">
+      {/* <header className="relative flex flex-col items-center gap-[1rem] pt-[2rem] h-screen">
         <div className="2xl:w-[82.1875rem] lg:w-[60rem] xl:w-[70rem] h-max flex justify-between">
           <Header />
           <ShoppingCartIcon />
@@ -30,21 +30,21 @@ export const LandingPage = () => {
 
         <HeroSection />
         <LandingPot />
-      </header>
+      </header> */}
 
       {/* Main Section */}
-      <main className="flex flex-col gap-[3rem]">
-        <ExploreSection />
-        <AboutUsSection />
+      <main className="flex flex-col gap-[3rem] border-[2px]">
+        {/* <ExploreSection />
+        <AboutUsSection /> */}
         <FeatureSection />
-        <TestmonialSection />
-        <ContactForm />
+        {/* <TestmonialSection />
+        <ContactForm /> */}
       </main>
 
       {/* Footer Section */}
-      <footer>
+      {/* <footer>
         <Footer />
-      </footer>
+      </footer> */}
     </div>
   );
 };

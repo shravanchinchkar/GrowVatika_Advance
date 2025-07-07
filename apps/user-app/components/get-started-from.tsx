@@ -8,10 +8,7 @@ import { ContactSuccess } from "./contact-success-msg";
 import { toastStyle } from "@repo/shared/utilfunctions";
 import { useForm, SubmitHandler } from "react-hook-form";
 import { LabelInput, FormType } from "@repo/ui/label-input";
-import {
-  GetStartedFromInput,
-  GetStartedFromSchema,
-} from "@repo/common-types";
+import { GetStartedFromInput, GetStartedFromSchema } from "@repo/common-types";
 
 export const ContactForm = () => {
   const [loading, setLoading] = useState(false);
@@ -63,11 +60,10 @@ export const ContactForm = () => {
 
   return (
     <div
-      className={`new-sm:w-[100%] new-sm:h-[4.9375rem] md:w-[45rem] lg:w-[60rem] xl:w-[75rem] 2xl:w-[82rem] 
-  flex flex-col items-center m-auto 
-  bg-contact-form sm:pt-[2rem] md:pt-[1rem] pb-[1rem] relative 
-  rounded-none sm:rounded-[28px] 
-  ${displayForm ? "sm:h-[40rem] gap-[2rem]" : "sm:h-[12.8125rem] gap-[2rem]"}`}
+      className={`new-sm:w-[100%] new-sm:h-[4.9375rem] md:w-[45rem] lg:w-[60rem] xl:w-[75rem] 
+        2xl:w-[82rem] flex flex-col items-center m-auto bg-contact-form sm:pt-[2rem] md:pt-[1rem] pb-[1rem] 
+        relative rounded-none sm:rounded-[28px] border-[2px] 
+        ${displayForm ? "sm:h-[40rem] gap-[2rem]" : "sm:h-[12.8125rem] gap-[2rem]"}`}
     >
       {/* Following is the title of the form */}
 
@@ -79,7 +75,7 @@ export const ContactForm = () => {
         <>
           <form
             onSubmit={handleSubmit(handleGetStartedForm)}
-            className="w-[90%] grid lg:grid-cols-[30rem auto 15rem] xl:grid-cols-[35rem auto 20rem] 2xl:grid-cols-[40rem auto 29rem] gap-y-[1rem] gap-x-0 my-[1rem] font-[Poppins]"
+            className="grid w-[90%] lg:grid-cols-[30rem auto 15rem] xl:grid-cols-[35rem auto 20rem] 2xl:grid-cols-[40rem auto 29rem] gap-y-[1rem] gap-x-0 my-[1rem] font-[Poppins]"
           >
             {/* Input Field For Full Name */}
             <div className="lg:w-[30rem] xl:w-[35rem] 2xl:w-[40rem] h-max col-span-2">

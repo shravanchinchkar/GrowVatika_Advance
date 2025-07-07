@@ -1,4 +1,4 @@
-
+import { Cart } from "./cart";
 import { Navbar } from "./nav-section";
 import { Header } from "./header-section";
 import { Footer } from "./footer-section";
@@ -12,7 +12,6 @@ import { FeatureSection } from "./feature-section";
 import { UserAuthButton } from "./user-auth-button";
 import { UserProfileIcon } from "./user-profile-icon";
 import { TestmonialSection } from "./testimonial-section";
-import { Cart } from "./cart";
 
 export const LandingPage = () => {
   return (
@@ -24,7 +23,7 @@ export const LandingPage = () => {
         <div className="lg:w-[60rem] xl:w-[70rem] 2xl:w-[82.1875rem] h-max flex justify-between">
           <Header />
           <div className="flex items-center gap-[2.5rem]">
-            <UserProfileIcon/>
+            <UserProfileIcon />
             <ShoppingCartIcon />
           </div>
         </div>
@@ -36,7 +35,7 @@ export const LandingPage = () => {
 
         <HeroSection />
         <LandingPot />
-      </header> 
+      </header>
 
       {/* Main Section */}
       <main className="flex flex-col gap-[3rem] border-[2px]">

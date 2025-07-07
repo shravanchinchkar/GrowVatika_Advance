@@ -1,15 +1,16 @@
 import { SiteLogo } from "@repo/ui/brand-logo";
 import Image from "next/image";
+import Link from "next/link";
 
 export const Footer = () => {
   return (
     <div
       id="contact-us"
-      className="flex lg:h-[20rem] xl:h-[22.875rem] bg-feature-gradient mt-[5rem]"
+      className="flex lg:h-[20rem] xl:h-[22.875rem] bg-feature-gradient mt-[5rem] border-[2px] border-red-500"
     >
       {/* Following is the left footer div */}
-      <div className="w-[29rem] h-[100%] lg:pt-[2.5rem] overflow-hidden">
-        <div className="flex justify-center">
+      <div className="w-[29rem] h-[100%] lg:pt-[2.5rem] overflow-hidden border-[2px] border-red-500">
+        <div className="flex justify-center border-[2px] border-red-500">
           <SiteLogo />
         </div>
         <div className="relative lg:w-[15rem] lg:h-[15rem] xl:w-[20rem] xl:h-[20rem] flex items-start ml-[-1rem] lg:mt-[3rem] xl:mt-[2.5rem] drop-shadow-2xl">
@@ -34,7 +35,9 @@ export const Footer = () => {
 
             <div className="text-[#123524A0] lg:text-[0.8rem] xl:text-[1.25rem] font-medium uppercase flex flex-col gap-[0.2rem]">
               <p>Testimonials</p>
-              <p>terms & Co.</p>
+              <Link href="/terms" className="hover:underline">
+                terms & Co.
+              </Link>
               <p>more search</p>
               <p>privacy policy</p>
             </div>

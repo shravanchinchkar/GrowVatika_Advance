@@ -65,10 +65,10 @@ export const SellerDashboardMainSection = () => {
     );
   }
   return (
-    <>
+    <div className="w-[100%]">
       <SellerDashboardProfileSection />
       <SellerDashboardProductManagementSection />
       <SellerDashboardAddProductSection />
-    </>
+    </div>
   );
 };

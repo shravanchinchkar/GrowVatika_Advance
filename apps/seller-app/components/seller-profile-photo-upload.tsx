@@ -47,11 +47,10 @@ export const SellerProfilePhotoUpload = ({
     }
   }, [fileRejections]);
 
-
   return (
     <div
-      className={`w-[15%] h-[6.5rem] flex flex-col items-center cursor-not-allowed outline-none
-        ${!currentImage && blinking && !enableEditing ? "animate-border-blink border-[2px] border-dashed justify-center" : 
+      className={`lg:w-[20%] xl:w-[15%] h-[6.5rem] flex flex-col items-center cursor-not-allowed outline-none
+        ${!currentImage && blinking && !enableEditing ? "border-[2px] border-dashed justify-center" : 
           !currentImage && enableEditing && !blinking && !isDragActive && error ? "border-[2px] border-dashed border-[#FF4B4B] cursor-pointer justify-center" : 
           !currentImage && enableEditing && !blinking && !isDragActive ? " border-[2px] border-dashed border-[#CBD0D3] cursor-pointer justify-center" : 
           isDragActive ? "border-[2px] border-dashed border-[#56A430] justify-center" : 
@@ -84,7 +83,7 @@ export const SellerProfilePhotoUpload = ({
         // Default View
         <div
           className={`w-[5rem] h-[5rem] rounded-full bg-[#56A430] flex justify-center items-center
-            ${blinking && !enableEditing ? "border-[#FF4B4B]" : enableEditing && !blinking && !isDragActive ? "border-[#CBD0D3]" : isDragActive && "border-[#56A430]"} border-[2px] border-dashed`}
+            ${enableEditing && !blinking && !isDragActive ? "border-[#CBD0D3]" : isDragActive && "border-[#56A430]"} border-[2px] border-dashed`}
         >
           <div className="relative w-[2rem] h-[2rem]">
             <Image

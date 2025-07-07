@@ -12,147 +12,78 @@ export const AnaylticalCards = () => {
   const totalProductsLowInStock = sellerProductData.filter((product) => {
     return product.productQuantity < 10;
   }).length;
-  
+
+  const AnalyticsData = [
+    {
+      title: "total Sales",
+      cardImageName: "totalSalesIcon.svg",
+      mainContent: "₹0",
+      summaryImageName: "growthIcon.svg",
+      summaryContent: "+0% from last month",
+    },
+    {
+      title: "Total Orders",
+      cardImageName: "totalOrderIcon.svg",
+      mainContent: "0",
+      summaryImageName: "growthIcon.svg",
+      summaryContent: "+0% from last month",
+    },
+    {
+      title: "total Products",
+      cardImageName: "totalProductIcon.svg",
+      mainContent: totalProductCount.toString(),
+      summaryImageName: "totalProductsIcon2.svg",
+      summaryContent: `${totalProductsLowInStock} low in stock`,
+    },
+    {
+      title: "total Visitors",
+      cardImageName: "storeVisitorIcon.svg",
+      mainContent: "0",
+      summaryImageName: "storeVisitorsIcon2.svg",
+      summaryContent: "+0% from last month",
+    },
+  ];
+
   return (
-    <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-4 justify-items-center">
-      {/* card 1 */}
-      <div className="w-[14.88544rem] h-[9.1875rem] p-4 bg-white rounded-[1.25rem] shadow flex flex-col justify-between border-[1px] border-[#0000001A]">
-        <div className="text-[1.25rem] font-[Poppins] font-semibold leading-[1.3] text-[#00000066] flex items-end justify-between ">
-          <h1>Total Sales</h1>
-          <div className="w-[2.93875rem] h-[2.93875rem] rounded-[1.25rem] bg-[#DDE6CD] flex justify-center items-center">
-            <div className="w-[1.53325rem] h-[1.5em] relative">
-              <Image
-                src={
-                  "/assets/images/SellerDashboardMainImages/totalSalesIcon.svg"
-                }
-                className="object-contain"
-                fill
-                alt="rupeeimage"
-              />
+    <div className="grid lg:grid-cols-3  xl:grid-cols-4 gap-4 justify-items-center">
+      {AnalyticsData.map((item, index) => {
+        return (
+          <div
+            className="lg:w-[13rem] lg:h-[8rem] 2xl:w-[14.88544rem] 2xl:h-[9.1875rem] p-4 bg-white rounded-[1.25rem] shadow flex flex-col justify-between border-[1px] border-[#0000001A]"
+            key={index}
+          >
+            <div className="lg:text-[1rem] 2xl:text-[1.25rem] font-[Poppins] font-semibold leading-[1.3] text-[#00000066] flex lg:items-center 2xl:items-end justify-between capitalize">
+              <h1>{item.title}</h1>
+              <div className="lg:w-[2.5rem] lg:h-[2.5rem] 2xl:w-[2.93875rem] 2xl:h-[2.93875rem] rounded-[1.25rem] bg-[#DDE6CD] flex justify-center items-center">
+                <div className="lg:w-[1.2rem] lg:h-[1.2rem] 2xl:w-[1.53325rem] 2xl:h-[1.5em] relative">
+                  <Image
+                    src={`/assets/images/SellerDashboardMainImages/${item.cardImageName}`}
+                    className="object-contain"
+                    fill
+                    alt="rupeeimage"
+                  />
+                </div>
+              </div>
+            </div>
+
+            <div className="lg:text-[1.5rem] 2xl:text-[2rem] font-[Poppins] font-bold leading-[1.3] text-[#171717]">
+              {item.mainContent}
+            </div>
+
+            <div className="lg:text-[0.7rem] 2xl:text-[0.8rem] font-[Poppins] font-medium leading-[1.3] text-[#56A430] flex items-center gap-[0.2rem]">
+              <div className="w-[1rem] h-[1rem] relative">
+                <Image
+                  src={`/assets/images/SellerDashboardMainImages/${item.summaryImageName}`}
+                  alt="growthIcon"
+                  fill
+                  className="object-contain"
+                />
+              </div>
+              <p>{`${item.summaryContent}`}</p>
             </div>
           </div>
-        </div>
-
-        <div className="text-[2rem] font-[Poppins] font-bold leading-[1.3] text-[#171717]">
-          ₹0
-        </div>
-        <div className="text-[0.8rem] font-[Poppins] font-medium leading-[1.3] text-[#56A430] flex items-center gap-[0.2rem]">
-          <div className="w-[1rem] h-[1rem] relative">
-            <Image
-              src={"/assets/images/SellerDashboardMainImages/growthIcon.svg"}
-              alt="growthIcon"
-              fill
-              className="object-contain"
-            />
-          </div>
-          <p>+0% from last month</p>
-        </div>
-      </div>
-
-      {/* Card 2 */}
-      <div className="w-[14.88544rem] h-[9.1875rem] p-4 bg-white rounded-[1.25rem] shadow flex flex-col justify-between border-[1px] border-[#0000001A]">
-        <div className="text-[1.25rem] font-[Poppins] font-semibold leading-[1.3] text-[#00000066] flex items-end justify-between ">
-          <h1>Total Orders</h1>
-          <div className="w-[2.93875rem] h-[2.93875rem] rounded-[1.25rem] bg-[#BCC1B4] flex justify-center items-center">
-            <div className="w-[1.53325rem] h-[1.5em] relative">
-              <Image
-                src={
-                  "/assets/images/SellerDashboardMainImages/totalOrderIcon.svg"
-                }
-                className="object-contain"
-                fill
-                alt="rupeeimage"
-              />
-            </div>
-          </div>
-        </div>
-
-        <div className="text-[2rem] font-[Poppins] font-bold leading-[1.3] text-[#171717]">
-          0
-        </div>
-        <div className="text-[0.8rem] font-[Poppins] font-medium leading-[1.3] text-[#56A430] flex items-center gap-[0.2rem]">
-          <div className="w-[1rem] h-[1rem] relative">
-            <Image
-              src={"/assets/images/SellerDashboardMainImages/growthIcon.svg"}
-              alt="growthIcon"
-              fill
-              className="object-contain"
-            />
-          </div>
-          <p>+0% from last month</p>
-        </div>
-      </div>
-
-      {/* Crad 3 */}
-      <div className="w-[14.88544rem] h-[9.1875rem] p-4 bg-white rounded-[1.25rem] shadow flex flex-col justify-between border-[1px] border-[#0000001A]">
-        <div className="text-[1.25rem] font-[Poppins] font-semibold leading-[1.3] text-[#00000066] flex items-end justify-between ">
-          <h1>Total Products</h1>
-          <div className="w-[2.93875rem] h-[2.93875rem] rounded-[1.25rem] bg-[#D3F8C2] flex justify-center items-center">
-            <div className="w-[1.53325rem] h-[1.5em] relative">
-              <Image
-                src={
-                  "/assets/images/SellerDashboardMainImages/totalProductIcon.svg"
-                }
-                className="object-contain"
-                fill
-                alt="rupeeimage"
-              />
-            </div>
-          </div>
-        </div>
-
-        <div className="text-[2rem] font-[Poppins] font-bold leading-[1.3] text-[#171717]">
-          {totalProductCount}
-        </div>
-        <div className="text-[0.8rem] font-[Poppins] font-medium leading-[1.3] text-[#56A430] flex items-center gap-[0.2rem]">
-          <div className="w-[1rem] h-[1rem] relative">
-            <Image
-              src={
-                "/assets/images/SellerDashboardMainImages/totalProductsIcon2.svg"
-              }
-              alt="growthIcon"
-              fill
-              className="object-contain"
-            />
-          </div>
-          <p>{`${totalProductsLowInStock} low in stock`}</p>
-        </div>
-      </div>
-
-      {/* Card 4 */}
-      <div className="w-[14.88544rem] h-[9.1875rem] p-4 bg-white rounded-[1.25rem] shadow flex flex-col justify-between border-[1px] border-[#0000001A]">
-        <div className="text-[1.25rem] font-[Poppins] font-semibold leading-[1.3] text-[#00000066] flex items-end justify-between ">
-          <h1>Store Visitors</h1>
-          <div className="w-[2.93875rem] h-[2.93875rem] rounded-[1.25rem] bg-[#BBE1FB] flex justify-center items-center">
-            <div className="w-[1.53325rem] h-[1.5em] relative">
-              <Image
-                src={
-                  "/assets/images/SellerDashboardMainImages/storeVisitorIcon.svg"
-                }
-                className="object-contain"
-                fill
-                alt="rupeeimage"
-              />
-            </div>
-          </div>
-        </div>
-        <div className="text-[2rem] font-[Poppins] font-bold leading-[1.3] text-[#171717]">
-          0
-        </div>
-        <div className="text-[0.8rem] font-[Poppins] font-medium leading-[1.3] text-[#56A430] flex items-center gap-[0.2rem]">
-          <div className="w-[1rem] h-[1rem] relative">
-            <Image
-              src={
-                "/assets/images/SellerDashboardMainImages/storeVisitorsIcon2.svg"
-              }
-              alt="growthIcon"
-              fill
-              className="object-contain"
-            />
-          </div>
-          <p>+0% from last month</p>
-        </div>
-      </div>
+        );
+      })}
     </div>
   );
 };

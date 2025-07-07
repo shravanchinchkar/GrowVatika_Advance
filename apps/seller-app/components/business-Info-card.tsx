@@ -178,9 +178,12 @@ export const BusinessInfoCard: React.FC<BusinessInfoCardProps> = ({
 
   return (
     <form
-      className="w-[100%] rounded-[1.25rem] border-[1px] border-[#E6E6E6] bg-white p-[1.5rem] shadow-md flex flex-col gap-[1rem]"
+      className="relative z-0 w-[100%] rounded-[1.25rem] border-[1px] border-[#E6E6E6] bg-white p-[1.5rem] shadow-md flex flex-col gap-[1rem]"
       onSubmit={handleSubmit(handleSaveBusinessData)}
     >
+      <div
+        className={`${!blinking ? "hidden" : "block"} absolute z-10 top-0 left-0 w-[100%] h-[100%] bg-[#00000040] rounded-[1.25rem]`}
+      ></div>
       {/* Card Title and Edit Button */}
       <div className="flex justify-between items-center">
         <div className="flex flex-col">
@@ -193,14 +196,14 @@ export const BusinessInfoCard: React.FC<BusinessInfoCardProps> = ({
         </div>
 
         {/* Edit and Save Button */}
-        <div className="flex gap-[2rem]">
+        <div className="flex lg:items-center lg:gap-[1rem] xl:gap-[2rem] z-20">
           {/* Edit Button */}
           <button
-            className={`w-[6.875rem] h-[3.1875rem] flex justify-center items-center gap-[1rem] px-4 py-2 rounded-[0.625rem] text-[#000000] font-[Poppins] text-[1.3rem] font-normal border-[1.5px] capitalize outline-none ${blinking ? " animate-glow-pulse" : "border-[#CBD0D3]"}`}
+            className={`lg:w-[5rem] lg:h-[2.5rem] xl:w-[6.875rem] xl:h-[3.1875rem] flex justify-center items-center lg:gap-[0.5rem] xl:gap-[1rem] lg:p-[0.5rem] xl:px-4 xl:py-2 rounded-[0.625rem] text-[#000000] font-[Poppins] lg:text-[1.1rem]  xl:text-[1.3rem] font-normal border-[2px] capitalize outline-none bg-white ${blinking && "border-red-500 shadow-editButton"}`}
             onClick={handleEditButton}
             type="button"
           >
-            <div className="w-[1.3rem] h-[1.3rem] relative">
+            <div className="lg:w-[1rem] lg:h-[1rem] xl:w-[1.3rem] xl:h-[1.3rem] relative">
               <Image
                 src={"/assets/images/SellerDashboardMainImages/editIcon.svg"}
                 alt="editbutton"
@@ -213,14 +216,14 @@ export const BusinessInfoCard: React.FC<BusinessInfoCardProps> = ({
 
           {/* Save Button */}
           <button
-            className={`rounded-[0.625rem] h-[3.1875rem] w-[8rem] bg-[#56A430] flex justify-center items-center gap-4 text-white text-[1.3rem] outline-none ${displaySaveButton === true ? "block" : "hidden"} ${loading ? "cursor-not-allowed" : "cursor-pointer"}`}
+            className={`lg:w-[5rem] lg:h-[2.5rem]  xl:w-[8rem] xl:h-[3.1875rem] rounded-[0.625rem]  bg-[#56A430] flex justify-center items-center lg:gap-[0.5rem] xl:gap-4 text-white lg:text-[1.1rem] xl:text-[1.3rem] outline-none ${displaySaveButton === true ? "block" : "hidden"} ${loading ? "cursor-not-allowed" : "cursor-pointer"}`}
             type="submit"
           >
             {loading ? (
               <>Loading...</>
             ) : (
               <>
-                <div className="relative h-[1.5rem] w-[1.5rem]">
+                <div className="relative lg:w-[1rem] lg:h-[1rem]  xl:h-[1.5rem] xl:w-[1.5rem]">
                   <Image
                     src="/assets/images/AddProductSectionImages/publishProductIcon.svg"
                     alt="publishProductIcon"
@@ -236,8 +239,9 @@ export const BusinessInfoCard: React.FC<BusinessInfoCardProps> = ({
 
       {/* Following div consist of Profile Picture,Nursery Name,description and Rating Section */}
       <div className="flex justify-between items-center gap-[2rem]">
+
         {/* Profile Picture,Nursery Name,description */}
-        <div className="w-[75%] h-max flex items-start gap-[0.8rem]">
+        <div className="lg:w-[80%] xl:w-[75%] h-max flex items-start lg:gap-[1rem] xl:gap-[0.8rem]">
           {/* Nursery Profile Photo goes here! */}
           <Controller
             name="profilePictureURL"
@@ -270,7 +274,6 @@ export const BusinessInfoCard: React.FC<BusinessInfoCardProps> = ({
                 <>
                   <BusinessInfoInputSection
                     lengendName="Nursery Bio"
-                    blinking={blinking}
                     {...register("nurseryBio", { required: true })}
                     error={errors.nurseryBio?.message}
                   />
@@ -281,7 +284,6 @@ export const BusinessInfoCard: React.FC<BusinessInfoCardProps> = ({
                 <BusinessInfoInputSection
                   lengendName="Nursery Bio"
                   placeHolder="Add your nursery bio here"
-                  blinking={blinking}
                   {...register("nurseryBio", { required: true })}
                   error={errors.nurseryBio?.message}
                 />
@@ -291,7 +293,7 @@ export const BusinessInfoCard: React.FC<BusinessInfoCardProps> = ({
         </div>
 
         {/* Rating Section */}
-        <div className="w-[6rem] h-[3rem] flex justify-center items-center gap-2 px-4 py-2 bg-[#123524] text-white rounded-[1.26rem]">
+        <div className="lg:w-[5rem] lg:h-[2.5rem] xl:w-[6rem] xl:h-[3rem] flex justify-center items-center gap-2 px-4 py-2 bg-[#123524] text-white rounded-[1.26rem]">
           <div className="w-[1.2rem] h-[1.2rem] relative">
             <Image
               src={"/assets/images/SellerDashboardMainImages/ratingIcon.svg"}
@@ -300,7 +302,7 @@ export const BusinessInfoCard: React.FC<BusinessInfoCardProps> = ({
               className="object-contain"
             />
           </div>
-          <span className="font-[Poppins] text-[1.1rem] font-medium uppercase">
+          <span className="font-[Poppins] lg:text-[0.9rem] xl:text-[1.1rem] font-medium uppercase">
             4.5
           </span>
         </div>
@@ -308,7 +310,8 @@ export const BusinessInfoCard: React.FC<BusinessInfoCardProps> = ({
 
       {/* Following div consist of business detail information */}
       <div className="border-t-[0.0625rem] pt-[2rem]">
-        <div className="grid grid-cols-2 gap-y-[1.5rem] gap-x-14 text-[1rem]">
+
+        <div className="lg:flex lg:flex-col xl:grid xl:grid-cols-2 gap-y-[1.5rem] gap-x-14 text-[1rem]">
           {/* Address Section */}
           <div className="flex items-center gap-4">
             <div className="w-[1.5rem] h-[1.5rem] flex-shrink-0 relative">
@@ -334,7 +337,6 @@ export const BusinessInfoCard: React.FC<BusinessInfoCardProps> = ({
                   <>
                     <BusinessInfoInputSection
                       lengendName="Address"
-                      blinking={blinking}
                       {...register("address", { required: true })}
                       error={errors.address?.message}
                     />
@@ -345,7 +347,6 @@ export const BusinessInfoCard: React.FC<BusinessInfoCardProps> = ({
                   <BusinessInfoInputSection
                     lengendName="Address"
                     placeHolder="Add your nursery address here"
-                    blinking={blinking}
                     {...register("address", { required: true })}
                     error={errors.address?.message}
                   />
@@ -419,7 +420,6 @@ export const BusinessInfoCard: React.FC<BusinessInfoCardProps> = ({
                   <>
                     <BusinessInfoInputSection
                       lengendName="Business Hours"
-                      blinking={blinking}
                       {...register("businesshours", { required: true })}
                       error={errors.businesshours?.message}
                     />
@@ -430,7 +430,6 @@ export const BusinessInfoCard: React.FC<BusinessInfoCardProps> = ({
                   <BusinessInfoInputSection
                     lengendName="Business Hours"
                     placeHolder="Mon-Sat: 9AM-6PM, Sun: 10AM-4PM"
-                    blinking={blinking}
                     {...register("businesshours", { required: true })}
                     error={errors.businesshours?.message}
                   />
@@ -465,7 +464,6 @@ export const BusinessInfoCard: React.FC<BusinessInfoCardProps> = ({
                   <>
                     <BusinessInfoInputSection
                       lengendName="Location (Google Map Link)"
-                      blinking={blinking}
                       {...register("location", { required: true })}
                       error={errors.location?.message}
                     />
@@ -476,7 +474,6 @@ export const BusinessInfoCard: React.FC<BusinessInfoCardProps> = ({
                   <BusinessInfoInputSection
                     lengendName="Location (Google Map Link)"
                     placeHolder="Add URL of your nursery location"
-                    blinking={blinking}
                     {...register("location", { required: true })}
                     error={errors.location?.message}
                   />
@@ -494,7 +491,7 @@ export const BusinessInfoCard: React.FC<BusinessInfoCardProps> = ({
         </div>
 
         {errors.specialities && (
-          <div className="ml-[1rem] text-red-500 font-bold text-start">
+          <div className="text-red-500 font-bold text-start">
             {errors.specialities.message}
           </div>
         )}
@@ -515,7 +512,7 @@ export const BusinessInfoCard: React.FC<BusinessInfoCardProps> = ({
 
           {/* Add More Button */}
           <button
-            className={`w-[10.46094rem] h-[3.0625rem] flex items-center justify-center gap-2 border border-[#56A430] rounded-full ${blinking && sellerData.specialities.length === 0 ? "animate-glow-pulse cursor-not-allowed" : "animate-none cursor-pointer"} ${displayAddMoreButton ? "block" : "hidden"}`}
+            className={`w-[10.46094rem] h-[3.0625rem] flex items-center justify-center gap-2 border border-[#56A430] rounded-full animate-none cursor-pointer ${displayAddMoreButton ? "block" : "hidden"}`}
             onClick={handleAddMoreButton}
             type="button"
           >

@@ -85,14 +85,14 @@ export const CustomSellerDashboardDropDown: React.FC<ReusableDropdownProps> = ({
 
   return (
     <div
-      className={`relative w-[15.9375rem] h-[6rem] flex flex-col gap-2  ${className}`}
+      className={`relative lg:w-[15.9375rem] new-xl:w-[20rem] 2xl:w-[15.9375rem] h-[6rem] flex flex-col gap-2 ${className}`}
     >
       {/* Label */}
-      <div className="text-[1.2rem] font-medium">{label}</div>
+      <div className="lg:text-[1.1rem] xl:text-[1.2rem] font-medium">{label}</div>
 
       {/* Dropdown Button */}
       <button
-        className={`h-[3.1875rem] w-[100%] border-[1.5px] border-[#CBD0D3] rounded-[0.625rem] flex items-center justify-between px-[1rem] ${
+        className={`lg:w-[100%] xl:w-[90%] 2xl:w-[100%] h-[3.1875rem] border-[1.5px] border-[#CBD0D3] rounded-[0.625rem] flex items-center justify-between px-[1rem] ${
           disabled
             ? "bg-gray-100 cursor-not-allowed"
             : "bg-white cursor-pointer"
@@ -103,10 +103,11 @@ export const CustomSellerDashboardDropDown: React.FC<ReusableDropdownProps> = ({
         data-key={customKey}
       >
         <div
-          className={`text-[1.2rem] ${!value ? "text-[#697F75]" : "text-[#171717]"}`}
+          className={`lg:text-[1.2rem] xl:text-[1rem] 2xl:text-[1.2rem] ${!value ? "text-[#697F75]" : "text-[#171717]"}`}
         >
           {displayValue}
         </div>
+
         <div className="relative h-[1.5rem] w-[1.5rem]">
           <Image
             src="/assets/images/AddProductSectionImages/dropdownIcon.svg"
@@ -121,7 +122,7 @@ export const CustomSellerDashboardDropDown: React.FC<ReusableDropdownProps> = ({
 
       {/* Dropdown Options */}
       <ul
-        className={`absolute top-[6rem] w-[100%] bg-[#fff] border-[1.5px] border-[#CBD0D3] rounded-[0.625rem] gap-[0.5rem] overflow-hidden justify-between p-[0.2rem] z-10 shadow-lg ${
+        className={`absolute top-[6rem] lg:w-[1005] xl:w-[90%] 2xl:w-[100%] bg-[#fff] border-[1.5px] border-[#CBD0D3] rounded-[0.625rem] gap-[0.5rem] overflow-hidden justify-between p-[0.2rem] z-10 shadow-lg ${
           isOpen ? "flex flex-col" : "hidden"
         }`}
       >

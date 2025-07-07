@@ -20,7 +20,7 @@ export const SellerDashboardProfileSection = () => {
 
   if (activeSideBar === "dashboard" && displayAddProductSection === false) {
     return (
-      <div className="w-[100%] p-[1rem] flex flex-col gap-[1.5rem] justify-center">
+      <div className="w-[100%] px-[1rem] flex flex-col gap-[1.5rem] justify-center">
         {/* Following is the welcome back message div */}
         <SellerDashboardWelcomeMsg nurseryName={sellerData.nurseryName} />
         {/* Stats Cards */}

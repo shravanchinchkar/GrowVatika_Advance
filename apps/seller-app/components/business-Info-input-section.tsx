@@ -1,5 +1,5 @@
 interface BusinessInfoInputProps {
-  blinking: boolean;
+  blinking?: boolean;
   lengendName: string;
   placeHolder?: string;
   props?: any;
@@ -23,10 +23,10 @@ export const BusinessInfoInputSection = ({
         </div>
       )}
       <fieldset
-        className={`px-[1rem] pb-[0.5rem] border-[2px] rounded-[6.5625rem] flex gap-[1rem] ${blinking ? "animate-border-blink" : "border-[#8C8C8C]"}`}
+        className="px-[1rem] pb-[0.5rem] border-[2px] rounded-[6.5625rem] flex gap-[1rem] border-[#8C8C8C]"
       >
         <legend
-          className={`font-[Poppins] font-medium ${blinking ? "animate-text-blink" : "text-[#171717]"}`}
+          className="font-[Poppins] font-medium text-[#171717]"
         >
           {lengendName}
         </legend>

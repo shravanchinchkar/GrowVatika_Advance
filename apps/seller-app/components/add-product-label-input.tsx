@@ -26,7 +26,7 @@ export const AddProductLabelInput = ({
           {error}
         </div>
       )}
-      <label className="text-[#171717] font-[Poppins] text-[1.2rem] font-medium capitalize">
+      <label className="text-[#171717] font-[Poppins] lg:text-[1.1rem] xl:text-[1.2rem] font-medium capitalize">
         {lableName}
         <span className="text-[#FF4B4B]"> *</span>
       </label>
@@ -42,7 +42,7 @@ export const AddProductLabelInput = ({
           <input
             type={inputType}
             placeholder={placeHolder}
-            className="w-[14rem] h-[3.1875rem] rounded-l-[0.625rem] border-[1.5px] border-[#CBD0D3] bg-white text-[1.2rem] font-poppins font-normal flex justify-between items-center px-[1rem] outline-none"
+            className="new-lg:w-[18rem] xl:w-[12rem] 2xl:w-[14rem] h-[3.1875rem] rounded-l-[0.625rem] border-[1.5px] border-[#CBD0D3] bg-white text-[1.2rem] font-poppins font-normal flex justify-between items-center px-[1rem] outline-none"
             onWheel={onWheel}
             {...props}
           />

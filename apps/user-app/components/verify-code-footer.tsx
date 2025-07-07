@@ -2,7 +2,7 @@
 
 import { toast } from "react-hot-toast";
 import { useState, useEffect } from "react";
-import { resendOTP } from "../app/actions/auth";
+import { resendOTP } from "../actions/auth";
 import { toastStyle } from "@repo/shared/utilfunctions";
 import { SignupResponse } from "@repo/common-types/types";
 import { formatCountdown } from "@repo/shared/utilfunctions";
@@ -13,6 +13,7 @@ export const VerifyCodeFooter = ({ email }: { email: string }) => {
   const [disableResendMail, setdisableResendMail] = useState(true);
 
   useEffect(() => {
+    console.log("Verify code footer useEffect");
     if (timeLeft <= 0) {
       setdisableResendMail(false);
       return;

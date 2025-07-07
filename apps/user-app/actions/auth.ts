@@ -81,7 +81,6 @@ export async function signup(
         }
         //If the user already exists but is not verified
         else {
-          console.log("Email exists but not verified!", existingUserByEmail);
           const hashPassword = await bcrypt.hash(
             result.data.confirmPassword || "",
             10
@@ -103,10 +102,9 @@ export async function signup(
           );
           // If error while sending email
           if (!emailResponse.success) {
-            console.log("email not send message:", emailResponse.message);
+            console.error("email not send message:", emailResponse.message);
             return { success: false, errors: emailResponse.message };
           }
-          console.log("email success message:", emailResponse);
 
           // If success in sending email
           return {
@@ -138,7 +136,6 @@ export async function signup(
           };
         }
 
-        console.log("New User Created", newUser);
         // If the new fresh user is created, then send an otp to the user's email to verify
         const emailResponse = await sendVerificationEmail(
           newUser.name,
@@ -148,7 +145,7 @@ export async function signup(
 
         // If error while sending email to the new user
         if (!emailResponse.success) {
-          console.log(
+          console.error(
             "new user created email not send message:",
             emailResponse.message
           );
@@ -156,10 +153,6 @@ export async function signup(
         }
 
         // If success in sending email to the new user
-        console.log(
-          "new user created email send message:",
-          emailResponse.message
-        );
         return {
           success: true,
           message: "User registered successfully. Please verify your email",
@@ -182,10 +175,11 @@ export async function resetPasswordEmail(
     return { success: false, error: "Invalid Email" };
   } else {
     try {
-      const emailResponse = await sendResendPasswordMail(validateInput.data || "");
+      const emailResponse = await sendResendPasswordMail(
+        validateInput.data || ""
+      );
       // If error while sending email
       if (!emailResponse.success) {
-        console.log("Can't send reset password link", emailResponse.message);
         return { success: false, error: emailResponse.message };
       }
       // If success in sending email
@@ -207,7 +201,6 @@ export async function resetPasswordEmail(
 export async function resetPassword(
   resetPasswordData: SignInInputs
 ): Promise<ApiResponseType> {
-  console.log("Reset password inputs:",resetPasswordData)
   //Validate input
   const validateInput = SignInSchema.safeParse(resetPasswordData);
   if (!validateInput) {
@@ -221,7 +214,6 @@ export async function resetPassword(
         where: { email: validateInput.data?.email },
       });
 
-      console.log("Reset Password input result:",validateInput)
       // If the user dose not exists return the error message
       if (!existingUser) {
         return { success: false, error: "User Not Found" };
@@ -266,7 +258,6 @@ export async function verifyCode({
         email: email,
       },
     });
-    console.log("Verify Code user exists", user);
 
     // If the email dose not exists then
     if (!user) {
@@ -352,11 +343,10 @@ export async function resendOTP({
 
     // If fail to send mail
     if (!emailResponse.success) {
-      console.log("resend email not send message:", emailResponse.message);
+      console.error("resend email not send message:", emailResponse.message);
       return { success: false, errors: emailResponse.message };
     }
     // If success in send mail
-    console.log("resend email send message:", emailResponse.message);
     return {
       success: true,
       message: "New OTP sent successfully. Please verify your email",
@@ -392,9 +382,8 @@ export async function storeDataInExcel(
   }
   // If above everything succeed then execute the following block
   else {
-    console.log("remaining:",remaining);
+    console.log("remaining:", remaining);
     try {
-      console.log("User Details:", userDetails);
       const existingSellerByEmail = await client.seller.findUnique({
         where: { email: validateInput.data.email },
       });
@@ -414,7 +403,6 @@ export async function storeDataInExcel(
           const verifyCode = generateVerifyCode(); //Generate the verify Code for email Authentication
           const expiryDate = getExpiryDate();
 
-          console.log("Email exists but not verified!", existingSellerByEmail);
           await client.seller.update({
             where: { email: validateInput.data.email },
             data: {
@@ -439,11 +427,10 @@ export async function storeDataInExcel(
 
           // If error while sending email
           if (!emailResponse.success) {
-            console.log("email not send message:", emailResponse.message);
+            console.error("email not send message:", emailResponse.message);
             return { success: false, message: emailResponse.message };
           }
 
-          console.log("email success message:", emailResponse);
           // If success in sending email
           return {
             success: true,
@@ -495,7 +482,6 @@ export async function storeDataInExcel(
         });
 
         //After Storing the seller's data in the spread sheet, then store the data in the db
-        console.log("Current Date is:", getCurrentFormattedDate());
         const verifyCode = generateVerifyCode(); //Generate the verify Code for email Authentication
         const expiryDate = getExpiryDate();
 
@@ -531,11 +517,9 @@ export async function storeDataInExcel(
 
         // If error while sending email
         if (!emailResponse.success) {
-          console.log("email not send message:", emailResponse.message);
+          console.error("email not send message:", emailResponse.message);
           return { success: false, message: emailResponse.message };
         }
-
-        console.log("email success message:", emailResponse);
         return {
           success: true,
           message: "Form submitted successfully",

@@ -10,7 +10,7 @@ import { useRouter } from "next/navigation";
 import { SiteLogo } from "@repo/ui/brand-logo";
 import { AuthButton } from "@repo/ui/auth-button";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { resetPasswordEmail } from "@/app/actions/auth";
+import { resetPasswordEmail } from "@/actions/auth";
 import { ButtonLoadingSign } from "@repo/ui/loading-sign";
 import { FormType, LabelInput } from "@repo/ui/label-input";
 import { SignInInputs, SignInSchema } from "@repo/common-types/types";
@@ -40,6 +40,7 @@ export const Sign_In = () => {
   // Handle Login with credentials
   async function handleSignIn(data: SignInInputs) {
     setLoading(true);
+    console.log("Signin data is:", data);
     const res = await signIn("credentials", {
       email: data.email,
       password: data.password,
@@ -48,13 +49,23 @@ export const Sign_In = () => {
     setLoading(false);
 
     if (res?.error) {
-      const errorResponse = JSON.parse(res.error) as {
-        success: boolean;
-        message?: string;
-        error?: string;
-        status?: string;
-      };
-      toast.error(errorResponse.error || "", {
+      let errorMessage = "Signin Failed";
+      try {
+        const errorResponse = JSON.parse(res.error) as {
+          success: boolean;
+          message?: string;
+          error?: string;
+          status?: string;
+        };
+        errorMessage =
+          errorResponse.error || errorResponse.message || "Signin Failed";
+        console.log("User Signin error response to FE :", errorResponse.error);
+      } catch (parseError) {
+        // If JSON parsing fails, use the raw error message
+        console.error("Signin error:", res.error);
+        errorMessage = "Internal Server Error!";
+      }
+      toast.error(errorMessage, {
         ...toastStyle,
         position: "bottom-left",
       });
@@ -132,7 +143,7 @@ export const Sign_In = () => {
   };
 
   return (
-    <div className="w-screen h-screen bg-[#FFF6F4] flex font-[Poppins]">
+    <div className="w-screen min-h-screen max-h-max bg-[#FFF6F4] flex font-[Poppins]">
       <div className="w-[50%] flex flex-col gap-[1rem]">
         {/* Following div consist of site logo */}
         <div className="flex flex-col items-start gap-[2rem] pl-[2rem] pt-[1rem]">

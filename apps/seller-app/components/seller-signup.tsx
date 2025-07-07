@@ -9,7 +9,7 @@ import { SiteLogo } from "@repo/ui/brand-logo";
 import { AuthButton } from "@repo/ui/auth-button";
 import { useSearchParams } from "next/navigation";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { sellerRegistration } from "../app/actions/auth";
+import { sellerRegistration } from "../actions/auth";
 import { toastStyle } from "@repo/shared/utilfunctions";
 import { useForm, SubmitHandler } from "react-hook-form";
 import { LabelInput, FormType } from "@repo/ui/label-input";
@@ -159,7 +159,6 @@ export const SellerRegister = () => {
 
           {/* Following div consist of signup form , and signup message */}
           <div className="flex flex-col items-center">
-
             {/* Seller Registration Form */}
             <form
               className="flex flex-col items-start gap-[1rem] lg:mt-[0.5rem]"

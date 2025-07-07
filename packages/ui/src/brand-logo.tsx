@@ -5,6 +5,7 @@ export const SiteLogo = () => {
   return (
     <Link
       href={"/"}
+<<<<<<< HEAD
       className="
         z-10 
         new-sm:w-[12.5rem] new-sm:h-[4rem]
@@ -15,6 +16,9 @@ export const SiteLogo = () => {
         xl:w-[16.3rem] xl:h-[3.8125rem] 
         flex items-center lg:justify-between cursor-pointer
       "
+=======
+      className="z-10 lg:w-[14rem] lg:h-[4rem] xl:w-[16.3rem] xl:h-[3.8125rem] flex items-center lg:justify-between cursor-pointer outline-none"
+>>>>>>> main
     >
       {/* Following div consist of logo */}
       <div

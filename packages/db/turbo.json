@@ -1,0 +1,9 @@
+{
+  "extends": ["//"],
+  "tasks": {
+    "db:generate": {
+      "cache": false,
+      "outputs": ["../../node_modules/.prisma/**"]
+    }
+  }
+}

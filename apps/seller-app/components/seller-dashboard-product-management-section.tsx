@@ -112,7 +112,7 @@ export const SellerDashboardProductManagementSection = () => {
               <p className="ml-[0.8rem]">Search products........</p>
             </div>
 
-            <div className="h-[3.1875rem] w-[10rem] bg-white  border-[1.5px] border-[#CBD0D3] rounded-[0.625rem] flex items-center">
+            <div className="h-[3.1875rem] w-[10rem] bg-white border-[1.5px] border-[#CBD0D3] rounded-[0.625rem] flex items-center">
               <div className="ml-[1rem] relative h-[1.5rem] w-[1.5rem]">
                 <Image
                   src="/assets/images/productSectionImages/filterIcon.svg"
@@ -154,7 +154,7 @@ export const SellerDashboardProductManagementSection = () => {
         </div>
 
         {filterProducts.length === 0 ? (
-          <div className="w-[100%] h-[15rem] flex justify-center items-center text-center my-auto text-[1.5rem] text-[#FF4B4B] uppercase font-medium">
+          <div className="w-[100%] h-[15rem] flex justify-center items-center text-center my-auto text-[1.5rem] text-[#CBD0D3] uppercase font-medium">
             No Product to display
           </div>
         ) : (

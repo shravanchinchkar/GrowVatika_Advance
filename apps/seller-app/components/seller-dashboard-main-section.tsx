@@ -26,6 +26,7 @@ export const SellerDashboardMainSection = () => {
   );
 
   useEffect(() => {
+    console.log("useEffect")
     setIsDataLoaded(false);
     const fetchData = async () => {
       try {
@@ -41,6 +42,7 @@ export const SellerDashboardMainSection = () => {
           nurseryName: res.data.sellerData.nurseryName,
           specialities: res.data.sellerData.specialities,
           businesshours: res.data.sellerData.business_hours,
+          profilePictureURL:res.data.sellerData.profilePictureURL
         });
         updateSellerProductData(res.data.sellerProductData);
         setIsDataLoaded(true);

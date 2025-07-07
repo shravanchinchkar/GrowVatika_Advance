@@ -3,7 +3,7 @@ import { toast } from "react-hot-toast";
 import { useState, useCallback } from "react";
 import { AuthButton } from "@repo/ui/auth-button";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { storeDataInExcel } from "../app/actions/auth";
+import { storeDataInExcel } from "../actions/auth";
 import { ContactSuccess } from "./contact-success-msg";
 import { toastStyle } from "@repo/shared/utilfunctions";
 import { useForm, SubmitHandler } from "react-hook-form";

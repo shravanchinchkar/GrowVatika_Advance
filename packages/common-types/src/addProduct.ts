@@ -1,4 +1,4 @@
-import { string, z } from "zod";
+import { z } from "zod";
 
 // Define the validation schema for adding products
 export const addProductSchema = z
@@ -48,7 +48,6 @@ export const addProductSchema = z
     tags: z.string().min(1, { message: "Required" }),
     productStatus: z.string().min(1, { message: "Product status is required" }),
     visibility: z.string().min(1, { message: "Visibility is required" }),
-    
     image: z
       .instanceof(File, { message: "Image is required" })
       .refine((file) => file.size <= 300 * 1024, {
@@ -67,8 +66,7 @@ export const addProductSchema = z
 
 export type TAddProductSchema = z.infer<typeof addProductSchema>;
 
-export type SellerProductData= TAddProductSchema & {
-  id:string,
-  imageURL:string
-}
-
+export type SellerProductData = TAddProductSchema & {
+  id: string;
+  imageURL: string;
+};

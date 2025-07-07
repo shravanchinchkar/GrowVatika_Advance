@@ -27,8 +27,8 @@ BE FINAL YEAR PROJECT
 
 
 ## Following are the live links of the project
-- GrowVatika-userapp: [growvatika-userapp](https://growvatika.live/)
-- GrowVatika-sellerapp: [growvatika-sellerapp](https://seller.growvatika.live/)
+- GrowVatika-userapp: [growvatika.live](https://growvatika.live/)
+- GrowVatika-sellerapp: [seller.growvatika.live](https://seller.growvatika.live/)
 
 
 

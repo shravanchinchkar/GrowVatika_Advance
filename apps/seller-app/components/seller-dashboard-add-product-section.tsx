@@ -7,7 +7,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { toastStyle } from "@repo/shared/utilfunctions";
 import { ButtonLoadingSign } from "@repo/ui/loading-sign";
 import { ApiResponseType } from "@repo/common-types/types";
-import { uploadProduct } from "../app/actions/uploadProduct";
+import { uploadProduct } from "../actions/uploadProduct";
 import { AddProductLabelInput } from "./add-product-label-input";
 import { ProductImageDropZone } from "./product-image-drop-zone";
 import { useForm, SubmitHandler, Controller } from "react-hook-form";
@@ -118,7 +118,7 @@ export const SellerDashboardAddProductSection = () => {
           tags: "",
           productStatus: "Active",
           visibility: "Public",
-          productQuantity:0,
+          productQuantity: 0,
           featured: false,
           image: undefined,
         });
@@ -353,6 +353,7 @@ export const SellerDashboardAddProductSection = () => {
                   Add photos of your product
                 </h2>
               </div>
+
               <Controller
                 name="image"
                 control={control}

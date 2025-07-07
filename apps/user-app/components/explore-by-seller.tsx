@@ -141,14 +141,17 @@ export const ExplorePlantsBySeller = () => {
                       {/* Following is the image div */}
                       <div className="w-[98%] h-[17rem] flex justify-between">
                         {/* Nursery profile Photo */}
-                        <div className="relative w-[14rem] h-[100%] rounded-[1.5625rem] overflow-hidden border-[3px] border-[#56A430]">
-                          <Image
-                            className="object-cover"
-                            alt="plant-img-1"
-                            src={plantImage1}
-                            fill
-                            placeholder="blur"
-                          />
+                        <div
+                          className={`relative w-[14rem] h-[100%] rounded-[1.5625rem] overflow-hidden border-[3px] border-[#56A430] ${!item.profilePictureURL && "bg-[#DBD5A4] border-none"}`}
+                        >
+                          {item.profilePictureURL && (
+                            <Image
+                              className="object-cover"
+                              alt="nursery-profile-photo"
+                              src={item.profilePictureURL}
+                              fill
+                            />
+                          )}
                         </div>
 
                         {/* Nursery product Photos */}
@@ -215,39 +218,6 @@ export const ExplorePlantsBySeller = () => {
                           {item.products.length === 1 && (
                             <div className="relative overflow-hidden w-[7.8rem] h-[8.2rem] bg-[#DBD5A4] rounded-[1.5625rem]"></div>
                           )}
-                          {/* {item.products.map((image, index) => {
-                            if (index == 1) {
-                              return (
-                                <div
-                                  className="relative overflow-hidden w-[7.8rem] h-[8.2rem] border-[3px] rounded-[1.5625rem] border-[#56A430]"
-                                  key={index}
-                                >
-                                  <Image
-                                    className="object-cover"
-                                    alt="plant-img-2"
-                                    src={image}
-                                    fill
-                                  />
-                                  <div className="w-[100%] h-[100%] absolute top-0 bg-[#00000087] flex justify-center items-center text-[#FFF6F4] font-medium text-[2.25rem] uppercase">
-                                    {`+${item.productCount}`}
-                                  </div>
-                                </div>
-                              );
-                            }
-                            return (
-                              <div
-                                className="relative overflow-hidden w-[7.8rem] h-[8.2rem] border-[3px] rounded-[1.5625rem] border-[#56A430]"
-                                key={index}
-                              >
-                                <Image
-                                  className="object-cover"
-                                  alt="plant-img-2"
-                                  src={image}
-                                  fill
-                                />
-                              </div>
-                            );
-                          })} */}
                         </div>
                       </div>
 

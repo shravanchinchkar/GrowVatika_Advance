@@ -2,7 +2,7 @@
 
 import Image from "next/image";
 import toast from "react-hot-toast";
-import { useEffect, useState } from "react";
+import { useEffect, useState,memo } from "react";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { toastStyle } from "@repo/shared/utilfunctions";
 import { ButtonLoadingSign } from "@repo/ui/loading-sign";
@@ -15,7 +15,7 @@ import { useDisplayAddProductSectionStore } from "@repo/shared-store";
 import { addProductSchema, TAddProductSchema } from "@repo/common-types/types";
 import { CustomSellerDashboardDropDown } from "./custom-seller-dashboard-dropdown";
 
-export const SellerDashboardAddProductSection = () => {
+export const SellerDashboardAddProductSection =memo(() => {
   // Zustand Code
   const displayAddProductSection = useDisplayAddProductSectionStore(
     (state: any) => state.displayAddProductSection
@@ -494,4 +494,4 @@ export const SellerDashboardAddProductSection = () => {
       </form>
     );
   }
-};
+});

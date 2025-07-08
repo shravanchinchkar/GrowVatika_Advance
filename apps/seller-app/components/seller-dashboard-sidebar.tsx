@@ -1,14 +1,14 @@
 "use client";
 
 import Image from "next/image";
-import { useState } from "react";
+import { useState, memo } from "react";
 import { signOut } from "next-auth/react";
 import { useSellerDataStore } from "@repo/shared-store";
 import { useActiveSellerDashboardSideBar } from "@repo/shared-store";
 import { SellerDashboardSiteLogo } from "./seller-dashboard-sitelogo";
 import { useDisplayAddProductSectionStore } from "@repo/shared-store";
 
-export const SellerDashboardSideBar = () => {
+export const SellerDashboardSideBar = memo(() => {
   const [display, setDisplay] = useState(false);
   const sellerData = useSellerDataStore((state) => state.sellerData);
 
@@ -265,9 +265,8 @@ export const SellerDashboardSideBar = () => {
               </button>
             </div>
           </div>
-
         </div>
       </div>
     </div>
   );
-};
+});

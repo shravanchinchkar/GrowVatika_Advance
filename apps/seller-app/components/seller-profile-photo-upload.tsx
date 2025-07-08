@@ -1,7 +1,7 @@
 import Image from "next/image";
 import toast from "react-hot-toast";
 import { useDropzone } from "react-dropzone";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState,memo } from "react";
 import { toastStyle } from "@repo/shared/utilfunctions";
 
 interface ProfilePictureUploadProps {
@@ -13,7 +13,7 @@ interface ProfilePictureUploadProps {
   file?: File;
 }
 
-export const SellerProfilePhotoUpload = ({
+export const SellerProfilePhotoUpload =memo(({
   onDrop,
   error,
   file,
@@ -99,4 +99,4 @@ export const SellerProfilePhotoUpload = ({
       )}
     </div>
   );
-};
+});

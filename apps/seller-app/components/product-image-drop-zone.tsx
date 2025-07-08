@@ -1,7 +1,8 @@
 import Image from "next/image";
+import { memo } from "react";
 import { useDropzone } from "react-dropzone";
 
-export const ProductImageDropZone = ({
+export const ProductImageDropZone =memo(({
   className,
   onDrop,
   error,
@@ -138,4 +139,4 @@ export const ProductImageDropZone = ({
       </div>
     </>
   );
-};
+});

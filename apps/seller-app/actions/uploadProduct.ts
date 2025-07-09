@@ -4,10 +4,8 @@ import { NEXT_AUTH } from "../lib/auth";
 import { getServerSession } from "next-auth";
 import { v2 as cloudinary } from "cloudinary";
 import { ApiResponseType } from "@repo/common-types/types";
-import {
-  formDataToObject,
-  validateServerProduct,
-} from "../lib/product-input-validation";
+import { formDataToObject } from "../helper/formDataToObject";
+import { validateServerProduct } from "../lib/product-input-validation";
 
 // Configure Cloudinary
 cloudinary.config({

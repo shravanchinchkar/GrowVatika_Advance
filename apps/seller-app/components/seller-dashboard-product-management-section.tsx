@@ -222,7 +222,7 @@ export const SellerDashboardProductManagementSection = () => {
               <div className="grid grid-rows-4 text-center">
                 {/* Table row 2 Header Section */}
                 <div className="grid lg:grid-cols-[3rem_9rem_9rem_9rem_9em] new-lg:grid-cols-[3rem_10rem_10rem_10rem_10em] xl:grid-cols-[3rem_13rem_13rem_13rem_13em] new-xl:grid-cols-[3rem_14rem_14rem_14rem_14em] 2xl:grid-cols-[3rem_15rem_15rem_15rem_15rem] text-[#697F75] lg:text-[1rem] 2xl:text-[1.1rem]">
-                  <div className="self-center border-[2px]"></div>
+                  <div className="self-center"></div>
                   <div className="flex justify-start items-center pl-[1rem]">Products</div>
                   <div className="flex justify-center items-center">Collections</div>
                   <div className="flex justify-center items-center">Price</div>

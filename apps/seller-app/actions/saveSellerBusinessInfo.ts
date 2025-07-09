@@ -90,7 +90,6 @@ export async function saveSellerBusinessInfo(
 
     // Convert form Data to object to validate the input with the schema
     const sellerData = formDataToObject(formData);
-    console.log("formData to object:", sellerData);
 
     //validate the Inputs
     const validateInput = SellerDataSchema.safeParse(sellerData);
@@ -99,7 +98,6 @@ export async function saveSellerBusinessInfo(
       return { success: false, error: "Invalid Inputs" };
     }
 
-    // New Code goes Below
     // Extract file for upload
     const file = validateInput.data?.profilePicture as File | null;
     let profilePictureURL = existingSeller.profilePictureURL; //get existing profilePicture URL from the database

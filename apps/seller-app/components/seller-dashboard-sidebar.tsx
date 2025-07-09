@@ -175,7 +175,7 @@ export const SellerDashboardSideBar = memo(() => {
         <div
           className={
             display === true
-              ? "absolute top-[-6rem] rounded-[1.5rem] w-[15.9375rem] h-[11.0625rem] py-[1.2rem]  bg-[#fff] border-[2px] border-[#697F75]"
+              ? "absolute top-[-6rem] rounded-[1.5rem] lg:w-[14rem] 2xl:w-[15.9375rem] h-[11.0625rem] py-[1.2rem] bg-[#fff] border-[2px] border-[#697F75]"
               : "hidden"
           }
         >
@@ -213,7 +213,6 @@ export const SellerDashboardSideBar = memo(() => {
           </ul>
         </div>
 
-        {/* border-[#697F75] */}
         <div className="z-10 lg:w-[14rem] lg:h-[4rem] 2xl:w-[15.9375rem] 2xl:h-[4.0625rem] rounded-[1.5rem] flex justify-center items-center px-[1rem] gap-[0.8rem] m-[1rem] bg-[#fff] border-[1.5px] border-[#697F75]">
           {/* 697F75 */}
 

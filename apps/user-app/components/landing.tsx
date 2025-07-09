@@ -19,7 +19,7 @@ export const LandingPage = () => {
       <Cart />
       {/* Header Section */}
 
-      <header className="relative flex flex-col items-center gap-[1rem] pt-[2rem] h-screen">
+      {/* <header className="relative flex flex-col items-center gap-[1rem] pt-[2rem] h-screen">
         <div className="lg:w-[60rem] xl:w-[70rem] 2xl:w-[82.1875rem] h-max flex justify-between">
           <Header />
           <div className="flex items-center gap-[2.5rem]">
@@ -35,13 +35,13 @@ export const LandingPage = () => {
 
         <HeroSection />
         <LandingPot />
-      </header>
+      </header> */}
 
       {/* Main Section */}
       <main className="flex flex-col gap-[3rem] border-[2px]">
-        {/* <ExploreSection />
-        <AboutUsSection /> */}
-        <FeatureSection />
+        {/* <ExploreSection /> */}
+        <AboutUsSection />
+        {/* <FeatureSection /> */}
         {/* <TestmonialSection />
         <ContactForm /> */}
       </main>

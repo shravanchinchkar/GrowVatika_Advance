@@ -214,8 +214,7 @@ export const SellerDashboardSideBar = memo(() => {
         </div>
 
         <div className="z-10 lg:w-[14rem] lg:h-[4rem] 2xl:w-[15.9375rem] 2xl:h-[4.0625rem] rounded-[1.5rem] flex justify-center items-center px-[1rem] gap-[0.8rem] m-[1rem] bg-[#fff] border-[1.5px] border-[#697F75]">
-          {/* 697F75 */}
-
+  
           <div className="w-[100%] h-[100%] flex justify-between py-[0.5rem]">
             {/* Nursery Profile Photo goes here! */}
             <div className="flex items-center">
@@ -235,9 +234,8 @@ export const SellerDashboardSideBar = memo(() => {
 
             <div className="w-[77%] h-[100%] flex justify-between items-center gap-[1rem]">
               {/* Nursery Name */}
-
               <div className="flex flex-col justify-center font-medium capitalize h-[100%]">
-                <h1 className="text-[#123524] text-[0.75rem] min-h-[50%] max-h-max leading-[15px]">
+                <h1 className="text-[#123524] text-[0.75rem] max-h-max leading-[15px]">
                   {sellerData.nurseryName}
                 </h1>
                 <h3 className="text-[#697F75] text-[0.6875rem] h-[50%] flex items-end">

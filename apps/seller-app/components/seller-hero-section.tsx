@@ -5,6 +5,8 @@ import { use, useState } from "react";
 import Skeleton from "../app/loading";
 import { useRouter } from "next/navigation";
 import { useSession } from "next-auth/react";
+import SellerLandingFooterLeft from "../public/assets/images/FooterImages/sellerLandingFooterLeft.png";
+import SellerLandingFooterRight from "../public/assets/images/FooterImages/sellerLandingFooterRight.png";
 
 export const SellerHeroSection = () => {
   const { data: session } = useSession();
@@ -26,10 +28,12 @@ export const SellerHeroSection = () => {
       {/* Bottomm Left Image */}
       <div className="w-[19.5rem] h-[19.5rem] relative">
         <Image
-          src={"/assets/images/FooterImages/sellerLandingFooterLeft.png"}
+          src={SellerLandingFooterLeft}
           alt="image1"
           className="object-cover"
           fill
+          placeholder="blur"
+          priority
         />
       </div>
       {/* Center Content */}
@@ -68,10 +72,12 @@ export const SellerHeroSection = () => {
       {/* Bottom right Image */}
       <div className="w-[19.5rem] h-[19.5rem] relative">
         <Image
-          src={"/assets/images/FooterImages/sellerLandingFooterRight.png"}
+          src={SellerLandingFooterRight}
           alt="image1"
           className="object-cover"
           fill
+          placeholder="blur"
+          priority
         />
       </div>
     </div>

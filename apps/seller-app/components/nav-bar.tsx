@@ -25,10 +25,8 @@ export const SellerNavbar = () => {
   }
   
   return (
-    <nav className="w-[100%] h-[10%] flex justify-between items-center">
-      <div className="ml-[2rem]">
-        <SiteLogo />
-      </div>
+    <nav className="w-[100%] flex justify-between items-center ml-[1rem] mt-[1rem]">
+      <SiteLogo/>
       <div className="w-[10rem] h-[4rem] mr-[2rem]">
         <AuthButton
           buttonName={

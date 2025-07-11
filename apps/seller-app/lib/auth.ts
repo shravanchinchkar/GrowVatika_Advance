@@ -6,7 +6,6 @@ import { SignInSchema } from "@repo/common-types/types";
 import CredentialsProvider from "next-auth/providers/credentials";
 import { cookies } from "next/headers";
 
-console.log("NextAuth Secret in seller-app:", process.env.NEXTAUTH_SECRET);
 export const NEXT_AUTH = {
   providers: [
     CredentialsProvider({
@@ -20,8 +19,6 @@ export const NEXT_AUTH = {
         password: { label: "Password", type: "password" },
       },
       async authorize(credentials: any) {
-        console.log("credential in seller are:", credentials);
-
         //validate the user Input
         const inputResult = SignInSchema.safeParse(credentials);
         if (!inputResult.success) {
@@ -37,7 +34,6 @@ export const NEXT_AUTH = {
         }
         //If the count of signin request goes beyond 5 wihin 5 minutes then  the user gets blocked for 5 minutes, following is its logic
         const IpAddress = await getIp();
-        console.log("Ip address is:", IpAddress);
         const { success, pending, limit, reset, remaining } =
           await authRateLimit.limit(IpAddress);
         if (!success) {
@@ -50,7 +46,6 @@ export const NEXT_AUTH = {
             })
           );
         } else {
-          console.log("remaining:", remaining);
           //extract the email and password send by the user
           const { email, password } = inputResult.data;
           //check if the user with the entered email already exists in db

@@ -13,13 +13,12 @@ import { LabelInput, FormType } from "@repo/ui/label-input";
 import { SignInInputs, SignInSchema } from "@repo/common-types/types";
 
 export const SellerSignin = () => {
-  const { data: session } = useSession();
   const router = useRouter();
+  const { data: session } = useSession();
   const [loading, setLoading] = useState(false);
 
   useEffect(() => {
     if (session?.user) {
-      console.log("Hello")
       const sellerId = session.user.id;
       redirect(`/sellerdashboard?id=${sellerId}`);
     }

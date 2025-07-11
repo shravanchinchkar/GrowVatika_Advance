@@ -11,7 +11,7 @@ export const SiteButton = ({ buttonName, onClick }: SiteButtonProps) => {
           ? "w-[160px] h-[64px] lg:mx-[2rem] 2xl:mx-[3rem] lg:mt-[2rem] xl:mt-[1rem] 2xl:mt-[2rem] group border-[2px] hover:border-none rounded-[2.10294rem] bg-[#56A430] hover:bg-[#123524] shadow-button-custom-boxshadow backdrop-blur-[6.408869743347168px] text-[#FFF6F4] text-[1.23044rem] hover:text-[1.33331rem] font-[Poppins] font-normal hover:font-semibold uppercase"
 
 
-          : "lg:w-[80px] xl:w-[120px] lg:h-[40px] xl:h-[55px] border-[2px] hover:border-none rounded-[2.10294rem] bg-[#56A430] hover:bg-[#123524] shadow-button-custom-boxshadow backdrop-blur-[6.408869743347168px] text-[#FFF6F4] text-[0.90538rem] hover:text-[1rem] font-[Poppins] font-normal hover:font-semibold uppercase"
+          : "new-sm:w-[3.5rem] lg:w-[80px] xl:w-[120px] new-sm:h-[1.5rem] lg:h-[40px] xl:h-[55px] border-[2px] hover:border-none rounded-[2.10294rem] bg-[#56A430] hover:bg-[#123524] shadow-button-custom-boxshadow backdrop-blur-[6.408869743347168px] text-[#FFF6F4] new-sm:text-[0.6rem] new-sm-1:text-[0.90538rem] hover:text-[1rem] font-[Poppins] font-normal hover:font-semibold uppercase"
 
       }
       onClick={onClick}

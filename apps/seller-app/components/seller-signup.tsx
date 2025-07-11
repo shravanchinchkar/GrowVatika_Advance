@@ -24,6 +24,7 @@ export const SellerRegister = () => {
   const [loading, setLoading] = useState(false);
   const searchParams = useSearchParams();
   const searchParamsEmail = searchParams?.get("email") || "";
+  console.log("search params email is:", !searchParamsEmail);
 
   const {
     register,
@@ -120,6 +121,18 @@ export const SellerRegister = () => {
     }
   };
 
+  if (!searchParamsEmail) {
+    return (
+      <div className="w-screen h-screen bg-[#FFF6F4] flex justify-center items-center font-[Poppins]">
+
+        <div className="flex flex-col items-center text-center gap-[0.5rem] text-[1.22669rem]">
+          <p>Please Register through the link send in your <span className="text-[#FF4B4B] underline font-semibold">eamil</span> by</p>
+          <SiteLogo/>
+        </div>
+
+      </div>
+    );
+  }
   return (
     <div className="w-screen relative bg-[#FFF6F4] flex font-[Poppins] overflow-x-hidden">
       {/* Following is the left side div*/}

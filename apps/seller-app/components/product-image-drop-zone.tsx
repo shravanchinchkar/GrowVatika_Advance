@@ -1,7 +1,8 @@
 import Image from "next/image";
+import { memo } from "react";
 import { useDropzone } from "react-dropzone";
 
-export const ProductImageDropZone = ({
+export const ProductImageDropZone =memo(({
   className,
   onDrop,
   error,
@@ -68,7 +69,7 @@ export const ProductImageDropZone = ({
             </div>
           ) : file ? (
             // Shows the preview of the uploaded file
-            <div className="w-[45%] h-[90%] flex flex-col justify-center items-center gap-[1rem]">
+            <div className="lg:w-[50%] lg:h-[100%] xl:w-[45%] xl:h-[85%] 2xl:h-[90%] flex flex-col justify-center items-center gap-[1rem]">
               <img
                 src={URL.createObjectURL(file)}
                 alt="Preview"
@@ -91,8 +92,8 @@ export const ProductImageDropZone = ({
               {/* Following div consist of Image Icon,upload Title,upload subtitle*/}
               <div className="flex flex-col justify-center items-center">
                 {/* Image Icon Box */}
-                <div className="w-[3.3125rem] h-[3.25rem] flex-shrink-0 rounded-[1.25rem] bg-[#EDF2E5] flex items-center justify-center">
-                  <div className="relative w-[1.53325rem] h-[1.53325rem]">
+                <div className="lg:w-[3.1rem] lg:h-[3.1rem] new-lg:w-[3.2rem] new-lg:h-[3.2rem] xl:w-[3.3125rem] xl:h-[3.25rem] flex-shrink-0 rounded-[1.25rem] bg-[#EDF2E5] flex items-center justify-center">
+                  <div className="relative lg:w-[1.4rem] lg:h-[1.4rem] new-lg:w-[1.5rem] max-new-lg:h-[1.5rem] xl:w-[1.53325rem] xl:h-[1.53325rem]">
                     <Image
                       src="/assets/images/SellerDashboardMediaImages/addMediaImageIcon.svg"
                       alt="upload icon"
@@ -102,12 +103,12 @@ export const ProductImageDropZone = ({
                   </div>
                 </div>
                 {/* Upload Title */}
-                <h3 className="text-[#171717] text-center font-[Poppins] text-[1.22669rem] font-medium">
+                <h3 className="text-[#171717] text-center font-[Poppins] lg:text-[1.1rem] new-lg:text-[1.2rem] xl:text-[1.22669rem] font-medium">
                   Upload Product Images
                 </h3>
                 {/* Upload Title */}
                 <p
-                  className={`${isDragActive ? "text-[#FF4B4B]" : "text-[#697F75]"} text-center font-[Poppins] text-[0.9375rem] font-medium`}
+                  className={`${isDragActive ? "text-[#FF4B4B]" : "text-[#697F75]"} text-center font-[Poppins] lg:text-[0.8rem] new-lg:text-[0.9rem] xl:text-[0.9375rem] font-medium`}
                 >
                   Drag and drop your images here,{" "}
                   <span className="text-[#697F75]">or click to browse</span>
@@ -115,10 +116,10 @@ export const ProductImageDropZone = ({
               </div>
 
               <button
-                className="w-[14.5rem] h-[3.1875rem] rounded-[0.625rem] bg-[#56A430] flex justify-center items-center gap-[1rem] text-[#fff] text-[1.22669rem] capitalize font-normal"
+                className="lg:w-[13rem] lg:h-[3rem]  new-lg:w-[14.5rem] new-lg:h-[3.1875rem] rounded-[0.625rem] bg-[#56A430] flex justify-center items-center gap-[1rem] text-[#fff] lg:text-[1.1rem] xl:text-[1.22669rem] capitalize font-normal"
                 type="button"
               >
-                <div className="w-[1.5rem] h-[1.5rem] relative">
+                <div className="lg:w-[1.2rem] lg:h-[1.2rem] new-lg:w-[1.5rem] max-new-lg:h-[1.5rem] relative">
                   <Image
                     src="/assets/images/SellerDashboardMediaImages/uploadImageIcon.svg"
                     alt="uploadImageIcon"
@@ -128,9 +129,8 @@ export const ProductImageDropZone = ({
                 </div>
                 <p>Upload Images</p>
               </button>
-
               {/* File Format Note */}
-              <p className="text-[#697F75] text-center font-[Poppins] text-[0.9375rem] font-normal">
+              <p className="text-[#697F75] text-center font-[Poppins] lg:text-[0.8rem] xl:text-[0.9375rem] font-normal">
                 Supported formats: JPEG, PNG, WebP. Max size: 300kb per image.
               </p>
             </div>
@@ -139,4 +139,4 @@ export const ProductImageDropZone = ({
       </div>
     </>
   );
-};
+});

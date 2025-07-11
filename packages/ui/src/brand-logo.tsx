@@ -18,14 +18,15 @@ export const SiteLogo = () => {
       </div>
 
       {/* Following div consist of site-name and tag-line */}
-      <div className="h-max text-[#123524]">
+      <div className="text-[#123524] leading-[25px]">
         <div className="lg:w-[8rem] lg:h-max xl:w-[11.25rem] h-[2.9375rem] lg:text-[30px] xl:text-[38.4px] font-[impact]">
           GrowVatika
         </div>
-        <div className="font-[Poppins] w-[9.5625rem] h-[1.3125rem] lg:text-[12px] xl:text-[13.97px] font-normal leading-[20.95px]">
+        <div className="font-[Poppins] w-[9.5625rem] h-[1.3125rem] lg:text-[12px] xl:text-[13.97px] font-normal">
           Nursery For Everyone
         </div>
       </div>
+
     </Link>
   );
 };

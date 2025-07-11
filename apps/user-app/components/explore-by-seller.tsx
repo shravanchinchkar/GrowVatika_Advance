@@ -16,7 +16,6 @@ import { toastStyle } from "@repo/shared/utilfunctions";
 import { ProductPageButton } from "./product-page-button";
 import { TExploreBySellerData } from "@repo/common-types/types";
 import { ProductSearchBar, SearchBarWorkType } from "./product-search-bar";
-import plantImage1 from "../public/assets/images/ProductImages/explore-by-seller-img1.jpg";
 
 export const ExplorePlantsBySeller = () => {
   const [loading, setLoading] = useState(false);
@@ -123,7 +122,7 @@ export const ExplorePlantsBySeller = () => {
         </div>
 
         {!isDataPresent ? (
-          <div className="text-[1.5rem] font-medium uppercase text-[#FF4B4B]">
+          <div className="text-[1.5rem] font-medium uppercase text-[#CBD0D3]">
             No Nursery Data Available Currently
           </div>
         ) : (
@@ -142,7 +141,7 @@ export const ExplorePlantsBySeller = () => {
                       <div className="w-[98%] h-[17rem] flex justify-between">
                         {/* Nursery profile Photo */}
                         <div
-                          className={`relative w-[14rem] h-[100%] rounded-[1.5625rem] overflow-hidden border-[3px] border-[#56A430] ${!item.profilePictureURL && "bg-[#DBD5A4] border-none"}`}
+                          className={`relative w-[14rem] h-[100%] rounded-[1.5625rem] overflow-hidden ${!item.profilePictureURL ? "bg-[#DBD5A4]" : "border-[1.2px] border-[#56A430]"}`}
                         >
                           {item.profilePictureURL && (
                             <Image
@@ -155,17 +154,18 @@ export const ExplorePlantsBySeller = () => {
                         </div>
 
                         {/* Nursery product Photos */}
+                        {/* bg-[#DBD5A4] */}
                         <div className="flex flex-col justify-between">
                           {item.products.length === 0 ? (
                             <>
-                              <div className="relative overflow-hidden w-[7.8rem] h-[8.2rem] bg-[#DBD5A4] rounded-[1.5625rem]"></div>
-                              <div className="relative overflow-hidden w-[7.8rem] h-[8.2rem] bg-[#DBD5A4] rounded-[1.5625rem]"></div>
+                              <div className="relative overflow-hidden w-[7.8rem] h-[8.2rem] rounded-[1.5625rem] bg-[#DBD5A4]"></div>
+                              <div className="relative overflow-hidden w-[7.8rem] h-[8.2rem] rounded-[1.5625rem] bg-[#DBD5A4]"></div>
                             </>
                           ) : item.products.length === 1 ? (
                             item.products.map((image, index) => {
                               return (
                                 <div
-                                  className="relative overflow-hidden w-[7.8rem] h-[8.2rem] border-[3px] rounded-[1.5625rem] border-[#56A430]"
+                                  className="relative overflow-hidden w-[7.8rem] h-[8.2rem] border-[1.2px] rounded-[1.5625rem] border-[#56A430]"
                                   key={index}
                                 >
                                   <Image
@@ -184,7 +184,7 @@ export const ExplorePlantsBySeller = () => {
                                 if (index == 1) {
                                   return (
                                     <div
-                                      className="relative overflow-hidden w-[7.8rem] h-[8.2rem] border-[3px] rounded-[1.5625rem] border-[#56A430]"
+                                      className="relative overflow-hidden w-[7.8rem] h-[8.2rem] border-[1.2px] rounded-[1.5625rem] border-[#56A430]"
                                       key={index}
                                     >
                                       <Image
@@ -202,7 +202,7 @@ export const ExplorePlantsBySeller = () => {
                               }
                               return (
                                 <div
-                                  className="relative overflow-hidden w-[7.8rem] h-[8.2rem] border-[3px] rounded-[1.5625rem] border-[#56A430]"
+                                  className="relative overflow-hidden w-[7.8rem] h-[8.2rem] border-[1.2px] rounded-[1.5625rem] border-[#56A430]"
                                   key={index}
                                 >
                                   <Image

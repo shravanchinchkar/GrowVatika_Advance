@@ -5,11 +5,10 @@ export const Footer = () => {
   return (
     <div
       id="contact-us"
-      className="flex lg:h-[20rem] xl:h-[22.875rem] bg-feature-gradient mt-[5rem]"
-    >
+      className="flex h-[20rem] lg:h-[20rem] xl:h-[22.875rem] bg-feature-gradient mt-[5rem]">
       {/* Following is the left footer div */}
       <div className="w-[29rem] h-[100%] lg:pt-[2.5rem] overflow-hidden">
-        <div className="flex justify-center">
+        <div className="w-[2.125rem] flex justify-center">
           <SiteLogo />
         </div>
         <div className="relative lg:w-[15rem] lg:h-[15rem] xl:w-[20rem] xl:h-[20rem] flex items-start ml-[-1rem] lg:mt-[3rem] xl:mt-[2.5rem] drop-shadow-2xl">

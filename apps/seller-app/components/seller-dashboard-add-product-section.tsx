@@ -2,7 +2,7 @@
 
 import Image from "next/image";
 import toast from "react-hot-toast";
-import { useEffect, useState } from "react";
+import { useEffect, useState,memo } from "react";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { toastStyle } from "@repo/shared/utilfunctions";
 import { ButtonLoadingSign } from "@repo/ui/loading-sign";
@@ -15,7 +15,7 @@ import { useDisplayAddProductSectionStore } from "@repo/shared-store";
 import { addProductSchema, TAddProductSchema } from "@repo/common-types/types";
 import { CustomSellerDashboardDropDown } from "./custom-seller-dashboard-dropdown";
 
-export const SellerDashboardAddProductSection = () => {
+export const SellerDashboardAddProductSection =memo(() => {
   // Zustand Code
   const displayAddProductSection = useDisplayAddProductSectionStore(
     (state: any) => state.displayAddProductSection
@@ -188,9 +188,10 @@ export const SellerDashboardAddProductSection = () => {
               />
             </button>
 
+            {/* Title */}
             <div>
-              <div className="text-[1.7rem] font-semibold">Add Product</div>
-              <div className="text-[1.15rem] text-[#8C8C8C] leading-4">
+              <div className="lg:text-[1.5rem] 2xl:text-[1.7rem] font-semibold">Add Product</div>
+              <div className="lg:text-[1rem] 2xl:text-[1.15rem] text-[#8C8C8C] leading-4">
                 Create the product listing
               </div>
             </div>
@@ -200,10 +201,10 @@ export const SellerDashboardAddProductSection = () => {
           <div className="flex items-center gap-5">
             {/* Cancle Button */}
             <button
-              className="rounded-[0.625rem] h-[3.1875rem] w-[10rem] border-[1.5px] border-[#CBD0D3] bg-white flex justify-center items-center gap-4 animate-bg-bounce-in"
+              className="lg:w-[8rem] lg:h-[3rem] xl:w-[10rem] xl:h-[3.1875rem] rounded-[0.625rem] border-[1.5px] border-[#CBD0D3] bg-white flex justify-center items-center gap-4 animate-bg-bounce-in"
               type="button"
             >
-              <div className="relative h-[1.5rem] w-[1.5rem]">
+              <div className="relative lg:w-[1.2rem] lg:h-[1.2rem] xl:w-[1.5rem] xl:h-[1.5rem]">
                 <Image
                   src="/assets/images/AddProductSectionImages/cancelIcon.svg"
                   alt="publishProductIcon"
@@ -215,13 +216,13 @@ export const SellerDashboardAddProductSection = () => {
 
             {/* Publish Product Button */}
             <button
-              className={`rounded-[0.625rem] h-[3.1875rem] w-[14.5rem] bg-[#56A430] flex justify-center items-center gap-4 animate-bg-bounce-in-2 ${!loading ? "cursor-pointer" : "cursor-not-allowed"}`}
+              className={`lg:w-[11rem] lg:h-[3rem] xl:w-[14.5rem] xl:h-[3.1875rem] rounded-[0.625rem] bg-[#56A430] flex justify-center items-center lg:gap-[0.5rem] xl:gap-4 animate-bg-bounce-in-2 ${!loading ? "cursor-pointer" : "cursor-not-allowed"}`}
               type="submit"
               disabled={loading}
             >
               {!loading ? (
                 <>
-                  <div className="relative h-[1.5rem] w-[1.5rem]">
+                  <div className="relative lg:w-[1.2rem] lg:h-[1.2rem]  xl:w-[1.5rem] xl:h-[1.5rem]">
                     <Image
                       src="/assets/images/AddProductSectionImages/publishProductIcon.svg"
                       alt="publishProductIcon"
@@ -240,19 +241,21 @@ export const SellerDashboardAddProductSection = () => {
         </div>
 
         {/* Add Product Bottom div */}
-        <div className="w-[98%] flex justify-between pt-[1rem]">
+        <div className="w-[98%] flex lg:flex-col xl:flex-row justify-between pt-[1rem]">
           {/* Following div consist of Business Information section and Media Section  */}
 
           {/* Add Product Form */}
-          <div className="pb-[1rem]">
+          <div className="pb-[1rem] lg:flex lg:flex-col lg:items-center xl:block">
+
             {/* Following div consist of inputs for product name, price, compareAt, description, product Size, product Quantity */}
-            <div className="w-[41rem] flex flex-col gap-[1rem] h-max p-[2rem] bg-white rounded-xl shadow-md">
+            <div className="lg:w-[40rem] new-lg:w-[46rem] xl:w-[34rem] 2xl:w-[41rem] flex flex-col gap-[1rem] h-max p-[2rem] bg-white rounded-xl shadow-md">
+
               {/* Heading */}
               <div>
-                <h1 className="text-[#171717] font-[Poppins] text-[1.7rem] font-semibold leading-[2.6rem]">
+                <h1 className="text-[#171717] font-[Poppins] lg:text-[1.5rem] 2xl:text-[1.7rem] font-semibold leading-[2.6rem]">
                   Product Information
                 </h1>
-                <p className="text-[#8C8C8C] font-[Poppins] text-[1.15rem] font-medium leading-[1.54375rem]">
+                <p className="text-[#8C8C8C] font-[Poppins] lg:text-[1rem] 2xl:text-[1.15rem] font-medium leading-[1.54375rem]">
                   Add the basic information about your product
                 </p>
               </div>
@@ -263,7 +266,7 @@ export const SellerDashboardAddProductSection = () => {
                 lableName="Product name"
                 inputType="text"
                 placeHolder="Name of your product"
-                inputWidthHeight="w-[37.0625rem] h-[3.1875rem]"
+                inputWidthHeight="lg:w-[35rem] new-lg:w-[42rem] xl:w-[30rem] 2xl:w-[37.0625rem] h-[3.1875rem]"
                 {...register("name", { required: true })}
               />
 
@@ -275,7 +278,7 @@ export const SellerDashboardAddProductSection = () => {
                   lableName="Price"
                   inputType="number"
                   placeHolder="0.00 Rs."
-                  inputWidthHeight="w-[17.3125rem] h-[3.1875rem]"
+                  inputWidthHeight="lg:w-[16.5rem] new-lg:w-[20.5rem] xl:w-[14.5rem] 2xl:w-[17.3125rem] h-[3.1875rem]"
                   onWheel={handleWheel}
                   {...register("price", {
                     required: true,
@@ -289,7 +292,7 @@ export const SellerDashboardAddProductSection = () => {
                   lableName="Compare-at Price"
                   inputType="number"
                   placeHolder="0.00 Rs."
-                  inputWidthHeight="w-[18.3rem] h-[3.1875rem]"
+                  inputWidthHeight="lg:w-[17.5rem] new-lg:w-[20.5rem] xl:w-[14.5rem] 2xl:w-[18.3rem] h-[3.1875rem]"
                   onWheel={handleWheel}
                   {...register("compareAt", {
                     required: true,
@@ -330,7 +333,7 @@ export const SellerDashboardAddProductSection = () => {
                   lableName="Product Quantity"
                   inputType="number"
                   placeHolder="25 in stock"
-                  inputWidthHeight="w-[18.3rem] h-[3.1875rem]"
+                  inputWidthHeight="lg:w-[17rem] new-lg:w-[20rem] xl:w-[13.5rem] 2xl:w-[18.3rem] h-[3.1875rem]"
                   onWheel={handleWheel}
                   {...register("productQuantity", {
                     required: true,
@@ -341,15 +344,14 @@ export const SellerDashboardAddProductSection = () => {
             </div>
 
             {/* Following div consist of drop-zone to upload Images */}
-            <div
-              className={`w-[41rem] h-[33rem] flex flex-col justify-center items-center bg-white rounded-xl mt-5 shadow-md ${errors.image?.message ? "gap-0" : "gap-[1rem]"}`}
+            <div className={`lg:w-[40rem] new-lg:w-[46rem]  xl:w-[34rem] border-[2px] 2xl:w-[41rem] h-[33rem] flex flex-col justify-center items-center bg-white rounded-xl mt-5 shadow-md ${errors.image?.message ? "gap-0" : "gap-[1rem]"}`}
             >
               {/* Media Heading Section */}
-              <div className="w-[37.0625rem]">
-                <h1 className="text-[#171717] font-[Poppins] text-[2rem] font-semibold">
+              <div className="lg:w-[35rem] new-lg:w-[42rem] xl:w-[30rem] 2xl:w-[37.0625rem]">
+                <h1 className="text-[#171717] font-[Poppins] lg:text-[1.5rem] new-lg:text-[1.7rem] 2xl:text-[2rem] font-semibold">
                   Media
                 </h1>
-                <h2 className="text-[#8C8C8C] font-[Poppins] text-[1.1875rem] font-medium">
+                <h2 className="text-[#8C8C8C] font-[Poppins] lg:text-[1rem] xl:text-[1.1875rem] font-medium">
                   Add photos of your product
                 </h2>
               </div>
@@ -359,7 +361,7 @@ export const SellerDashboardAddProductSection = () => {
                 control={control}
                 render={({ field }) => (
                   <ProductImageDropZone
-                    className={`w-[37.0625rem] h-[24.125rem] flex-shrink-0 rounded-[0.625rem] border-[1.5px] border-dashed  bg-white flex justify-center items-center cursor-pointer outline-none ${errors.image?.message ? "border-[#FF4B4B]" : "border-[#CBD0D3]"}`}
+                    className={`lg:w-[35rem] new-lg:w-[42rem] xl:w-[30rem] 2xl:w-[37.0625rem] h-[24.125rem] flex-shrink-0 rounded-[0.625rem] border-[1.5px] border-dashed  bg-white flex justify-center items-center cursor-pointer outline-none ${errors.image?.message ? "border-[#FF4B4B]" : "border-[#CBD0D3]"}`}
                     onDrop={(files: any) => {
                       if (files.length > 0) {
                         field.onChange(files[0]);
@@ -374,16 +376,18 @@ export const SellerDashboardAddProductSection = () => {
           </div>
 
           {/* Organization,Status & Visibility Section */}
-          <div className="flex flex-col justify-between gap-5 pb-[1rem]">
+          <div className="flex lg:flex-row lg:justify-evenly xl:flex-col xl:justify-between gap-5 pb-[1rem]">
+
             {/* Organization Section */}
-            <div className="h-[35.5rem] w-[19.875rem] bg-white rounded-[1.25rem]  pt-[1.5rem] flex flex-col shadow-md">
-              <div className="flex flex-col items-center gap-[2.7rem]">
-                <div className="w-[100%] text-[1.7rem]  font-semibold pl-[1.5rem]">
+            <div className="lg:w-[19.875rem] xl:w-[18rem] new-xl:w-[21.5rem] 2xl:w-[19.875rem] lg:h-[33rem] xl:h-[35.5rem] bg-white rounded-[1.25rem]  pt-[1.5rem] flex flex-col shadow-md">
+
+              <div className="flex flex-col items-center lg:gap-[2rem] xl:gap-[2.7rem]">
+                <div className="w-[100%] lg:text-[1.5rem] 2xl:text-[1.7rem] font-semibold pl-[1.5rem]">
                   Organization
                 </div>
 
                 <div
-                  className={`flex flex-col ${errors.collection || errors.category || errors.tags ? "gap-0" : "gap-[1rem]"}`}
+                  className={`w-[80%] flex flex-col ${errors.collection || errors.category || errors.tags ? "gap-0" : "gap-[1rem]"}`}
                 >
                   {/* Collection DropDown */}
                   {errors.collection && (
@@ -434,8 +438,8 @@ export const SellerDashboardAddProductSection = () => {
             </div>
 
             {/* Status & Visibility Section */}
-            <div className="h-[33rem] w-[19.875rem]  bg-white rounded-[1.25rem] pl-[2rem] pt-[1.5rem] flex flex-col gap-5 shadow-md">
-              <div className="text-[1.7rem] font-semibold w-[10rem]">
+            <div className="lg:w-[19.875rem] xl:w-[18rem] new-xl:w-[21.5rem] 2xl:w-[19.875rem] h-[33rem] bg-white rounded-[1.25rem] pl-[2rem] pt-[1.5rem] flex flex-col gap-5 shadow-md">
+              <div className="lg:w-[15rem] 2xl:w-[10rem] lg:text-[1.5rem] xl:text-[1.7rem] font-semibold">
                 Status & Visibility
               </div>
 
@@ -484,9 +488,10 @@ export const SellerDashboardAddProductSection = () => {
                 </div>
               </div>
             </div>
+
           </div>
         </div>
       </form>
     );
   }
-};
+});

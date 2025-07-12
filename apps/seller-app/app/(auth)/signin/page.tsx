@@ -15,7 +15,7 @@ export default async function SellerSigninPage() {
     return (
       <div className="overflow-x-hidden">
         <Suspense fallback={<Skeleton />}>
-          <SellerSignin />;
+          <SellerSignin />
         </Suspense>
       </div>
     );

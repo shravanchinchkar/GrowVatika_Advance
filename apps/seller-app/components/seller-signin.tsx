@@ -6,7 +6,7 @@ import { useEffect, useState } from "react";
 import { SiteLogo } from "@repo/ui/brand-logo";
 import { AuthButton } from "@repo/ui/auth-button";
 import { signIn, useSession } from "next-auth/react";
-import { redirect,useRouter } from "next/navigation";
+import { redirect, useRouter } from "next/navigation";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { toastStyle } from "@repo/shared/utilfunctions";
 import { LabelInput, FormType } from "@repo/ui/label-input";
@@ -92,13 +92,15 @@ export const SellerSignin = () => {
   return (
     <div className="w-screen min-h-screen max-h-max bg-[#FFF6F4] flex font-[Poppins]">
       {/* Following is the left side div which consist of Image */}
+
       <div className="w-[50%] flex justify-center items-center">
-        <div className="lg:w-[30rem] lg:h-[30rem] xl:w-[31rem] xl:h-[31rem] 2xl:w-[42rem] 2xl:h-[42rem] shrink-0 rounded-[28px] overflow-hidden bg-[url(/assets/images/AuthImages/seller-signin.png)] bg-cover bg-no-repeat border-[1px] border-[#8C8C8C]">
+
+        <div className="lg:w-[30rem] lg:h-[36rem] new-lg:w-[34rem] xl:w-[37rem]  2xl:w-[42rem] 2xl:h-[42rem] shrink-0 rounded-[28px] overflow-hidden bg-[url(/assets/images/AuthImages/seller-signin.png)] bg-cover bg-no-repeat border-[1px] border-[#8C8C8C]">
           <div className="mx-auto flex flex-col items-center text-[#606060] mt-[2rem]">
-            <h1 className="text-[2rem] font-bold w-[32rem] text-center">
+            <h1 className="lg:text-[1.5rem] new-lg:text-[1.7rem] xl:text-[1.8rem] 2xl:text-[2rem] font-bold w-[32rem] text-center">
               Nursery For Everyone
             </h1>
-            <p className="w-[38rem] text-[1.5rem] leading-[1.9rem] text-center font-semibold">
+            <p className="lg:w-[27rem] new-lg:w-[30rem] xl:w-[32rem] 2xl:w-[38rem] lg:text-[1rem] new-lg:text-[1.2rem] xl:text-[1.2rem] 2xl:text-[1.5rem] lg:leading-[1.5rem] 2xl:leading-[1.9rem] text-center font-semibold">
               Welcome back to your seller dashboard. Manage your plant
               inventory, track orders, and grow your business.
             </p>
@@ -107,7 +109,7 @@ export const SellerSignin = () => {
       </div>
 
       {/* Following is the right side div */}
-      <div className={"w-[50%] flex flex-col gap-[1rem] lg:mt-[0.2rem]"}>
+      <div className={"w-[50%] flex flex-col gap-[1rem]"}>
         {/* Following div consist of site logo*/}
         <div className="flex flex-col items-start gap-[2rem] pl-[2rem] pt-[1rem]">
           <div>
@@ -177,7 +179,7 @@ export const SellerSignin = () => {
             </form>
 
             {/* Signup message */}
-            <div className=" mt-[1.3rem] text-[#123524] text-[1.25rem] font-normal flex gap-[0.5rem]">
+            <div className=" mt-[1.3rem] text-[#123524] lg:text-[1rem] xl:text-[1.25rem] font-normal flex gap-[0.5rem]">
               <p>Don't have a seller account?</p>
               <Link href={"/register"} className="font-bold">
                 Register here
@@ -186,7 +188,7 @@ export const SellerSignin = () => {
           </div>
 
           {/* Copyright div */}
-          <div className="flex flex-col ml-[4rem] mt-[2.5rem] text-[#8C8C8C] text-[1.25rem] font-normal">
+          <div className="flex flex-col lg:ml-[2rem] xl:ml-[4rem] mt-[2.5rem] text-[#8C8C8C] lg:text-[1rem] xl:text-[1.25rem] font-normal">
             <div className="flex">
               <div>&#169;</div>
               <div>2025 GrowVatika. All rights reserved.</div>

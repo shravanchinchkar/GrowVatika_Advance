@@ -321,6 +321,21 @@ export const SingleProductPage = () => {
               </div>
             </div>
           </div>
+
+          <div className="bg-white p-8">
+            <div className="text-[#000] text-center font-[Poppins] text-[2rem] not-italic font-semibold leading-[130%]">
+              About Product
+            </div>
+            <div className="text-[#171717] text-center font-[Poppins] text-[1.25rem] not-italic font-normal leading-[130%] mt-4">
+              The Lush Green Bird of Paradise (Strelitzia reginae) is a striking
+              ornamental plant known for its large, banana-like leaves and bold,
+              upright presence. Ideal for bright indoor corners, balconies, or
+              patios, it adds a tropical elegance to any space while naturally
+              purifying the air. Easy to care for with moderate watering and
+              indirect sunlight, this fast-growing plant makes a stunning focal
+              point in home or office décor.
+            </div>
+          </div>
         </div>
       </div>
     </div>

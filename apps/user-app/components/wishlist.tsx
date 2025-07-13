@@ -55,7 +55,13 @@ export const WishList = () => {
       price: 399,
       image: "/assets/images/WishListImages/plantImage.jpg",
     },
-    // Add more items as needed
+    {
+      name: "Monstera Deliciosa",
+      description: 'Swiss Cheese Plant - 6" Pot',
+      type: "Indoor Plant",
+      price: 399,
+      image: "/assets/images/WishListImages/plantImage.jpg",
+    },
   ];
   const handleWishListVisibility = () => {
     updateWishListVisibility(false);
@@ -63,48 +69,51 @@ export const WishList = () => {
 
   if (wishListVisibility === true) {
     return (
-      <div className="z-30 absolute top-0 w-[100%] h-[100%] bg-black/25 bg-opacity-10 flex justify-center">
-        <div className="h-[49.6875rem] w-[82.1875rem] font-[Poppins] bg-white rounded-[1.25rem] shadow-2xl mx-auto my-[2.75rem]">
-          {/* Your Wishlist header section */}
-          <div className="border-b pb-[1.81rem]">
-            <div className="flex items-center pt-[1.88rem]">
-              <div className="flex items-center ml-[34.81rem] gap-1">
-                <div className="relative h-[1.875rem] w-[1.875rem]">
-                  <Image
-                    src="/assets/images/WishListImages/wishListIcon.svg"
-                    alt="wishListIcon"
-                    fill
-                  />
-                </div>
-                <p className="text-[2rem] font-semibold">Your Wishlist</p>
+      <div className="z-30 absolute top-0 w-[100%] h-[100%] bg-[#00000040] bg-opacity-10 flex justify-center">
+        <div className="w-[82.1875rem] h-[41rem] font-[Poppins] bg-white rounded-[1.25rem] shadow-2xl mx-auto my-[1rem] overflow-hidden">
+          {/* Wishlist header section */}
+          <div className="w-[100%] py-[1rem] flex justify-between items-center border-b-[0.0625rem] border-[#00000033]">
+            {/* Wishlist title */}
+            <div className="w-[95%] h-[100%]  flex justify-center items-center gap-[1rem]">
+              <div className="relative h-[1.875rem] w-[1.875rem]">
+                <Image
+                  src="/assets/images/WishListImages/wishListIcon.svg"
+                  alt="wishListIcon"
+                  fill
+                />
               </div>
-              {/* Cancel Icon */}
-              <button
-                className="relative h-[1.5rem] w-[1.5rem] ml-[28rem]"
-                onClick={handleWishListVisibility}
-              >
+              <p className="text-[2rem] font-semibold">Your Wishlist</p>
+            </div>
+
+            {/* Cancel Icon */}
+            <button
+              className="relative w-[5%] flex justify-center"
+              onClick={handleWishListVisibility}
+            >
+              <div className="relative w-[1.5rem] h-[1.5rem]">
                 <Image
                   src="/assets/images/WishListImages/cancelIcon.svg"
+                  className="object-cover"
                   alt="cancelIcon"
                   fill
                 />
-              </button>
-            </div>
+              </div>
+            </button>
           </div>
 
-          <div className="mt-[2rem] ml-[4rem] mr-[4rem]">
+          <div className="flex flex-col items-center">
             {/* Items in your wishlist section */}
-            <div className="text-[1.25rem] font-medium flex justify-between">
+            <div className="w-[100%] text-[1.25rem] font-medium flex justify-between items-center px-[3rem] pt-[0.5rem]">
               <div>Items in your wishlist</div>
               <button className="text-[#697F75]">Remove all</button>
             </div>
 
             {/* Items section */}
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-x-4 gap-y-2 justify-items-center border-b pb-[2rem]">
+            <div className="w-[100%] h-[26.5rem] grid sm:grid-cols-2 lg:grid-cols-3 mt-[0.5rem] gap-y-[1rem] justify-items-center pb-[1rem] border-b-[0.0625rem] border-[#00000033] overflow-y-auto [&::-webkit-scrollbar]:w-2 [&::-webkit-scrollbar-track]:bg-[#fff] [&::-webkit-scrollbar-thumb]:bg-[#697F75]">
               {wishlistItems.map((item, index) => (
                 <div
                   key={index}
-                  className="h-[12.1875rem] w-[22rem] mt-[1.75rem] bg-[#EDE7E4] rounded-[1.25rem] flex flex-col justify-center items-center gap-2"
+                  className="h-[12.1875rem] w-[22rem] bg-[#EDE7E4] rounded-[1.25rem] flex flex-col justify-center items-center gap-[0.5rem]"
                 >
                   <div className="h-[7.5625rem] flex gap-[1.5rem]">
                     <div className="relative h-[7rem] w-[7rem] border-[1.6px] border-white rounded-[1.25rem] overflow-hidden">
@@ -141,7 +150,7 @@ export const WishList = () => {
                     </div>
                   </div>
 
-                  <button className="h-[2.7rem] w-[20rem] bg-[#56A430] rounded-[0.625rem] flex justify-center items-center gap-[1.42rem]">
+                  <button className="h-[2.7rem] w-[20rem] bg-[#56A430] hover:bg-[#213E12] rounded-[0.625rem] flex justify-center items-center gap-[1.42rem]">
                     <img
                       className="h-[1.5rem] w-[1.5rem] object-contain"
                       src="/assets/images/WishListImages/addToCartIcon.svg"
@@ -154,7 +163,7 @@ export const WishList = () => {
             </div>
 
             {/* Pay online and get extra 5% off section*/}
-            <div className="flex justify-center pt-4 gap-2">
+            <div className="flex justify-center gap-2 pt-[0.5rem]">
               <div className="relative h-[1.5rem] w-[1.5rem]">
                 <Image
                   src="/assets/images/WishListImages/discountIcon.svg"
@@ -166,7 +175,7 @@ export const WishList = () => {
             </div>
 
             {/* Go to Your Cart section */}
-            <button className="h-[3.1875rem] w-[73.625rem] mt-4 bg-[#1A9AEF] rounded-[0.625rem] flex justify-center items-center">
+            <button className="h-[3.1875rem] w-[73.625rem] mt-[0.5rem] bg-[#1A9AEF] hover:bg-[#0F5889] rounded-[0.625rem] flex justify-center items-center">
               <p className="text-[1.22669rem] text-white">Go to Your Cart</p>
             </button>
           </div>

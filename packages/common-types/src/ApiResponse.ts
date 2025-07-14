@@ -11,4 +11,6 @@ export interface ApiResponseType {
   status?: string;
   sellerData?: SellerData;
   responseData?:any
+  totalProductsCount?:number,
+  totalPages?:number
 }

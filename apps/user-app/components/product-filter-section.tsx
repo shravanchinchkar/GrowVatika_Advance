@@ -1,11 +1,8 @@
-import { Header } from "./header-section";
-import { Navbar } from "./nav-section";
 import PriceRangeSlider from "./PriceRangeSlider";
-import { UserAuthButton } from "./user-auth-button";
 
 export const ProductFilterSection = () => {
   return (
-    <div className="h-[77.125rem] w-[18.8125rem] pl-[2rem] pr-[2rem] pt-[1rem] font-[Poppins] bg-white rounded-[1.25rem]">
+    <div className="w-[23%] h-[77.125rem] pl-[2rem] pr-[2rem] pt-[1rem] font-[Poppins] bg-white rounded-[1.25rem]">
       {/* Filter Top Section */}
       <div className="flex justify-between items-center">
         <div className="text-[1.5rem] font-medium">Filter</div>

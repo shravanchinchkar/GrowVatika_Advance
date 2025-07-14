@@ -83,13 +83,13 @@ export const NavLinks = ({
           <button
             onClick={handleNavigation}
             className="text-white w-[10rem] h-[10rem] flex items-center font-Poppins uppercase lg:text-[16px] xl:text-[19.63px] leading-[29.44px] tracking-wider justify-center"
-          >
+          > 
             {linkName}
           </button>
         ) : (
           // Use Link for regular navigation (Collections)
           <Link
-            href={linkName === "Collections" ? "/explore" : "/"}
+            href={linkName === "Collections" ? "/":"/"}
             className="text-white w-[10rem] h-[10rem] flex items-center uppercase font-Poppins lg:text-[16px] xl:text-[19.63px] leading-[29.44px] tracking-wider justify-center"
           >
             {linkName}
@@ -100,7 +100,7 @@ export const NavLinks = ({
       {/* Following is the dropdown */}
       {linkName === "Collections" ? (
         <div
-          className={`absolute lg:w-[7.9rem] xl:w-[11.49rem] h-[8rem] top-full lg:left-[7.9rem] xl:left-[11.57rem] bg-[#649173] rounded-b-3xl shadow-lg transition-none duration-300 overflow-hidden ${
+          className={`absolute lg:w-[7.9rem] xl:w-[9.75rem] 2xl:w-[11.49rem] h-[8rem] top-full lg:left-[7.9rem] xl:left-[9.9rem] 2xl:left-[11.57rem] bg-[#649173] rounded-b-3xl shadow-lg transition-none duration-300 overflow-hidden ${
             isCollectionsOpen ? "opacity-100 visible" : "opacity-0 invisible"
           }`}
         >

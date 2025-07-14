@@ -9,7 +9,7 @@ export const AboutUsSection = () => {
       className="grid new-sm:grid-cols-1 new-sm-1:grid-cols-2 relative mt-[2rem]"
     >
       {/* Image */}
-      <div className="border-[2px] border-red-500 new-sm:hidden new-sm-1:block w-[12rem] h-[12rem] new-sm-1:w-[16rem] new-sm-1:h-[16rem] md:w-[20rem] md:h-[20rem] lg:w-[25rem] lg:h-[25rem] xl:w-[38.96875rem] xl:h-[35.5rem] relative shrink-0 justify-self-center z-10">
+      <div className="new-sm:hidden new-sm-1:block w-[12rem] h-[12rem] new-sm-1:w-[16rem] new-sm-1:h-[16rem] md:w-[20rem] md:h-[20rem] lg:w-[25rem] lg:h-[25rem] xl:w-[38.96875rem] xl:h-[35.5rem] relative shrink-0 justify-self-center z-10">
         <Image
           className="object-cover"
           src={AboutSectionImage}
@@ -20,7 +20,7 @@ export const AboutUsSection = () => {
       </div>
 
       {/* Text */}
-      <div className="border-[2px] border-red-500 new-sm:w-[90%] lg:w-[55%] new-sm:min-h-fit h-auto new-sm:static new-sm:justify-self-center lg:absolute top-[10%] right-[17%] z-0 lg:pl-[8rem] lg:pt-[0.7rem] xl:pl-[12rem] xl:pb-[2rem] flex flex-col justify-center self-center gap-[1rem] font-poppins rounded-[28px] bg-custom-gradient overflow-hidden new-sm:items-center new-sm:text-center new-sm:p-4">
+      <div className="new-sm:w-[90%] lg:w-[55%] new-sm:min-h-fit h-auto new-sm:static new-sm:justify-self-center lg:absolute top-[10%] right-[17%] z-0 lg:pl-[8rem] lg:pt-[0.7rem] xl:pl-[12rem] xl:pb-[2rem] flex flex-col justify-center self-center gap-[1rem] font-poppins rounded-[28px] bg-custom-gradient overflow-hidden new-sm:items-center new-sm:text-center new-sm:p-4">
         <h1 className="lg:text-[1.5rem] xl:text-[2rem] 2xl:text-[2.25rem] text-[#123524] font-medium new-sm:text-[1.25rem]">
           About GrowVatika
         </h1>

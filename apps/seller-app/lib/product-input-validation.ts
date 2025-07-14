@@ -34,25 +34,3 @@ export function validateServerProduct(
     return { success: false, errors: { general: "Validation failed" } };
   }
 }
-
-// FormData converter utility
-export function formDataToObject(formData: FormData): Record<string, any> {
-  const obj: Record<string, any> = {};
-  for (const [key, value] of formData.entries()) {
-    if (key === "image") {
-      obj[key] = value; // File object
-    } else if (
-      key === "price" ||
-      key === "compareAt" ||
-      key === "productSize" ||
-      key === "productQuantity"
-    ) {
-      obj[key] = value ? Number(value) : undefined;
-    } else if (key === "featured") {
-      obj[key] = value === "true";
-    } else {
-      obj[key] = value || undefined;
-    }
-  }
-  return obj;
-}

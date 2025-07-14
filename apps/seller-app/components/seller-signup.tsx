@@ -24,6 +24,7 @@ export const SellerRegister = () => {
   const [loading, setLoading] = useState(false);
   const searchParams = useSearchParams();
   const searchParamsEmail = searchParams?.get("email") || "";
+  console.log("search params email is:", !searchParamsEmail);
 
   const {
     register,
@@ -120,17 +121,29 @@ export const SellerRegister = () => {
     }
   };
 
+  if (!searchParamsEmail) {
+    return (
+      <div className="w-screen h-screen bg-[#FFF6F4] flex justify-center items-center font-[Poppins]">
+
+        <div className="flex flex-col items-center text-center gap-[0.5rem] text-[1.22669rem]">
+          <p>Please Register through the link send in your <span className="text-[#FF4B4B] underline font-semibold">eamil</span> by</p>
+          <SiteLogo/>
+        </div>
+
+      </div>
+    );
+  }
   return (
     <div className="w-screen relative bg-[#FFF6F4] flex font-[Poppins] overflow-x-hidden">
       {/* Following is the left side div*/}
       <div className="w-[50%] flex justify-center items-center relative">
         {/* Following div consist of image */}
-        <div className="lg:w-[30rem] lg:h-[30rem] xl:w-[31rem] xl:h-[31rem] 2xl:w-[42rem] 2xl:h-[42rem] shrink-0 rounded-[28px] overflow-hidden bg-[url(/assets/images/AuthImages/seller-registration.png)] bg-cover bg-no-repeat border-[1px] border-[#8C8C8C] fixed top-[10px] bottom-0">
+        <div className="lg:w-[30rem] lg:h-[36rem] new-lg:w-[33rem] xl:w-[35rem] xl:h-[36rem] new-xl:w-[38rem] new-xl:h-[37rem] 2xl:w-[42rem] 2xl:h-[42rem] shrink-0 rounded-[28px] overflow-hidden bg-[url(/assets/images/AuthImages/seller-registration.png)] bg-cover bg-no-repeat border-[1px] border-[#8C8C8C] fixed top-[10px] bottom-0">
           <div className="flex flex-col items-center text-[#606060] mt-[2rem]">
-            <h1 className="text-[2rem] font-bold w-[32rem] text-center">
+            <h1 className="lg:text-[1.5rem] new-lg:text-[1.7rem] xl:text-[1.8rem] new-xl:text-[2rem] font-bold w-[32rem] text-center">
               Nursery For Everyone
             </h1>
-            <p className="w-[38rem] h-max text-[1.5rem] leading-[1.9rem] text-center font-semibold">
+            <p className="h-max lg:w-[27rem] new-lg:w-[30rem] xl:w-[32rem] new-xl:w-[33rem] 2xl:w-[38rem] lg:text-[1rem] new-lg:text-[1.2rem] xl:text-[1.2rem] 2xl:text-[1.5rem] lg:leading-[1.5rem] 2xl:leading-[1.9rem] text-center font-semibold">
               Join our community of plant sellers. Create your account to start
               listing your plants and growing your business.
             </p>
@@ -161,7 +174,7 @@ export const SellerRegister = () => {
           <div className="flex flex-col items-center">
             {/* Seller Registration Form */}
             <form
-              className="flex flex-col items-start gap-[1rem] lg:mt-[0.5rem]"
+              className="flex flex-col items-start lg:gap-[1.5rem] 2xl:gap-[1rem] lg:mt-[0.5rem]"
               onSubmit={handleSubmit(handelSellerRegistration)}
             >
               {/* Following div consist of firstName and lastName */}
@@ -285,7 +298,7 @@ export const SellerRegister = () => {
             </form>
 
             {/* Signin message */}
-            <div className=" mt-[1.3rem] text-[#123524] text-[1.25rem] font-normal flex">
+            <div className=" mt-[1.3rem] text-[#123524] lg:text-[1rem] 2lx:text-[1.25rem] font-normal flex">
               <p>Already have a seller account?</p>
               <Link href={"/signin"} className="font-bold">
                  Sign in
@@ -294,7 +307,7 @@ export const SellerRegister = () => {
           </div>
 
           {/* Copyright div */}
-          <div className="flex flex-col ml-[4rem] mt-[1rem] mb-[1rem] text-[#8C8C8C] text-[1.25rem] font-normal">
+          <div className="flex flex-col lg:ml-[2.5rem] 2xl:ml-[4rem] mt-[1rem] mb-[1rem] text-[#8C8C8C] lg:text-[1rem] 2xl:text-[1.25rem] font-normal">
             <div className="flex">
               <div>&#169;</div>
               <div>2025 GrowVatika. All rights reserved.</div>
@@ -305,6 +318,7 @@ export const SellerRegister = () => {
               <p>Help</p>
             </div>
           </div>
+
         </div>
       </div>
     </div>

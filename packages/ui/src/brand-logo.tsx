@@ -28,32 +28,12 @@ export const SiteLogo = () => {
       </div>
 
       {/* Following div consist of site-name and tag-line */}
-      <div className="h-max text-[#123524]">
-        <div
-          className="
-            new-sm:w-[6rem] new-sm:text-[1.25rem]
-            new-sm-1:w-[7rem] new-sm-1:text-[1.5rem]
-            sm:w-[8rem] sm:text-[1.75rem]
-            md:w-[9rem] md:text-[1.875rem]
-            lg:w-[8rem] lg:text-[1.875rem]
-            xl:w-[11.25rem] xl:text-[2.4rem]
-            h-[2.9375rem] font-[impact]
-          "
-        >
+
+      <div className="text-[#123524] leading-[25px]">
+        <div className="lg:w-[8rem] lg:h-max xl:w-[11.25rem] h-[2.9375rem] lg:text-[30px] xl:text-[38.4px] font-[impact]">
           GrowVatika
         </div>
-        <div
-          className="
-            font-[Poppins]
-            new-sm:w-[8rem] new-sm:text-[0.625rem]
-            new-sm-1:w-[9rem] new-sm-1:text-[0.7rem]
-            sm:w-[9rem] sm:text-[0.75rem]
-            md:w-[9.5rem] md:text-[0.75rem]
-            lg:w-[9.5625rem] lg:text-[0.75rem]
-            xl:w-[9.5625rem] xl:text-[0.85rem]
-            h-[1.3125rem] font-normal leading-[1.3rem]
-          "
-        >
+        <div className="font-[Poppins] w-[9.5625rem] h-[1.3125rem] lg:text-[12px] xl:text-[13.97px] font-normal">
           Nursery For Everyone
         </div>
       </div>

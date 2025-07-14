@@ -1,5 +1,7 @@
+import { memo } from "react";
+
 interface BusinessInfoInputProps {
-  blinking: boolean;
+  blinking?: boolean;
   lengendName: string;
   placeHolder?: string;
   props?: any;
@@ -7,7 +9,7 @@ interface BusinessInfoInputProps {
   error?: string;
 }
 
-export const BusinessInfoInputSection = ({
+export const BusinessInfoInputSection = memo(({
   blinking,
   lengendName,
   placeHolder,
@@ -18,16 +20,10 @@ export const BusinessInfoInputSection = ({
   return (
     <div className="flex flex-col gap-0">
       {error && (
-        <div className="text-[#FF4B4B] font-semibold text-start">
-          {error}
-        </div>
+        <div className="text-[#FF4B4B] font-semibold text-start">{error}</div>
       )}
-      <fieldset
-        className={`px-[1rem] pb-[0.5rem] border-[2px] rounded-[6.5625rem] flex gap-[1rem] ${blinking ? "animate-border-blink" : "border-[#8C8C8C]"}`}
-      >
-        <legend
-          className={`font-[Poppins] font-medium ${blinking ? "animate-text-blink" : "text-[#171717]"}`}
-        >
+      <fieldset className="px-[1rem] pb-[0.5rem] border-[2px] rounded-[6.5625rem] flex gap-[1rem] border-[#8C8C8C]">
+        <legend className="font-[Poppins] font-medium text-[#171717]">
           {lengendName}
         </legend>
         <input
@@ -41,4 +37,4 @@ export const BusinessInfoInputSection = ({
       </fieldset>
     </div>
   );
-};
+});

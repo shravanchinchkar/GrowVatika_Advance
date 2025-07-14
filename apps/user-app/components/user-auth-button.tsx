@@ -24,7 +24,13 @@ export const UserAuthButton = () => {
   return (
     <div className="sm:hidden md:block lg:w-[140px] xl:w-[168px] h-[64.8px]">
       <AuthButton
-        buttonName={session.status === "authenticated" ? "Sign Out" : "Sign In"}
+        buttonName={
+          session.status === "loading"
+            ? "Loading"
+            : session.status === "authenticated"
+              ? "Sign Out"
+              : "Sign In"
+        }
         onClick={
           session.status === "authenticated" ? handleSignOut : handleSignIn
         }

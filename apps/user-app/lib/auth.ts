@@ -9,7 +9,6 @@ import { generateVerifyCode } from "@repo/shared/utilfunctions";
 import CredentialsProvider from "next-auth/providers/credentials";
 import { sendVerificationEmail } from "../helper/sendVerificationMail";
 
-console.log("NextAuth Secret in user-app:", process.env.NEXTAUTH_SECRET);
 export const NEXT_AUTH = {
   providers: [
     CredentialsProvider({
@@ -23,10 +22,8 @@ export const NEXT_AUTH = {
         },
       },
       async authorize(credentials: any) {
-        console.log("credentials are:", credentials);
         //validate the user Input
         const inputResult = SignInSchema.safeParse(credentials);
-        console.log("Input Result is:", inputResult.data);
         if (!inputResult.success) {
           console.error(
             "Input Error:",
@@ -42,7 +39,6 @@ export const NEXT_AUTH = {
         }
         //If the count of signin request gose beyond 5 wihin 5 minutes then  the user gets blocked for 5 minutes, following is its logic
         const IpAddress = await getIp();
-        console.log("Ip address is:", IpAddress);
         const { success, pending, limit, reset, remaining } =
           await authRateLimit.limit(IpAddress);
         if (!success) {
@@ -55,7 +51,6 @@ export const NEXT_AUTH = {
             })
           );
         } else {
-          console.log("remaining:", remaining);
           //extract the email and password send by the user
           const { email, password } = inputResult.data;
           //check if the user with the entered email already exists in db
@@ -212,7 +207,6 @@ export const NEXT_AUTH = {
   callbacks: {
     signIn: async ({ user, account, profile, email, credentials }: any) => {
       if (account.provider === "google") {
-        console.log("Signin withe google!");
         const upsertedUser = await client.user.upsert({
           where: { email: user.email },
           update: {
@@ -238,7 +232,6 @@ export const NEXT_AUTH = {
     async jwt({ token, user }: any) {
       // When the user signs in, `user` contains the object returned by `authorize`
       if (user) {
-        console.log("user is:", user);
         token.id = user.id;
         token.isVerified = user.isVerified; // Pass isVerified to the token
       }
@@ -246,12 +239,10 @@ export const NEXT_AUTH = {
     },
     // The session callback helps in displaying the  userId in client component
     session: ({ session, token }: any) => {
-      console.log("User Token is:", token);
       if (session.user) {
         session.user.id = token.id as string;
         session.user.isVerified = token.isVerified as boolean; // Pass isVerified to the session
       }
-      console.log("User session details are:", session, token);
       return session;
     },
   },

@@ -1,233 +1,178 @@
 "use client";
 
 import axios from "axios";
+import Link from "next/link";
 import { Cart } from "./cart";
 import Image from "next/image";
-import Skeleton from "@/app/loading";
+import { useState } from "react";
 import { WishList } from "./wishlist";
 import { Navbar } from "./nav-section";
 import { Header } from "./header-section";
 import { Footer } from "./footer-section";
-import { useEffect, useState } from "react";
 import { ShoppingCartIcon } from "./cart-icon";
-import { CustomSelectTag } from "./custom-select-tag";
 import { UserProfileIcon } from "./user-profile-icon";
 import { LikeProductIcon } from "./like-product-icon";
-import { SellerProductData } from "@repo/common-types/types";
+import { CustomSelectTag } from "./custom-select-tag";
+import { ProductCatalogCard } from "./product-catalog-card";
 import { ProductFilterSection } from "./product-filter-section";
-import { ProductCard } from "./product-card";
 
 export const ExploreProductCatalogSection = () => {
-  const [loading, setLoading] = useState(false);
-  const [likeProduct, setLikeProduct] = useState(false);
-  const filterTags = ["Indoor Plants", "Large (24–48”)", "2 star & up"];
   const [displaySortDropDown, setDisplaySortDropDown] = useState(false);
-  const [productsData, setProductsData] = useState<SellerProductData[]>([]);
-
-  useEffect(() => {
-    console.log("Explore-product-catalog-section useEffect");
-    const getProductsData = async () => {
-      try {
-        setLoading(true);
-        const res = await axios.get("api/getallproducts");
-        const productsDataFromBE = res.data.productData;
-        setProductsData(productsDataFromBE);
-        setLoading(false);
-      } catch (error) {
-        console.error("Error while getting product data", error);
-      }
-    };
-    getProductsData();
-  }, []);
+  const filterTags = ["Indoor Plants", "Large (24–48”)", "2 star & up"];
 
   const handleSortProduct = () => {
     setDisplaySortDropDown(!displaySortDropDown);
   };
 
-  const handleLikeProduct = () => {
-    if (!likeProduct) {
-      setLikeProduct(true);
-    } else {
-      setLikeProduct(false);
-    }
-  };
-  if (loading) {
-    return <Skeleton />;
-  } else {
-    return (
-      <div className="relative flex flex-col items-center bg-[#FFF6F4] min-h-screen font-[Poppins]">
-        <Cart />
-        <WishList />
-        <div className="flex flex-col gap-[2rem]">
-          {/* Header,Navbar, and all other buttons */}
-          <div className="z-20 2xl:w-[82.1875rem] lg:w-[60rem] xl:w-[70rem] h-max flex flex-col items-center gap-[1rem] pt-[2rem]">
-            <div className="2xl:w-[82.1875rem] lg:w-[60rem] xl:w-[70rem] h-max flex justify-between z-0">
-              <Header />
-              <div className="w-[18rem] flex justify-between items-center">
-                <UserProfileIcon />
-                <LikeProductIcon />
-                <ShoppingCartIcon />
-              </div>
-            </div>
-
-            <div className="w-[100%] flex justify-between z-10">
-              <Navbar />
-              <div className="h-[4.05rem] w-[22.5rem] flex justify-between">
-                <CustomSelectTag
-                  width={"10.5"}
-                  activeValue="Plants"
-                  values={["Plant", "Soil", "Pots", "Fertilizers"]}
-                  explore={true}
-                />
-                <CustomSelectTag
-                  width={"10.5"}
-                  activeValue="Explore"
-                  values={["Explore", "Explore by seller"]}
-                  explore={true}
-                />
-              </div>
+  return (
+    <div className="relative flex flex-col items-center bg-[#FFF6F4] min-h-screen font-[Poppins]">
+      <Cart />
+      <WishList />
+      <div className="flex flex-col gap-[2rem]">
+        {/* Header,Navbar, and all other buttons */}
+        <div className="z-20 2xl:w-[82.1875rem] lg:w-[60rem] xl:w-[70rem] h-max flex flex-col items-center gap-[1rem] pt-[2rem]">
+          <div className="2xl:w-[82.1875rem] lg:w-[60rem] xl:w-[70rem] h-max flex justify-between z-0">
+            <Header />
+            <div className="w-[18rem] flex justify-between items-center">
+              <UserProfileIcon />
+              <LikeProductIcon />
+              <ShoppingCartIcon />
             </div>
           </div>
 
-          {/* Search Input, Search button & Sort Button */}
-          <div className="z-10 flex items-start justify-between gap-4 w-[82.1875rem]">
-            {/* Search Input */}
-            <div className="flex items-center w-[60rem] h-[3.0625rem] rounded-full border border-[#56A430] bg-white px-4">
-              <div className="relative w-[1.8rem] h-[1.8rem] flex-shrink-0 mr-3">
+          <div className="w-[100%] flex justify-between z-10">
+            <Navbar />
+            <div className="h-[4.05rem] w-[22.5rem] flex justify-between">
+              <CustomSelectTag
+                width={"10.5"}
+                activeValue="Plants"
+                values={["Plant", "Soil", "Pots", "Fertilizers"]}
+                explore={true}
+              />
+              <CustomSelectTag
+                width={"10.5"}
+                activeValue="Explore"
+                values={["Explore", "Explore by seller"]}
+                explore={true}
+              />
+            </div>
+          </div>
+        </div>
+
+        {/* Search Input, Search button & Sort Button */}
+        <div className="z-10 flex items-start justify-between gap-4 w-[82.1875rem]">
+          {/* Search Input */}
+          <div className="flex items-center w-[60rem] h-[3.0625rem] rounded-full border border-[#56A430] bg-white px-4">
+            <div className="relative w-[1.8rem] h-[1.8rem] flex-shrink-0 mr-3">
+              <Image
+                src="/assets/images/ExploreImages/searchBarSearchIcon.svg"
+                alt="search icon"
+                className="w-full h-full"
+                fill
+              />
+            </div>
+            <input
+              type="text"
+              placeholder="Find your Plants, Pots, Tools..."
+              className="w-full bg-transparent text-[#CBD0D3] placeholder-[#CBD0D3] text-[1.22669rem] font-normal outline-none font-poppins"
+            />
+          </div>
+
+          {/* Consist of Search and sort Button */}
+          <div className="flex justify-between w-[20rem]">
+            {/* Search Button */}
+            <button className="flex items-center justify-center gap-2 w-[10.1875rem] h-[3.0625rem] rounded-full bg-[#56A430] text-white text-[1.22669rem] font-poppins capitalize">
+              <div className="relative w-[1.5rem] h-[1.5rem] flex-shrink-0">
                 <Image
-                  src="/assets/images/ExploreImages/searchBarSearchIcon.svg"
+                  src="/assets/images/ExploreImages/searchButtonSearchIcon.svg"
                   alt="search icon"
                   className="w-full h-full"
                   fill
                 />
               </div>
-              <input
-                type="text"
-                placeholder="Find your Plants, Pots, Tools..."
-                className="w-full bg-transparent text-[#CBD0D3] placeholder-[#CBD0D3] text-[1.22669rem] font-normal outline-none font-poppins"
-              />
-            </div>
+              Search
+            </button>
 
-            {/* Consist of Search and sort Button */}
-            <div className="flex justify-between w-[20rem]">
-              {/* Search Button */}
-              <button className="flex items-center justify-center gap-2 w-[10.1875rem] h-[3.0625rem] rounded-full bg-[#56A430] text-white text-[1.22669rem] font-poppins capitalize">
+            <div className="relative w-[8.375rem] h-[3.0625rem]">
+              {/* Sort Button */}
+              <button
+                className="absolute top-0 flex items-center justify-center gap-2 w-[100%] h-[3.0625rem] rounded-full border-[1.6px] bg-[#fff] border-[#56A430] text-[#171717] text-[1.22669rem] font-poppins capitalize"
+                onClick={handleSortProduct}
+              >
                 <div className="relative w-[1.5rem] h-[1.5rem] flex-shrink-0">
                   <Image
-                    src="/assets/images/ExploreImages/searchButtonSearchIcon.svg"
-                    alt="search icon"
+                    src="/assets/images/ExploreImages/sortButtonIcon.svg"
+                    alt="sort icon"
                     className="w-full h-full"
                     fill
                   />
                 </div>
-                Search
+                Sort
               </button>
 
-              <div className="relative w-[8.375rem] h-[3.0625rem]">
-                {/* Sort Button */}
-                <button
-                  className="absolute top-0 flex items-center justify-center gap-2 w-[100%] h-[3.0625rem] rounded-full border-[1.6px] bg-[#fff] border-[#56A430] text-[#171717] text-[1.22669rem] font-poppins capitalize"
-                  onClick={handleSortProduct}
-                >
-                  <div className="relative w-[1.5rem] h-[1.5rem] flex-shrink-0">
-                    <Image
-                      src="/assets/images/ExploreImages/sortButtonIcon.svg"
-                      alt="sort icon"
-                      className="w-full h-full"
-                      fill
-                    />
-                  </div>
-                  Sort
-                </button>
-
-                {displaySortDropDown && (
-                  <ul className="z-10 w-[100%] h-[13.9375rem] mt-[1.5rem] pt-[2rem] border-x-[1.6px] border-b-[1.6px] rounded-bl-[2.1875rem] rounded-br-[2.1875rem] border-[#56A430] bg-[#fff] flex flex-col gap-[0.2rem] overflow-hidden">
-                    <li className="cursor-pointer pl-[1.5rem] hover:bg-[#FFF6F4]">
-                      Features
-                    </li>
-                    <li className="cursor-pointer pl-[1.5rem] hover:bg-[#FFF6F4]">
-                      Price:<span>Low to high</span>
-                    </li>
-                    <li className="cursor-pointer pl-[1.5rem] hover:bg-[#FFF6F4]">
-                      Price:<span>High to Low</span>
-                    </li>
-                    <li className="cursor-pointer pl-[1.5rem] hover:bg-[#FFF6F4]">
-                      Newest
-                    </li>
-                    <li className="cursor-pointer pl-[1.5rem] hover:bg-[#FFF6F4]">
-                      Rating
-                    </li>
-                  </ul>
-                )}
-              </div>
-            </div>
-          </div>
-
-          {/* Filter Section and Product Card */}
-          <div className="z-0 flex justify-between w-[82.1875rem] gap-6 font-[Poppins]">
-            {/* Sidebar */}
-            <ProductFilterSection />
-
-            {/* Main Section */}
-            <div className="w-[80%] flex flex-col gap-[1rem] pb-[1rem]">
-              {/* Filter Tags and Clear all button*/}
-              <div className="flex flex-wrap items-center justify-start gap-[5rem]">
-                {/* Following div consist of tag button */}
-                <div className="flex flex-wrap gap-[1rem] ml-[1rem]">
-                  {filterTags.map((tag, index) => (
-                    <button
-                      key={index}
-                      className="flex items-center justify-center gap-2 w-[12rem] h-[3.0625rem] px-[1rem] rounded-full bg-[#EDE7E4]"
-                    >
-                      <span className="text-[#171717] text-[1rem] font-poppins font-normal text-center">
-                        {tag}
-                      </span>
-                      <div className="w-[1.5rem] h-[1.5rem] relative">
-                        <Image
-                          src="/assets/images/ExploreImages/xIcon.svg"
-                          alt="close"
-                          fill
-                        />
-                      </div>
-                    </button>
-                  ))}
-                </div>
-
-                <button className="text-[#697F75] text-[1.1875rem] font-poppins font-medium whitespace-nowrap ml-2">
-                  Clear all
-                </button>
-              </div>
-
-              {/* Count of the products */}
-              <div className="w-max text-[2rem] text-[#000] ml-[1.5rem] font-semibold">
-                {`${productsData.length} Products Available`}
-              </div>
-
-              {/* Product Card  */}
-              <div className="grid grid-cols-3 gap-8">
-                {productsData.map((item: SellerProductData) => {
-                  return (
-                    <ProductCard
-                      key={item.id}
-                      id={item.id}
-                      imageURL={item.imageURL}
-                      collection={item.collection}
-                      compareAt={item.compareAt}
-                      handleLikeProduct={handleLikeProduct}
-                      likeProduct={likeProduct}
-                      name={item.name}
-                      price={item.price}
-                      productSize={item.productSize}
-                      tags={item.tags}
-                    />
-                  );
-                })}
-              </div>
+              {displaySortDropDown && (
+                <ul className="z-10 w-[100%] h-[13.9375rem] mt-[1.5rem] pt-[2rem] border-x-[1.6px] border-b-[1.6px] rounded-bl-[2.1875rem] rounded-br-[2.1875rem] border-[#56A430] bg-[#fff] flex flex-col gap-[0.2rem] overflow-hidden">
+                  <li className="cursor-pointer pl-[1.5rem] hover:bg-[#FFF6F4]">
+                    Features
+                  </li>
+                  <li className="cursor-pointer pl-[1.5rem] hover:bg-[#FFF6F4]">
+                    Price:<span>Low to high</span>
+                  </li>
+                  <li className="cursor-pointer pl-[1.5rem] hover:bg-[#FFF6F4]">
+                    Price:<span>High to Low</span>
+                  </li>
+                  <li className="cursor-pointer pl-[1.5rem] hover:bg-[#FFF6F4]">
+                    Newest
+                  </li>
+                  <li className="cursor-pointer pl-[1.5rem] hover:bg-[#FFF6F4]">
+                    Rating
+                  </li>
+                </ul>
+              )}
             </div>
           </div>
         </div>
-        <Footer />
+
+        {/* Filter Section and Product Card */}
+        <div className="z-0 flex justify-between w-[82.1875rem] font-[Poppins]">
+          {/* Sidebar */}
+          <ProductFilterSection />
+
+          <div className="w-[75%]">
+            {/* Filter Tags and Clear all button*/}
+            <div className="flex flex-wrap items-center justify-start gap-[5rem] mb-[1rem]">
+              {/* Following div consist of tag button */}
+              <div className="flex flex-wrap gap-[1rem] ml-[1rem]">
+                {filterTags.map((tag, index) => (
+                  <button
+                    key={index}
+                    className="flex items-center justify-center gap-2 w-[12rem] h-[3.0625rem] px-[1rem] rounded-full bg-[#EDE7E4]"
+                  >
+                    <span className="text-[#171717] text-[1rem] font-poppins font-normal text-center">
+                      {tag}
+                    </span>
+                    <div className="w-[1.5rem] h-[1.5rem] relative">
+                      <Image
+                        src="/assets/images/ExploreImages/xIcon.svg"
+                        alt="close"
+                        fill
+                      />
+                    </div>
+                  </button>
+                ))}
+              </div>
+
+              <button className="text-[#697F75] text-[1.1875rem] font-poppins font-medium whitespace-nowrap ml-2">
+                Clear all
+              </button>
+            </div>
+
+            {/* Main Section */}
+            <ProductCatalogCard />
+          </div>
+        </div>
       </div>
-    );
-  }
+      <Footer />
+    </div>
+  );
 };

@@ -13,7 +13,7 @@ import { ShoppingCartIcon } from "./cart-icon";
 import { UserProfileIcon } from "./user-profile-icon";
 import { LikeProductIcon } from "./like-product-icon";
 import { CustomSelectTag } from "./custom-select-tag";
-import { ProductCatalogCard } from "./product-catalog-card";
+import { ProductCatalogGrid } from "./product-catalog-grid";
 import { ProductFilterSection } from "./product-filter-section";
 
 export const ExploreProductCatalogSection = () => {
@@ -168,7 +168,7 @@ export const ExploreProductCatalogSection = () => {
             </div>
 
             {/* Main Section */}
-            <ProductCatalogCard />
+            <ProductCatalogGrid />
           </div>
         </div>
       </div>

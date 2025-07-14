@@ -3,13 +3,13 @@
 import axios from "axios";
 import Link from "next/link";
 import Image from "next/image";
-import Skeleton from "@/app/loading";
 import { useEffect, useState } from "react";
 import { ProductCard } from "./product-card";
 import { useSearchParams } from "next/navigation";
 import { SellerProductData } from "@repo/common-types";
+import { LocalLoadingSkeleton } from "./local-loading-skeleton";
 
-export const ProductCatalogCard = () => {
+export const ProductCatalogGrid = () => {
   const searchParams = useSearchParams();
   const searchParamsPage = searchParams.get("page");
 
@@ -90,7 +90,7 @@ export const ProductCatalogCard = () => {
   if (loading) {
     return (
       <div className="w-[100%] h-[95%] flex justify-center items-start pt-[10rem]">
-        <Skeleton />
+        <LocalLoadingSkeleton />
       </div>
     );
   } else {

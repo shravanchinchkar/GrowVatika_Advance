@@ -274,53 +274,125 @@ export const SingleProductPage = () => {
           </div>
 
           {/* Carousel */}
-          <div className="flex flex-col items-start">
-            <div className="flex gap-2 mt-2 mb-8">
-              {[0, 1, 2, 3, 4].map((i) => (
-                <div key={i} className="w-3 h-3 relative">
-                  <Image
-                    src={`/assets/images/SingleProductImage/${i === 2 ? "selectCircle" : "nonSelectedCircle"}.svg`}
-                    alt="Dot"
-                    fill
-                    className="object-contain"
+
+          {/* Slidebar + Evergreen Card */}
+          <div className="flex items-start gap-6">
+            {/* Slidebar Section */}
+            <div className="flex flex-col justify-between h-[16.5rem]">
+              {" "}
+              {/* Fixed height to align with card */}
+              {/* Dots Above Thumbnails */}
+              <div className="flex justify-center gap-2">
+                {[0, 1, 2, 3, 4].map((i) => (
+                  <div key={i} className="w-3 h-3 relative">
+                    <Image
+                      src={`/assets/images/SingleProductImage/${i === 2 ? "selectCircle" : "nonSelectedCircle"}.svg`}
+                      alt="Dot"
+                      fill
+                      className="object-contain"
+                    />
+                  </div>
+                ))}
+              </div>
+              {/* Thumbnail container box */}
+              <div className="w-[40rem] h-[14.3125rem] rounded-[0.9375rem] bg-[#FFF6F4] flex items-center justify-between px-4 relative">
+                <div className="flex gap-4 mx-auto z-10">
+                  <Thumbnail src="/assets/images/SingleProductImage/leafImage.png" />
+                  <Thumbnail
+                    src="/assets/images/SingleProductImage/productImage.png"
+                    selected
                   />
+                  <Thumbnail src="/assets/images/SingleProductImage/rootImage.png" />
                 </div>
-              ))}
+              </div>
             </div>
 
-            <div className="w-[40rem] h-[14.3125rem] rounded-[0.9375rem] bg-[#FFF6F4] flex items-center justify-between px-4 relative my-8">
-              <div className="w-[6.75rem] h-[6.75rem] bg-[#56A430] rounded-full absolute left-[-3.375rem] top-1/2 -translate-y-1/2 rotate-90 flex items-center justify-center">
-                <div className="relative w-6 h-6 rotate-90">
-                  <Image
-                    src="/assets/images/SingleProductImage/rightSlideIcon.svg"
-                    alt="left"
-                    fill
-                    className="object-contain"
-                  />
+            {/* Evergreen Gardens Card */}
+            <div className="w-[28.6875rem] h-[14.3125rem] flex-shrink-0 rounded-[0.625rem] bg-[#FFF6F4] flex items-center justify-center mt-[2.2rem]">
+              {" "}
+              {/* 👈 Push down to align */}
+              <div className="w-[26.25rem] h-[11.875rem] flex-shrink-0 rounded-[0.625rem] bg-white flex flex-col justify-between px-4 py-4 shadow-sm">
+                {/* Top Row: Image + Info */}
+                <div className="flex">
+                  <div className="w-[6.3125rem] h-[6.3125rem] flex-shrink-0 rounded-full overflow-hidden relative">
+                    <Image
+                      src="/assets/images/SingleProductImage/profileImage.svg"
+                      alt="Evergreen Gardens"
+                      fill
+                      className="object-cover"
+                    />
+                  </div>
+
+                  <div className="flex flex-col justify-start ml-4">
+                    <div className="text-[#171717] font-[Poppins] text-[1.5rem] font-semibold leading-[1.95rem] flex items-center gap-1">
+                      Evergreen Gardens
+                      <Image
+                        src="/assets/images/SingleProductImage/verifyIcon.svg"
+                        alt="Verified"
+                        width={24}
+                        height={24}
+                        className="w-[1.5rem] h-[1.5rem] flex-shrink-0"
+                      />
+                    </div>
+
+                    <div className="flex items-center gap-2 mt-1 flex-wrap">
+                      <Image
+                        src="/assets/images/SingleProductImage/locationIcon.svg"
+                        alt="Location"
+                        width={24}
+                        height={24}
+                        className="w-[1.5rem] h-[1.5rem] flex-shrink-0"
+                      />
+                      <span className="text-[#697F75] font-[Poppins] text-[1.1875rem] font-medium">
+                        Katraj, Pune |
+                      </span>
+                      <Image
+                        src="/assets/images/SingleProductImage/ratingIcon.svg"
+                        alt="Star"
+                        width={22}
+                        height={22}
+                        className="w-[1.375rem] h-[1.375rem] flex-shrink-0"
+                      />
+                      <span className="text-[#697F75] text-center font-[Poppins] text-[1.22669rem] font-medium uppercase">
+                        4.9
+                      </span>
+                    </div>
+                  </div>
                 </div>
-              </div>
 
-              <div className="flex gap-4 mx-auto z-10">
-                <Thumbnail src="/assets/images/SingleProductImage/leafImage.png" />
-                <Thumbnail
-                  src="/assets/images/SingleProductImage/productImage.png"
-                  selected
-                />
-                <Thumbnail src="/assets/images/SingleProductImage/rootImage.png" />
-              </div>
+                {/* Bottom Row: Buttons */}
+                <div className="flex gap-2 mt-4">
+                  <button className="w-[12.75rem] h-[3.1875rem] flex-shrink-0 rounded-[0.625rem] border border-[#CBD0D3] flex items-center justify-center gap-2">
+                    <Image
+                      src="/assets/images/SingleProductImage/visitStoreIcon.svg"
+                      alt="Visit Store"
+                      width={25}
+                      height={25}
+                      className="w-[1.53806rem] h-[1.50469rem] flex-shrink-0"
+                    />
+                    <span className="text-[#171717] text-center font-[Poppins] text-[1.22669rem] font-medium">
+                      Visit Store
+                    </span>
+                  </button>
 
-              <div className="w-[6.75rem] h-[6.75rem] bg-[#213E12] rounded-full absolute right-[-3.375rem] top-1/2 -translate-y-1/2 -rotate-90 flex items-center justify-center">
-                <div className="relative w-6 h-6 -rotate-90">
-                  <Image
-                    src="/assets/images/SingleProductImage/leftSlideIcon.svg"
-                    alt="right"
-                    fill
-                    className="object-contain"
-                  />
+                  <button className="w-[11rem] h-[3.1875rem] flex-shrink-0 rounded-[0.625rem] border border-[#CBD0D3] flex items-center justify-center gap-2">
+                    <Image
+                      src="/assets/images/SingleProductImage/contactIcon.svg"
+                      alt="Contact"
+                      width={25}
+                      height={25}
+                      className="w-[1.53806rem] h-[1.50469rem] flex-shrink-0"
+                    />
+                    <span className="text-[#171717] text-center font-[Poppins] text-[1.22669rem] font-medium">
+                      Contact
+                    </span>
+                  </button>
                 </div>
               </div>
             </div>
           </div>
+
+          {/* About Product */}
 
           <div className="bg-white p-8">
             <div className="text-[#000] text-center font-[Poppins] text-[2rem] not-italic font-semibold leading-[130%]">

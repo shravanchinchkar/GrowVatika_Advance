@@ -1,3 +1,5 @@
+"use client"
+
 import { Cart } from "./cart";
 import { Navbar } from "./nav-section";
 import { Footer } from "./footer-section";
@@ -8,19 +10,31 @@ import { UserProfileIcon } from "./user-profile-icon";
 import { ProductPageButton } from "./product-page-button";
 import { ProductSearchBar, SearchBarWorkType } from "./product-search-bar";
 import { ExploreBySellerGrid } from "./explore-by-seller-grid";
+import { LikeProductIcon } from "./like-product-icon";
+import { useAddToCartVisibilityStore, useWishListVisibilityStore } from "@repo/shared-store";
+import { WishList } from "./wishlist";
 
 export const ExplorePlantsBySeller = () => {
   const productPageButton = ["Most Popular", "Newly Added", "NearBy Seller"];
+  const addToCartVisibility = useAddToCartVisibilityStore(
+      (state: any) => state.addToCartDropDownVisibility
+    );
+  
+    const wishListVisibility = useWishListVisibilityStore(
+      (state: any) => state.wishListDropDownVisibility
+    );
 
   return (
-    <div className="h-max flex flex-col items-center bg-[#FFF6F4] font-[Poppins]">
+    <div className={`flex flex-col items-center bg-[#FFF6F4] font-[Poppins] ${addToCartVisibility || wishListVisibility ?"h-[100vh] overflow-hidden":"h-max"}`}>
       <Cart />
+      <WishList/>
       {/* Heder and Navbar */}
       <div className="2xl:w-[82.1875rem] lg:w-[60rem] xl:w-[70rem] h-max flex flex-col items-center gap-[1rem] pt-[2rem]">
         <div className="2xl:w-[82.1875rem] lg:w-[60rem] xl:w-[70rem] h-max flex justify-between">
           <Header />
-          <div className="w-[12rem] flex justify-between items-center">
+          <div className="w-[18rem] flex justify-between items-center">
             <UserProfileIcon />
+            <LikeProductIcon />
             <ShoppingCartIcon />
           </div>
         </div>
@@ -38,7 +52,6 @@ export const ExplorePlantsBySeller = () => {
       </div>
 
       <div className="2xl:w-[82.1875rem] lg:w-[60rem] xl:w-[70rem] h-max mt-[3rem] flex flex-col gap-[3rem] items-center">
-
         {/* Heading of  Eplore by seller */}
         <h1 className="w-[67.8125rem] uppercase text-center text-[#123524] font-[Unbounded] text-[2.25rem]">
           Explore by Sellers – Discover Nurseries Near You!
@@ -70,7 +83,7 @@ export const ExplorePlantsBySeller = () => {
           </div>
         </div>
 
-        <ExploreBySellerGrid/>
+        <ExploreBySellerGrid />
       </div>
 
       <div className="w-[100%]">

@@ -1,3 +1,5 @@
+"use client"
+
 import { Cart } from "./cart";
 import { Navbar } from "./nav-section";
 import { Header } from "./header-section";
@@ -12,17 +14,21 @@ import { FeatureSection } from "./feature-section";
 import { UserAuthButton } from "./user-auth-button";
 import { UserProfileIcon } from "./user-profile-icon";
 import { TestmonialSection } from "./testimonial-section";
+import { useAddToCartVisibilityStore } from "@repo/shared-store";
 
 export const LandingPage = () => {
+  const addToCartVisibility = useAddToCartVisibilityStore(
+    (state: any) => state.addToCartDropDownVisibility
+  );
   return (
-    <div className="relative flex flex-col bg-[#FFF6F4]">
+    <div className={`relative flex flex-col bg-[#FFF6F4] ${addToCartVisibility && "h-[100vh] overflow-hidden"}`}>
       <Cart />
       {/* Header Section */}
       <header className="relative flex flex-col items-center gap-[1rem] pt-[2rem] h-screen">
         <div className="lg:w-[60rem] xl:w-[70rem] 2xl:w-[82.1875rem] h-max flex justify-between">
           <Header />
           <div className="flex items-center gap-[2.5rem]">
-            <UserProfileIcon/>
+            <UserProfileIcon />
             <ShoppingCartIcon />
           </div>
         </div>

@@ -1,5 +1,6 @@
 import { SiteLogo } from "@repo/ui/brand-logo";
 import Image from "next/image";
+import Link from "next/link";
 
 export const Footer = () => {
   return (
@@ -34,7 +35,9 @@ export const Footer = () => {
 
             <div className="text-[#123524A0] new-sm:text-[0.3rem] new-sm-1:text-[0.8rem] lg:text-[0.8rem] xl:text-[1.25rem] font-medium uppercase flex flex-col new-sm:gap-[0.1rem] new-sm-1:gap-[0.2rem]">
               <p>Testimonials</p>
-              <p>terms & Co.</p>
+              <Link href="/terms" className="hover:underline">
+                terms & Co.
+              </Link>
               <p>more search</p>
               <p>privacy policy</p>
             </div>

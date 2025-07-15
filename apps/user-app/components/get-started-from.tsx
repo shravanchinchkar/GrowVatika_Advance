@@ -60,13 +60,14 @@ export const ContactForm = () => {
 
   return (
     <div
-      className={`lg:w-[60rem] xl:w-[75rem] 2xl:w-[82rem] flex flex-col items-center m-auto rounded-[28px] bg-contact-form pt-[1rem] pb-[1rem] relative ${
-        displayForm ? "h-[40rem] gap-[2rem]" : "h-[12.8125rem] gap-[2rem]"
-      }`}
+      className={`new-sm:w-[100%] new-sm:h-[4.9375rem] md:w-[45rem] lg:w-[60rem] xl:w-[75rem] 
+        2xl:w-[82rem] flex flex-col items-center m-auto bg-contact-form sm:pt-[2rem] md:pt-[1rem] pb-[1rem] 
+        relative rounded-none sm:rounded-[28px] border-[2px] 
+        ${displayForm ? "sm:h-[40rem] gap-[2rem]" : "sm:h-[12.8125rem] gap-[2rem]"}`}
     >
       {/* Following is the title of the form */}
 
-      <div className="text-[#123524] font-[Poppins] lg:text-[2rem] xl:text-[2.25rem] font-medium  text-center mt-[1rem]">
+      <div className="text-[#123524] font-[Poppins] new-sm:text-[0.7rem] sm:text-[1.2rem] md:text-[1.5rem] lg:text-[2rem] xl:text-[2.25rem] font-medium  text-center mt-[1rem]">
         Join Our Growing Network of Trusted Sellers!
       </div>
 
@@ -74,7 +75,7 @@ export const ContactForm = () => {
         <>
           <form
             onSubmit={handleSubmit(handleGetStartedForm)}
-            className="w-[90%] grid lg:grid-cols-[30rem auto 15rem] xl:grid-cols-[35rem auto 20rem] 2xl:grid-cols-[40rem auto 29rem] gap-y-[1rem] gap-x-0 my-[1rem] font-[Poppins]"
+            className="grid w-[90%] lg:grid-cols-[30rem auto 15rem] xl:grid-cols-[35rem auto 20rem] 2xl:grid-cols-[40rem auto 29rem] gap-y-[1rem] gap-x-0 my-[1rem] font-[Poppins]"
           >
             {/* Input Field For Full Name */}
             <div className="lg:w-[30rem] xl:w-[35rem] 2xl:w-[40rem] h-max col-span-2">
@@ -195,7 +196,10 @@ export const ContactForm = () => {
           <div
             className={
               !displayForm
-                ? "lg:w-[15rem] xl:w-[17.625rem] h-[4.0625rem]"
+                ? `new-sm:w-[10.5625rem] new-sm:h-[1.5625rem] new-sm:-translate-y-6
+                sm:w-[11rem] sm:h-[3rem]
+                md:w-[12rem] md:h-[4.0625rem]
+                lg:w-[15rem] xl:w-[17.625rem] h-[4.0625rem]`
                 : "hidden"
             }
           >

@@ -26,7 +26,6 @@ export const SiteLogo = () => {
           Nursery For Everyone
         </div>
       </div>
-
     </Link>
   );
 };

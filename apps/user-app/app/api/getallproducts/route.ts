@@ -10,6 +10,13 @@ export async function GET(req: NextRequest) {
     const limit: number = 6;
     const skip = (currentPage - 1) * Number(limit); // offset formula
 
+    if (currentPage < 1) {
+      return NextResponse.json({
+        success: false,
+        error: "Invalid page number",
+      });
+    }
+
     const productsData = await client.product.findMany({
       where: {
         productStatus: "Active",
@@ -31,7 +38,7 @@ export async function GET(req: NextRequest) {
         id: "asc", // Optional: Add consistent ordering
       },
     });
-    
+
     if (!productsData) {
       return NextResponse.json({
         success: false,

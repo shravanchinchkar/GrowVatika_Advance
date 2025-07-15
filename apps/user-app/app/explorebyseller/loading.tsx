@@ -2,7 +2,7 @@ import Image from "next/image";
 
 export default function Skeleton() {
   return (
-    <div className="w-[100%] flex justify-center items-center">
+    <div className="w-screen h-screen bg-[#FFF6F4] flex justify-center items-center">
       <div
         role="status"
         className="relative w-[7rem] h-[7rem] flex items-center justify-center"

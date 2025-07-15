@@ -15,17 +15,26 @@ import { LikeProductIcon } from "./like-product-icon";
 import { CustomSelectTag } from "./custom-select-tag";
 import { ProductCatalogGrid } from "./product-catalog-grid";
 import { ProductFilterSection } from "./product-filter-section";
+import { useAddToCartVisibilityStore, useWishListVisibilityStore } from "@repo/shared-store";
 
 export const ExploreProductCatalogSection = () => {
   const [displaySortDropDown, setDisplaySortDropDown] = useState(false);
   const filterTags = ["Indoor Plants", "Large (24–48”)", "2 star & up"];
 
+  const addToCartVisibility = useAddToCartVisibilityStore(
+    (state: any) => state.addToCartDropDownVisibility
+  );
+  const wishListVisibility = useWishListVisibilityStore(
+    (state: any) => state.wishListDropDownVisibility
+  );
   const handleSortProduct = () => {
     setDisplaySortDropDown(!displaySortDropDown);
   };
 
   return (
-    <div className="relative flex flex-col items-center bg-[#FFF6F4] min-h-screen font-[Poppins]">
+    <div
+      className={`min-h-screen relative flex flex-col items-center bg-[#FFF6F4] font-[Poppins] ${addToCartVisibility || wishListVisibility && "h-[100vh] overflow-hidden"}`}
+    >
       <Cart />
       <WishList />
       <div className="flex flex-col gap-[2rem]">

@@ -196,7 +196,7 @@ export const ContactForm = () => {
           <div
             className={
               !displayForm
-                ? `new-sm:w-[10.5625rem] new-sm:h-[1.5625rem] new-sm:-translate-y-6
+                ? `new-sm:w-[10.5625rem] new-sm:h-[1.5625rem] new-sm:-translate-y-6 sm:translate-y-0
                 sm:w-[11rem] sm:h-[3rem]
                 md:w-[12rem] md:h-[4.0625rem]
                 lg:w-[15rem] xl:w-[17.625rem] h-[4.0625rem]`

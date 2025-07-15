@@ -2,6 +2,9 @@ import Image from "next/image";
 import { Header } from "./header-section";
 import { Navbar } from "./nav-section";
 import { UserAuthButton } from "./user-auth-button";
+import { ShoppingCartIcon } from "./cart-icon";
+import { LikeProductIcon } from "./like-product-icon";
+import { UserProfileIcon } from "./user-profile-icon";
 
 const BreadCrumb = () => {
   const crumbs = [
@@ -96,7 +99,14 @@ export const SingleProductPage = () => {
     <div className="flex flex-col items-center bg-[#FFF6F4] gap-[2rem] min-h-screen font-[Poppins] pb-[2rem]">
       {/* Header & Nav */}
       <div className="flex flex-col gap-[1rem] pt-[2rem]">
-        <Header />
+        <div className="2xl:w-[82.1875rem] lg:w-[60rem] xl:w-[70rem] h-max flex justify-between z-0">
+          <Header />
+          <div className="w-[18rem] flex justify-between items-center">
+            <UserProfileIcon />
+            <LikeProductIcon />
+            <ShoppingCartIcon />
+          </div>
+        </div>
         <div className="flex justify-between">
           <Navbar />
           <UserAuthButton />

@@ -15,6 +15,7 @@ import { UserAuthButton } from "./user-auth-button";
 import { UserProfileIcon } from "./user-profile-icon";
 import { TestmonialSection } from "./testimonial-section";
 import { useAddToCartVisibilityStore } from "@repo/shared-store";
+import { Hamburg } from "./hamburg";
 
 export const LandingPage = () => {
   const addToCartVisibility = useAddToCartVisibilityStore(
@@ -26,16 +27,19 @@ export const LandingPage = () => {
       <Cart />
       {/* Header Section */}
 
-      <header className="relative flex flex-col items-center gap-[1rem] pt-[2rem] h-screen">
-        <div className="lg:w-[60rem] xl:w-[70rem] 2xl:w-[82.1875rem] h-max flex justify-between">
+      <header className="relative flex flex-col items-center gap-[1rem] new-sm:pt-[0.5rem] md:pt-[2rem] h-screen">
+
+        <div className="new-sm:w-[100vw] md:w-[60rem] xl:w-[70rem] 2xl:w-[82.1875rem] h-max flex justify-between">
           <Header />
-          <div className="flex items-center gap-[2.5rem]">
+          <div className="flex new-sm:flex-col md:flex-row items-center new-sm:gap-[0.8rem] md:gap-[2.5rem]">
             <UserProfileIcon />
             <ShoppingCartIcon />
+            <Hamburg/>
           </div>
         </div>
 
-        <div className="lg:w-[60rem] xl:w-[70rem] 2xl:w-[82.1875rem] flex justify-between items-center z-10 font-[Poppins]">
+        {/* Navbar and Authbutton */}
+        <div className="new-sm:hidden md:flex lg:w-[60rem] xl:w-[70rem] 2xl:w-[82.1875rem] justify-between items-center z-10 font-[Poppins]">
           <Navbar />
           <UserAuthButton />
         </div>

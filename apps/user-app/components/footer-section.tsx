@@ -28,7 +28,7 @@ export const Footer = () => {
       <div className="new-sm:w-[18.07rem] new-sm-1:w-[66rem]">
         <div className="grid grid-cols-3 new-sm:pt-[1rem] new-sm-1:pt-[3rem] font-[Poppins] new-sm:border-b-[0.1px] new-sm-1:border-b-[2px] border-[#123524] new-sm:pb-[0.5rem] new-sm-1:pb-[2rem] lg:pb-[2rem] xl:pb-[3rem]">
           {/* Following is the div 1 */}
-          <div className="border-[2px] border-red-500 flex flex-col new-sm:gap-[0.2rem] new-sm-1:gap-[1rem] new-sm:w-[3.65rem] new-sm-1:w-max justify-self-center">
+          <div className=" flex flex-col new-sm:gap-[0.2rem] new-sm-1:gap-[1rem] new-sm:w-[3.65rem] new-sm-1:w-max justify-self-center">
             <div className="new-sm:text-[0.45rem] new-sm-1:text-[1.2rem] lg:text-[1.2rem] xl:text-[1.5rem] text-[#123524] font-bold uppercase">
               Our Company
             </div>
@@ -44,7 +44,7 @@ export const Footer = () => {
           </div>
 
           {/* Following is the div 2 */}
-          <div className="border-[2px] border-red-500 flex flex-col new-sm:gap-[0.2rem] new-sm-1:gap-[1rem] new-sm:w-[5.4rem] new-sm-1:w-max justify-self-start">
+          <div className=" flex flex-col new-sm:gap-[0.2rem] new-sm-1:gap-[1rem] new-sm:w-[5.4rem] new-sm-1:w-max justify-self-start">
             <div className="new-sm:text-[0.45rem] new-sm-1:text-[1.2rem] lg:text-[1.2rem] xl:text-[1.5rem] text-[#123524] font-bold uppercase">
               Products & Services
             </div>
@@ -57,7 +57,7 @@ export const Footer = () => {
           </div>
 
           {/* Following is the div 3 */}
-          <div className="border-[2px] border-red-500 new-sm:w-[4.5rem] new-sm-1:w-max lg:ml-[2rem] xl:ml-0 flex flex-col new-sm:gap-[1rem] new-sm-1:gap-[4rem]">
+          <div className=" new-sm:w-[4.5rem] new-sm-1:w-max lg:ml-[2rem] xl:ml-0 flex flex-col new-sm:gap-[1rem] new-sm-1:gap-[4rem]">
             <div className="flex flex-col new-sm:gap-[0.2rem] new-sm-1:gap-[1rem]">
               <div className="new-sm:text-[0.45rem] new-sm-1:text-[1.2rem] lg:text-[1.2rem] xl:text-[1.5rem] text-[#123524] font-bold uppercase">
                 Contact us

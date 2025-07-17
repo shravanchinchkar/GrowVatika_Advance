@@ -47,6 +47,7 @@ export default {
         "explore-custom": "10px 10px 59px #85A947",
         "testinomial-custom": "0px 4px 9.9px 0px rgba(0, 0, 0, 0.44)",
       },
+
       screens: {
         "new-sm": "320px",
         "new-sm-1": "430px",
@@ -54,6 +55,7 @@ export default {
         "new-xl": "1330px",
         "new-xl-2": "1400px",
       },
+
       borderRadius: {
         lg: "var(--radius)",
         md: "calc(var(--radius) - 2px)",

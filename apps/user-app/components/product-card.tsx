@@ -1,5 +1,6 @@
 import Image from "next/image";
 import { memo } from "react";
+import { useRouter } from "next/navigation";
 
 interface ProductCardProps {
   id: string;
@@ -27,13 +28,21 @@ export const ProductCard = memo(
     tags,
     likeProduct,
   }: ProductCardProps) => {
+    const router = useRouter();
+
+    const handleProductData = (id: string) => {
+      router.push(`/product?id=${id}`);
+    };
+
     return (
       <div
         key={id}
-        className="w-[18rem] h-[29rem] flex flex-col items-center flex-shrink-0 rounded-[1.25rem] bg-white shadow-[0px_0px_25px_-11px_rgba(0,0,0,0.25)] font-[Poppins] overflow-hidden justify-self-end"
+        className="w-[18rem] h-[29rem] flex flex-col items-center flex-shrink-0 rounded-[1.25rem] bg-white shadow-[0px_0px_25px_-11px_rgba(0,0,0,0.25)] font-[Poppins] overflow-hidden justify-self-end cursor-pointer"
+        onClick={() => handleProductData(id)}
       >
         {/* Product Image */}
-        <div className="w-[100%] h-[55%] flex flex-shrink-0 bg-cover bg-center bg-no-repeat"
+        <div
+          className="w-[100%] h-[55%] flex flex-shrink-0 bg-cover bg-center bg-no-repeat"
           style={{
             backgroundImage: `url(${imageURL})`,
           }}
@@ -98,13 +107,13 @@ export const ProductCard = memo(
             </div>
 
             {/* Product Name */}
-            <p className="text-[#000] text-[1.4rem] font-semibold leading-[1.3rem]">
+            <p className="w-[100%] text-[#000] text-start text-[1.4rem] font-semibold leading-[1.3rem]">
               {name}
             </p>
           </div>
 
           {/* Product Size */}
-          <p className="text-[#697F75] text-[0.9375rem] leading-[1.5rem] font-medium ">
+          <p className="text-start text-[#697F75] text-[0.9375rem] leading-[1.5rem] font-medium">
             {`Product Size - ${productSize}" Pot`}
           </p>
 

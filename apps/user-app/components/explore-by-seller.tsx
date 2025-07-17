@@ -1,4 +1,4 @@
-"use client"
+"use client";
 
 import { Cart } from "./cart";
 import { Navbar } from "./nav-section";
@@ -6,28 +6,33 @@ import { Footer } from "./footer-section";
 import { Header } from "./header-section";
 import { ShoppingCartIcon } from "./cart-icon";
 import { CustomSelectTag } from "./custom-select-tag";
+import { LikeProductIcon } from "./like-product-icon";
 import { UserProfileIcon } from "./user-profile-icon";
 import { ProductPageButton } from "./product-page-button";
-import { ProductSearchBar, SearchBarWorkType } from "./product-search-bar";
 import { ExploreBySellerGrid } from "./explore-by-seller-grid";
-import { LikeProductIcon } from "./like-product-icon";
-import { useAddToCartVisibilityStore, useWishListVisibilityStore } from "@repo/shared-store";
+import {
+  useAddToCartVisibilityStore,
+  useWishListVisibilityStore,
+} from "@repo/shared-store";
+import { ProductSearchBar, SearchBarWorkType } from "./product-search-bar";
+
 import { WishList } from "./wishlist";
 
 export const ExplorePlantsBySeller = () => {
   const productPageButton = ["Most Popular", "Newly Added", "NearBy Seller"];
   const addToCartVisibility = useAddToCartVisibilityStore(
-      (state: any) => state.addToCartDropDownVisibility
-    );
-  
-    const wishListVisibility = useWishListVisibilityStore(
-      (state: any) => state.wishListDropDownVisibility
-    );
+    (state: any) => state.addToCartDropDownVisibility
+  );
+  const wishListVisibility = useWishListVisibilityStore(
+    (state: any) => state.wishListDropDownVisibility
+  );
 
   return (
-    <div className={`flex flex-col items-center bg-[#FFF6F4] font-[Poppins] ${addToCartVisibility || wishListVisibility ?"h-[100vh] overflow-hidden":"h-max"}`}>
+    <div
+      className={`flex flex-col items-center bg-[#FFF6F4] font-[Poppins] ${addToCartVisibility || wishListVisibility ? "h-[100vh] overflow-hidden" : "h-max"}`}
+    >
       <Cart />
-      <WishList/>
+      <WishList />
       {/* Heder and Navbar */}
       <div className="2xl:w-[82.1875rem] lg:w-[60rem] xl:w-[70rem] h-max flex flex-col items-center gap-[1rem] pt-[2rem]">
         <div className="2xl:w-[82.1875rem] lg:w-[60rem] xl:w-[70rem] h-max flex justify-between">

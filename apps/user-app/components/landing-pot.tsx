@@ -1,12 +1,14 @@
 import Image from "next/image";
 import { SiteButton } from "./shop-button";
 import HangingPot from "../public/assets/images/HeroImages/HangingPot.png";
+import MobileHangingPot from "../public/assets/images/MobileView/mobile-hangingpot.png"
 import FlowerPot from "../public/assets/images/HeroImages/LandingPot.svg";
 
 export const LandingPot = () => {
   return (
-    <div className="2xl:w-[82.1875rem] lg:w-[60rem] xl:w-[70rem] h-[42rem] absolute z-0 top-0 grid grid-cols-2 rounded-[28px]">
-      <div className="relative z-10 rounded-l-[28px] h-[100%] grid grid-cols-2">
+    <div className="new-sm:w-[24rem] new-sm:h-[23.5rem] md:h-[42rem] lg:w-[60rem] xl:w-[70rem] 2xl:w-[82.1875rem] absolute z-0 top-0 new-sm:flex md:grid grid-cols-2 rounded-[28px] overflow-visible">
+
+      <div className="relative z-10 rounded-l-[28px] h-[100%] new-sm:hidden md:grid grid-cols-2">
         {/* Following is the Shop now button */}
         <div className="flex justify-start items-end mb-[1rem]">
           <SiteButton buttonName={"Shop Now"} />
@@ -29,16 +31,25 @@ export const LandingPot = () => {
         </div>
       </div>
 
-      <div className="relative flex justify-center rounded-r-[28px]">
+      <div className="w-[100%] relative flex justify-center rounded-r-[28px]">
 
-        <div className="absolute w-[25rem] top-0 lg:left-[5%] xl:left-[17%] 2xl:left-[25%]">
-          <div className="relative w-[25rem] lg:h-[35rem] drop-shadow-3xl shrink-0">
+        <div className="absolute new-sm:w-[13rem] new-sm:h-[16.6875rem] md:w-[25rem] md:h-[35rem] top-0 new-sm:right-0 lg:left-[5%] xl:left-[17%] 2xl:left-[25%]">
+          <div className="relative new-sm:w-[13rem] new-sm:h-[16.6875rem] md:w-[25rem] md:h-[35rem] drop-shadow-3xl shrink-0">
             <Image
-              className="object-cover"
+              className="new-sm:hidden md:block object-cover"
               src={HangingPot}
               alt="pot"
               fill
               sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 25vw"
+              placeholder="blur"
+              priority
+            />
+            <Image
+              className="new-sm:block md:hidden object-cover"
+              src={MobileHangingPot}
+              alt="pot"
+              fill
+              // sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 25vw"
               placeholder="blur"
               priority
             />

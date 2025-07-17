@@ -8,7 +8,7 @@ export const HeroSection = () => {
           Create Your own <span className="text-[#3E7B27]">Green</span> Heaven!!
         </div>
 
-        <div className="new-sm:w-[16rem] xl:w-[22rem] 2xl:w-[24rem] lg:leading-[25px] xl:leading-[29px] new-sm:mx-[1rem] lg:mx-[2rem] 2xl:mx-[3rem] new-sm:mt-[1rem] 2xl:mt-[2rem] font-[Poppins] new-sm:text-[0.625rem] lg:text-[0.8rem] xl:text-[1rem] text-white">
+        <div className="new-sm:w-[12rem] lg:w-[16rem] xl:w-[22rem] 2xl:w-[24rem] lg:leading-[25px] xl:leading-[29px] new-sm:mx-[1rem] lg:mx-[2rem] 2xl:mx-[3rem] new-sm:mt-[1rem] 2xl:mt-[2rem] font-[Poppins] new-sm:text-[0.625rem] lg:text-[0.8rem] xl:text-[1rem] text-white text-justify">
           
           Welcome to <span className="font-bold italic">GrowVatika</span>, your
           one-stop destination to explore and shop from the best nurseries near
@@ -20,18 +20,23 @@ export const HeroSection = () => {
 
       <div className="triangle bg-gradient-to-r from-[#73735A] to-[#445A4A] absolute right-0 bottom-0 w-[45%] h-[70%]">
 
-        <div className="absolute top-[10rem] new-sm:right-0 xl:right-1 2xl:right-[3%] new-sm:leading-0 lg:leading-[65px] xl:leading-[75px] uppercase font-[Poppins]">
-          <div className="new-sm:text-[1rem] lg:text-[2rem] lg:text-center xl:text-start xl:text-[3.125rem] font-bold stroke-[#85A947] text-white drop-shadow-md italic">
+        <div className="absolute md:top-[10rem] right-1 2xl:right-[3%] new-sm:leading-0 lg:leading-[65px] xl:leading-[75px] uppercase font-[Poppins]">
+
+          <div className="new-sm:hidden md:block md:text-[2rem] lg:text-center xl:text-start xl:text-[3.125rem] font-bold stroke-[#85A947] text-white drop-shadow-md italic">
             50% OFF
           </div>
-          <div className="new-sm:text-[10px] lg:text-[15px] lg:mr-[1rem] xl:mr-0 xl:text-[18px] leading-[0px] text-[#DBD5A4]">
-            on orders above ₹1499/-
+
+          <div className="new-sm:w-[4.5rem] md:w-max new-sm:mt-[4.5rem] new-sm:text-center md:mt-0 new-sm:text-[0.6rem] lg:text-[15px] lg:mr-[1rem] xl:mr-0 xl:text-[18px]  md:leading-[0px] text-[#DBD5A4]">
+            on orders above ₹1499/- 
           </div>
+
         </div>
 
-        <div className="absolute font-[Poppins] new-sm:text-[0.5rem] lg:text-[0.8rem] xl:text-[1rem] flex justify-end pr-[1rem] items-center bottom-0 right-0 w-[100%] h-[15%] uppercase bg-[#123524] text-[#fff] pl-[4rem]">
-          Free Shipping above ₹499 | All India Delivery
+        <div className="absolute font-[Poppins] md:text-[0.8rem] xl:text-[1rem] flex new-sm:justify-start md:justify-end items-center new-sm:pr-0 md:pr-[1rem] new-sm:pl-[3.5rem] md:pl-[4rem] bottom-0 right-0 w-[100%] new-sm:h-[30%] md:h-[15%] uppercase bg-[#123524] text-[#fff]">
+          <p className="new-sm:hidden md:block">Free Shipping above ₹499 | All India Delivery</p>
+          <p className="new-sm:block md:hidden font-bold stroke-[#85A947] text-white drop-shadow-md italic text-[1.5rem]">50% off</p>
         </div>
+
       </div>
     </div>
   );

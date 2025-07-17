@@ -27,11 +27,11 @@ export const LandingPage = () => {
       <Cart />
       {/* Header Section */}
 
-      <header className="relative flex flex-col items-center gap-[1rem] new-sm:pt-[0.5rem] md:pt-[2rem] h-screen">
+      <header className="md:h-screen relative flex flex-col items-center gap-[1rem] new-sm:pt-[0.5rem] md:pt-[2rem] new-sm:pb-[0.5rem] md:pb-0">
 
         <div className="new-sm:w-[100vw] md:w-[60rem] xl:w-[70rem] 2xl:w-[82.1875rem] h-max flex justify-between">
           <Header />
-          <div className="flex new-sm:flex-col md:flex-row items-center new-sm:gap-[0.8rem] md:gap-[2.5rem]">
+          <div className="flex new-sm:flex-col md:flex-row items-center new-sm:gap-[0.3rem] md:gap-[2.5rem]">
             <UserProfileIcon />
             <ShoppingCartIcon />
             <Hamburg/>
@@ -49,7 +49,7 @@ export const LandingPage = () => {
       </header>
 
       {/* Main Section */}
-      <main className="flex flex-col gap-[3rem]">
+      <main className="flex flex-col new-sm:gap-[0.5rem] md:gap-[3rem]">
         <ExploreSection />
         <AboutUsSection />
         <FeatureSection />

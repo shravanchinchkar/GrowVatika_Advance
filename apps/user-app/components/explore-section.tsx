@@ -3,12 +3,12 @@ import { ExploreMoreSectionData } from "../data/exploreMoreSectionData";
 
 export const ExploreSection = () => {
   return (
-    <div className="new-sm:pb-[1.37rem] new-sm-1:pb-0 lg:mt-[12rem] xl:mt-[15rem] 2xl:mt-[8rem] bg-custom-gradient">
+    <div className="new-sm:pb-[1.37rem] new-sm:mt-[1rem] new-sm-1:pb-0 md:mt-[12rem] xl:mt-[15rem] 2xl:mt-[8rem] bg-custom-gradient">
       {/* Following is the top div */}
 
       <div className="flex flex-col justify-center items-center new-sm:mt-0 sm:mt-1 mt-[1rem] font-[Poppins]">
 
-        <div className="new-sm:text-[1.1rem]  sm:text-[1.3rem] lg:text-[1.5rem] xl:text-[2.25rem] font-medium uppercase new-sm:w-[22rem] sm:w-max new-sm:h-[1.5rem] sm:h-[2rem] lg:h-[3.375rem] text-center text-[#123524] mt-[1rem]">
+        <div className="new-sm:text-[0.9375rem] sm:text-[1.3rem] lg:text-[1.5rem] xl:text-[2.25rem] font-medium uppercase new-sm:w-[24rem] new-sm:h-max sm:w-max sm:h-[2rem] lg:h-[3.375rem] text-center text-[#123524] mt-[1rem]">
           Explore <span className="font-bold ">a World of Green</span> – Plants,
           Tools & Essentials!
         </div>
@@ -21,7 +21,7 @@ export const ExploreSection = () => {
         </div>
       </div>
 
-      <div className="new-sm:mx-[2rem] new-sm:pt-[2.5rem] new-sm-1:px-[5rem] new-sm-1:py-[3rem] new-sm:grid new-sm:grid-cols-2 new-sm-1:flex gap-[1.5rem]">
+      <div className="new-sm:mx-[1rem] new-sm:pt-[1rem] new-sm-1:px-[5rem] new-sm-1:py-[3rem] new-sm:grid new-sm:grid-cols-2 new-sm-1:flex gap-[1.5rem]">
         {ExploreMoreSectionData.map((item) => {
           return <ExploreCard key={item.id} cardData={item} />
         })}

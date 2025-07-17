@@ -1,6 +1,6 @@
 export const HeroSection = () => {
   return (
-    <div className="new-sm:w-[24rem] new-sm:h-[14.125rem] md:min-h-[29rem] lg:w-[60rem] xl:w-[70rem] 2xl:w-[82.1875rem] mt-[1rem] relative  overflow-hidden flex flex-wrap rounded-[28px]">
+    <div className="new-sm:w-[24rem] new-sm:h-[14.125rem] new-sm-1:w-[25.5rem] md:min-h-[29rem] lg:w-[60rem] xl:w-[70rem] 2xl:w-[82.1875rem] mt-[1rem] relative  overflow-hidden flex flex-wrap rounded-[28px]">
 
       <div className="polygon bg-[#9DB375] w-[100%] h-[100%] border-[1px] border-[#9DB375]">
 

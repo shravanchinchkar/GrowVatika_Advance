@@ -6,7 +6,7 @@ import FlowerPot from "../public/assets/images/HeroImages/LandingPot.svg";
 
 export const LandingPot = () => {
   return (
-    <div className="new-sm:w-[24rem] new-sm:h-[23.5rem] md:h-[42rem] lg:w-[60rem] xl:w-[70rem] 2xl:w-[82.1875rem] absolute z-0 top-0 new-sm:flex md:grid grid-cols-2 rounded-[28px] overflow-visible">
+    <div className="new-sm:w-[24rem] new-sm:h-[23.5rem] new-sm-1:w-[25.5rem] md:h-[42rem] lg:w-[60rem] xl:w-[70rem] 2xl:w-[82.1875rem] absolute z-0 top-0 new-sm:flex md:grid grid-cols-2 rounded-[28px] overflow-visible">
 
       <div className="relative z-10 rounded-l-[28px] h-[100%] new-sm:hidden md:grid grid-cols-2">
         {/* Following is the Shop now button */}

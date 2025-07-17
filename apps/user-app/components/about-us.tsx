@@ -29,7 +29,7 @@ export const AboutUsSection = () => {
       </div>
 
       {/* Text */}
-      <div className="new-sm:w-[62%] new-sm:h-[85%] md:w-[55%] md:h-[80%] absolute top-[10%] new-sm:right-[3%] md:right-[14%] z-0  new-sm:pl-[3.5rem] new-sm:pt-[0.9rem] md:pt-0 lg:pl-[8rem] lg:pt-[0.7rem] xl:pl-[12rem] xl:pb-[2rem] flex flex-col md:justify-center self-center font-poppins new-sm:rounded-[15px] md:rounded-[28px] bg-custom-gradient overflow-hidden border-[2px]">
+      <div className="new-sm:w-[62%] new-sm:h-[85%] md:w-[55%] md:h-[80%] absolute top-[10%] new-sm:right-[3%] md:right-[14%] z-0  new-sm:pl-[3.5rem] new-sm:pt-[0.9rem] md:pt-0 lg:pl-[8rem] lg:pt-[0.7rem] xl:pl-[12rem] xl:pb-[2rem] flex flex-col md:justify-center self-center font-poppins new-sm:rounded-[15px] md:rounded-[28px] bg-custom-gradient overflow-hidden">
 
         <h1 className="new-sm:text-[0.9375rem] md:text-[1.5rem] xl:text-[2rem] 2xl:text-[2.25rem] text-[#123524] font-medium ">
           About GrowVatika

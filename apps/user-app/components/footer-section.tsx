@@ -9,7 +9,7 @@ export const Footer = () => {
       className="flex new-sm:flex-col md:flex-row new-sm:h-max md:h-[20rem] xl:h-[22.875rem] bg-feature-gradient new-sm:mt-[1rem] md:mt-[5rem] overflow-hidden"
     >
       {/* Following is the left footer div */}
-      <div className="new-sm:w-[100%] new-sm-1:w-[29rem] md:h-[100%] new-sm:pt-[0.2rem] new-sm-1:pt-[2.5rem] lg:pt-[2.5rem]">
+      <div className="new-sm:hidden md:block md:w-[29rem] md:h-[100%] new-sm:pt-[0.2rem] new-sm-1:pt-[2.5rem] lg:pt-[2.5rem]">
         <div className="flex justify-center ">
           <SiteLogo />
         </div>
@@ -27,9 +27,10 @@ export const Footer = () => {
 
       {/* Following is the right footer div */}
       <div className="new-sm:w-[100%] md:w-[66rem]">
-        <div className="grid grid-cols-3 new-sm:pt-0 md:pt-[3rem] font-[Poppins] new-sm:border-b-[0.01675rem] md:border-b-[2px] border-[#123524] new-sm:pb-[0.5rem] md:pb-[2rem] xl:pb-[3rem]">
+        <div className="grid grid-cols-3 new-sm:pt-0 md:pt-[3rem] font-[Poppins] new-sm:border-b-[0.01675rem] md:border-b-[2px] border-[#123524] new-sm:pb-[0.5rem] new-sm:pl-[0.5rem] md:pl-0 md:pb-[2rem] xl:pb-[3rem]">
+
           {/* Following is the div 1 */}
-          <div className="new-sm:w-[90%] md:w-max  flex flex-col new-sm:gap-[0.2rem] new-sm-1:gap-[1rem] justify-self-center">
+          <div className="new-sm:w-[90%] md:w-max flex flex-col new-sm:gap-[0.2rem] new-sm-1:gap-[1rem] justify-self-center">
             <div className="new-sm:text-[0.7rem] md:text-[1.2rem] xl:text-[1.5rem] text-[#123524] font-bold uppercase">
               Our Company
             </div>
@@ -45,7 +46,7 @@ export const Footer = () => {
           </div>
 
           {/* Following is the div 2 */}
-          <div className="new-sm:w-[90%] md:w-max flex flex-col new-sm:gap-[0.2rem] new-sm-1:gap-[1rem]">
+          <div className="new-sm:w-[90%] md:w-max flex flex-col md:items-start new-sm:gap-[0.2rem] new-sm-1:gap-[1rem]">
             <div className="new-sm:text-[0.7rem] md:text-[1.2rem] xl:text-[1.5rem] text-[#123524] font-bold uppercase">
               Products & Services
             </div>
@@ -133,6 +134,7 @@ export const Footer = () => {
               </div>
             </div>
           </div>
+
         </div>
 
         <div className="font-[Poppins] flex justify-between text-[#3E7B27] uppercase">

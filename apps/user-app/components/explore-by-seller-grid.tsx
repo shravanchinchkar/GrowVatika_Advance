@@ -144,14 +144,23 @@ export const ExploreBySellerGrid = memo(() => {
                   <div className="w-[98%] h-[17rem] flex justify-between">
                     {/* Nursery profile Photo */}
                     <div
-                      className={`relative w-[14rem] h-[100%] rounded-[1.5625rem] overflow-hidden ${!item.profilePictureURL ? "bg-[#DBD5A4]" : "border-[1.2px] border-[#56A430]"}`}
+                      className={`relative w-[14rem] h-[100%] rounded-[1.5625rem] overflow-hidden ${item.profilePictureURL && "border-[1.2px] border-[#56A430]"}`}
                     >
-                      {item.profilePictureURL && (
+                      {item.profilePictureURL ? (
                         <Image
                           className="object-cover"
                           alt="nursery-profile-photo"
                           src={item.profilePictureURL}
                           fill
+                        />
+                      ) : (
+                        <Image
+                          src={
+                            "/assets/images/ExploreBySellerImages/ImagePlaceholder.jpg"
+                          }
+                          alt="NoImage"
+                          fill
+                          className="object-cover"
                         />
                       )}
                     </div>
@@ -161,8 +170,26 @@ export const ExploreBySellerGrid = memo(() => {
                     <div className="flex flex-col justify-between">
                       {item.products.length === 0 ? (
                         <>
-                          <div className="relative overflow-hidden w-[7.8rem] h-[8.2rem] rounded-[1.5625rem] bg-[#DBD5A4]"></div>
-                          <div className="relative overflow-hidden w-[7.8rem] h-[8.2rem] rounded-[1.5625rem] bg-[#DBD5A4]"></div>
+                          <div className="relative overflow-hidden w-[7.8rem] h-[8.2rem] rounded-[1.5625rem]">
+                            <Image
+                              src={
+                                "/assets/images/ExploreBySellerImages/ImagePlaceholder2.png"
+                              }
+                              alt="NoImage"
+                              fill
+                              className="object-cover"
+                            />
+                          </div>
+                          <div className="relative overflow-hidden w-[7.8rem] h-[8.2rem] rounded-[1.5625rem]">
+                            <Image
+                              src={
+                                "/assets/images/ExploreBySellerImages/ImagePlaceholder2.png"
+                              }
+                              alt="NoImage"
+                              fill
+                              className="object-cover"
+                            />
+                          </div>
                         </>
                       ) : item.products.length === 1 ? (
                         item.products.map((image, index) => {

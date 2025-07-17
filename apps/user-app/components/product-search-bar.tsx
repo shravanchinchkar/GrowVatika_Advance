@@ -17,7 +17,7 @@ export const ProductSearchBar = ({
   return (
     <div className="w-[100%] h-[100%] border-[2px] rounded-l-full rounded-r-full border-[#56A430] flex gap-x-[0.5rem] justify-center items-center bg-white">
       {/* Following is the search Image */}
-      <div className="lg:w-[1.5rem] lg:h-[1.5rem] xl:w-[1.8rem] xl:h-[1.8rem]  relative">
+      <div className="new-sm:w-[1.5rem] new-sm:h-[1.5rem] lg:w-[1.5rem] lg:h-[1.5rem] xl:w-[1.8rem] xl:h-[1.8rem]  relative">
         <Image
           className="object-cover"
           src="./assets/images/HeaderImages/search-logo.svg"
@@ -32,7 +32,7 @@ export const ProductSearchBar = ({
         <input
           className={
             UseType === SearchBarWorkType.PRODUCTSEARCH
-              ? "lg:w-[11rem] xl:w-[17.3125rem] h-[1.8125rem] font-[Poppins] outline-none font-normal lg:text-[1rem] xl:text-[1.22669rem] placeholder:text-[#CBD0D3] text-[#8C8C8C]"
+              ? "new-sm:w-[16rem] lg:w-[11rem] xl:w-[17.3125rem] h-[1.8125rem] font-[Poppins] outline-none font-normal lg:text-[1rem] xl:text-[1.22669rem] placeholder:text-[#CBD0D3] text-[#8C8C8C]"
               : "w-[7.875rem] h-[1.8125rem] font-[Poppins] text-[1.22669rem] placeholder:text-[#CBD0D3] text-[#8C8C8C] font-normal border-none outline-none"
           }
           type="text"

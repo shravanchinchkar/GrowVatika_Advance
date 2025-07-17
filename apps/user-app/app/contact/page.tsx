@@ -1,4 +1,4 @@
-import { GetStartedContactFormMobileView } from "@/components/get-started-contact-form-mobile-view";
+import { GetStartedContactFormMobileView } from "@/components/mobile-get-started-form";
 
 export default function Contact() {
   return (

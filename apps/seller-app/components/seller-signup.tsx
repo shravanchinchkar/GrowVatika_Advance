@@ -124,12 +124,20 @@ export const SellerRegister = () => {
   if (!searchParamsEmail) {
     return (
       <div className="w-screen h-screen bg-[#FFF6F4] flex justify-center items-center font-[Poppins]">
-
         <div className="flex flex-col items-center text-center gap-[0.5rem] text-[1.22669rem]">
-          <p>Please Register through the link send in your <Link href={"https://mail.google.com"} className="text-[#FF4B4B] underline font-semibold">email</Link> by</p>
-          <SiteLogo/>
-        </div>
+          <p>
+            Please Register through the link send in your{" "}
+            <Link
+              href={"https://mail.google.com/"}
+              className="text-[#FF4B4B] underline font-semibold"
+            >
+              email
+            </Link>{" "}
+            by
+          </p>
 
+          <SiteLogo />
+        </div>
       </div>
     );
   }
@@ -318,7 +326,6 @@ export const SellerRegister = () => {
               <p>Help</p>
             </div>
           </div>
-
         </div>
       </div>
     </div>

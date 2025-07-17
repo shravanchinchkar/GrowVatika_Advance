@@ -15,6 +15,7 @@ import {
   useWishListVisibilityStore,
 } from "@repo/shared-store";
 import { ProductSearchBar, SearchBarWorkType } from "./product-search-bar";
+
 import { WishList } from "./wishlist";
 
 export const ExplorePlantsBySeller = () => {

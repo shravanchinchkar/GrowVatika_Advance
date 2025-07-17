@@ -35,6 +35,7 @@ export const ExploreProductCatalogSection = () => {
     <div
       className={`min-h-screen relative flex flex-col items-center bg-[#FFF6F4] font-[Poppins] ${addToCartVisibility || wishListVisibility && "h-[100vh] overflow-hidden"}`}
     >
+
       <Cart />
       <WishList />
       <div className="flex flex-col gap-[2rem]">

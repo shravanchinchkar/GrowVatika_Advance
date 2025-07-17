@@ -1,3 +1,4 @@
+
 "use client";
 
 import { Cart } from "./cart";
@@ -17,6 +18,7 @@ import { TestmonialSection } from "./testimonial-section";
 import { useAddToCartVisibilityStore } from "@repo/shared-store";
 import { Hamburg } from "./hamburg";
 
+
 export const LandingPage = () => {
   const addToCartVisibility = useAddToCartVisibilityStore(
     (state: any) => state.addToCartDropDownVisibility
@@ -32,6 +34,7 @@ export const LandingPage = () => {
         <div className="new-sm:w-[100vw] md:w-[60rem] xl:w-[70rem] 2xl:w-[82.1875rem] h-max flex justify-between">
           <Header />
           <div className="flex new-sm:flex-col md:flex-row items-center new-sm:gap-[0.3rem] md:gap-[2.5rem]">
+
             <UserProfileIcon />
             <ShoppingCartIcon />
             <Hamburg/>

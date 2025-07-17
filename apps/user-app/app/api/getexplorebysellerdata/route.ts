@@ -1,8 +1,22 @@
 import client from "@repo/db/client";
-import { NextResponse } from "next/server";
+import { NextRequest, NextResponse } from "next/server";
 
-export async function GET() {
+export async function GET(req: NextRequest) {
   try {
+    const { searchParams } = new URL(req.url);
+    const currentPage = searchParams.get("page")
+      ? Number(searchParams.get("page"))
+      : 1;
+    const limit: number = 6;
+    const skip = (currentPage - 1) * Number(limit); // offset formula
+
+    if (currentPage < 1) {
+      return NextResponse.json({
+        success: false,
+        error: "Invalid page number",
+      });
+    }
+
     // Get sellers with their products in a single query
     const sellersWithProducts = await client.seller.findMany({
       select: {
@@ -14,7 +28,7 @@ export async function GET() {
         location: true,
         business_hours: true,
         phoneNumber: true,
-        profilePictureURL:true,
+        profilePictureURL: true,
         products: {
           where: {
             productStatus: "Active",
@@ -27,6 +41,11 @@ export async function GET() {
           },
         },
       },
+      skip: skip, // Skip records based on current page
+      take: limit, // Limit the number of records returned
+      orderBy: {
+        id: "asc", // Optional: Add consistent ordering
+      },
     });
 
     if (!sellersWithProducts) {
@@ -38,15 +57,20 @@ export async function GET() {
     }
 
     // Transform the data to match your desired structure
-    const sellerWithProductData = sellersWithProducts.map((seller:any) => ({
+    const sellerWithProductData = sellersWithProducts.map((seller: any) => ({
       ...seller,
-      products: seller.products.map((product:any) => product.imageURL),
+      products: seller.products.map((product: any) => product.imageURL),
       productCount: seller.products.length,
     }));
+
+    const totalSellerCount = await client.seller.count({});
+    const totalPages = Math.ceil(totalSellerCount / Number(limit));
+
     return NextResponse.json({
       success: true,
       message: "Successfully got seller and product data!",
       sellerWithProductData: sellerWithProductData,
+      totalPages: totalPages,
     });
   } catch (error) {
     console.error(

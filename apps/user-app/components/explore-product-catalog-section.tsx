@@ -13,8 +13,9 @@ import { ShoppingCartIcon } from "./cart-icon";
 import { UserProfileIcon } from "./user-profile-icon";
 import { LikeProductIcon } from "./like-product-icon";
 import { CustomSelectTag } from "./custom-select-tag";
-import { ProductCatalogCard } from "./product-catalog-card";
+import { ProductCatalogGrid } from "./product-catalog-grid";
 import { ProductFilterSection } from "./product-filter-section";
+import { useAddToCartVisibilityStore, useWishListVisibilityStore } from "@repo/shared-store";
 
 export const ExploreProductCatalogSection = () => {
   const [displaySortDropDown, setDisplaySortDropDown] = useState(false);
@@ -23,9 +24,16 @@ export const ExploreProductCatalogSection = () => {
   const handleSortProduct = () => {
     setDisplaySortDropDown(!displaySortDropDown);
   };
+  const addToCartVisibility = useAddToCartVisibilityStore(
+    (state: any) => state.addToCartDropDownVisibility
+  );
+
+  const wishListVisibility = useWishListVisibilityStore(
+    (state: any) => state.wishListDropDownVisibility
+  );
 
   return (
-    <div className="relative flex flex-col items-center bg-[#FFF6F4] min-h-screen font-[Poppins]">
+    <div className={`relative flex flex-col items-center bg-[#FFF6F4] font-[Poppins] ${addToCartVisibility || wishListVisibility ?"h-[100vh] overflow-hidden":"min-h-screen"}`}>
       <Cart />
       <WishList />
       <div className="flex flex-col gap-[2rem]">
@@ -168,7 +176,7 @@ export const ExploreProductCatalogSection = () => {
             </div>
 
             {/* Main Section */}
-            <ProductCatalogCard />
+            <ProductCatalogGrid />
           </div>
         </div>
       </div>

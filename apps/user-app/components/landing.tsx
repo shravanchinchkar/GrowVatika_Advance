@@ -25,8 +25,8 @@ export const LandingPage = () => {
   return (
     <div className={`relative flex flex-col bg-[#FFF6F4] ${addToCartVisibility && "h-[100vh] overflow-hidden"}`}>
       <Cart />
-      {/* Header Section */}
 
+      {/* Header Section */}
       <header className="md:h-screen relative flex flex-col items-center gap-[1rem] new-sm:pt-[0.5rem] md:pt-[2rem] new-sm:pb-[0.5rem] md:pb-0">
 
         <div className="new-sm:w-[100vw] md:w-[60rem] xl:w-[70rem] 2xl:w-[82.1875rem] h-max flex justify-between">

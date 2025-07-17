@@ -24,7 +24,7 @@ export const FeatureSection = () => {
   ];
   return (
     <div
-      className="new-sm:h-[90px] sm:h-[10rem] md:h-[11rem] lg:h-[12.6875rem] xl:h-[12.6875rem] flex flex-col items-center justify-between bg-feature-gradient new-sm:mt-0 md:mt-[2rem]"
+      className="new-sm:h-[90px] sm:h-[10rem] md:h-[11rem] lg:h-[12.6875rem] xl:h-[12.6875rem] flex flex-col items-center justify-between bg-feature-gradient"
     >
       <div
         className="

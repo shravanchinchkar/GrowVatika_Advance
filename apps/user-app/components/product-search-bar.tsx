@@ -32,7 +32,7 @@ export const ProductSearchBar = ({
         <input
           className={
             UseType === SearchBarWorkType.PRODUCTSEARCH
-              ? "new-sm:w-[16rem] lg:w-[11rem] xl:w-[17.3125rem] h-[1.8125rem] font-[Poppins] outline-none font-normal lg:text-[1rem] xl:text-[1.22669rem] placeholder:text-[#CBD0D3] text-[#8C8C8C]"
+              ? "new-sm:w-[13rem] lg:w-[11rem] xl:w-[17.3125rem] h-[1.8125rem] font-[Poppins] outline-none font-normal lg:text-[1rem] xl:text-[1.22669rem] placeholder:text-[#CBD0D3] text-[#8C8C8C]"
               : "w-[7.875rem] h-[1.8125rem] font-[Poppins] text-[1.22669rem] placeholder:text-[#CBD0D3] text-[#8C8C8C] font-normal border-none outline-none"
           }
           type="text"

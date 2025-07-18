@@ -9,7 +9,7 @@ export const AboutUsSection = () => {
     <div
       id="about"
       className="grid grid-cols-2 relative new-sm:mt-[1rem] md:mt-[2rem]"
-    >
+    > 
       {/* Image */}
       <div className="new-sm:w-[12rem] new-sm:h-[12rem] md:w-[20rem] md:h-[20rem] lg:w-[25rem] lg:h-[25rem] xl:w-[38.96875rem] xl:h-[35.5rem] relative shrink-0 justify-self-center z-10 ">
         <Image
@@ -31,7 +31,7 @@ export const AboutUsSection = () => {
       {/* Text */}
       <div className="new-sm:w-[62%] new-sm:h-[85%] md:w-[55%] md:h-[80%] absolute top-[10%] new-sm:right-[3%] md:right-[14%] z-0  new-sm:pl-[3.5rem] new-sm:pt-[0.9rem] md:pt-0 lg:pl-[8rem] lg:pt-[0.7rem] xl:pl-[12rem] xl:pb-[2rem] flex flex-col md:justify-center self-center font-poppins new-sm:rounded-[15px] md:rounded-[28px] bg-custom-gradient overflow-hidden">
 
-        <h1 className="new-sm:text-[0.9375rem] md:text-[1.5rem] xl:text-[2rem] 2xl:text-[2.25rem] text-[#123524] font-medium ">
+        <h1 className="new-sm:text-[0.9375rem] md:text-[1.5rem] xl:text-[2rem] 2xl:text-[2.25rem] text-[#123524] font-medium">
           About GrowVatika
         </h1>
 

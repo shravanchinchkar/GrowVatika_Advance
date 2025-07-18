@@ -15,6 +15,8 @@ interface LabelInputProps {
   onChange?: React.ChangeEventHandler<HTMLInputElement>;
   readonly?: boolean;
   props?: any;
+  fieldSetClassName?: string;
+  legendClassName?: string;
 }
 
 export const LabelInput = ({
@@ -25,6 +27,8 @@ export const LabelInput = ({
   useType,
   onChange,
   readonly,
+  fieldSetClassName,
+  legendClassName,
   ...props
 }: LabelInputProps) => {
   const [viewPassword, setViewPassword] = useState(false);
@@ -42,7 +46,7 @@ export const LabelInput = ({
       <fieldset
         className={
           useType == FormType.Seller
-            ? "w-[100%] h-[100%] px-[2rem] border-[2px] border-[#fff] rounded-[6.5625rem] flex gap-[1rem] pb-[0.5rem]"
+            ? fieldSetClassName
             : useType == FormType.AUTH
               ? `w-[100%] h-[100%] px-[1rem] border-[2px] text-[#8C8C8C] border-[#8C8C8C] rounded-[6.5625rem] flex items-center gap-[1rem] pb-[0.5rem] ${readonly ? "cursor-not-allowed" : "cursor-default"}`
               : ""
@@ -51,7 +55,7 @@ export const LabelInput = ({
         <legend
           className={
             useType === FormType.Seller
-              ? "text-[1.125rem] text-[#123524] font-normal"
+              ? legendClassName
               : useType === FormType.AUTH
                 ? "text-[0.99138rem] text-[#8C8C8C] font-medium"
                 : ""
@@ -60,7 +64,9 @@ export const LabelInput = ({
           {legendName}
         </legend>
         <input
-          className={`${legendName === "Password" ? "w-[130%]" : readonly ? "cursor-not-allowed w-[100%]" : "w-[100%]"} pl-[0.4rem]  text-[#0B1320] outline-none text-[1.1rem] font-normal  rounded-l-full rounded-r-full bg-transparent`}
+          className={`
+            ${legendName === "Password" ? "w-[130%]" : readonly ? "cursor-not-allowed w-[100%]" : "w-[100%]"} 
+            placeholder:text-[#CBD0D3] new-sm:placeholder:text-[1rem] md:placeholder:text-[1.25rem] pl-[0.4rem]  text-[#0B1320] outline-none text-[1.1rem] font-normal rounded-l-full rounded-r-full bg-transparent`}
           type={
             legendName === "Phone Number"
               ? "tel"
@@ -104,6 +110,7 @@ export const LabelInput = ({
             )}
           </button>
         ) : null}
+
       </fieldset>
     </div>
   );

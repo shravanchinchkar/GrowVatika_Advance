@@ -6,7 +6,7 @@ import FlowerPot from "../public/assets/images/HeroImages/LandingPot.svg";
 
 export const LandingPot = () => {
   return (
-    <div className="new-sm:w-[24rem] new-sm:h-[23.5rem] new-sm-1:w-[25.5rem] md:h-[42rem] lg:w-[60rem] xl:w-[70rem] 2xl:w-[82.1875rem] absolute z-0 top-0 new-sm:flex md:grid grid-cols-2 rounded-[28px] overflow-visible">
+    <div className="new-sm:w-[100%] new-sm:h-[23rem] md:h-[42rem] md:w-[60rem] xl:w-[70rem] 2xl:w-[82.1875rem] absolute z-0 top-0 new-sm:flex md:grid grid-cols-2 rounded-[28px] overflow-visible">
 
       <div className="relative z-10 rounded-l-[28px] h-[100%] new-sm:hidden md:grid grid-cols-2">
         {/* Following is the Shop now button */}
@@ -34,6 +34,7 @@ export const LandingPot = () => {
       <div className="w-[100%] relative flex justify-center rounded-r-[28px]">
 
         <div className="absolute new-sm:w-[13rem] new-sm:h-[16.6875rem] md:w-[25rem] md:h-[35rem] top-0 new-sm:right-0 lg:left-[5%] xl:left-[17%] 2xl:left-[25%]">
+
           <div className="relative new-sm:w-[13rem] new-sm:h-[16.6875rem] md:w-[25rem] md:h-[35rem] drop-shadow-3xl shrink-0">
             <Image
               className="new-sm:hidden md:block object-cover"

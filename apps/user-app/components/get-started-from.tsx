@@ -2,8 +2,8 @@
 import { toast } from "react-hot-toast";
 import { useState, useCallback } from "react";
 import { AuthButton } from "@repo/ui/auth-button";
-import { zodResolver } from "@hookform/resolvers/zod";
 import { storeDataInExcel } from "../actions/auth";
+import { zodResolver } from "@hookform/resolvers/zod";
 import { ContactSuccess } from "./contact-success-msg";
 import { toastStyle } from "@repo/shared/utilfunctions";
 import { useForm, SubmitHandler } from "react-hook-form";
@@ -76,6 +76,7 @@ export const ContactForm = () => {
             onSubmit={handleSubmit(handleGetStartedForm)}
             className="grid w-[90%] lg:grid-cols-[30rem auto 15rem] xl:grid-cols-[35rem auto 20rem] 2xl:grid-cols-[40rem auto 29rem] gap-y-[1rem] gap-x-0 my-[1rem] font-[Poppins]"
           >
+
             {/* Input Field For Full Name */}
             <div className="lg:w-[30rem] xl:w-[35rem] 2xl:w-[40rem] h-max col-span-2">
               {errors.fullName && (
@@ -86,6 +87,8 @@ export const ContactForm = () => {
               <LabelInput
                 legendName="Full Name"
                 useType={FormType.Seller}
+                fieldSetClassName="w-[100%] h-[100%] px-[2rem] border-[2px] border-[#fff] rounded-[6.5625rem] flex gap-[1rem] pb-[0.5rem]"
+                legendClassName="text-[1.125rem] text-[#123524] font-normal"
                 placeHolder="Enter your name here"
                 {...register("fullName", { required: true })}
               />
@@ -101,6 +104,8 @@ export const ContactForm = () => {
               <LabelInput
                 legendName="Phone Number"
                 useType={FormType.Seller}
+                fieldSetClassName="w-[100%] h-[100%] px-[2rem] border-[2px] border-[#fff] rounded-[6.5625rem] flex gap-[1rem] pb-[0.5rem]"
+                legendClassName="text-[1.125rem] text-[#123524] font-normal"
                 placeHolder="+91 9999999999"
                 {...register("phoneNumber", { required: true })}
               />
@@ -116,6 +121,8 @@ export const ContactForm = () => {
               <LabelInput
                 legendName="Business Email"
                 useType={FormType.Seller}
+                fieldSetClassName="w-[100%] h-[100%] px-[2rem] border-[2px] border-[#fff] rounded-[6.5625rem] flex gap-[1rem] pb-[0.5rem]"
+                legendClassName="text-[1.125rem] text-[#123524] font-normal"
                 placeHolder="Enter your email here"
                 {...register("email", { required: true })}
               />
@@ -131,6 +138,8 @@ export const ContactForm = () => {
               <LabelInput
                 legendName="Nursery Name"
                 useType={FormType.Seller}
+                fieldSetClassName="w-[100%] h-[100%] px-[2rem] border-[2px] border-[#fff] rounded-[6.5625rem] flex gap-[1rem] pb-[0.5rem]"
+                legendClassName="text-[1.125rem] text-[#123524] font-normal"
                 placeHolder="Enter your nursery name here"
                 {...register("nurseryName", { required: true })}
               />
@@ -146,6 +155,8 @@ export const ContactForm = () => {
               <LabelInput
                 legendName="City"
                 useType={FormType.Seller}
+                fieldSetClassName="w-[100%] h-[100%] px-[2rem] border-[2px] border-[#fff] rounded-[6.5625rem] flex gap-[1rem] pb-[0.5rem]"
+                legendClassName="text-[1.125rem] text-[#123524] font-normal"
                 placeHolder="Enter your city name here"
                 {...register("city", { required: true })}
               />
@@ -184,6 +195,7 @@ export const ContactForm = () => {
                   loading={loading}
                 />
               </div>
+
             </div>
           </form>
         </>
@@ -195,7 +207,7 @@ export const ContactForm = () => {
           <div
             className={
               !displayForm
-                ? `new-sm:w-[10.5625rem] new-sm:h-[1.5625rem] sm:w-[11rem] sm:h-[3rem] md:w-[12rem] md:h-[4.0625rem] lg:w-[15rem] xl:w-[17.625rem] h-[4.0625rem]`
+                ? `new-sm:w-[10.5625rem] new-sm:h-[2rem] sm:w-[11rem] sm:h-[3rem] md:w-[12rem] md:h-[4.0625rem] lg:w-[15rem] xl:w-[17.625rem] h-[4.0625rem]`
                 : "hidden"
             }
           >

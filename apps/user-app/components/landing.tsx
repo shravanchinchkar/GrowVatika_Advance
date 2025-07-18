@@ -1,4 +1,3 @@
-
 "use client";
 
 import { Cart } from "./cart";
@@ -19,27 +18,26 @@ import { TestmonialSection } from "./testimonial-section";
 import { MobileGetStartedForm } from "./mobile-get-started-form";
 import { useAddToCartVisibilityStore } from "@repo/shared-store";
 
-
 export const LandingPage = () => {
   const addToCartVisibility = useAddToCartVisibilityStore(
     (state: any) => state.addToCartDropDownVisibility
   );
 
   return (
-    <div className={`relative flex flex-col bg-[#FFF6F4] ${addToCartVisibility && "h-[100vh] overflow-hidden"}`}>
+    <div
+      className={`relative flex flex-col bg-[#FFF6F4] ${addToCartVisibility && "h-[100vh] overflow-hidden"}`}
+    >
       <Cart />
-      <MobileGetStartedForm/>
+      <MobileGetStartedForm />
 
       {/* Header Section */}
-      {/* <header className="md:h-screen relative flex flex-col items-center gap-[1rem] new-sm:pt-[0.5rem] md:pt-[2rem] new-sm:pb-[0.5rem] md:pb-0">
-
+      <header className="md:h-screen relative flex flex-col items-center gap-[1rem] new-sm:pt-[0.5rem] md:pt-[2rem] new-sm:pb-[0.5rem] md:pb-0">
         <div className="new-sm:w-[100vw] md:w-[60rem] xl:w-[70rem] 2xl:w-[82.1875rem] h-max flex justify-between">
           <Header />
           <div className="flex new-sm:flex-col md:flex-row items-center new-sm:gap-[0.3rem] md:gap-[2.5rem]">
-
             <UserProfileIcon />
             <ShoppingCartIcon />
-            <Hamburg/>
+            <Hamburg />
           </div>
         </div>
 
@@ -50,21 +48,21 @@ export const LandingPage = () => {
 
         <HeroSection />
         <LandingPot />
-      </header> */}
+      </header>
 
       {/* Main Section */}
-      {/* <main className="flex flex-col new-sm:gap-[0.5rem] md:gap-[3rem]">
+      <main className="flex flex-col new-sm:gap-[0.5rem] md:gap-[3rem]">
         <ExploreSection />
         <AboutUsSection />
         <FeatureSection />
         <TestmonialSection />
         <ContactForm />
-      </main> */}
+      </main>
 
       {/* Footer Section */}
-      {/* <footer>
+      <footer>
         <Footer />
-      </footer> */}
+      </footer>
     </div>
   );
 };

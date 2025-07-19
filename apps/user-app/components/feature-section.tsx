@@ -24,24 +24,24 @@ export const FeatureSection = () => {
   ];
   return (
     <div
-      className="new-sm:h-[90px] sm:h-[10rem] md:h-[11rem] lg:h-[12.6875rem] xl:h-[12.6875rem] flex flex-col items-center justify-between bg-feature-gradient"
+      className="new-sm:h-max sm:h-[10rem] md:h-[11rem] lg:h-[12.6875rem] xl:h-[12.6875rem] flex flex-col items-center justify-between bg-feature-gradient new-sm-2:mt-[1rem] md:mt-0"
     >
       <div
         className="
-          font-[Poppins] font-medium text-[#123524] text-center md:mt-[1rem]
+          font-[Poppins] font-medium text-[#123524] text-center new-sm:mt-[0.5rem] md:mt-[1rem]
           text-[1.25rem]
           sm:text-[1.5rem]
           md:text-[1.75rem]
           lg:text-[2rem]
           xl:text-[2.25rem]
-          new-sm-1:text-[15px] new-sm-1:capitalize new-sm-1:leading-[144.9%]
           new-sm:text-[0.9375rem] new-sm:capitalize new-sm:leading-[144.9%]
+          new-sm-1:text-[1rem] new-sm-1:capitalize new-sm-1:leading-[144.9%]
         "
       >
         Why GrowVatika
       </div>
 
-      <div className="w-full mt-[0.5rem] mb-[2rem] flex justify-around">
+      <div className="w-full mt-[0.5rem] new-sm:mb-[0.5rem] md:mb-[2rem] flex justify-around">
         {features.map((features) => {
           return (
             <div
@@ -56,8 +56,8 @@ export const FeatureSection = () => {
                   md:w-[1.875rem] md:h-[1.875rem]
                   lg:w-[2rem] lg:h-[2rem]
                   xl:w-[2.6875rem] xl:h-[2.6875rem]
-                  new-sm-1:w-[20px] new-sm-1:h-[20px]
                   new-sm:w-[1.25rem] new-sm:h-[1.25rem] new-sm:flex-shrink-0
+                  new-sm-1:w-[1.5rem] new-sm-1:h-[1.5rem]
                 "
               >
                 <Image
@@ -69,7 +69,7 @@ export const FeatureSection = () => {
                 />
               </div>
               <div
-                className="font-[Poppins] new-sm:text-[0.5rem] new-sm:w-[5.9375rem] md:w-max new-sm:text-center lg:text-[1rem] xl:text-[1.1875rem] font-medium text-[#123524A1]">
+                className="font-[Poppins] new-sm:text-[0.5rem] new-sm-1:text-[0.7rem] new-sm:w-[5.9375rem] new-sm-1:w-[9rem] md:w-max new-sm:text-center lg:text-[1rem] xl:text-[1.1875rem] font-medium text-[#123524A1]">
                 {features.featureDescription}
               </div>
             </div>

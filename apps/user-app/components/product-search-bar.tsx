@@ -15,9 +15,9 @@ export const ProductSearchBar = ({
   UseType,
 }: ProductSearchBarProps) => {
   return (
-    <div className="w-[100%] h-[100%] border-[2px] rounded-l-full rounded-r-full border-[#56A430] flex gap-x-[0.5rem] justify-center items-center bg-white">
+    <div className="w-[100%] h-[100%] border-[2px] rounded-l-full rounded-r-full border-[#56A430] flex gap-x-[0.5rem] justify-start items-center bg-white pl-[1rem]">
       {/* Following is the search Image */}
-      <div className="new-sm:w-[1.5rem] new-sm:h-[1.5rem] lg:w-[1.5rem] lg:h-[1.5rem] xl:w-[1.8rem] xl:h-[1.8rem]  relative">
+      <div className="new-sm:w-[1.5rem] new-sm:h-[1.5rem] lg:w-[1.5rem] lg:h-[1.5rem] xl:w-[1.8rem] xl:h-[1.8rem] relative">
         <Image
           className="object-cover"
           src="./assets/images/HeaderImages/search-logo.svg"
@@ -28,7 +28,7 @@ export const ProductSearchBar = ({
       </div>
 
       {/* Following is the Search Input Field */}
-      <div>
+      <div className="">
         <input
           className={
             UseType === SearchBarWorkType.PRODUCTSEARCH

@@ -16,16 +16,17 @@ import { UserAuthButton } from "./user-auth-button";
 import { UserProfileIcon } from "./user-profile-icon";
 import { TestmonialSection } from "./testimonial-section";
 import { MobileGetStartedForm } from "./mobile-get-started-form";
-import { useAddToCartVisibilityStore } from "@repo/shared-store";
+import { useAddToCartVisibilityStore, useChangeMobileConnectFormVisibility } from "@repo/shared-store";
 
 export const LandingPage = () => {
   const addToCartVisibility = useAddToCartVisibilityStore(
     (state: any) => state.addToCartDropDownVisibility
   );
+  const MCFormVisibility=useChangeMobileConnectFormVisibility((state:any)=>state.displayMCForm)
 
   return (
     <div
-      className={`relative flex flex-col bg-[#FFF6F4] ${addToCartVisibility && "h-[100vh] overflow-hidden"}`}
+      className={`relative flex flex-col bg-[#FFF6F4] ${addToCartVisibility && "h-[100vh] overflow-hidden"} ${MCFormVisibility && "h-[100vh] overflow-hidden"} `}
     >
       <Cart />
       <MobileGetStartedForm/>

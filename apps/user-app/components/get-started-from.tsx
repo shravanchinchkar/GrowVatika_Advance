@@ -8,12 +8,18 @@ import { ContactSuccess } from "./contact-success-msg";
 import { toastStyle } from "@repo/shared/utilfunctions";
 import { useForm, SubmitHandler } from "react-hook-form";
 import { LabelInput, FormType } from "@repo/ui/label-input";
+import { ButtonLoadingSign } from "@repo/ui/loading-sign";
+import { useChangeMobileConnectFormVisibility } from "@repo/shared-store";
 import { GetStartedFromInput, GetStartedFromSchema } from "@repo/common-types";
 
 export const ContactForm = () => {
   const [loading, setLoading] = useState(false);
   const [displayForm, setDisplayForm] = useState(false);
   const [successMessage, setSuccessMessage] = useState(false);
+
+  const updateMCFormVisibility = useChangeMobileConnectFormVisibility(
+    (state: any) => state.updateMCFormVisibility
+  );
 
   const {
     register,
@@ -51,6 +57,10 @@ export const ContactForm = () => {
     }
   };
 
+  const displayMobileContactForm = () => {
+    updateMCFormVisibility(true);
+  };
+
   const handleSuccessMessage = () => {
     if (successMessage) {
       setSuccessMessage(false);
@@ -60,23 +70,23 @@ export const ContactForm = () => {
 
   return (
     <div
-      className={`new-sm:w-[100%] new-sm:h-[4.9375rem] md:w-[45rem] lg:w-[60rem] xl:w-[75rem] 
-        2xl:w-[82rem] flex flex-col items-center m-auto bg-contact-form sm:pt-[2rem] md:pt-[1rem] md:pb-[1rem] 
+      className={`new-sm:w-[100%] new-sm:h-[4.9375rem] new-sm-2:h-[6rem] md:w-[45rem] lg:w-[60rem] xl:w-[75rem] 
+        2xl:w-[82rem] flex flex-col items-center m-auto bg-contact-form new-sm-2:pt-[0.3rem] sm:pt-[2rem] md:pt-[1rem] md:pb-[1rem] 
         relative rounded-none sm:rounded-[28px] ${displayForm ? "sm:h-[40rem] gap-[2rem]" : "sm:h-[12.8125rem] new-sm:gap-[0.5rem] md:gap-[1rem]"} new-sm:mt-[1rem] md:mt-0`}
     >
       {/* Following is the title of the form */}
 
-      <div className="text-[#123524] font-[Poppins] new-sm:text-[0.9375rem] sm:text-[1.2rem] md:text-[1.5rem] lg:text-[2rem] xl:text-[2.25rem] font-medium  text-center new-sm:mt-[0.5rem] md:mt-[1rem]">
+      <div className="text-[#123524] font-[Poppins] new-sm:text-[0.9375rem] new-sm-1:text-[1rem] sm:text-[1.2rem] md:text-[1.5rem] lg:text-[2rem] xl:text-[2.25rem] font-medium  text-center new-sm:mt-[0.5rem] md:mt-[1rem]">
         Join Our Growing Network of Trusted Sellers!
       </div>
 
+      {/* Following form gets displayed from md screen size */}
       {displayForm && (
         <>
           <form
             onSubmit={handleSubmit(handleGetStartedForm)}
-            className="grid w-[90%] lg:grid-cols-[30rem auto 15rem] xl:grid-cols-[35rem auto 20rem] 2xl:grid-cols-[40rem auto 29rem] gap-y-[1rem] gap-x-0 my-[1rem] font-[Poppins]"
+            className="new-sm:hidden md:grid w-[90%] lg:grid-cols-[30rem auto 15rem] xl:grid-cols-[35rem auto 20rem] 2xl:grid-cols-[40rem auto 29rem] gap-y-[1rem] gap-x-0 my-[1rem] font-[Poppins]"
           >
-
             {/* Input Field For Full Name */}
             <div className="lg:w-[30rem] xl:w-[35rem] 2xl:w-[40rem] h-max col-span-2">
               {errors.fullName && (
@@ -195,19 +205,19 @@ export const ContactForm = () => {
                   loading={loading}
                 />
               </div>
-
             </div>
           </form>
         </>
       )}
 
+      {/* Following button gets displayed from md screen size */}
       {/* Get Started Button */}
       {!displayForm && (
         <>
           <div
             className={
               !displayForm
-                ? `new-sm:w-[10.5625rem] new-sm:h-[2rem] sm:w-[11rem] sm:h-[3rem] md:w-[12rem] md:h-[4.0625rem] lg:w-[15rem] xl:w-[17.625rem] h-[4.0625rem]`
+                ? `new-sm:hidden md:block md:w-[12rem] md:h-[4.0625rem] lg:w-[15rem] xl:w-[17.625rem] h-[4.0625rem]`
                 : "hidden"
             }
           >
@@ -221,6 +231,16 @@ export const ContactForm = () => {
           </div>
         </>
       )}
+
+      <button
+        className={`new-sm:block md:hidden border-[2px] new-sm:w-[10.5625rem] new-sm:h-[2rem] sm:w-[11rem] sm:h-[3rem]  hover:border-none rounded-[2.10294rem] bg-[#56A430] hover:bg-[#123524] shadow-button-custom-boxshadow backdrop-blur-[6.408869743347168px] text-[#FFF6F4] new-sm:text-[1rem] hover:text-[1.33331rem] font-[Poppins] font-normal  hover:font-semibold  uppercase ${loading ? "cursor-not-allowed" : "cursor-pointer"} `}
+        disabled={loading}
+        onClick={displayMobileContactForm}
+      >
+        <div className="w-[100%] h-[100%] rounded-[2.10294rem] bg-button-custom-gradient group-hover:bg-none flex justify-center items-center">
+          {!loading ? "Get Started" : <ButtonLoadingSign />}
+        </div>
+      </button>
 
       {/* Connect Success Message */}
       <ContactSuccess

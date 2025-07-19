@@ -11,7 +11,7 @@ export const AboutUsSection = () => {
       className="grid grid-cols-2 relative new-sm:mt-[1rem] md:mt-[2rem]"
     > 
       {/* Image */}
-      <div className="new-sm:w-[12rem] new-sm:h-[12rem] md:w-[20rem] md:h-[20rem] lg:w-[25rem] lg:h-[25rem] xl:w-[38.96875rem] xl:h-[35.5rem] relative shrink-0 justify-self-center z-10 ">
+      <div className="new-sm:w-[12rem] new-sm:h-[12rem] new-sm-1:w-[13.5rem] md:w-[20rem] md:h-[20rem] lg:w-[25rem] lg:h-[25rem] xl:w-[38.96875rem] xl:h-[35.5rem] relative shrink-0 justify-self-center z-10 ">
         <Image
           className="new-sm:hidden md:block object-cover"
           src={AboutSectionImage}
@@ -29,14 +29,14 @@ export const AboutUsSection = () => {
       </div>
 
       {/* Text */}
-      <div className="new-sm:w-[62%] new-sm:h-[85%] md:w-[55%] md:h-[80%] absolute top-[10%] new-sm:right-[3%] md:right-[14%] z-0  new-sm:pl-[3.5rem] new-sm:pt-[0.9rem] md:pt-0 lg:pl-[8rem] lg:pt-[0.7rem] xl:pl-[12rem] xl:pb-[2rem] flex flex-col md:justify-center self-center font-poppins new-sm:rounded-[15px] md:rounded-[28px] bg-custom-gradient overflow-hidden">
+      <div className="new-sm:w-[62%] new-sm:h-[85%] new-sm-1:w-[65%] new-sm-2:h-[90%] md:w-[55%] md:h-[80%] absolute top-[10%] new-sm:right-[3%] md:right-[14%] z-0 new-sm:pl-[3.5rem] new-sm-1:pl-[4rem] new-sm:pt-[0.9rem] md:pt-0 lg:pl-[8rem] lg:pt-[0.7rem] xl:pl-[12rem] xl:pb-[2rem] flex flex-col md:justify-center self-center font-poppins new-sm:rounded-[15px] md:rounded-[28px] bg-custom-gradient overflow-hidden">
 
-        <h1 className="new-sm:text-[0.9375rem] md:text-[1.5rem] xl:text-[2rem] 2xl:text-[2.25rem] text-[#123524] font-medium">
+        <h1 className="new-sm:text-[0.9375rem] new-sm-1:text-[1rem] new-sm-2:text-[1.3rem] md:text-[1.5rem] xl:text-[2rem] 2xl:text-[2.25rem] text-[#123524] font-medium">
           About GrowVatika
         </h1>
 
-        {/* ✅ Short version for new-sm & new-sm-1 */}
-        <div className="w-[9.875rem] new-sm:block md:hidden text-[0.625rem] font-normal text-[#3E7B27] text-justify">
+        {/* ✅ Short version for new-sm to sm */}
+        <div className="new-sm:w-[9.875rem] new-sm-1:w-[12.5rem] new-sm-2:w-[17rem] new-sm:block md:hidden new-sm:text-[0.625rem] new-sm-1:text-[0.7rem] new-sm-2:text-[0.8rem] font-normal text-[#3E7B27] text-justify">
           <p>
             At <span className="font-bold">GrowVatika</span>, we believe that
             greenery should be accessible to everyone. As a{" "}
@@ -46,8 +46,8 @@ export const AboutUsSection = () => {
           </p>
         </div>
 
-        {/* ✅ Full version for sm & larger */}
-        <div className="hidden sm:block xl:w-[30rem] 2xl:w-[36.625rem] w-full text-[0.9rem] md:text-[1rem] 2xl:text-[1.2rem] font-normal text-[#3E7B27] text-justify leading-relaxed">
+        {/* ✅ Full version for md & larger */}
+        <div className="new-sm:hidden md:block xl:w-[30rem] 2xl:w-[36.625rem] w-full text-[0.9rem] md:text-[1rem] 2xl:text-[1.2rem] font-normal text-[#3E7B27] text-justify leading-relaxed">
           <p>
             At <span className="font-bold">GrowVatika</span>, we believe that
             greenery should be accessible to everyone. As a{" "}
@@ -97,6 +97,7 @@ export const AboutUsSection = () => {
         </div>
 
       </div>
+
     </div>
   );
 };

@@ -3,7 +3,7 @@ import { ProductSearchBar, SearchBarWorkType } from "./product-search-bar";
 
 export const Header = () => {
   return (
-    <div className="new-sm:w-[95%]  md:w-[60rem] md:h-max xl:w-[70rem] 2xl:w-[82.1875rem]  flex items-center gap-[0.5rem]">
+    <div className="new-sm:w-[95%]  md:w-[60rem] md:h-max xl:w-[70rem] 2xl:w-[82.1875rem] flex items-center">
       {/* Following div consist of logo,Site-Name,search-bar */}
 
       <div className="new-sm:w-[100%] md:w-[40rem] md:h-[4.05rem] xl:w-[50rem] 2xl:w-[58.3rem] flex new-sm:flex-col new-sm:items-center  md:flex-row md:justify-between md:items-center">

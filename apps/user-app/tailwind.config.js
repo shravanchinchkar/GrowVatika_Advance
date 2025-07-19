@@ -12,8 +12,8 @@ export default {
       screens: {
         "new-sm": "320px",
         "new-sm-1": "360px",
-        "new-sm-1-2": "430px",
-        "new-sm-1-3": "535px",
+        "new-sm-2": "430px",
+        "new-sm-3": "535px",
         "new-xl": "1330px",
         "new-xl-2": "1400px",
       },

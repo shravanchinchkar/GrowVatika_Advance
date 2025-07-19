@@ -8,7 +8,7 @@ export const SiteLogo = () => {
       className="new-sm:w-max new-sm:h-max md:w-[14rem] lg:w-[14rem] lg:h-[4rem] xl:w-[16.3rem] xl:h-[3.8125rem] flex items-center new-sm:justify-start md:justify-between cursor-pointer outline-none"
     >
       {/* Following div consist of logo */}
-      <div className="relative new-sm:w-[3rem] new-sm:h-[3rem] md:w-[4rem] xl:w-[4.75rem] xl:h-[3.35rem]">
+      <div className="relative new-sm:w-[4rem] new-sm:h-[4rem]  new-sm:w-[3rem] new-sm:h-[3rem] md:w-[4rem] xl:w-[4.75rem] xl:h-[3.35rem]">
         <Image
           className="new-sm:object-contain md:object-cover"
           src="./assets/images/HeaderImages/site-logo.svg"

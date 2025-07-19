@@ -19,8 +19,9 @@ export const MobileGetStartedForm = () => {
     (state: any) => state.displayMCForm
   );
 
-  const updateMCFormVisibility=useChangeMobileConnectFormVisibility((state:any)=>state.updateMCFormVisibility)
-
+  const updateMCFormVisibility = useChangeMobileConnectFormVisibility(
+    (state: any) => state.updateMCFormVisibility
+  );
 
   const {
     register,
@@ -190,7 +191,7 @@ export const MobileGetStartedForm = () => {
                   {...register("termsandconditions")}
                 />
                 <div
-                  className={`text-[0.875rem] font-[Poppins] font-normal capitalize ${errors.termsandconditions ? "text-red-500" : "text-[#123524]"}`}
+                  className={`new-sm:text-[0.7rem] new-sm-1:text-[0.875rem] font-[Poppins] font-normal capitalize ${errors.termsandconditions ? "text-red-500" : "text-[#123524]"}`}
                 >
                   {errors.termsandconditions
                     ? "Agree to the "
@@ -217,11 +218,11 @@ export const MobileGetStartedForm = () => {
                 <SiteLogo />
               </div>
 
-              <div className="w-[100%] flex flex-col items-center text-[0.875rem] text-[#8C8C8C]">
+              <div className="w-[100%] flex flex-col items-center new-sm:text-[0.8rem] new-sm-1:text-[0.875rem] text-[#8C8C8C]">
                 <div>
                   <div>&copy; 2025 GrowVatika.All rights reserved</div>
                 </div>
-                <div className="w-[50%] flex justify-around">
+                <div className="w-[60%] flex justify-around">
                   <p>Terms</p>
                   <p>Privacy</p>
                   <p>Help</p>

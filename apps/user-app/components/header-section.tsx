@@ -1,4 +1,3 @@
-import { ShoppingCartIcon } from "./cart-icon";
 import { SiteLogo } from "@repo/ui/brand-logo";
 import { ProductSearchBar, SearchBarWorkType } from "./product-search-bar";
 
@@ -10,6 +9,7 @@ export const Header = () => {
       <div className="new-sm:w-[100%] md:w-[40rem] md:h-[4.05rem] xl:w-[50rem] 2xl:w-[58.3rem] flex new-sm:flex-col new-sm:items-center  md:flex-row md:justify-between md:items-center">
         {/* Following div consist of site-log, site-name, site-tagline */}
         <SiteLogo />
+        {/* <NewBrandLogo/> */}
 
         {/* Following div consist of search bar */}
         <div className="z-10 new-sm:w-[95%] new-sm:h-[2.8rem] lg:w-[15rem] lg:h-[3.05rem] xl:w-[21.3rem]">

@@ -214,19 +214,25 @@ export const SellerDashboardSideBar = memo(() => {
         </div>
 
         <div className="z-10 lg:w-[14rem] lg:h-[4rem] 2xl:w-[15.9375rem] 2xl:h-[4.0625rem] rounded-[1.5rem] flex justify-center items-center px-[1rem] gap-[0.8rem] m-[1rem] bg-[#fff] border-[1.5px] border-[#697F75]">
-  
           <div className="w-[100%] h-[100%] flex justify-between py-[0.5rem]">
             {/* Nursery Profile Photo goes here! */}
             <div className="flex items-center">
               <div className="relative w-[2.425rem] h-[2.425rem] rounded-full overflow-hidden bg-[#56A430]">
                 {/* Profile Photo Image  goes here */}
-                {sellerData.profilePictureURL && (
+                {sellerData.profilePictureURL ? (
                   <Image
                     src={sellerData.profilePictureURL}
                     alt="profileImage"
                     className="object-cover"
                     fill
                     sizes="2.425rem" // Add this - matches your container size
+                  />
+                ) : (
+                  <Image
+                    src={"/assets/images/SellerDashboardImages/ImagePlaceholder.png"}
+                    alt="noimage"
+                    className="object-cover"
+                    fill
                   />
                 )}
               </div>

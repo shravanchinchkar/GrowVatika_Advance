@@ -97,12 +97,12 @@ export const ProductCatalogGrid = () => {
     return (
       <div className="w-[100%] flex flex-col gap-[1rem] pb-[1rem]">
         {/* Count of the products */}
-        <div className="w-max text-[2rem] text-[#000] ml-[1.5rem] font-semibold">
+        <div className="w-max text-[2rem] text-[#000] ml-[1.5rem] font-semibold hidden md:block">
           {`${totalProductsCount} Products Available`}
         </div>
 
         {/* Product Card  */}
-        <div className="min-h-[60rem] max-h-max grid grid-cols-3 gap-8">
+        <div className="border-[2px] border-red-500 new-sm:min-h-[10rem] new-sm:max-h-max grid new-sm:grid-cols-2 new-sm:gap-8 lg:min-h-[60rem] lg:max-h-max lg:grid-cols-3 lg:gap-8">
           {productsData.map((item: SellerProductData) => {
             return (
               <ProductCard

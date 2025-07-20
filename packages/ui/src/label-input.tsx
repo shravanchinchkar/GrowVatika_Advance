@@ -66,7 +66,7 @@ export const LabelInput = ({
         <input
           className={`
             ${legendName === "Password" ? "w-[130%]" : readonly ? "cursor-not-allowed w-[100%]" : "w-[100%]"} 
-            placeholder:text-[#CBD0D3] new-sm:placeholder:text-[1rem] md:placeholder:text-[1.25rem] pl-[0.4rem]  text-[#0B1320] outline-none text-[1.1rem] font-normal rounded-l-full rounded-r-full bg-transparent`}
+            placeholder:text-[#CBD0D3] new-sm-1:placeholder:text-[1rem] md:placeholder:text-[1.25rem] pl-[0.4rem]  text-[#0B1320] outline-none text-[1.1rem] font-normal rounded-l-full rounded-r-full bg-transparent`}
           type={
             legendName === "Phone Number"
               ? "tel"
@@ -110,7 +110,6 @@ export const LabelInput = ({
             )}
           </button>
         ) : null}
-
       </fieldset>
     </div>
   );

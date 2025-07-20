@@ -102,12 +102,8 @@ export const TestmonialSection = () => {
                     {currentTestimonial?.testmonialName}
                   </div>
                   <div className="lg:text-[0.8rem] xl:text-[1rem] font-normal text-[#123524A0]">
-                    <span>
-                      {currentTestimonial?.testmonialDesignation},
-                    </span>
-                    <span>
-                      {currentTestimonial?.testmonialCountry}
-                    </span>
+                    <span>{currentTestimonial?.testmonialDesignation},</span>
+                    <span>{currentTestimonial?.testmonialCountry}</span>
                   </div>
                 </div>
 

@@ -1,7 +1,4 @@
 "use client";
-
-import axios from "axios";
-import Link from "next/link";
 import { Cart } from "./cart";
 import Image from "next/image";
 import { useState } from "react";
@@ -72,6 +69,7 @@ export const ExploreProductCatalogSection = () => {
         {/* Search Input, Search button & Sort Button */}
         <div className="z-10 flex items-start justify-between gap-4 w-[82.1875rem]">
           {/* Search Input */}
+
           <div className="flex items-center w-[60rem] h-[3.0625rem] rounded-full border border-[#56A430] bg-white px-4">
             <div className="relative w-[1.8rem] h-[1.8rem] flex-shrink-0 mr-3">
               <Image
@@ -87,6 +85,7 @@ export const ExploreProductCatalogSection = () => {
               className="w-full bg-transparent text-[#CBD0D3] placeholder-[#CBD0D3] text-[1.22669rem] font-normal outline-none font-poppins"
             />
           </div>
+        
 
           {/* Consist of Search and sort Button */}
           <div className="flex justify-between w-[20rem]">

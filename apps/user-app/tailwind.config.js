@@ -9,6 +9,15 @@ export default {
   ],
   theme: {
     extend: {
+      screens: {
+        "new-sm": "320px",
+        "new-sm-1": "360px",
+        "new-sm-2": "430px",
+        "new-sm-3": "535px",
+        "new-xl": "1330px",
+        "new-xl-2": "1400px",
+      },
+
       fontFamily: {
         "nunito-sans": ["Nunito Sans", "sans-serif"],
         outfit: ["Outfit", "sans-serif"],
@@ -46,14 +55,6 @@ export default {
           "0px 1.282px 12.818px -0.32px rgba(0, 0, 0, 0.25)",
         "explore-custom": "10px 10px 59px #85A947",
         "testinomial-custom": "0px 4px 9.9px 0px rgba(0, 0, 0, 0.44)",
-      },
-
-      screens: {
-        "new-sm": "320px",
-        "new-sm-1": "430px",
-        "new-sm-2": "535px",
-        "new-xl": "1330px",
-        "new-xl-2": "1400px",
       },
 
       borderRadius: {

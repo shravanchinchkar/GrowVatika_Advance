@@ -82,13 +82,13 @@ export const SellerProfilePhotoUpload =memo(({
       ) : (
         // Default View
         <div
-          className={`w-[5rem] h-[5rem] rounded-full bg-[#56A430] flex justify-center items-center
+          className={`w-[5rem] h-[5rem] rounded-full flex justify-center items-center overflow-hidden
             ${enableEditing && !blinking && !isDragActive ? "border-[#CBD0D3]" : isDragActive && "border-[#56A430]"} border-[2px] border-dashed`}
         >
-          <div className="relative w-[2rem] h-[2rem]">
+          <div className="relative w-[5rem] h-[5rem]">
             <Image
               src={
-                "/assets/images/SellerDashboardMediaImages/uploadImageIcon.svg"
+                "/assets/images/SellerDashboardImages/ImagePlaceholder.png"
               }
               alt="uploadIcon"
               fill

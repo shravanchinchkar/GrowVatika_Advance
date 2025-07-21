@@ -3,16 +3,14 @@ import { Cart } from "./cart";
 import Image from "next/image";
 import { useState } from "react";
 import { WishList } from "./wishlist";
-import { Navbar } from "./nav-section";
-import { Header } from "./header-section";
 import { Footer } from "./footer-section";
-import { ShoppingCartIcon } from "./cart-icon";
-import { UserProfileIcon } from "./user-profile-icon";
-import { LikeProductIcon } from "./like-product-icon";
-import { CustomSelectTag } from "./custom-select-tag";
+import { HeaderSection } from "./header-section";
 import { ProductCatalogGrid } from "./product-catalog-grid";
 import { ProductFilterSection } from "./product-filter-section";
-import { useAddToCartVisibilityStore, useWishListVisibilityStore } from "@repo/shared-store";
+import {
+  useAddToCartVisibilityStore,
+  useWishListVisibilityStore,
+} from "@repo/shared-store";
 
 export const ExploreProductCatalogSection = () => {
   const [displaySortDropDown, setDisplaySortDropDown] = useState(false);
@@ -30,42 +28,14 @@ export const ExploreProductCatalogSection = () => {
 
   return (
     <div
-      className={`min-h-screen relative flex flex-col items-center bg-[#FFF6F4] font-[Poppins] ${addToCartVisibility || wishListVisibility && "h-[100vh] overflow-hidden"}`}
+      className={`min-h-screen relative flex flex-col items-center bg-[#FFF6F4] font-[Poppins]  ${(addToCartVisibility || wishListVisibility) && "h-[100vh] overflow-hidden"}`}
     >
-
       <Cart />
       <WishList />
-      <div className="flex flex-col gap-[2rem]">
-        {/* Header,Navbar, and all other buttons */}
-        <div className="z-20 2xl:w-[82.1875rem] lg:w-[60rem] xl:w-[70rem] h-max flex flex-col items-center gap-[1rem] pt-[2rem]">
-          <div className="2xl:w-[82.1875rem] lg:w-[60rem] xl:w-[70rem] h-max flex justify-between z-0">
-            <Header />
-            <div className="w-[18rem] flex justify-between items-center">
-              <UserProfileIcon />
-              <LikeProductIcon />
-              <ShoppingCartIcon />
-            </div>
-          </div>
+      {/* Header,Navbar, and all other buttons */}
+      <HeaderSection explore={true} />
 
-          <div className="w-[100%] flex justify-between z-10">
-            <Navbar />
-            <div className="h-[4.05rem] w-[22.5rem] flex justify-between">
-              <CustomSelectTag
-                width={"10.5"}
-                activeValue="Plants"
-                values={["Plant", "Soil", "Pots", "Fertilizers"]}
-                explore={true}
-              />
-              <CustomSelectTag
-                width={"10.5"}
-                activeValue="Explore"
-                values={["Explore", "Explore by seller"]}
-                explore={true}
-              />
-            </div>
-          </div>
-        </div>
-
+      <div className="flex flex-col items-center gap-[2rem]">
         {/* Search Input, Search button & Sort Button */}
         <div className="z-10 flex items-start justify-between gap-4 w-[82.1875rem]">
           {/* Search Input */}
@@ -85,7 +55,6 @@ export const ExploreProductCatalogSection = () => {
               className="w-full bg-transparent text-[#CBD0D3] placeholder-[#CBD0D3] text-[1.22669rem] font-normal outline-none font-poppins"
             />
           </div>
-        
 
           {/* Consist of Search and sort Button */}
           <div className="flex justify-between w-[20rem]">
@@ -181,6 +150,7 @@ export const ExploreProductCatalogSection = () => {
           </div>
         </div>
       </div>
+
       <Footer />
     </div>
   );

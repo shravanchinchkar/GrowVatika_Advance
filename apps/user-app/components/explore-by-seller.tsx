@@ -1,13 +1,7 @@
 "use client";
 
 import { Cart } from "./cart";
-import { Navbar } from "./nav-section";
 import { Footer } from "./footer-section";
-import { Header } from "./header-section";
-import { ShoppingCartIcon } from "./cart-icon";
-import { CustomSelectTag } from "./custom-select-tag";
-import { LikeProductIcon } from "./like-product-icon";
-import { UserProfileIcon } from "./user-profile-icon";
 import { ProductPageButton } from "./product-page-button";
 import { ExploreBySellerGrid } from "./explore-by-seller-grid";
 import {
@@ -17,6 +11,7 @@ import {
 import { ProductSearchBar, SearchBarWorkType } from "./product-search-bar";
 
 import { WishList } from "./wishlist";
+import { HeaderSection } from "./header-section";
 
 export const ExplorePlantsBySeller = () => {
   const productPageButton = ["Most Popular", "Newly Added", "NearBy Seller"];
@@ -29,33 +24,11 @@ export const ExplorePlantsBySeller = () => {
 
   return (
     <div
-      className={`flex flex-col items-center bg-[#FFF6F4] font-[Poppins] ${addToCartVisibility || wishListVisibility ? "h-[100vh] overflow-hidden" : "h-max"}`}
+      className={`relative flex flex-col items-center bg-[#FFF6F4] font-[Poppins] ${(addToCartVisibility || wishListVisibility) && "h-[100vh] overflow-hidden"}`}
     >
       <Cart />
       <WishList />
-      {/* Heder and Navbar */}
-      <div className="2xl:w-[82.1875rem] lg:w-[60rem] xl:w-[70rem] h-max flex flex-col items-center gap-[1rem] pt-[2rem]">
-        <div className="2xl:w-[82.1875rem] lg:w-[60rem] xl:w-[70rem] h-max flex justify-between">
-          <Header />
-          <div className="w-[18rem] flex justify-between items-center">
-            <UserProfileIcon />
-            <LikeProductIcon />
-            <ShoppingCartIcon />
-          </div>
-        </div>
-
-        <div className="w-[100%] flex justify-between">
-          <Navbar />
-          <div className="h-[4.05rem] w-[22.5rem] flex justify-between">
-            <CustomSelectTag
-              activeValue="Explore by seller"
-              values={["Explore", "Explore by seller"]}
-              explore={false}
-            />
-          </div>
-        </div>
-      </div>
-
+      <HeaderSection explorebyseller={true} />
       <div className="2xl:w-[82.1875rem] lg:w-[60rem] xl:w-[70rem] h-max mt-[3rem] flex flex-col gap-[3rem] items-center">
         {/* Heading of  Eplore by seller */}
         <h1 className="w-[67.8125rem] uppercase text-center text-[#123524] font-[Unbounded] text-[2.25rem]">
@@ -87,13 +60,10 @@ export const ExplorePlantsBySeller = () => {
             </div>
           </div>
         </div>
-
         <ExploreBySellerGrid />
       </div>
 
-      <div className="w-[100%]">
-        <Footer />
-      </div>
+      <Footer />
     </div>
   );
 };

@@ -69,7 +69,7 @@ export const WishList = () => {
 
   if (wishListVisibility === true) {
     return (
-      <div className="z-30 absolute top-0 w-[100%] h-[100%] bg-[#00000040] bg-opacity-10 flex justify-center">
+      <div className="z-50 absolute top-0 w-[100%] h-[100%] bg-[#00000040] bg-opacity-10 flex justify-center">
         <div className="w-[82.1875rem] h-[41rem] font-[Poppins] bg-white rounded-[1.25rem] shadow-2xl mx-auto my-[1rem] overflow-hidden">
           {/* Wishlist header section */}
           <div className="w-[100%] py-[1rem] flex justify-between items-center border-b-[0.0625rem] border-[#00000033]">

@@ -1,19 +1,14 @@
 "use client";
 
 import { Cart } from "./cart";
-import { Hamburg } from "./hamburg";
-import { Navbar } from "./nav-section";
-import { Header } from "./header-section";
 import { Footer } from "./footer-section";
 import { LandingPot } from "./landing-pot";
 import { AboutUsSection } from "./about-us";
 import { HeroSection } from "./hero-section";
-import { ShoppingCartIcon } from "./cart-icon";
 import { ContactForm } from "./get-started-from";
+import { HeaderSection } from "./header-section";
 import { ExploreSection } from "./explore-section";
 import { FeatureSection } from "./feature-section";
-import { UserAuthButton } from "./user-auth-button";
-import { UserProfileIcon } from "./user-profile-icon";
 import { TestmonialSection } from "./testimonial-section";
 import { MobileGetStartedForm } from "./mobile-get-started-form";
 import {
@@ -31,32 +26,17 @@ export const LandingPage = () => {
 
   return (
     <div
-      className={`relative flex flex-col bg-[#FFF6F4] ${addToCartVisibility && "h-[100vh] overflow-hidden"} ${MCFormVisibility && "h-[100vh] overflow-hidden"} `}
+      className={`relative flex flex-col bg-[#FFF6F4] ${addToCartVisibility && "h-[100vh] overflow-hidden"} ${MCFormVisibility && "h-[100vh] overflow-hidden"}`}
     >
       <Cart />
       <MobileGetStartedForm />
+      <HeaderSection />
+      <LandingPot />
 
       {/* Header Section */}
-      <header className="md:h-screen relative flex flex-col items-center gap-[1rem] new-sm:pt-[0.5rem] md:pt-[1rem] new-sm:pb-[0.5rem] md:pb-0">
-        
-        <div className="flex flex-col gap-[1rem]">
-          <div className="new-sm:w-[100vw] md:w-[60rem] xl:w-[70rem] 2xl:w-[82.1875rem] h-max flex justify-between">
-            <Header />
-            <div className="flex new-sm:flex-col md:flex-row items-center new-sm-1:gap-[0.3rem] md:gap-[2.5rem]">
-              <UserProfileIcon />
-              <ShoppingCartIcon />
-              <Hamburg />
-            </div>
-          </div>
-
-          <div className="new-sm:hidden md:flex lg:w-[60rem] xl:w-[70rem] 2xl:w-[82.1875rem] justify-between items-center z-10 font-[Poppins] ">
-            <Navbar />
-            <UserAuthButton />
-          </div>
-        </div>
+      <div className="mx-auto md:h-max relative flex flex-col items-center gap-[1rem] new-sm:pt-[0.5rem] md:pt-[1rem] new-sm:pb-[0.5rem] md:pb-0">
         <HeroSection />
-        <LandingPot />
-      </header>
+      </div>
 
       {/* Main Section */}
       <main className="flex flex-col new-sm:gap-[0.5rem] md:gap-[3rem]">

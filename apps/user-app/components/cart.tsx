@@ -18,7 +18,7 @@ export const Cart = () => {
   };
   if (addToCartVisibility === true) {
     return (
-      <div className="w-[100%] h-[100vh] z-30 absolute top-0  flex justify-end bg-black bg-opacity-10">
+      <div className="w-[100%] h-[100vh] z-50 absolute top-0  flex justify-end bg-black bg-opacity-10">
         <div className="w-[29.375rem] h-max font-[Poppins] flex-shrink-0 rounded-l-[1.25rem] bg-white shadow-[0px_3.2px_32px_-0.8px_rgba(0,0,0,0.25)] flex flex-col overflow-hidden my-[2rem]">
           {/* Cart Header */}
           <div className="relative border-b border-gray-200 h-[4.5rem] flex items-center">

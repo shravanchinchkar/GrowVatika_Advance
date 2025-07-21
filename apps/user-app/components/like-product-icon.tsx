@@ -12,7 +12,7 @@ export const LikeProductIcon = () => {
   };
   return (
     <button
-      className="z-10 w-[3.95rem] h-[3.05rem] px-4 py-3 border-[#56A430] border-[2px]  hover:border-none  hover:bg-[#123524] transform duration-300 group-ease-in-out transition-colors rounded-full group flex justify-center items-center cursor-pointer"
+      className="z-10 w-[3.95rem] h-[3.05rem] px-4 py-3 border-[#56A430] border-[1.6px] bg-[#fff] hover:border-none  hover:bg-[#123524] transform duration-300 group-ease-in-out transition-colors rounded-full group flex justify-center items-center cursor-pointer"
       onClick={handleWishListVisibility}
     >
       <RiHeart3Line className="text-gray-500 group-hover:text-white group-hover:hidden" />

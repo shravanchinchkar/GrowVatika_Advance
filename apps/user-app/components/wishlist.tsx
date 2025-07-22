@@ -1,9 +1,10 @@
 "use client";
 
+import { memo } from "react";
 import Image from "next/image";
 import { useWishListVisibilityStore } from "@repo/shared-store";
 
-export const WishList = () => {
+export const WishList = memo(() => {
   const wishListVisibility = useWishListVisibilityStore(
     (state: any) => state.wishListDropDownVisibility
   );
@@ -183,4 +184,4 @@ export const WishList = () => {
       </div>
     );
   }
-};
+});

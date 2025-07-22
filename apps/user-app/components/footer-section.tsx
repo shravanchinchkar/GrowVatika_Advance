@@ -30,11 +30,11 @@ export const Footer = () => {
         <div className="grid grid-cols-3 new-sm:pt-0 md:pt-[3rem] font-[Poppins] new-sm:border-b-[0.01675rem] md:border-b-[2px] border-[#123524] new-sm:pb-[0.5rem] new-sm:pl-[0.5rem] md:pl-0 md:pb-[2rem] xl:pb-[3rem]">
           {/* Following is the div 1 */}
           <div className="new-sm:w-[90%] md:w-max flex flex-col new-sm:gap-[0.2rem] md:gap-[1rem] justify-self-center">
-            <div className="new-sm:text-[0.50056rem] new-sm-2:text-[0.8rem] md:text-[1.2rem] xl:text-[1.5rem] text-[#123524] font-bold uppercase">
+            <div className="new-sm:text-[0.50056rem] new-sm-2:text-[0.6rem] md:text-[1.2rem] xl:text-[1.5rem] text-[#123524] font-bold uppercase">
               Our Company
             </div>
 
-            <div className="text-[#123524A0] new-sm:text-[0.41719rem] new-sm-2:text-[0.6rem] md:text-[0.8rem] xl:text-[1.25rem] font-medium uppercase flex flex-col new-sm:gap-[0.1rem] md:gap-[0.2rem]">
+            <div className="text-[#123524A0] new-sm:text-[0.41719rem] new-sm-2:text-[0.5rem] md:text-[0.8rem] xl:text-[1.25rem] font-medium uppercase flex flex-col new-sm:gap-[0.1rem] md:gap-[0.2rem]">
               <p>Testimonials</p>
               <p>terms & Co.</p>
               <p>more search</p>
@@ -44,11 +44,11 @@ export const Footer = () => {
 
           {/* Following is the div 2 */}
           <div className="new-sm:w-[90%] md:w-max flex flex-col md:items-start new-sm:gap-[0.2rem] md:gap-[1rem]">
-            <div className="new-sm:text-[0.50056rem] new-sm-2:text-[0.8rem] md:text-[1.2rem] xl:text-[1.5rem] text-[#123524] font-bold uppercase">
+            <div className="new-sm:text-[0.50056rem] new-sm-2:text-[0.6rem] md:text-[1.2rem] xl:text-[1.5rem] text-[#123524] font-bold uppercase">
               Products & Services
             </div>
 
-            <div className="text-[#123524A0] new-sm:text-[0.41719rem] new-sm-2:text-[0.6rem] md:text-[0.8rem] lg:text-[0.8rem] xl:text-[1.25rem] font-medium uppercase flex flex-col new-sm:gap-[0.1rem] md:gap-[0.2rem]">
+            <div className="text-[#123524A0] new-sm:text-[0.41719rem] new-sm-2:text-[0.5rem] md:text-[0.8rem] lg:text-[0.8rem] xl:text-[1.25rem] font-medium uppercase flex flex-col new-sm:gap-[0.1rem] md:gap-[0.2rem]">
               <p>product lists</p>
               <p>return & exchange</p>
               <p>order</p>
@@ -58,11 +58,11 @@ export const Footer = () => {
           {/* Following is the div 3 */}
           <div className="new-sm:w-[90%] md:w-max lg:ml-[2rem] xl:ml-0 flex flex-col new-sm:gap-[1rem] md:gap-[4rem]">
             <div className="flex flex-col new-sm:gap-[0.2rem] md:gap-[1rem]">
-              <div className="new-sm:text-[0.50056rem] new-sm-2:text-[0.8rem]  md:text-[1.2rem] xl:text-[1.5rem] text-[#123524] font-bold uppercase">
+              <div className="new-sm:text-[0.50056rem] new-sm-2:text-[0.6rem]  md:text-[1.2rem] xl:text-[1.5rem] text-[#123524] font-bold uppercase">
                 Contact us
               </div>
 
-              <div className="text-[#123524A0] new-sm:text-[0.41719rem] new-sm-2:text-[0.6rem] md:text-[0.8rem] lg:text-[0.8rem] xl:text-[1.25rem] font-medium flex flex-col new-sm:gap-[0.1rem] md:gap-[0.7rem] gap-[0.7rem]">
+              <div className="text-[#123524A0] new-sm:text-[0.41719rem] new-sm-2:text-[0.5rem] md:text-[0.8rem] lg:text-[0.8rem] xl:text-[1.25rem] font-medium flex flex-col new-sm:gap-[0.1rem] md:gap-[0.7rem] gap-[0.7rem]">
                 <div className="flex new-sm:gap-[0.4rem] md:gap-[1rem] items-center">
                   <div className="relative new-sm:w-[0.7rem] new-sm:h-[0.7rem] new-sm-2:w-[0.8rem] new-sm-2:h-[0.8rem] md:w-[1.2rem] xl:w-[1.5625rem]  lg:h-[1.2rem] xl:h-[1.5rem]">
                     <Image

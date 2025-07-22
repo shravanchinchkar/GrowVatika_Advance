@@ -1,7 +1,7 @@
 import { Hamburg } from "./hamburg";
 import { Navbar } from "./nav-section";
-import { memo, useEffect, useState } from "react";
 import { ShoppingCartIcon } from "./cart-icon";
+import { memo, useEffect, useState } from "react";
 import { UserAuthButton } from "./user-auth-button";
 import { HeaderSectionOne } from "./header-section-1";
 import { UserProfileIcon } from "./user-profile-icon";
@@ -19,6 +19,7 @@ export const HeaderSection = memo(
     const [lastScrollY, setLastScrollY] = useState(0);
 
     useEffect(() => {
+      console.log("Header UseEffect")
       const handleScroll = () => {
         const currentScrollY = window.scrollY;
         console.log("currentScrollY:",currentScrollY)
@@ -43,9 +44,9 @@ export const HeaderSection = memo(
     // 2xl:w-[87rem]
     return (
       <div
-        className={`new-sm:w-[100vw] md:w-[60rem] xl:w-[70rem] 2xl:w-[90%] mx-auto z-40 flex flex-col items-center gap-[1rem] md:h-[11rem] mt-[1rem] ${isScrollingUp && "py-[0.5rem] sticky top-[1rem] bg-[#FFF6F4] border-[#56A430] border-[1.6px] rounded-[1rem] transition-all duration-300"}`}
+        className={`new-sm:w-[100%] md:w-[60rem] xl:w-[70rem] 2xl:w-[90%] mx-auto z-40 flex flex-col items-center justify-center gap-[1rem] new-sm:h-max md:h-[10rem] mt-[1rem] ${isScrollingUp && "sticky top-[1rem] bg-[#FFF6F4] md:border-[#56A430] md:border-[1.6px] md:rounded-[1rem] transition-all md:duration-300"}`}
       >
-        <div className="new-sm:w-[100vw] md:w-[60rem] xl:w-[70rem] 2xl:w-[82.1875rem] h-max flex justify-between">
+        <div className="new-sm:w-[100%] md:w-[96.5%] h-max flex justify-between">
           <HeaderSectionOne />
           <div className="flex new-sm:flex-col md:flex-row items-center new-sm-1:gap-[0.3rem] md:gap-[2.5rem]">
             <UserProfileIcon />
@@ -55,7 +56,7 @@ export const HeaderSection = memo(
           </div>
         </div>
 
-        <div className="new-sm:hidden md:flex lg:w-[60rem] xl:w-[70rem] 2xl:w-[82.1875rem] justify-between items-center z-10 font-[Poppins] ">
+        <div className="new-sm:hidden md:flex md:w-[96.5%] justify-between items-center z-10 font-[Poppins]">
           <Navbar />
           {!explore && !explorebyseller && <UserAuthButton />}
           {explore && (

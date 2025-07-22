@@ -6,7 +6,7 @@ import MobileHangingPot from "../public/assets/images/MobileView/mobile-hangingp
 
 export const LandingPot = () => {
   return (
-    <div className="new-sm:w-[100%] new-sm:h-[23rem] md:h-[42rem] md:w-[60rem] xl:w-[70rem] 2xl:w-[82.1875rem] absolute z-30 top-0 new-sm:flex md:grid grid-cols-2 rounded-[28px] overflow-visible md:ml-[6.5rem]">
+    <div className="new-sm:w-[100%] new-sm:h-[22rem] md:h-[42rem] md:w-[60rem] xl:w-[70rem] 2xl:w-[82.1875rem] absolute z-30 top-0 new-sm:flex md:grid grid-cols-2 rounded-[28px] overflow-visible md:ml-[6.5rem]">
 
       <div className="relative z-10 rounded-l-[28px] h-[100%] new-sm:hidden md:grid grid-cols-2">
         {/* Following is the Shop now button */}

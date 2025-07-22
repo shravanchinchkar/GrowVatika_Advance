@@ -1,7 +1,8 @@
 import { ExploreCard } from "./explore-card";
 import { ExploreMoreSectionData } from "../data/exploreMoreSectionData";
+import { memo } from "react";
 
-export const ExploreSection = () => {
+export const ExploreSection =memo(() => {
   return (
     <div className="new-sm:pb-[1.37rem] new-sm:mt-[1rem] md:pb-0 md:mt-[12rem] xl:mt-[15rem] 2xl:mt-[8rem] bg-custom-gradient">
       {/* Following is the top div */}
@@ -28,4 +29,4 @@ export const ExploreSection = () => {
       </div>
     </div>
   );
-};
+});

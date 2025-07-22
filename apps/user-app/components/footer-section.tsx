@@ -1,8 +1,8 @@
-import { SiteLogo } from "@repo/ui/brand-logo";
+import { memo } from "react";
 import Image from "next/image";
-import Link from "next/link";
+import { SiteLogo } from "@repo/ui/brand-logo";
 
-export const Footer = () => {
+export const Footer = memo(() => {
   return (
     <div
       id="contact-us"
@@ -151,4 +151,4 @@ export const Footer = () => {
       </div>
     </div>
   );
-};
+});

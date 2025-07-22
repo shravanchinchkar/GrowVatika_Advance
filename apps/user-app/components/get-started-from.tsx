@@ -1,18 +1,18 @@
 "use client";
+import { useState, memo } from "react";
 import { toast } from "react-hot-toast";
-import { useState, useCallback } from "react";
 import { AuthButton } from "@repo/ui/auth-button";
 import { storeDataInExcel } from "../actions/auth";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { ContactSuccess } from "./contact-success-msg";
 import { toastStyle } from "@repo/shared/utilfunctions";
 import { useForm, SubmitHandler } from "react-hook-form";
-import { LabelInput, FormType } from "@repo/ui/label-input";
 import { ButtonLoadingSign } from "@repo/ui/loading-sign";
+import { LabelInput, FormType } from "@repo/ui/label-input";
 import { useChangeMobileConnectFormVisibility } from "@repo/shared-store";
 import { GetStartedFromInput, GetStartedFromSchema } from "@repo/common-types";
 
-export const ContactForm = () => {
+export const ContactForm = memo(() => {
   const [loading, setLoading] = useState(false);
   const [displayForm, setDisplayForm] = useState(false);
   const [successMessage, setSuccessMessage] = useState(false);
@@ -72,7 +72,7 @@ export const ContactForm = () => {
     <div
       className={`new-sm:w-[100%] new-sm:h-[4.9375rem] new-sm-3:h-[6rem] md:w-[45rem] lg:w-[60rem] xl:w-[75rem] 
         2xl:w-[82rem] flex flex-col items-center m-auto bg-contact-form new-sm-3:pt-[0.3rem] sm:pt-[2rem] md:pt-[1rem] md:pb-[1rem] 
-        relative rounded-none sm:rounded-[28px] ${displayForm ? "sm:h-[40rem] gap-[2rem]" : "sm:h-[12.8125rem] new-sm:gap-[0.5rem] md:gap-[1rem]"} new-sm:mt-[1rem] md:mt-0`}
+        relative rounded-none sm:rounded-[28px] ${displayForm ? "sm:h-[40rem] gap-[2rem]" : "sm:h-[12.8125rem] new-sm:gap-[0.5rem] md:gap-[1rem]"}`}
     >
       {/* Following is the title of the form */}
 
@@ -249,4 +249,4 @@ export const ContactForm = () => {
       />
     </div>
   );
-};
+});

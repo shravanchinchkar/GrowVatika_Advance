@@ -34,11 +34,8 @@ export const LandingPage = () => {
       <HeroSection />
       <LandingPot />
 
-      {/* Header Section */}
-      <div className="mx-auto md:h-max relative flex flex-col items-center gap-[1rem] new-sm:pt-[0.5rem] md:pt-[1rem] new-sm:pb-[0.5rem] md:pb-0"></div>
-
       {/* Main Section */}
-      <main className="flex flex-col new-sm:gap-[0.5rem] md:gap-[3rem]">
+      <main className="flex flex-col new-sm:gap-[1rem] md:gap-[3rem]">
         <ExploreSection />
         <AboutUsSection />
         <FeatureSection />

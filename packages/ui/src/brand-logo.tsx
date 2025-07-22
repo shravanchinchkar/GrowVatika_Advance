@@ -1,7 +1,8 @@
-import Image from "next/image";
+import { memo } from "react";
 import Link from "next/link";
+import Image from "next/image";
 
-export const SiteLogo = () => {
+export const SiteLogo =memo(() => {
   return (
     <Link
       href={"/"}
@@ -28,4 +29,4 @@ export const SiteLogo = () => {
       </div>
     </Link>
   );
-};
+});

@@ -1,7 +1,8 @@
+import { memo } from "react";
 import { SiteLogo } from "@repo/ui/brand-logo";
 import { ProductSearchBar, SearchBarWorkType } from "./product-search-bar";
 
-export const HeaderSectionOne = () => {
+export const HeaderSectionOne =memo(() => {
   return (
     <div className="new-sm:w-[95%]  md:w-[60rem] md:h-max xl:w-[70rem] 2xl:w-[82.1875rem] flex items-center">
       {/* Following div consist of logo,Site-Name,search-bar */}
@@ -20,4 +21,4 @@ export const HeaderSectionOne = () => {
       </div>
     </div>
   );
-};
+});

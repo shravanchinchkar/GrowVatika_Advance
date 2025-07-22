@@ -6,7 +6,7 @@ export const Footer = memo(() => {
   return (
     <div
       id="contact-us"
-      className="flex new-sm:flex-col md:flex-row new-sm:h-max md:h-[20rem] xl:h-[22.875rem] bg-feature-gradient new-sm:mt-[1rem] md:mt-[5rem] overflow-hidden"
+      className="flex new-sm:flex-col md:flex-row new-sm:h-max md:h-[20rem] xl:h-[22.875rem] bg-feature-gradient new-sm:mt-[1.5rem] md:mt-[5rem] overflow-hidden"
     >
       {/* Following is the left footer div */}
       <div className="new-sm:hidden md:block md:w-[29rem] md:h-[100%] new-sm:pt-[0.2rem] md:pt-[2.5rem] lg:pt-[2.5rem]">

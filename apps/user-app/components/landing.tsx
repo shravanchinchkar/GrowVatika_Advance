@@ -41,7 +41,7 @@ export const LandingPage = () => {
       <LandingPot />
 
       {/* Main Section */}
-      <main className="flex flex-col new-sm:gap-[1rem] md:gap-[3rem]">
+      <main className="flex flex-col new-sm:gap-[1.5rem] md:gap-[3rem]">
         <ExploreSection />
         <AboutUsSection />
         <FeatureSection />

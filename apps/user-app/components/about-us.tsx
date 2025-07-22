@@ -12,7 +12,7 @@ export const AboutUsSection =memo(() => {
       className="grid grid-cols-2 relative md:mt-[2rem]"
     >
       {/* Image */}
-      <div className="new-sm:w-[10rem] new-sm:h-[10rem] new-sm-1:w-[12rem] new-sm-1:h-[12rem] new-sm-2:w-[13.5rem] md:w-[20rem] md:h-[20rem] lg:w-[25rem] lg:h-[25rem] xl:w-[38.96875rem] xl:h-[35.5rem] relative shrink-0 justify-self-center z-10 ">
+      <div className="new-sm:w-[10rem] new-sm:h-[10rem] new-sm-1:w-[12rem] new-sm-1:h-[12rem] new-sm-2:w-[13.5rem] md:w-[20rem] md:h-[20rem] lg:w-[25rem] lg:h-[25rem] xl:w-[38.96875rem] xl:h-[35.5rem] relative shrink-0 justify-self-center z-10">
         <Image
           className="new-sm:hidden md:block object-cover"
           src={AboutSectionImage}

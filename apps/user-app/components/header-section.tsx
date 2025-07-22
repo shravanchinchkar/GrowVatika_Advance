@@ -44,7 +44,7 @@ export const HeaderSection = memo(
     // 2xl:w-[87rem]
     return (
       <div
-        className={`new-sm:w-[100%] md:w-[60rem] xl:w-[70rem] 2xl:w-[90%] mx-auto z-40 flex flex-col items-center justify-center gap-[1rem] new-sm:h-max md:h-[10rem] mt-[1rem] ${isScrollingUp && "sticky top-[1rem] bg-[#FFF6F4] md:border-[#56A430] md:border-[1.6px] md:rounded-[1rem] transition-all md:duration-300"}`}
+        className={`new-sm:w-[100%] md:w-[60rem] xl:w-[70rem] 2xl:w-[90%] mx-auto z-40 flex flex-col items-center justify-center gap-[1rem] new-sm:h-max md:h-[10rem] new-sm:mt-[0.5rem] md:mt-[1rem] ${isScrollingUp && "sticky top-[1rem] bg-[#FFF6F4] md:border-[#56A430] md:border-[1.6px] md:rounded-[1rem] transition-all md:duration-300"}`}
       >
         <div className="new-sm:w-[100%] md:w-[96.5%] h-max flex justify-between">
           <HeaderSectionOne />

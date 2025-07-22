@@ -14,7 +14,9 @@ import { MobileGetStartedForm } from "./mobile-get-started-form";
 import {
   useAddToCartVisibilityStore,
   useChangeMobileConnectFormVisibility,
+  useChangeMobileNavbarVisibility,
 } from "@repo/shared-store";
+import { MobileNavBar } from "./mobile-navbar";
 
 export const LandingPage = () => {
   const addToCartVisibility = useAddToCartVisibilityStore(
@@ -23,12 +25,16 @@ export const LandingPage = () => {
   const MCFormVisibility = useChangeMobileConnectFormVisibility(
     (state: any) => state.displayMCForm
   );
+  const MobileNavbarVisibility = useChangeMobileNavbarVisibility(
+    (state: any) => state.displayMobileNavbar
+  );
 
   return (
     <div
-      className={`relative flex flex-col bg-[#FFF6F4] ${addToCartVisibility && "h-[100vh] overflow-hidden"} ${MCFormVisibility && "h-[100vh] overflow-hidden"}`}
+      className={`relative flex flex-col bg-[#FFF6F4] ${(addToCartVisibility || MCFormVisibility || MobileNavbarVisibility) && "h-[100vh] overflow-hidden"}`}
     >
       <Cart />
+      <MobileNavBar />
       <MobileGetStartedForm />
       <HeaderSection />
       <HeroSection />

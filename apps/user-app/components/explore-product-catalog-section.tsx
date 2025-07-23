@@ -9,8 +9,10 @@ import { ProductCatalogGrid } from "./product-catalog-grid";
 import { ProductFilterSection } from "./product-filter-section";
 import {
   useAddToCartVisibilityStore,
+  useChangeMobileNavbarVisibility,
   useWishListVisibilityStore,
 } from "@repo/shared-store";
+import { MobileNavBar } from "./mobile-navbar";
 
 export const ExploreProductCatalogSection = () => {
   const [displaySortDropDown, setDisplaySortDropDown] = useState(false);
@@ -25,17 +27,25 @@ export const ExploreProductCatalogSection = () => {
   const handleSortProduct = () => {
     setDisplaySortDropDown(!displaySortDropDown);
   };
+  const MobileNavbarVisibility = useChangeMobileNavbarVisibility(
+    (state: any) => state.displayMobileNavbar
+  );
 
   return (
     <div
-      className={`min-h-screen relative flex flex-col items-center bg-[#FFF6F4] font-[Poppins]  ${(addToCartVisibility || wishListVisibility) && "h-[100vh] overflow-hidden"}`}
+      className={`min-h-screen relative flex flex-col items-center bg-[#FFF6F4] font-[Poppins]  ${(addToCartVisibility || wishListVisibility || MobileNavbarVisibility) && "h-[100vh] overflow-hidden"}`}
     >
       <Cart />
       <WishList />
-      {/* Header,Navbar, and all other buttons */}
+      <MobileNavBar />
       <HeaderSection explore={true} />
 
-      <div className="flex flex-col items-center gap-[2rem]">
+      {/* Following is the temporary message shown till the mobile view is readey */}
+      <div className="new-sm:flex md:hidden w-[100%] h-[20rem]  justify-center items-center">
+        <p className="w-[90%] text-center">🚧Mobile View Under Construction🚧, Please view throught Laptop or desktop for better experience</p>
+      </div>
+
+      <div className="new-sm:hidden md:flex flex-col items-center gap-[2rem]">
         {/* Search Input, Search button & Sort Button */}
         <div className="z-10 flex items-start justify-between gap-4 w-[82.1875rem]">
           {/* Search Input */}
@@ -150,8 +160,9 @@ export const ExploreProductCatalogSection = () => {
           </div>
         </div>
       </div>
-
-      <Footer />
+      <div className="new-sm:hidden md:block">
+        <Footer />
+      </div>
     </div>
   );
 };

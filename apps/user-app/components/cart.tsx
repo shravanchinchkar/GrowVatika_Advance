@@ -68,6 +68,7 @@ export const Cart = memo(() => {
               {/* Product Card */}
 
               <div className="new-sm:w-[100%] new-sm:h-[5.5rem] new-sm-1:h-[6.62219rem] md:w-[100%] md:h-[8.25rem] flex justify-between rounded-l-[1.25rem] bg-[#EDE7E4] px-[0.5rem]">
+
                 {/* Product Image */}
                 <div className="w-[35%] flex justify-start items-center md:pl-[0.2rem]">
                   <div className="relative new-sm:w-[5.2rem] new-sm:h-[4.6rem] new-sm-1:w-[6.52188rem] new-sm-1:h-[5.26769rem] new-sm-2:w-[6.9rem] new-sm-2:h-[5.7rem] md:w-[8.125rem] md:h-[6.5625rem] rounded-[1.25rem] border-[1.6px] border-white overflow-hidden flex-shrink-0">
@@ -80,6 +81,7 @@ export const Cart = memo(() => {
                   </div>
                 </div>
 
+                {/* Product Content */}
                 <div className="new-sm:w-[65%] flex flex-col justify-center">
                   <div className="flex items-start justify-between">
                     <div className="font-normal">
@@ -140,6 +142,7 @@ export const Cart = memo(() => {
                     </div>
                   </div>
                 </div>
+
               </div>
             </div>
           </div>

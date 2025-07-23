@@ -19,10 +19,8 @@ export const HeaderSection = memo(
     const [lastScrollY, setLastScrollY] = useState(0);
 
     useEffect(() => {
-      console.log("Header UseEffect")
       const handleScroll = () => {
         const currentScrollY = window.scrollY;
-        console.log("currentScrollY:",currentScrollY)
 
         // Check if scrolling up
         if (currentScrollY < lastScrollY && currentScrollY > 0) {
@@ -46,13 +44,13 @@ export const HeaderSection = memo(
       <div
         className={`new-sm:w-[100%] md:w-[60rem] xl:w-[70rem] 2xl:w-[90%] mx-auto z-40 flex flex-col items-center justify-center gap-[1rem] new-sm:h-max md:h-[10rem] md:mt-[1rem] py-[0.5rem] ${isScrollingUp && "sticky top-[1rem] bg-[#FFF6F4] md:border-[#56A430] md:border-[1.6px] md:rounded-[1rem] transition-all md:duration-300"}`}
       >
-        <div className="new-sm:w-[100%] md:w-[96.5%] h-max flex justify-between">
+        <div className="new-sm:w-[100%] md:w-[96.5%] h-max flex justify-between items-start">
           <HeaderSectionOne />
-          <div className="flex new-sm:flex-col md:flex-row items-center new-sm-1:gap-[0.3rem] md:gap-[2.5rem]">
-            <UserProfileIcon />
-            {(explore || explorebyseller) && <LikeProductIcon />}
+          <div className="flex new-sm:flex-col md:flex-row items-center new-sm:gap-[0.3rem] new-sm-1:gap-[0.3rem] md:gap-[2.5rem]">
             <ShoppingCartIcon />
             <Hamburg />
+            <UserProfileIcon />
+            {(explore || explorebyseller) && <LikeProductIcon />}
           </div>
         </div>
 

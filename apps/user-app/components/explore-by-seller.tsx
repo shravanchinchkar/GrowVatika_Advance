@@ -6,12 +6,14 @@ import { ProductPageButton } from "./product-page-button";
 import { ExploreBySellerGrid } from "./explore-by-seller-grid";
 import {
   useAddToCartVisibilityStore,
+  useChangeMobileNavbarVisibility,
   useWishListVisibilityStore,
 } from "@repo/shared-store";
 import { ProductSearchBar, SearchBarWorkType } from "./product-search-bar";
 
 import { WishList } from "./wishlist";
 import { HeaderSection } from "./header-section";
+import { MobileNavBar } from "./mobile-navbar";
 
 export const ExplorePlantsBySeller = () => {
   const productPageButton = ["Most Popular", "Newly Added", "NearBy Seller"];
@@ -21,15 +23,28 @@ export const ExplorePlantsBySeller = () => {
   const wishListVisibility = useWishListVisibilityStore(
     (state: any) => state.wishListDropDownVisibility
   );
+  const MobileNavbarVisibility = useChangeMobileNavbarVisibility(
+    (state: any) => state.displayMobileNavbar
+  );
 
   return (
     <div
-      className={`relative flex flex-col items-center bg-[#FFF6F4] font-[Poppins] ${(addToCartVisibility || wishListVisibility) && "h-[100vh] overflow-hidden"}`}
+      className={`min-h-screen relative flex flex-col items-center bg-[#FFF6F4] font-[Poppins] ${(addToCartVisibility || wishListVisibility || MobileNavbarVisibility) && "h-[100vh] overflow-hidden"}`}
     >
       <Cart />
       <WishList />
+      <MobileNavBar />
       <HeaderSection explorebyseller={true} />
-      <div className="2xl:w-[82.1875rem] lg:w-[60rem] xl:w-[70rem] h-max mt-[3rem] flex flex-col gap-[3rem] items-center">
+
+      {/* Following is the temporary message shown till the mobile view is readey */}
+      <div className="new-sm:flex md:hidden w-[100%] h-[20rem]  justify-center items-center">
+        <p className="w-[90%] text-center">
+          🚧Mobile View Under Construction🚧, Please view throught Laptop or
+          desktop for better experience
+        </p>
+      </div>
+
+      <div className="new-sm:hidden md:flex lg:w-[60rem] xl:w-[70rem] 2xl:w-[82.1875rem] h-max mt-[3rem] flex-col gap-[3rem] items-center">
         {/* Heading of  Eplore by seller */}
         <h1 className="w-[67.8125rem] uppercase text-center text-[#123524] font-[Unbounded] text-[2.25rem]">
           Explore by Sellers – Discover Nurseries Near You!
@@ -63,7 +78,9 @@ export const ExplorePlantsBySeller = () => {
         <ExploreBySellerGrid />
       </div>
 
-      <Footer />
+      <div className="new-sm:hidden md:block">
+        <Footer />
+      </div>
     </div>
   );
 };

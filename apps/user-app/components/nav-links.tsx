@@ -1,8 +1,6 @@
 "use client";
-import Skeleton from "@/app/loading";
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
-import { useState } from "react";
 
 interface NavLinksProps {
   linkName: string;

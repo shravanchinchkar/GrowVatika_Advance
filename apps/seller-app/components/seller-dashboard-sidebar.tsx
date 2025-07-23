@@ -229,7 +229,7 @@ export const SellerDashboardSideBar = memo(() => {
                   />
                 ) : (
                   <Image
-                    src={"/assets/images/SellerDashboardImages/ImagePlaceholder.png"}
+                    src={"/assets/images/SellerDashboardImages/seller-image-placeholder.svg"}
                     alt="noimage"
                     className="object-cover"
                     fill

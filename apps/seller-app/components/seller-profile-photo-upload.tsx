@@ -88,7 +88,7 @@ export const SellerProfilePhotoUpload =memo(({
           <div className="relative w-[5rem] h-[5rem]">
             <Image
               src={
-                "/assets/images/SellerDashboardImages/ImagePlaceholder.png"
+                "/assets/images/SellerDashboardImages/seller-image-placeholder.svg"
               }
               alt="uploadIcon"
               fill

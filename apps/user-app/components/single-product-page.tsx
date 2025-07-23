@@ -1,5 +1,5 @@
 import Image from "next/image";
-import { Header } from "./header-section";
+import { HeaderSectionOne } from "./header-section-1";
 import { Navbar } from "./nav-section";
 import { UserAuthButton } from "./user-auth-button";
 import { ShoppingCartIcon } from "./cart-icon";
@@ -100,7 +100,7 @@ export const SingleProductPage = () => {
       {/* Header & Nav */}
       <div className="flex flex-col gap-[1rem] pt-[2rem]">
         <div className="2xl:w-[82.1875rem] lg:w-[60rem] xl:w-[70rem] h-max flex justify-between z-0">
-          <Header />
+          <HeaderSectionOne />
           <div className="w-[18rem] flex justify-between items-center">
             <UserProfileIcon />
             <LikeProductIcon />

@@ -6,6 +6,7 @@ export * from "./stores/sellerDashboardDropDown"
 export * from "./stores/sellerData"
 export * from "./stores/sellerProductData"
 export * from "./stores/displayMobileContactForm"
+export * from "./stores/displayMobileNavbar"
 
 
 

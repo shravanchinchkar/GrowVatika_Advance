@@ -4,6 +4,7 @@ import Image, { StaticImageData } from "next/image";
 import { SiteButton } from "./shop-button";
 import { v4 as uuidv4 } from "uuid";
 import { useRouter } from "next/navigation";
+import { memo } from "react";
 
 type CardData = {
   id: string;
@@ -15,7 +16,7 @@ type ExploreCardProps = {
   cardData: CardData;
 };
 
-export const ExploreCard: React.FC<ExploreCardProps> = ({ cardData }) => {
+export const ExploreCard: React.FC<ExploreCardProps> = memo(({ cardData }) => {
   const router = useRouter();
 
   const handleNavigation = () => {
@@ -74,4 +75,4 @@ export const ExploreCard: React.FC<ExploreCardProps> = ({ cardData }) => {
       </div>
     </div>
   );
-};
+});

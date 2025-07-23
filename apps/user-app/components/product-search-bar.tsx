@@ -1,3 +1,4 @@
+import { memo } from "react";
 import Image from "next/image";
 
 export enum SearchBarWorkType {
@@ -10,7 +11,7 @@ interface ProductSearchBarProps {
   UseType: SearchBarWorkType;
 }
 
-export const ProductSearchBar = ({
+export const ProductSearchBar =memo(({
   placeholder,
   UseType,
 }: ProductSearchBarProps) => {
@@ -39,4 +40,4 @@ export const ProductSearchBar = ({
       />
     </div>
   );
-};
+});

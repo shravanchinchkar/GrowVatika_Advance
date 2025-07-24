@@ -1,3 +1,5 @@
+"use client"
+
 import { Hamburg } from "./hamburg";
 import { Navbar } from "./nav-section";
 import { ShoppingCartIcon } from "./cart-icon";
@@ -11,10 +13,11 @@ import { CustomSelectTag } from "./custom-select-tag";
 interface HeaderSectionProp {
   explore?: boolean;
   explorebyseller?: boolean;
+  singleProduct?:boolean
 }
 
 export const HeaderSection = memo(
-  ({ explore, explorebyseller }: HeaderSectionProp) => {
+  ({ explore, explorebyseller,singleProduct }: HeaderSectionProp) => {
     const [isScrollingUp, setIsScrollingUp] = useState(false);
     const [lastScrollY, setLastScrollY] = useState(0);
 
@@ -46,11 +49,16 @@ export const HeaderSection = memo(
       >
         <div className="new-sm:w-[100%] md:w-[96.5%] h-max flex justify-between items-start">
           <HeaderSectionOne />
-          <div className="flex new-sm:flex-col md:flex-row items-center new-sm:gap-[0.3rem] new-sm-1:gap-[0.3rem] md:gap-[2.5rem]">
+          <div className="flex new-sm:flex-col md:hidden items-center new-sm:gap-[0.3rem] new-sm-1:gap-[0.3rem] md:gap-0">
             <ShoppingCartIcon />
             <Hamburg />
             <UserProfileIcon />
-            {(explore || explorebyseller) && <LikeProductIcon />}
+            {(explore || explorebyseller || singleProduct) && <LikeProductIcon />}
+          </div>
+          <div className="new-sm:hidden md:flex items-center gap-[1.5rem]">
+            <UserProfileIcon />
+            {(explore || explorebyseller || singleProduct) && <LikeProductIcon />}
+            <ShoppingCartIcon />
           </div>
         </div>
 

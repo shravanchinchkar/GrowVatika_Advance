@@ -38,16 +38,16 @@ export const ExploreProductCatalogSection = () => {
       <Cart />
       <WishList />
       <MobileNavBar />
-      <HeaderSection explore={true} />
+      {/* <HeaderSection explore={true} /> */}
 
       {/* Following is the temporary message shown till the mobile view is readey */}
-      <div className="new-sm:flex md:hidden w-[100%] h-[20rem]  justify-center items-center">
+      {/* <div className="new-sm:flex md:hidden w-[100%] h-[20rem]  justify-center items-center">
         <p className="w-[90%] text-center">🚧Mobile View Under Construction🚧, Please view throught Laptop or desktop for better experience</p>
-      </div>
+      </div> */}
 
-      <div className="new-sm:hidden md:flex flex-col items-center gap-[2rem]">
+      <div className="flex flex-col items-center gap-[2rem]">
         {/* Search Input, Search button & Sort Button */}
-        <div className="z-10 flex items-start justify-between gap-4 w-[82.1875rem]">
+        <div className="new-sm:hidden z-10 md:flex items-start justify-between gap-4 w-[82.1875rem]">
           {/* Search Input */}
 
           <div className="flex items-center w-[60rem] h-[3.0625rem] rounded-full border border-[#56A430] bg-white px-4">
@@ -122,13 +122,13 @@ export const ExploreProductCatalogSection = () => {
         </div>
 
         {/* Filter Section and Product Card */}
-        <div className="z-0 flex justify-between w-[82.1875rem] font-[Poppins]">
+        <div className="border-[2px] border-red-500 z-0 flex justify-between new-sm:w-[100%] md:w-[82.1875rem] font-[Poppins]">
           {/* Sidebar */}
           <ProductFilterSection />
 
-          <div className="w-[75%]">
+          <div className="md:w-[75%]">
             {/* Filter Tags and Clear all button*/}
-            <div className="flex flex-wrap items-center justify-start gap-[5rem] mb-[1rem]">
+            <div className="new-sm:hidden md:flex flex-wrap items-center justify-start gap-[5rem] mb-[1rem]">
               {/* Following div consist of tag button */}
               <div className="flex flex-wrap gap-[1rem] ml-[1rem]">
                 {filterTags.map((tag, index) => (

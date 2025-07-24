@@ -95,7 +95,7 @@ export const ProductCatalogGrid = () => {
     );
   } else {
     return (
-      <div className="w-[100%] flex flex-col gap-[1rem] pb-[1rem]">
+      <div className="border-[2px] border-red-500 w-[100%] flex flex-col gap-[1rem] pb-[1rem]">
         {/* Count of the products */}
         <div className="w-max text-[2rem] text-[#000] ml-[1.5rem] font-semibold hidden md:block">
           {`${totalProductsCount} Products Available`}

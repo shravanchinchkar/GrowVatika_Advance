@@ -53,11 +53,12 @@ export const ProductCard = memo(
         {/* Product Image */}
         <div
           className="
+      border-[2px] border-red-500
       flex flex-shrink-0 bg-cover bg-center bg-no-repeat
       w-full h-[55%] 
       lg:w-full lg:h-[55%] md:w-full md:h-[55%]
       new-sm:w-[11.42325rem] new-sm:h-[9.22938rem] new-sm:rounded-t-[0.7565rem]
-      new-sm-1:w-[11.42325rem] new-sm-1:h-[9.22938rem] new-sm-1:rounded-t-[0.7565rem]
+      new-sm-1:w-[11.42325rem] new-sm-1:h-[9.22938rem] new-sm-1:rounded-t-[0.7565rem] 
     "
           style={{ backgroundImage: `url(${imageURL})` }}
         >
@@ -149,7 +150,7 @@ export const ProductCard = memo(
           </div>
 
           {/* Add to Cart Button */}
-          <button className="flex items-center justify-center gap-2 bg-[#56A430] hover:bg-[#213E12] rounded-[0.625rem] lg:w-[16.5rem] lg:h-[3.19744rem] md:w-[16.5rem] md:h-[3.19744rem] new-sm:w-[10.43444rem] new-sm:h-[1.93513rem] new-sm-1:w-[10.43444rem] new-sm-1:h-[1.93513rem] new-sm:rounded-[0.37825rem] new-sm-1:rounded-[0.37825rem]">
+          <button className="border-[2px] border-red-500 flex items-center justify-center gap-2 bg-[#56A430] hover:bg-[#213E12] rounded-[0.625rem] lg:w-[16.5rem] lg:h-[3.19744rem] md:w-[16.5rem] md:h-[3.19744rem] new-sm:w-[10.43444rem] new-sm:h-[1.93513rem] new-sm-1:w-[10.43444rem] new-sm-1:h-[1.93513rem] new-sm:rounded-[0.37825rem] new-sm-1:rounded-[0.37825rem]">
             <div className="relative flex-shrink-0 lg:w-[1.53806rem] lg:h-[1.50469rem] md:w-[1.53806rem] md:h-[1.50469rem] new-sm:w-[0.9375rem] new-sm:h-[0.9375rem] new-sm-1:w-[0.9375rem] new-sm-1:h-[0.9375rem]">
               <Image
                 src="/assets/images/ExploreImages/shopping-cart.svg"

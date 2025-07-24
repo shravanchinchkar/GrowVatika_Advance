@@ -48,7 +48,7 @@ export const ExploreProductCatalogSection = () => {
         <SearchSort/>
 
         {/* Filter Section and Product Card */}
-        <div className="z-0 flex justify-between w-[82.1875rem] font-[Poppins] border">
+        <div className="z-0 flex justify-between w-[82.1875rem] font-[Poppins]">
           {/* Sidebar */}
           <ProductFilterSection />
 

@@ -17,7 +17,6 @@ export const ExploreBySellerGrid = memo(() => {
   const [sellerData, setSellerData] = useState<TExploreBySellerData[]>([]);
 
   useEffect(() => {
-    console.log("Explore By Seller useEffect");
 
     // Reset states when component mounts
     setSellerData([]);
@@ -56,7 +55,6 @@ export const ExploreBySellerGrid = memo(() => {
         }
         setLoading(false);
       } catch (error) {
-        console.log("error while getting seller data:", error);
         toast.error("Error while fetching nurseries data!", toastStyle);
         setLoading(false);
       }
@@ -66,8 +64,6 @@ export const ExploreBySellerGrid = memo(() => {
   }, []); // Empty dependency array - only run on mount
 
   useEffect(() => {
-    console.log("Explore By Seller useEffect");
-
     if (page > 1) {
       setLoading(true);
       const fetchSellerData = async () => {
@@ -104,15 +100,12 @@ export const ExploreBySellerGrid = memo(() => {
           }
           setLoading(false);
         } catch (error) {
-          console.log("error while getting seller data:", error);
           toast.error("Error while fetching nurseries data!", toastStyle);
         }
       };
       fetchSellerData();
     }
   }, [page]);
-
-  console.log("seller data is:", sellerData);
 
   const handleLoadMoreSellerData = () => {
     setPage(page + 1);

@@ -1,5 +1,6 @@
-import Image from "next/image";
+import Link from "next/link";
 import { memo } from "react";
+import Image from "next/image";
 import { useRouter } from "next/navigation";
 
 interface ProductCardProps {
@@ -30,15 +31,12 @@ export const ProductCard = memo(
   }: ProductCardProps) => {
     const router = useRouter();
 
-    const handleProductData = (id: string) => {
-      router.push(`/product?id=${id}`);
-    };
 
     return (
-      <div
+      <Link
+        href={`/product?id=${id}`}
         key={id}
         className="w-[18rem] h-[29rem] flex flex-col items-center flex-shrink-0 rounded-[1.25rem] bg-white shadow-[0px_0px_25px_-11px_rgba(0,0,0,0.25)] font-[Poppins] overflow-hidden justify-self-end cursor-pointer"
-        onClick={() => handleProductData(id)}
       >
         {/* Product Image */}
         <div
@@ -141,7 +139,7 @@ export const ProductCard = memo(
             </span>
           </button>
         </div>
-      </div>
+      </Link>
     );
   }
 );

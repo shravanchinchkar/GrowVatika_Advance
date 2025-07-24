@@ -26,7 +26,7 @@ export const Footer = memo(() => {
       </div>
 
       {/* Following is the right footer div */}
-      <div className="new-sm:w-[100%] md:w-[66rem]">
+      <div className="new-sm:w-[100%] md:w-[66rem] new-sm:pt-[0.5rem] md:pt-0">
         <div className="grid grid-cols-3 new-sm:pt-0 md:pt-[3rem] font-[Poppins] new-sm:border-b-[0.01675rem] md:border-b-[2px] border-[#123524] new-sm:pb-[0.5rem] new-sm:pl-[0.5rem] md:pl-0 md:pb-[2rem] xl:pb-[3rem]">
           {/* Following is the div 1 */}
           <div className="new-sm:w-[90%] md:w-max flex flex-col new-sm:gap-[0.2rem] md:gap-[1rem] justify-self-center">
@@ -64,7 +64,7 @@ export const Footer = memo(() => {
 
               <div className="text-[#123524A0] new-sm:text-[0.41719rem] new-sm-2:text-[0.5rem] md:text-[0.8rem] lg:text-[0.8rem] xl:text-[1.25rem] font-medium flex flex-col new-sm:gap-[0.1rem] md:gap-[0.7rem] gap-[0.7rem]">
                 <div className="flex new-sm:gap-[0.4rem] md:gap-[1rem] items-center">
-                  <div className="relative new-sm:w-[0.7rem] new-sm:h-[0.7rem] new-sm-2:w-[0.8rem] new-sm-2:h-[0.8rem] md:w-[1.2rem] xl:w-[1.5625rem]  lg:h-[1.2rem] xl:h-[1.5rem]">
+                  <div className="relative new-sm:w-[0.52144rem] new-sm:h-[0.50056rem] new-sm-2:w-[0.8rem] new-sm-2:h-[0.8rem] md:w-[1.2rem] xl:w-[1.5625rem]  lg:h-[1.2rem] xl:h-[1.5rem]">
                     <Image
                       className="object-cover"
                       src="/assets/images/FooterImages/FooterPhoneIcon.svg"
@@ -77,7 +77,7 @@ export const Footer = memo(() => {
                 </div>
 
                 <div className="flex new-sm:gap-[0.4rem] md:gap-[1rem] items-center w-max">
-                  <div className="relative new-sm:w-[0.7rem] new-sm:h-[0.7rem] new-sm-2:w-[0.8rem] new-sm-2:h-[0.8rem] md:w-[1.2rem] md:h-[1.2rem] xl:w-[1.5625rem] xl:h-[1.5rem]">
+                  <div className="relative new-sm:w-[0.52144rem] new-sm:h-[0.52144rem] new-sm-2:w-[0.8rem] new-sm-2:h-[0.8rem] md:w-[1.2rem] md:h-[1.2rem] xl:w-[1.5625rem] xl:h-[1.5rem]">
                     <Image
                       className="object-cover"
                       src="/assets/images/FooterImages/FooterEmailIcon.svg"
@@ -93,7 +93,7 @@ export const Footer = memo(() => {
 
             {/* Following div consist of Social-Media Account Icons */}
             <div className="flex new-sm:gap-[0.5rem] md:gap-[1rem]">
-              <div className="relative new-sm:w-[0.7rem] new-sm:h-[0.7rem] md:w-[1.2rem] md:h-[1.2rem] xl:w-[1.5625rem] xl:h-[1.5rem] cursor-pointer">
+              <div className="relative new-sm:w-[0.52144rem] new-sm:h-[0.52144rem] md:w-[1.2rem] md:h-[1.2rem] xl:w-[1.5625rem] xl:h-[1.5rem] cursor-pointer">
                 <Image
                   className="object-cover"
                   src="/assets/images/FooterImages/FooterFacebookIcon.svg"
@@ -102,7 +102,7 @@ export const Footer = memo(() => {
                   sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 25vw"
                 />
               </div>
-              <div className="relative new-sm:w-[0.7rem] new-sm:h-[0.7rem] md:w-[1.2rem] md:h-[1.2rem] xl:w-[1.5625rem] xl:h-[1.5rem] cursor-pointer">
+              <div className="relative new-sm:w-[0.52144rem] new-sm:h-[0.52144rem] md:w-[1.2rem] md:h-[1.2rem] xl:w-[1.5625rem] xl:h-[1.5rem] cursor-pointer">
                 <Image
                   src="./assets/images/FooterImages/FooterXIcon.svg"
                   alt="x"
@@ -111,7 +111,7 @@ export const Footer = memo(() => {
                   sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 25vw"
                 />
               </div>
-              <div className="relative new-sm:w-[0.7rem] new-sm:h-[0.7rem] md:w-[1.2rem] md:h-[1.2rem] xl:w-[1.5625rem] xl:h-[1.5rem] cursor-pointer">
+              <div className="relative new-sm:w-[0.52144rem] new-sm:h-[0.52144rem] md:w-[1.2rem] md:h-[1.2rem] xl:w-[1.5625rem] xl:h-[1.5rem] cursor-pointer">
                 <Image
                   src="./assets/images/FooterImages/FooterInstaIcon.svg"
                   alt="instahram"
@@ -120,7 +120,7 @@ export const Footer = memo(() => {
                   sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 25vw"
                 />
               </div>
-              <div className="relative new-sm:w-[0.7rem] new-sm:h-[0.7rem] md:w-[1.2rem] md:h-[1.2rem] xl:w-[1.5625rem] xl:h-[1.5rem] cursor-pointer">
+              <div className="relative new-sm:w-[0.52144rem] new-sm:h-[0.52144rem] md:w-[1.2rem] md:h-[1.2rem] xl:w-[1.5625rem] xl:h-[1.5rem] cursor-pointer">
                 <Image
                   src="./assets/images/FooterImages/FooterYoutubeIcon.svg"
                   alt="youtube"

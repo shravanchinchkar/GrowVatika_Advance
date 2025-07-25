@@ -24,7 +24,7 @@ export const FeatureSection =memo(() => {
     },
   ];
   return (
-    <div className="new-sm:h-max sm:h-[10rem] md:h-[11rem] lg:h-[12.6875rem] xl:h-[12.6875rem] flex flex-col items-center justify-between bg-feature-gradient">
+    <div className="new-sm:h-max sm:h-[10rem] md:h-[11rem] lg:h-[12.6875rem] xl:h-[12.6875rem] flex flex-col items-center justify-between bg-feature-linear-gradient">
       <div
         className="
           font-[Poppins] font-medium text-[#123524] text-center new-sm:mt-[0.5rem] md:mt-[1rem]

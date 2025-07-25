@@ -1,19 +1,23 @@
 export const HeroSection = () => {
   return (
     <div className="new-sm:w-[96%] new-sm:h-[14.125rem] md:min-h-[29rem] lg:w-[60rem] xl:w-[70rem] 2xl:w-[82.1875rem] relative  overflow-hidden flex flex-wrap rounded-[28px] mx-auto new-sm:mt-[0.5rem] md:mt-[2rem] new-sm:mb-[0.5rem] md:mb-0">
-      <div className="polygon bg-[#9DB375] w-[100%] h-[100%] border-[1px] border-[#9DB375]">
-        {/* new-sm:w-[13.125rem] */}
+      <div className="polygon bg-hero-custom-parent-bg w-[100%] h-[100%]">
 
-        <div className="new-sm:w-[60%] new-sm:h-max lg:w-[31rem] 2xl:w-[47rem] italic new-sm:leading-[1.21431rem] new-sm-3:leading-[1.6rem] md:leading-[51px] new-sm:px-[1rem] lg:px-[2rem] 2xl:px-[3rem] new-sm:pt-[0.5rem] new-sm-1:pt-[1rem] lg:pt-[2rem] font-[Unbounded] new-sm:text-[1rem] new-sm-1:text-[1.1875rem] new-sm-3:text-[1.6rem] lg:text-[2.5rem]  2xl:text-[3.2rem] font-bold uppercase text-white">
-          Create Your own <span className="text-[#3E7B27]">Green</span> Heaven!!
-        </div>
+        <div className="polygon bg-[#9DB375] drop-shadow-hero-custom-dropShadow w-[100%] h-[100%] border-[1px] border-[#9DB375]">
+          {/* new-sm:w-[13.125rem] */}
 
-        <div className="new-sm:w-[12rem] new-sm-2:w-[60%] lg:w-[16rem] xl:w-[22rem] 2xl:w-[24rem] new-sm-2:leading-[17px] lg:leading-[25px] xl:leading-[29px] new-sm:mx-[1rem] lg:mx-[2rem] 2xl:mx-[3rem] new-sm:mt-[1rem] 2xl:mt-[2rem] font-[Poppins] new-sm:text-[0.625rem] new-sm-2:text-[0.75rem] lg:text-[0.8rem] xl:text-[1rem] text-white text-justify">
-          Welcome to <span className="font-bold italic">GrowVatika</span>, your
-          one-stop destination to explore and shop from the best nurseries near
-          you. Whether you're a plant lover, a home gardener, or a business
-          looking for fresh greenery, find everything you need from multiple
-          trusted sellers—all in one place!
+          <div className="new-sm:w-[60%] new-sm:h-max lg:w-[31rem] 2xl:w-[47rem] italic new-sm:leading-[1.21431rem] new-sm-3:leading-[1.6rem] md:leading-[51px] new-sm:px-[1rem] lg:px-[2rem] 2xl:px-[3rem] new-sm:pt-[0.5rem] new-sm-1:pt-[1rem] lg:pt-[2rem] font-[Unbounded] new-sm:text-[1rem] new-sm-1:text-[1.1875rem] new-sm-3:text-[1.6rem] lg:text-[2.5rem]  2xl:text-[3.2rem] font-bold uppercase text-white">
+            Create Your own <span className="text-[#3E7B27]">Green</span>{" "}
+            Heaven!!
+          </div>
+
+          <div className="new-sm:w-[12rem] new-sm-2:w-[60%] lg:w-[16rem] xl:w-[22rem] 2xl:w-[24rem] new-sm-2:leading-[17px] lg:leading-[25px] xl:leading-[29px] new-sm:mx-[1rem] lg:mx-[2rem] 2xl:mx-[3rem] new-sm:mt-[1rem] 2xl:mt-[2rem] font-[Poppins] new-sm:text-[0.625rem] new-sm-2:text-[0.75rem] lg:text-[0.8rem] xl:text-[1rem] text-white text-justify">
+            Welcome to <span className="font-bold italic">GrowVatika</span>,
+            your one-stop destination to explore and shop from the best
+            nurseries near you. Whether you're a plant lover, a home gardener,
+            or a business looking for fresh greenery, find everything you need
+            from multiple trusted sellers—all in one place!
+          </div>
         </div>
       </div>
 

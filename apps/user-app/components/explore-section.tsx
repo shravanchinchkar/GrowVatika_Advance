@@ -2,9 +2,9 @@ import { ExploreCard } from "./explore-card";
 import { ExploreMoreSectionData } from "../data/exploreMoreSectionData";
 import { memo } from "react";
 
-export const ExploreSection =memo(() => {
+export const ExploreSection = memo(() => {
   return (
-    <div className="new-sm:pb-[1.37rem] new-sm:mt-[1rem] md:pb-0 md:mt-[12rem] xl:mt-[15rem] 2xl:mt-[8rem] bg-custom-gradient">
+    <div className="new-sm:pb-[1.37rem] new-sm:mt-[1rem] md:pb-0 md:mt-[12rem] xl:mt-[15rem] 2xl:mt-[8rem] bg-explore/about-custom-linear-gradient">
       {/* Following is the top div */}
 
       <div className="flex flex-col justify-center items-center new-sm:mt-0 sm:mt-1 mt-[1rem] font-[Poppins]">
@@ -30,3 +30,38 @@ export const ExploreSection =memo(() => {
     </div>
   );
 });
+
+//explore bg
+//fill: linear-gradient(301deg, rgba(100, 145, 115, 0.53) 18.97%, rgba(219, 213, 164, 0.53) 87.28%);
+
+//about bg
+/*
+fill: linear-gradient(301deg, rgba(100, 145, 115, 0.53) 18.97%, rgba(219, 213, 164, 0.53) 87.28%);
+stroke-width: 0.8px;
+stroke: #FFF;
+*/
+
+//feature bg
+/*
+fill: linear-gradient(301deg, rgba(100, 145, 115, 0.30) 34.51%, rgba(219, 213, 164, 0.30) 102.82%);
+stroke-width: 0.8px;
+stroke: #FFF;
+*/
+
+//Testimonials bg
+//fill: linear-gradient(301deg, rgba(100, 145, 115, 0.53) 34.51%, rgba(219, 213, 164, 0.53) 102.82%);
+/*
+fill: linear-gradient(301deg, rgba(100, 145, 115, 0.53) 34.51%, rgba(219, 213, 164, 0.53) 102.82%);
+stroke-width: 4px;
+stroke: #FFF6F4;
+*/
+
+//connect bg
+//fill: linear-gradient(301deg, rgba(100, 145, 115, 0.30) 18.97%, rgba(219, 213, 164, 0.30) 87.28%);
+
+//footer bg
+/*
+fill: linear-gradient(301deg, rgba(100, 145, 115, 0.53) 34.51%, rgba(219, 213, 164, 0.53) 102.82%);
+stroke-width: 0.8px;
+stroke: #FFF; 
+*/

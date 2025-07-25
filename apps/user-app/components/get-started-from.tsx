@@ -71,8 +71,8 @@ export const ContactForm = memo(() => {
   return (
     <div
       className={`new-sm:w-[100%] new-sm:h-[4.9375rem] new-sm-3:h-[6rem] md:w-[45rem] lg:w-[60rem] xl:w-[75rem] 
-        2xl:w-[82rem] flex flex-col items-center m-auto bg-contact-form new-sm-3:pt-[0.3rem] sm:pt-[2rem] md:pt-[1rem] md:pb-[1rem] 
-        relative rounded-none sm:rounded-[28px] ${displayForm ? "sm:h-[40rem] gap-[2rem]" : "sm:h-[12.8125rem] new-sm:gap-[0.5rem] md:gap-[1rem]"}`}
+        2xl:w-[82rem] flex flex-col items-center m-auto new-sm-3:pt-[0.3rem] sm:pt-[2rem] md:pt-[1rem] md:pb-[1rem] 
+        relative rounded-none sm:rounded-[28px] bg-getstarted-linear-gradient ${displayForm ? "sm:h-[40rem] gap-[2rem]" : "sm:h-[12.8125rem] new-sm:gap-[0.5rem] md:gap-[1rem]"}`}
     >
       {/* Following is the title of the form */}
 
@@ -233,7 +233,7 @@ export const ContactForm = memo(() => {
       )}
 
       <button
-        className={`new-sm:block md:hidden border-[2px] new-sm:w-[10.5625rem] new-sm:h-[2rem] sm:w-[11rem] sm:h-[3rem]  hover:border-none rounded-[2.10294rem] bg-[#56A430] hover:bg-[#123524] shadow-button-custom-boxshadow backdrop-blur-[6.408869743347168px] text-[#FFF6F4] new-sm:text-[0.725rem] hover:text-[1.33331rem] font-[Poppins] font-normal  hover:font-semibold  uppercase ${loading ? "cursor-not-allowed" : "cursor-pointer"} `}
+        className={`new-sm:block md:hidden border-[2px] new-sm:w-[10.5625rem] new-sm:h-[2rem] sm:w-[11rem] sm:h-[3rem]  hover:border-none rounded-[2.10294rem] bg-[#56A430] hover:bg-[#123524] shadow-custom-boxshadow backdrop-blur-[6.408869743347168px] text-[#FFF6F4] new-sm:text-[0.725rem] hover:text-[1.33331rem] font-[Poppins] font-normal  hover:font-semibold  uppercase ${loading ? "cursor-not-allowed" : "cursor-pointer"} `}
         disabled={loading}
         onClick={displayMobileContactForm}
       >

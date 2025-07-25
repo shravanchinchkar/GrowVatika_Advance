@@ -25,7 +25,7 @@ export const ExploreCard: React.FC<ExploreCardProps> = memo(({ cardData }) => {
   return (
     <div
       key={cardData.id}
-      className="group relative flex new-sm:w-[9.5rem] new-sm-1:w-[10.68413rem] new-sm:h-[9.09rem] new-sm-2:w-[12rem] new-sm-2:h-[11rem] lg:w-[17rem] lg:h-[13em] xl:w-[19.6875rem] xl:h-[16.75rem] rounded-[28px] overflow-hidden shadow-explore-custom cursor-pointer"
+      className="group relative flex new-sm:w-[9.5rem] new-sm-1:w-[10.68413rem] new-sm:h-[9.09rem] new-sm-2:w-[12rem] new-sm-2:h-[11rem] lg:w-[17rem] lg:h-[13em] xl:w-[19.6875rem] xl:h-[16.75rem] rounded-[28px] overflow-hidden shadow-explorecrad-custom-boxShadow cursor-pointer"
     >
       {/* Following div appear by-default */}
       <div className="absolute inset-0 grid grid-cols-2 transform transition-transform duration-300 group-hover:-translate-y-full">

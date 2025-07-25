@@ -13,3 +13,11 @@
 .rectangle {
   clip-path: polygon(0% 71%, 100% 70%, 100% 100%, 0% 100%);
 }
+
+/* 
+fill: linear-gradient(297deg, rgba(100, 145, 115, 0.53) 14.21%, rgba(219, 213, 164, 0.53) 86.53%);
+stroke-width: 0.8px;
+stroke: #FFF;
+filter: drop-shadow(0 3.2px 32px rgba(0, 0, 0, 0.25));
+backdrop-filter: blur(16px);
+ */

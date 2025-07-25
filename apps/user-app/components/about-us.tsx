@@ -30,7 +30,7 @@ export const AboutUsSection =memo(() => {
       </div>
 
       {/* Text */}
-      <div className="new-sm:w-[62%] new-sm:h-[85%] new-sm-2:w-[65%] new-sm-3:h-[90%] md:w-[55%] md:h-[80%] absolute top-[10%] new-sm:right-[3%] md:right-[14%] z-0 new-sm:pl-[2.5rem] new-sm-1:pl-[3.5rem] new-sm-2:pl-[4rem] new-sm:pt-[0.9rem] md:pt-0 lg:pl-[8rem] lg:pt-[0.7rem] xl:pl-[12rem] xl:pb-[2rem] flex flex-col md:justify-center self-center font-poppins new-sm:rounded-[15px] md:rounded-[28px] bg-custom-gradient overflow-hidden">
+      <div className="new-sm:w-[62%] new-sm:h-[85%] new-sm-2:w-[65%] new-sm-3:h-[90%] md:w-[55%] md:h-[80%] absolute top-[10%] new-sm:right-[3%] md:right-[14%] z-0 new-sm:pl-[2.5rem] new-sm-1:pl-[3.5rem] new-sm-2:pl-[4rem] new-sm:pt-[0.9rem] md:pt-0 lg:pl-[8rem] lg:pt-[0.7rem] xl:pl-[12rem] xl:pb-[2rem] flex flex-col md:justify-center self-center font-poppins new-sm:rounded-[15px] md:rounded-[28px] bg-explore/about-custom-linear-gradient overflow-hidden">
 
         <h1 className="new-sm:text-[0.7rem] new-sm-1:text-[0.9375rem] new-sm-2:text-[1rem] new-sm-3:text-[1.3rem] md:text-[1.5rem] xl:text-[2rem] 2xl:text-[2.25rem] text-[#123524] font-medium">
           About GrowVatika

@@ -55,7 +55,7 @@ export const SellerHeroSection = () => {
 
           {/* Hero Button */}
           <button
-            className="lg:w-[15rem] lg:h-[3.5rem] 2xl:w-[17rem] 2xl:h-[4rem] group border-[2px] hover:border-none rounded-[2.10294rem] bg-[#56A430] hover:bg-[#123524] shadow-button-custom-boxshadow backdrop-blur-[6.408869743347168px] text-[#FFF6F4] lg:text-[1.2rem] 2xl:text-[1.23044rem] hover:text-[1.33331rem] font-[Poppins] font-normal  hover:font-semibold  uppercase"
+            className="lg:w-[15rem] lg:h-[3.5rem] 2xl:w-[17rem] 2xl:h-[4rem] group border-[2px] hover:border-none rounded-[2.10294rem] bg-[#56A430] hover:bg-[#123524] shadow-custom-boxshadow backdrop-blur-[6.408869743347168px] text-[#FFF6F4] lg:text-[1.2rem] 2xl:text-[1.23044rem] hover:text-[1.33331rem] font-[Poppins] font-normal  hover:font-semibold  uppercase"
             onClick={handleStartSellingNow}
           >
             <div className="w-[100%] h-[100%] rounded-[2.10294rem] bg-button-custom-gradient group-hover:bg-none flex justify-center items-center">

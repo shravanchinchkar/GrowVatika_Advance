@@ -15,8 +15,7 @@ export default {
       boxShadow: {
         editButton: "0px 0px 2px 5px #FF4B4B",
         "seller-header-custom": "0px 4px 4px 0px rgba(0, 0, 0, 0.25)",
-        "button-custom-boxshadow":
-          "0px 1.282px 12.818px -0.32px rgba(0, 0, 0, 0.25)",
+        "custom-boxshadow": "0px 1.282px 12.818px -0.32px rgba(0, 0, 0, 0.25)",
         "explore-custom": "10px 10px 59px #85A947",
       },
       backgroundImage: {

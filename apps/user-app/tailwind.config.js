@@ -30,29 +30,36 @@ export default {
         foreground: "var(--foreground)",
       },
       dropShadow: {
+        "hero-custom-dropShadow": "0 3.2px 32px rgba(0, 0, 0, 0.25)",
         "3xl": "0 5px 5px rgba(0, 0, 0, 0.75)",
         "4xl": "0 15px 25px rgba(0, 0, 0, 0.85)",
       },
+      backdropBlur: {
+        "hero-custom-backdropBlur": "16px",
+      },
+      borderWidth: {
+        0.8: "0.8px",
+      },
       backgroundImage: {
+        "hero-custom-parent-bg":
+          "radial-gradient(702.53% 105.84% at 81.38% 29.84%, #DBD5A4 0%, #85A947 41.5%, #35431C 100%)",
         "button-custom-gradient":
           "linear-gradient(297deg, rgba(100, 145, 115, 0.53) 14.21%, rgba(219, 213, 164, 0.53) 86.53%)",
-        "custom-gradient": "linear-gradient(to left, #649173, #DBD5A4)",
-        "feature-gradient":
+        "explore/about-custom-linear-gradient": "linear-gradient(301deg, rgba(100, 145, 115, 0.53) 18.97%, rgba(219, 213, 164, 0.53) 87.28%)",
+        "feature-linear-gradient":
           "linear-gradient(301deg, rgba(100, 145, 115, 0.30) 34.51%, rgba(219, 213, 164, 0.30) 102.82%)",
         "test-one": "url('/assets/images/TestmonialImageOne.jpg')",
         "test-two": "url('/assets/images/TestmonialImageTwo.jpeg')",
         "test-three": "url('/assets/images/TestmonialImageThree.jpg')",
-        "testimonial-gradient":
+        "testimonial/footer-linear-gradient":
           "linear-gradient(301deg, rgba(100, 145, 115, 0.53) 34.51%, rgba(219, 213, 164, 0.53) 102.82%)",
-        "testimonial-gradient-2":
-          "linear-gradient(301deg, rgba(100, 145, 115, 0.53) 34.51%, rgba(219, 213, 164, 0.53) 102.82%)",
-        "contact-form":
+        "getstarted-linear-gradient":
           "linear-gradient(301deg, rgba(100, 145, 115, 0.30) 18.97%, rgba(219, 213, 164, 0.30) 87.28%)",
       },
       boxShadow: {
-        "button-custom-boxshadow":
-          "0px 1.282px 12.818px -0.32px rgba(0, 0, 0, 0.25)",
-        "explore-custom": "10px 10px 59px #85A947",
+        "custom-boxshadow": "0 3.21px 32.099px -0.802px rgba(0, 0, 0, 0.25)",
+        "explore-button-custom-boxshadow":"0 2.362px 23.619px -0.59px rgba(0, 0, 0, 0.25)",
+        "explorecrad-custom-boxShadow": "0 5px 59.9px 0 #85A947",
         "testinomial-custom": "0px 4px 9.9px 0px rgba(0, 0, 0, 0.44)",
       },
       borderRadius: {

@@ -11,12 +11,11 @@ import { ProductFilterSection } from "./product-filter-section";
 import {
   useAddToCartVisibilityStore,
   useChangeMobileNavbarVisibility,
+  useFilterProduct,
   useWishListVisibilityStore,
 } from "@repo/shared-store";
 
 export const ExploreProductCatalogSection = () => {
-  const filterTags = ["Indoor Plants", "Large (24–48”)", "2 star & up"];
-
   const addToCartVisibility = useAddToCartVisibilityStore(
     (state: any) => state.addToCartDropDownVisibility
   );
@@ -26,6 +25,10 @@ export const ExploreProductCatalogSection = () => {
   const MobileNavbarVisibility = useChangeMobileNavbarVisibility(
     (state: any) => state.displayMobileNavbar
   );
+
+  const filterTags = useFilterProduct((state: any) => state.filter);
+  const removeFilter = useFilterProduct((state: any) => state.removeFilter);
+  const clearFilters = useFilterProduct((state: any) => state.clearFilters);
 
   return (
     <div
@@ -45,7 +48,7 @@ export const ExploreProductCatalogSection = () => {
       </div>
 
       <div className="new-sm:hidden md:flex flex-col items-center gap-[2rem] mt-[1.5rem]">
-        <SearchSort/>
+        <SearchSort />
 
         {/* Filter Section and Product Card */}
         <div className="z-0 flex justify-between w-[82.1875rem] font-[Poppins]">
@@ -54,32 +57,46 @@ export const ExploreProductCatalogSection = () => {
 
           <div className="w-[75%]">
             {/* Filter Tags and Clear all button*/}
-            <div className="flex flex-wrap items-center justify-start gap-[5rem] mb-[1rem]">
-              {/* Following div consist of tag button */}
-              <div className="flex flex-wrap gap-[1rem] ml-[1rem]">
-                {filterTags.map((tag, index) => (
-                  <button
-                    key={index}
-                    className="flex items-center justify-center gap-2 w-[12rem] h-[3.0625rem] px-[1rem] rounded-full bg-[#EDE7E4]"
-                  >
-                    <span className="text-[#171717] text-[1rem] font-poppins font-normal text-center">
-                      {tag}
-                    </span>
-                    <div className="w-[1.5rem] h-[1.5rem] relative">
-                      <Image
-                        src="/assets/images/ExploreImages/xIcon.svg"
-                        alt="close"
-                        fill
-                      />
-                    </div>
-                  </button>
-                ))}
+            {filterTags.length > 0 && (
+              <div className="max-w-max min-w-[80%] flex flex-wrap items-center justify-between mb-[1rem]">
+                {/* Following div consist of tag button */}
+                <div className="w-[85%] flex flex-wrap gap-[1rem] ml-[1rem]">
+                  {filterTags.map((tag: string, index: number) => {
+                    return (
+                      <div
+                        key={index}
+                        className="flex items-center justify-center gap-2 min-w-[12rem] max-w-max h-[3.0625rem] px-[1rem] rounded-full bg-[#EDE7E4]"
+                      >
+                        <span className="text-[#171717] text-[1rem] font-poppins font-normal text-center">
+                          {tag}
+                        </span>
+                        <button
+                          className="w-[1.5rem] h-[1.5rem] relative"
+                          onClick={(e) => {
+                            e.preventDefault();
+                            removeFilter(tag);
+                          }}
+                        >
+                          <Image
+                            src="/assets/images/ExploreImages/xIcon.svg"
+                            alt="close"
+                            fill
+                          />
+                        </button>
+                      </div>
+                    );
+                  })}
+                </div>
+                <button
+                  className="text-[#697F75] text-[1.1875rem] font-poppins font-medium whitespace-nowrap ml-2"
+                  onClick={() => {
+                    clearFilters();
+                  }}
+                >
+                  Clear all
+                </button>
               </div>
-
-              <button className="text-[#697F75] text-[1.1875rem] font-poppins font-medium whitespace-nowrap ml-2">
-                Clear all
-              </button>
-            </div>
+            )}
 
             {/* Main Section */}
             <ProductCatalogGrid />

@@ -36,7 +36,7 @@ export const ProductCard = memo(
       <Link
         href={`/product?id=${id}`}
         key={id}
-        className="w-[18rem] h-[29rem] flex flex-col items-center flex-shrink-0 rounded-[1.25rem] bg-white shadow-[0px_0px_25px_-11px_rgba(0,0,0,0.25)] font-[Poppins] overflow-hidden justify-self-end cursor-pointer"
+        className="w-[18rem] h-[29rem] flex flex-col items-center flex-shrink-0 rounded-[1.25rem] bg-white font-[Poppins] overflow-hidden justify-self-end cursor-pointer shadow-productcard-custom-boxShadow"
       >
         {/* Product Image */}
         <div

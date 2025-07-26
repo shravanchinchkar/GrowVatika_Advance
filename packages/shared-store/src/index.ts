@@ -7,6 +7,7 @@ export * from "./stores/sellerData"
 export * from "./stores/sellerProductData"
 export * from "./stores/displayMobileContactForm"
 export * from "./stores/displayMobileNavbar"
+export * from "./stores/filterProduct"
 
 
 

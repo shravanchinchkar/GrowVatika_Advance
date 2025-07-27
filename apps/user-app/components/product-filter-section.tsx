@@ -23,16 +23,21 @@ export const ProductFilterSection = memo(() => {
 
   // Following are the zustand state
   const filter = useFilterProduct((state: any) => state.filter);
-  const toggleFilter = useFilterProduct((state: any) => state.toggleFilter);
   const setFilter = useFilterProduct((state: any) => state.setFilter);
-
+  const clearFilters = useFilterProduct((state: any) => state.clearFilters);
+  const toggleFilter = useFilterProduct((state: any) => state.toggleFilter);
 
   return (
     <div className="w-[23%] h-[77.125rem] pl-[2rem] pr-[2rem] pt-[1rem] font-[Poppins] bg-white rounded-[1.25rem]">
       {/* Filter Top Section */}
       <div className="flex justify-between items-center">
         <div className="text-[1.5rem] font-medium">Filter</div>
-        <button className="text-[1.1875rem] text-[#697F75]">Clear all</button>
+        <button
+          className="text-[1.1875rem] text-[#697F75]"
+          onClick={() => clearFilters(filter)}
+        >
+          Clear all
+        </button>
       </div>
 
       {/* Plant Type Section */}

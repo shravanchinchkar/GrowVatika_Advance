@@ -55,7 +55,7 @@ export const TestmonialSection = () => {
   };
 
   return (
-    <div className="relative new-sm:hidden md:flex py-[2rem] mt-[4rem] mb-[4rem] bg-testimonial/footer-linear-gradient">
+    <div className="relative new-sm:hidden lg:flex py-[2rem] mt-[4rem] mb-[4rem] bg-testimonial/footer-linear-gradient">
       {/* Following div consist  of images of testmonials */}
       <div className="relative lg:ml-[-4rem] xl:ml-[-8rem] lg:w-[25rem] lg:h-[15rem] xl:w-[25.4375rem] xl:h-[25.4375rem] lg:my-[5rem] xl:my-[2rem] border-r-[10px] border-t-[10px] border-b-[10px] border-[#649173] rounded-r-[50%] rounded-t-[50%] rounded-b-[50%]">
         {TestmonialData.map((testimonial, index) => {

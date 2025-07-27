@@ -14,6 +14,7 @@ export default {
         "new-sm-1": "360px",
         "new-sm-2": "430px",
         "new-sm-3": "535px",
+        "new-md": "888px",
         "new-xl": "1330px",
         "new-xl-2": "1400px",
       },
@@ -45,7 +46,8 @@ export default {
           "radial-gradient(702.53% 105.84% at 81.38% 29.84%, #DBD5A4 0%, #85A947 41.5%, #35431C 100%)",
         "button-custom-gradient":
           "linear-gradient(297deg, rgba(100, 145, 115, 0.53) 14.21%, rgba(219, 213, 164, 0.53) 86.53%)",
-        "explore/about-custom-linear-gradient": "linear-gradient(301deg, rgba(100, 145, 115, 0.53) 18.97%, rgba(219, 213, 164, 0.53) 87.28%)",
+        "explore/about-custom-linear-gradient":
+          "linear-gradient(301deg, rgba(100, 145, 115, 0.53) 18.97%, rgba(219, 213, 164, 0.53) 87.28%)",
         "feature-linear-gradient":
           "linear-gradient(301deg, rgba(100, 145, 115, 0.30) 34.51%, rgba(219, 213, 164, 0.30) 102.82%)",
         "test-one": "url('/assets/images/TestmonialImageOne.jpg')",
@@ -58,9 +60,10 @@ export default {
       },
       boxShadow: {
         "custom-boxshadow": "0 3.21px 32.099px -0.802px rgba(0, 0, 0, 0.25)",
-        "productcard-custom-boxShadow":"0 0 25px -11px rgba(0, 0, 0, 0.25)",
-        "dropdown-custom-boxShadow":"0 3.2px 32px -0.8px rgba(0, 0, 0, 0.25)",
-        "explore-button-custom-boxshadow":"0 2.362px 23.619px -0.59px rgba(0, 0, 0, 0.25)",
+        "productcard-custom-boxShadow": "0 0 25px -11px rgba(0, 0, 0, 0.25)",
+        "dropdown-custom-boxShadow": "0 3.2px 32px -0.8px rgba(0, 0, 0, 0.25)",
+        "explore-button-custom-boxshadow":
+          "0 2.362px 23.619px -0.59px rgba(0, 0, 0, 0.25)",
         "explorecrad-custom-boxShadow": "0 5px 59.9px 0 #85A947",
         "testinomial-custom": "0px 4px 9.9px 0px rgba(0, 0, 0, 0.44)",
       },

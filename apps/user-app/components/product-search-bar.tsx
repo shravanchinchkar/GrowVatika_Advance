@@ -32,7 +32,8 @@ export const ProductSearchBar =memo(({
       <input
         className={
           UseType === SearchBarWorkType.PRODUCTSEARCH
-            ? "new-sm:w-[85%] new-sm-1:w-[87%] lg:w-[11rem] xl:w-[17.3125rem] h-[1.8125rem] font-[Poppins] outline-none font-normal new-sm:text-[0.9rem] new-sm-1:text-[1rem] xl:text-[1.22669rem] placeholder:text-[#CBD0D3] text-[#8C8C8C]"
+            ? "new-sm:w-[85%] new-sm-1:w-[87%] md:w-[11rem] xl:w-[17.3125rem] h-[1.8125rem] font-[Poppins] outline-none font-normal new-sm:text-[0.9rem] new-sm-1:text-[1rem] xl:text-[1.22669rem] placeholder:text-[#CBD0D3] text-[#8C8C8C]"
+
             : "w-[7.875rem] h-[1.8125rem] font-[Poppins] text-[1.22669rem] placeholder:text-[#CBD0D3] text-[#8C8C8C] font-normal border-none outline-none"
         }
         type="text"

@@ -1,13 +1,13 @@
 "use client";
 
-import { useState } from "react";
+import { memo, useState } from "react";
 import { NavLinks } from "./nav-links";
 
-export const Navbar = () => {
+export const Navbar = memo(() => {
   const [isCollectionsOpen, setIsCollectionsOpen] = useState(false);
 
   return (
-    <div className="sm:hidden md:block lg:w-[40rem] xl:w-[50rem] 2xl:w-[58.3rem] h-[4.05rem] bg-gradient-to-r from-[#B0BF78] to-[#759D61] rounded-full shadow-custom-boxshadow backdrop-blur-xl">
+    <div className="sm:hidden md:block md:w-[70%] md:h-[3.5rem] lg:h-[4.05rem] bg-gradient-to-r from-[#B0BF78] to-[#759D61] rounded-full shadow-custom-boxshadow backdrop-blur-xl md:text-[12px] new-md:text-[16px] xl:text-[19.63px]">
       <div className="relative w-[100%] h-[100%] flex items-center justify-between">
         <NavLinks linkName={"Home"} linkNumber={"1"} />
         <NavLinks
@@ -26,4 +26,4 @@ export const Navbar = () => {
       </div>
     </div>
   );
-};
+});

@@ -1,4 +1,4 @@
-"use client"
+"use client";
 
 import { Hamburg } from "./hamburg";
 import { Navbar } from "./nav-section";
@@ -13,11 +13,11 @@ import { CustomSelectTag } from "./custom-select-tag";
 interface HeaderSectionProp {
   explore?: boolean;
   explorebyseller?: boolean;
-  singleProduct?:boolean
+  singleProduct?: boolean;
 }
 
 export const HeaderSection = memo(
-  ({ explore, explorebyseller,singleProduct }: HeaderSectionProp) => {
+  ({ explore, explorebyseller, singleProduct }: HeaderSectionProp) => {
     const [isScrollingUp, setIsScrollingUp] = useState(false);
     const [lastScrollY, setLastScrollY] = useState(0);
 
@@ -45,19 +45,25 @@ export const HeaderSection = memo(
     // 2xl:w-[87rem]
     return (
       <div
-        className={`new-sm:w-[100%] md:w-[60rem] xl:w-[70rem] 2xl:w-[90%] mx-auto z-40 flex flex-col items-center justify-center gap-[1rem] new-sm:h-max md:h-[10rem] md:mt-[1rem] py-[0.5rem] ${isScrollingUp && "sticky top-[1rem] bg-[#FFF6F4] md:border-[#56A430] md:border-[1.6px] md:rounded-[1rem] transition-all md:duration-300"}`}
+        className={`new-sm:w-[100%] md:w-[100%] lg:w-[90%] 2xl:w-[90%] mx-auto z-40 flex flex-col items-center justify-center gap-[1rem] new-sm:h-max md:h-[10rem] md:mt-[1rem] py-[0.5rem] ${isScrollingUp && "sticky top-[1rem] bg-[#FFF6F4] md:border-[#56A430] md:border-[1.6px] md:rounded-[1rem] transition-all md:duration-300"}`}
       >
-        <div className="new-sm:w-[100%] md:w-[96.5%] h-max flex justify-between items-start">
+        <div className="new-sm:w-[100%] md:w-[96.5%] h-max flex justify-between new-sm:items-start md:items-center">
           <HeaderSectionOne />
           <div className="flex new-sm:flex-col md:hidden items-center new-sm:gap-[0.3rem] new-sm-1:gap-[0.3rem] md:gap-0">
             <ShoppingCartIcon />
             <Hamburg />
             <UserProfileIcon />
-            {(explore || explorebyseller || singleProduct) && <LikeProductIcon />}
+            {(explore || explorebyseller || singleProduct) && (
+              <LikeProductIcon />
+            )}
           </div>
           <div className="new-sm:hidden md:flex items-center gap-[1.5rem]">
-            <UserProfileIcon />
-            {(explore || explorebyseller || singleProduct) && <LikeProductIcon />}
+            <div className="new-sm:hidden lg:block">
+              <UserProfileIcon />
+            </div>
+            {(explore || explorebyseller || singleProduct) && (
+              <LikeProductIcon />
+            )}
             <ShoppingCartIcon />
           </div>
         </div>

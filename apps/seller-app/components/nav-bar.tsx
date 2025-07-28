@@ -9,10 +9,10 @@ import Skeleton from "../app/loading";
 export const SellerNavbar = () => {
   const session = useSession();
   const router = useRouter();
-  const [loading,setLoading]=useState(false);
+  const [loading, setLoading] = useState(false);
 
   function handleSignIn() {
-    setLoading(true)
+    setLoading(true);
     router.push("/signin");
     setLoading(false);
   }
@@ -20,17 +20,21 @@ export const SellerNavbar = () => {
     await signOut();
   }
 
-  if(loading){
-    return <Skeleton/>
+  if (loading) {
+    return <Skeleton />;
   }
-  
+
   return (
     <nav className="w-[100%] flex justify-between items-center ml-[1rem] mt-[1rem]">
-      <SiteLogo/>
+      <SiteLogo />
       <div className="lg:w-[9rem] lg:h-[3.5rem] xl:w-[10rem] xl:h-[4rem] lg:text-[1rem] xl:text-[1.23044rem] mr-[2rem]">
         <AuthButton
           buttonName={
-            session.status === "authenticated" ? "Sign Out" : "Sign In"
+            session.status === "loading"
+              ? "Loading"
+              : session.status === "authenticated"
+                ? "Sign Out"
+                : "Sign In"
           }
           onClick={
             session.status === "authenticated" ? handleSignOut : handleSignIn

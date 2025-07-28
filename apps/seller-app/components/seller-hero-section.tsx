@@ -38,7 +38,7 @@ export const SellerHeroSection = () => {
       </div>
 
       {/* Center Content */}
-      <div className="w-max h-[100%] flex flex-col items-center gap-[3rem]">
+      <div className="w-max h-[100%] flex flex-col items-center gap-[1.5rem]">
         {/* Description and button */}
         <div className="flex flex-col items-center gap-[1.5rem]">
           {/* Hero Description text */}
@@ -65,7 +65,7 @@ export const SellerHeroSection = () => {
         </div>
 
         {/* Login Message */}
-        <div className="text-[#123524] text-[1rem] font-normal flex text-center justify-between gap-[0.5rem]">
+        <div className="text-[#123524] text-[1rem] font-normal flex text-center justify-between gap-[0.5rem] mb-[1.5rem]">
           <p>Already have a Seller account?</p>
           <Link href={"/signin"} className="text-[#123524] font-bold">
             Log in

@@ -37,8 +37,10 @@ export const LandingPage = () => {
       <MobileNavBar />
       <MobileGetStartedForm />
       <HeaderSection />
-      <HeroSection />
-      <LandingPot />
+      <div>
+        <HeroSection />
+        <LandingPot />
+      </div>
 
       {/* Main Section */}
       <main className="flex flex-col new-sm:gap-[1.5rem] md:gap-[3rem]">

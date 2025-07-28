@@ -2,7 +2,7 @@
 
 import Image from "next/image";
 import toast from "react-hot-toast";
-import { useEffect, useState,memo } from "react";
+import { useEffect, useState, memo } from "react";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { toastStyle } from "@repo/shared/utilfunctions";
 import { ButtonLoadingSign } from "@repo/ui/loading-sign";
@@ -15,7 +15,7 @@ import { useDisplayAddProductSectionStore } from "@repo/shared-store";
 import { addProductSchema, TAddProductSchema } from "@repo/common-types/types";
 import { CustomSellerDashboardDropDown } from "./custom-seller-dashboard-dropdown";
 
-export const SellerDashboardAddProductSection =memo(() => {
+export const SellerDashboardAddProductSection = memo(() => {
   // Zustand Code
   const displayAddProductSection = useDisplayAddProductSectionStore(
     (state: any) => state.displayAddProductSection
@@ -149,10 +149,19 @@ export const SellerDashboardAddProductSection =memo(() => {
   };
 
   const Collections = [
-    "Indoor",
-    "Outdoor",
+    "Indoor Plants",
+    "Outdoor Plants",
     "Flowering Plants",
     "Tropical Plants",
+    "Potting Mix",
+    "Garden Soil",
+    "Organic Compost",
+    "Ceramic Pots",
+    "Plastic Pots",
+    "Hanging Pots",
+    "Organic Fertilizers",
+    "Chemical Fertilizers",
+    "Plant Food",
   ];
   const Category = ["Plants", "Pots", "Soil", "Fertilizers"];
   const Tags = [
@@ -190,7 +199,9 @@ export const SellerDashboardAddProductSection =memo(() => {
 
             {/* Title */}
             <div>
-              <div className="lg:text-[1.5rem] 2xl:text-[1.7rem] font-semibold">Add Product</div>
+              <div className="lg:text-[1.5rem] 2xl:text-[1.7rem] font-semibold">
+                Add Product
+              </div>
               <div className="lg:text-[1rem] 2xl:text-[1.15rem] text-[#8C8C8C] leading-4">
                 Create the product listing
               </div>
@@ -246,10 +257,8 @@ export const SellerDashboardAddProductSection =memo(() => {
 
           {/* Add Product Form */}
           <div className="pb-[1rem] lg:flex lg:flex-col lg:items-center xl:block">
-
             {/* Following div consist of inputs for product name, price, compareAt, description, product Size, product Quantity */}
             <div className="lg:w-[40rem] new-lg:w-[46rem] xl:w-[34rem] 2xl:w-[41rem] flex flex-col gap-[1rem] h-max p-[2rem] bg-white rounded-xl shadow-md">
-
               {/* Heading */}
               <div>
                 <h1 className="text-[#171717] font-[Poppins] lg:text-[1.5rem] 2xl:text-[1.7rem] font-semibold leading-[2.6rem]">
@@ -344,7 +353,8 @@ export const SellerDashboardAddProductSection =memo(() => {
             </div>
 
             {/* Following div consist of drop-zone to upload Images */}
-            <div className={`lg:w-[40rem] new-lg:w-[46rem]  xl:w-[34rem] border-[2px] 2xl:w-[41rem] h-[33rem] flex flex-col justify-center items-center bg-white rounded-xl mt-5 shadow-md ${errors.image?.message ? "gap-0" : "gap-[1rem]"}`}
+            <div
+              className={`lg:w-[40rem] new-lg:w-[46rem]  xl:w-[34rem] border-[2px] 2xl:w-[41rem] h-[33rem] flex flex-col justify-center items-center bg-white rounded-xl mt-5 shadow-md ${errors.image?.message ? "gap-0" : "gap-[1rem]"}`}
             >
               {/* Media Heading Section */}
               <div className="lg:w-[35rem] new-lg:w-[42rem] xl:w-[30rem] 2xl:w-[37.0625rem]">
@@ -377,10 +387,8 @@ export const SellerDashboardAddProductSection =memo(() => {
 
           {/* Organization,Status & Visibility Section */}
           <div className="flex lg:flex-row lg:justify-evenly xl:flex-col xl:justify-between gap-5 pb-[1rem]">
-
             {/* Organization Section */}
             <div className="lg:w-[19.875rem] xl:w-[18rem] new-xl:w-[21.5rem] 2xl:w-[19.875rem] lg:h-[33rem] xl:h-[35.5rem] bg-white rounded-[1.25rem]  pt-[1.5rem] flex flex-col shadow-md">
-
               <div className="flex flex-col items-center lg:gap-[2rem] xl:gap-[2.7rem]">
                 <div className="w-[100%] lg:text-[1.5rem] 2xl:text-[1.7rem] font-semibold pl-[1.5rem]">
                   Organization
@@ -488,7 +496,6 @@ export const SellerDashboardAddProductSection =memo(() => {
                 </div>
               </div>
             </div>
-
           </div>
         </div>
       </form>

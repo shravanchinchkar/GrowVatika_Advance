@@ -86,7 +86,7 @@ export const CustomSellerDashboardDropDown = memo(
 
     return (
       <div
-        className={`relative lg:w-[15.9375rem] new-xl:w-[20rem] 2xl:w-[15.9375rem] h-[6rem] flex flex-col gap-2 ${className}`}
+        className={`relative  lg:w-[15.9375rem] new-xl:w-[20rem] 2xl:w-[15.9375rem] h-[6rem] flex flex-col gap-2 ${className}`}
       >
         {/* Label */}
         <div className="lg:text-[1.1rem] xl:text-[1.2rem] font-medium">
@@ -95,7 +95,7 @@ export const CustomSellerDashboardDropDown = memo(
 
         {/* Dropdown Button */}
         <button
-          className={`lg:w-[100%] xl:w-[90%] 2xl:w-[100%] h-[3.1875rem] border-[1.5px] border-[#CBD0D3] rounded-[0.625rem] flex items-center justify-between px-[1rem] ${
+          className={`lg:w-[100%] xl:w-[90%] 2xl:w-[100%] h-[3.1875rem] border-[1.5px] border-[#CBD0D3] outline-none rounded-[0.625rem] flex items-center justify-between px-[1rem] ${
             disabled
               ? "bg-gray-100 cursor-not-allowed"
               : "bg-white cursor-pointer"
@@ -125,23 +125,25 @@ export const CustomSellerDashboardDropDown = memo(
 
         {/* Dropdown Options */}
         <ul
-          className={`absolute top-[6rem] lg:w-[100%] xl:w-[90%] 2xl:w-[100%] bg-[#fff] border-[1.5px] border-[#CBD0D3] rounded-[0.625rem] gap-[0.5rem] overflow-hidden justify-between p-[0.2rem] z-10 shadow-lg ${
-            isOpen ? "flex flex-col" : "hidden"
+          className={`absolute top-[6rem] lg:w-[100%] xl:w-[90%] 2xl:w-[100%] max-h-[12rem] bg-[#fff] border-[1.5px] border-[#CBD0D3] rounded-[0.625rem] overflow-hidden p-[0.2rem] z-10 shadow-lg overflow-y-auto ${
+            isOpen ? "block" : "hidden"
           }`}
         >
-          {normalizedOptions.map((option, index) => (
-            <li
-              className="h-[2.4375rem] bg-[#FFF6F4] rounded-[0.625rem] px-[1rem] flex items-center cursor-pointer hover:bg-[#FFE8E3] transition-colors duration-150 text-[1rem]"
-              key={index}
-              onMouseDown={(e) => {
-                // Prevent the mousedown event from bubbling up
-                e.preventDefault();
-                handleSelect(option.value);
-              }}
-            >
-              {option.label}
-            </li>
-          ))}
+          <div className="w-[100%] flex flex-col gap-[0.5rem] justify-between">
+            {normalizedOptions.map((option, index) => (
+              <li
+                className="h-[2.4375rem] bg-[#FFF6F4] rounded-[0.625rem] px-[1rem] flex items-center cursor-pointer hover:bg-[#FFE8E3] transition-colors duration-150 text-[1rem]"
+                key={index}
+                onMouseDown={(e) => {
+                  // Prevent the mousedown event from bubbling up
+                  e.preventDefault();
+                  handleSelect(option.value);
+                }}
+              >
+                {option.label}
+              </li>
+            ))}
+          </div>
         </ul>
       </div>
     );

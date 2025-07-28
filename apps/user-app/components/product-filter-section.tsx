@@ -1,17 +1,15 @@
 "use client";
 
-import { memo, useEffect, useState } from "react";
+import { memo } from "react";
 import PriceRangeSlider from "./PriceRangeSlider";
 import { useFilterProduct } from "@repo/shared-store";
 
 export const ProductFilterSection = memo(() => {
   const FilterContent = {
-    PlantType: [
-      "Indoor Plants",
-      "Outdoor Plants",
-      "Flowering Plants",
-      "Tropical Plants",
-    ],
+    PlantType: ["Indoor Plants", "Outdoor Plants", "Flowering Plants"],
+    Soil: ["Potting Mix", "Garden Soil", "Organic Compost"],
+    PotTypes: ["Ceramic Pots", "Plastic Pots", "Hanging Pots"],
+    Fertilizers: ["Organic Fertilizers", "Chemical Fertilizers", "Plant Food"],
     Size: [
       'Small (under 12")',
       'Medium (12-24")',
@@ -27,8 +25,9 @@ export const ProductFilterSection = memo(() => {
   const clearFilters = useFilterProduct((state: any) => state.clearFilters);
   const toggleFilter = useFilterProduct((state: any) => state.toggleFilter);
 
+  // h-[77.125rem]
   return (
-    <div className="w-[23%] h-[77.125rem] pl-[2rem] pr-[2rem] pt-[1rem] font-[Poppins] bg-white rounded-[1.25rem]">
+    <div className="w-[23%] h-[77.125rem] pl-[2rem] pr-[1rem] py-[1rem] font-[Poppins] bg-white rounded-[1.25rem] overflow-y-auto">
       {/* Filter Top Section */}
       <div className="flex justify-between items-center">
         <div className="text-[1.5rem] font-medium">Filter</div>
@@ -60,6 +59,85 @@ export const ProductFilterSection = memo(() => {
                     }}
                   />
                   <p>{PlantType}</p>
+                </li>
+              );
+            })}
+          </div>
+        </ul>
+      </div>
+
+      {/* Soil Section */}
+      <div className="pt-[1.69rem] pb-[1.75rem] border-b">
+        <ul className="">
+          <li className="text-[1.25rem] text-[#171717] font-medium">Soil</li>
+          <div className="flex flex-col gap-[0.2rem] text-[1.22669rem] pt-[0.75rem]">
+            {FilterContent.Soil.map((soil, index) => {
+              const isChecked = filter.includes(soil);
+              return (
+                <li key={index} className="flex items-center gap-[0.5rem]">
+                  <input
+                    type="checkbox"
+                    className="h-[1.25rem] w-[1.25rem] accent-[#000]"
+                    checked={isChecked}
+                    onChange={() => {
+                      toggleFilter(soil);
+                    }}
+                  />
+                  <p>{soil}</p>
+                </li>
+              );
+            })}
+          </div>
+        </ul>
+      </div>
+
+      {/* Pots Section */}
+      <div className="pt-[1.69rem] pb-[1.75rem] border-b">
+        <ul className="">
+          <li className="text-[1.25rem] text-[#171717] font-medium">
+            Pot Types
+          </li>
+          <div className="flex flex-col gap-[0.2rem] text-[1.22669rem] pt-[0.75rem]">
+            {FilterContent.PotTypes.map((pot, index) => {
+              const isChecked = filter.includes(pot);
+              return (
+                <li key={index} className="flex items-center gap-[0.5rem]">
+                  <input
+                    type="checkbox"
+                    className="h-[1.25rem] w-[1.25rem] accent-[#000]"
+                    checked={isChecked}
+                    onChange={() => {
+                      toggleFilter(pot);
+                    }}
+                  />
+                  <p>{pot}</p>
+                </li>
+              );
+            })}
+          </div>
+        </ul>
+      </div>
+
+      {/* Fertilizers */}
+      <div className="pt-[1.69rem] pb-[1.75rem] border-b">
+        <ul className="">
+          <li className="text-[1.25rem] text-[#171717] font-medium">
+            Fertilizers
+          </li>
+          <div className="flex flex-col gap-[0.2rem] text-[1.22669rem] pt-[0.75rem]">
+            {FilterContent.Fertilizers.map((fertilizer, index) => {
+              const isChecked = filter.includes(fertilizer);
+              return (
+                <li key={index} className="flex items-center gap-[0.5rem]">
+                  <input
+                    type="checkbox"
+                    className="h-[1.25rem] w-[1.25rem] accent-[#000]"
+                    checked={isChecked}
+                    onChange={() => {
+                      toggleFilter(fertilizer);
+                    }}
+                  />
+                  <p>{fertilizer}</p>
                 </li>
               );
             })}

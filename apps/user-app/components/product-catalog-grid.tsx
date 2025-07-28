@@ -6,6 +6,7 @@ import Image from "next/image";
 import { useEffect, useState } from "react";
 import { ProductCard } from "./product-card";
 import { useSearchParams } from "next/navigation";
+import { useFilterProduct } from "@repo/shared-store";
 import { SellerProductData } from "@repo/common-types";
 import { LocalLoadingSkeleton } from "./local-loading-skeleton";
 
@@ -25,34 +26,69 @@ export const ProductCatalogGrid = () => {
   const currentPage =
     typeof searchParamsPage === "string" ? Number(searchParamsPage) : 1;
 
+  const filter = useFilterProduct((state: any) => state.filter);
+
   useEffect(() => {
     if (currentPage < 1) {
       setPageNotFound(true);
       return;
     } else {
-      const getProductsData = async () => {
-        try {
-          setLoading(true);
-          const res = await axios.get(`api/getallproducts?page=${currentPage}`);
-          const productsData = res.data.productsData;
-          const totalProductsCount = res.data.totalProductsCount;
-          const totalPages = res.data.totalPages;
-          if (currentPage > totalPages) {
+      if (filter.length > 0) {
+        const getFilterProductData = async () => {
+          try {
+            if (!loading) {
+              setLoading(true);
+            }
+            const encodedFilter = encodeURIComponent(JSON.stringify(filter));
+            const res = await axios.get(
+              `api/getfilterproductdata?filter=${encodedFilter}`
+            );
+            console.log("filter response is :", res.data.success);
+            if (!res.data.success) {
+              setProductsData([]);
+              setTotalProductsCount(0);
+              setTotalPages(1);
+              setLoading(false);
+              return;
+            }
+            const filterProductData = res.data.filterProduct;
+            setProductsData(filterProductData);
             setLoading(false);
-            setPageNotFound(true);
-            return;
+          } catch (error) {
+            console.error("Error while getting data of filter products", error);
+            setLoading(false);
           }
-          setProductsData(productsData);
-          setTotalProductsCount(totalProductsCount);
-          setTotalPages(totalPages);
-          setLoading(false);
-        } catch (error) {
-          console.error("Error while getting product data", error);
-        }
-      };
-      getProductsData();
+        };
+        getFilterProductData();
+        return;
+      } else {
+        console.log("not if...")
+        const getProductsData = async () => {
+          try {
+            setLoading(true);
+            const res = await axios.get(
+              `api/getallproducts?page=${currentPage}`
+            );
+            const productsData = res.data.productsData;
+            const totalProductsCount = res.data.totalProductsCount;
+            const totalPages = res.data.totalPages;
+            if (currentPage > totalPages) {
+              setLoading(false);
+              setPageNotFound(true);
+              return;
+            }
+            setProductsData(productsData);
+            setTotalProductsCount(totalProductsCount);
+            setTotalPages(totalPages);
+            setLoading(false);
+          } catch (error) {
+            console.error("Error while getting product data", error);
+          }
+        };
+        getProductsData();
+      }
     }
-  }, [currentPage]);
+  }, [currentPage, filter]);
 
   //Following code helps to display page number at the bottom
   let pageNumber: number[] = [];

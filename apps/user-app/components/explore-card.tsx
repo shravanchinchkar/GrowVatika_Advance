@@ -1,10 +1,11 @@
 "use client";
 
-import Image, { StaticImageData } from "next/image";
-import { SiteButton } from "./shop-button";
-import { v4 as uuidv4 } from "uuid";
-import { useRouter } from "next/navigation";
 import { memo } from "react";
+import { v4 as uuidv4 } from "uuid";
+import { SiteButton } from "./shop-button";
+import { useRouter } from "next/navigation";
+import Image, { StaticImageData } from "next/image";
+import { useFilterProduct } from "@repo/shared-store";
 
 type CardData = {
   id: string;
@@ -18,8 +19,16 @@ type ExploreCardProps = {
 
 export const ExploreCard: React.FC<ExploreCardProps> = memo(({ cardData }) => {
   const router = useRouter();
+  const addFilter = useFilterProduct((state: any) => state.addFilter);
+  const setFilter = useFilterProduct((state: any) => state.setFilter);
 
-  const handleNavigation = () => {
+  const handleNavigation = (data: string[]) => {
+    setFilter(data);
+    router.push("/explore");
+  };
+
+  const handleSelectedProduct = (filterProduct: string) => {
+    addFilter(filterProduct);
     router.push("/explore");
   };
   return (
@@ -61,7 +70,8 @@ export const ExploreCard: React.FC<ExploreCardProps> = memo(({ cardData }) => {
             return (
               <div
                 key={uuidv4()}
-                className="w-[100%] new-sm:h-[25px] new-sm-2:h-[32px] md:h-[25px] lg:h-[40px] xl:h-[40px] flex items-center new-sm:pl-[1.2rem] md:pl-[2rem] hover:bg-[#123524] hover:drop-shadow-lg"
+                className="w-[100%] new-sm:h-[25px] new-sm-2:h-[32px] md:h-[25px] lg:h-[40px] flex items-center new-sm:pl-[1.2rem] md:pl-[2rem] hover:bg-[#123524] hover:drop-shadow-lg"
+                onClick={() => handleSelectedProduct(item)}
               >
                 {item}
               </div>
@@ -70,7 +80,10 @@ export const ExploreCard: React.FC<ExploreCardProps> = memo(({ cardData }) => {
         </div>
 
         <div className="new-sm:ml-[1.2rem] md:ml-[1.5rem] new-sm:mt-[0.25rem] new-sm-2:mt-[0.5rem] lg:mt-[0.5rem]">
-          <SiteButton buttonName={"Explore"} onClick={handleNavigation} />
+          <SiteButton
+            buttonName={"Explore"}
+            onClick={() => handleNavigation(cardData.onHover)}
+          />
         </div>
       </div>
     </div>

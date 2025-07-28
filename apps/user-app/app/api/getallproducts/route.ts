@@ -50,6 +50,7 @@ export async function GET(req: NextRequest) {
         productStatus: "Active",
       },
     });
+    
     if (!totalProductsCount) {
       console.error(
         "product data found but error while getting count of total products"

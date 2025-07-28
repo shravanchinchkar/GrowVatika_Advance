@@ -17,7 +17,6 @@ export const ExploreBySellerGrid = memo(() => {
   const [sellerData, setSellerData] = useState<TExploreBySellerData[]>([]);
 
   useEffect(() => {
-
     // Reset states when component mounts
     setSellerData([]);
     setPage(1);
@@ -111,6 +110,16 @@ export const ExploreBySellerGrid = memo(() => {
     setPage(page + 1);
   };
 
+  // reduce the word count present in the nurseryBio
+  function truncateWords(text: string, wordLimit: number = 20): string {
+    if (!text) return "";
+    const words = text.trim().split(/\s+/);
+    if (words.length <= wordLimit) {
+      return text;
+    }
+    return words.slice(0, wordLimit).join(" ") + "...";
+  }
+
   if (!isDataPresent) {
     return (
       <div className="text-[1.5rem] font-medium uppercase text-[#CBD0D3]">
@@ -132,9 +141,9 @@ export const ExploreBySellerGrid = memo(() => {
                 key={index}
               >
                 {/* Following is the nursery card! */}
-                <div className="w-[25rem] h-max shadow-[0px_0px_25px_-11px_rgba(0,0,0,0.25)] flex flex-col items-center gap-[1rem] shrink-0 bg-[#fff] rounded-[1.8rem] p-[1rem] outline-none border-[1.2px] border-[#56A430]">
+                <div className="w-[25rem] h-[50rem] shadow-[0px_0px_25px_-11px_rgba(0,0,0,0.25)] flex flex-col items-center gap-[1rem] shrink-0 bg-[#fff] rounded-[1.8rem] p-[1rem] outline-none border-[1.2px] border-[#56A430]">
                   {/* Following is the image div */}
-                  <div className="w-[98%] h-[17rem] flex justify-between">
+                  <div className="w-[98%] h-[36%] flex justify-between">
                     {/* Nursery profile Photo */}
                     <div
                       className={`relative w-[14rem] h-[100%] rounded-[1.5625rem] overflow-hidden ${item.profilePictureURL && "border-[1.2px] border-[#56A430]"}`}
@@ -244,7 +253,7 @@ export const ExploreBySellerGrid = memo(() => {
                     </div>
                   </div>
 
-                  <div className="w-[98%] min-h-[25rem] max-h-max flex flex-col justify-between">
+                  <div className="w-[98%] min-h-[60%] flex flex-col justify-between">
                     {/* Following div consist of Nursery Name and all that */}
                     <div className="w-[100%] max-h-max border-b-[0.0625rem] flex flex-col gap-[1rem] pb-[1rem] border-[#00000033]">
                       {/* Following div consist of Nursery name,distance and address */}
@@ -277,7 +286,7 @@ export const ExploreBySellerGrid = memo(() => {
 
                       {/* Following div consist of Nursery Bio */}
                       <p className="text-[#606060] text-[1rem] font-medium text-justify capitalize">
-                        {item.nurseryBio}
+                        {truncateWords(item.nurseryBio)}
                       </p>
 
                       {/* Following div consist of specialties of the nursery */}
@@ -296,7 +305,7 @@ export const ExploreBySellerGrid = memo(() => {
                     </div>
 
                     {/* Following div consist of working hours,buttons and all that */}
-                    <div className="w-[100%] max-h-max flex flex-col gap-[1.5rem]">
+                    <div className="w-[100%] flex flex-col justify-between gap-[1.5rem] ">
                       {/* Following div consist of business hours and contact number */}
                       <div className="flex flex-wrap justify-between gap-[0.5rem] text-[1rem] text-[#606060]">
                         {/* Following div consist of business hours */}

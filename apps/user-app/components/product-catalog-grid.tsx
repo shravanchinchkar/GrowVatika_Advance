@@ -33,6 +33,7 @@ export const ProductCatalogGrid = () => {
       setPageNotFound(true);
       return;
     } else {
+      // only call the below end-point if the filter array length is greater than 0
       if (filter.length > 0) {
         const getFilterProductData = async () => {
           try {
@@ -41,7 +42,7 @@ export const ProductCatalogGrid = () => {
             }
             const encodedFilter = encodeURIComponent(JSON.stringify(filter));
             const res = await axios.get(
-              `api/getfilterproductdata?filter=${encodedFilter}`
+              `api/getfilterproductdata?filter=${encodedFilter}&page=${currentPage}`
             );
             console.log("filter response is :", res.data.success);
             if (!res.data.success) {
@@ -52,7 +53,16 @@ export const ProductCatalogGrid = () => {
               return;
             }
             const filterProductData = res.data.filterProduct;
+            const totalFilterProductCount = res.data.totalFilterProductCount;
+            const totalPages = res.data.totalPages;
+            if (currentPage > totalPages) {
+              setLoading(false);
+              setPageNotFound(true);
+              return;
+            }
             setProductsData(filterProductData);
+            setTotalProductsCount(totalFilterProductCount);
+            setTotalPages(totalPages);
             setLoading(false);
           } catch (error) {
             console.error("Error while getting data of filter products", error);
@@ -62,7 +72,6 @@ export const ProductCatalogGrid = () => {
         getFilterProductData();
         return;
       } else {
-        console.log("not if...")
         const getProductsData = async () => {
           try {
             setLoading(true);
@@ -154,7 +163,7 @@ export const ProductCatalogGrid = () => {
 
         {/*  Page Navigation */}
         <div className="w-[95%] mx-[1.5rem] flex justify-center mt-[4rem]">
-          <div className="min-w-[30%] max-w-max flex justify-between">
+          <div className="min-w-[30%] max-w-max flex justify-between gap-[0.5rem]">
             {/* Previous Page Button */}
 
             {currentPage - 1 >= 1 ? (

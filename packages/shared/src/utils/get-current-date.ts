@@ -1,4 +1,4 @@
-export function getCurrentFormattedDate(): string {
+export function getCurrentFormattedDateTimeString(): string {
   const today = new Date();
 
   // Get month name
@@ -22,6 +22,20 @@ export function getCurrentFormattedDate(): string {
   const day = today.getDate();
   const year = today.getFullYear();
 
-  // Format as "March 19,2025"
-  return `${monthName} ${day},${year}`;
+  // Get time components
+  let hours = today.getHours();
+  const minutes = today.getMinutes();
+  const seconds = today.getSeconds();
+  const ampm = hours >= 12 ? 'PM' : 'AM';
+  
+  // Convert to 12-hour format
+  hours = hours % 12;
+  hours = hours ? hours : 12;
+  
+  // Add leading zeros if needed
+  const minutesStr = minutes < 10 ? '0' + minutes : minutes.toString();
+  const secondsStr = seconds < 10 ? '0' + seconds : seconds.toString();
+  
+  // Return combined format: "March 19,2025 at 1:29:17 PM"
+  return `${monthName} ${day},${year} at ${hours}:${minutesStr}:${secondsStr} ${ampm}`;
 }

@@ -1,24 +1,29 @@
-import { v4 as uuidv4 } from "uuid";
 import { resend } from "../lib/resend";
+import { v4 as uuidv4 } from "uuid";
 import { ApiResponseType } from "@repo/common-types/types";
-import VerificationEmail from "../emails/email-verification-template";
+import NurseryCollaborationEmail from "../emails/successful-collaboration-mail-template";
 
-export async function sendVerificationEmail(
-  name: string,
+export async function successfulCollaboration(
+  nurseryName: string,
+  ownerName: string,
+  registrationDate: string,
   email: string,
-  verifyCode: string
+  verifyCode: string,
+  verificationURL: string
 ): Promise<ApiResponseType> {
   try {
     const { data, error } = await resend.emails.send({
       from: "GrowVatika Support <support@growvatika.live>",
       to: email,
-      subject: "Your GrowVatika Verification Code",
-      react: VerificationEmail({ name, verifyCode }),
-      text: `Hello ${name},Thank you for registering with GrowVatika. To complete your account setup, please verify your email address using this verification code: ${verifyCode}
-      This code is valid for 2 minutes.
-      Best Regards,
-      GrowVatika Team
-      https://growvatika.live`,
+      subject: "Collaboration Successful With GrowVatika ",
+      react: NurseryCollaborationEmail({
+        nurseryName,
+        ownerName,
+        registrationDate,
+        email,
+        verifyCode,
+        verificationURL,
+      }),
       headers: {
         "X-Entity-Ref-ID": uuidv4(),
       },

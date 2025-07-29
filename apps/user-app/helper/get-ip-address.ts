@@ -1,9 +1,9 @@
 import { headers } from "next/headers";
 
-/**
- * Gets the client's IP address from request headers
- * @returns The IP address as a string
- */
+/*
+ Gets the client's IP address from request headers
+ returns The IP address as a string
+*/
 export async function getIp(): Promise<string> {
   const headersList = await headers();
 
@@ -11,12 +11,14 @@ export async function getIp(): Promise<string> {
   const forwardedFor = headersList.get("x-forwarded-for");
   if (forwardedFor) {
     // Use type assertion to tell TypeScript we know what we're doing
+    console.log("forwardedfor")
     return (forwardedFor.split(",")[0] as string).trim();
   }
 
   // Try other common headers
   const realIp = headersList.get("x-real-ip");
   if (realIp) {
+    console.log("real IP:",realIp)
     return realIp;
   }
 

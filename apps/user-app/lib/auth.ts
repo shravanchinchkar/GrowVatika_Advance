@@ -11,6 +11,7 @@ import { sendVerificationEmail } from "../helper/send-verification-mail";
 import { sendSignInSuccessfulMail } from "@/helper/send-signin-successful-mail";
 import {
   getCurrentFormattedDateTimeString,
+  getCurrentDateTime,
   getExpiryDate,
 } from "@repo/shared/utilfunctions";
 
@@ -57,8 +58,6 @@ export const NEXT_AUTH = {
             })
           );
         } else {
-          console.log("IP Address:", IpAddress);
-          console.log("current Location:", currentLocation);
           //extract the email and password send by the user
           const { email, password } = inputResult.data;
           //check if the user with the entered email already exists in db
@@ -161,6 +160,11 @@ export const NEXT_AUTH = {
               password,
               userExists.password
             );
+            
+            // Send this  to your server
+            const userTimezone =
+              Intl.DateTimeFormat().resolvedOptions().timeZone;
+            const currentDateTime = getCurrentDateTime(userTimezone);
 
             if (passwordValidation) {
               //send signin email notification
@@ -169,7 +173,7 @@ export const NEXT_AUTH = {
                 email: userExists.email,
                 accountType: "User Account",
                 ipAddress: IpAddress,
-                signintime: getCurrentFormattedDateTimeString(),
+                signintime: currentDateTime,
                 location: currentLocation || "",
               });
 
@@ -181,7 +185,8 @@ export const NEXT_AUTH = {
                 throw new Error(
                   JSON.stringify({
                     success: false,
-                    error: "Failed to send signin successful email notification",
+                    error:
+                      "Failed to send signin successful email notification",
                   })
                 );
               }

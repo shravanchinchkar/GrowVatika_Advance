@@ -8,6 +8,7 @@ import { sendSignInSuccessfulMail } from "../helper/send-signin-successful-mail"
 import {
   getCurrentFormattedDateTimeString,
   getLocationFromIP,
+  getCurrentDateTime,
 } from "@repo/shared/utilfunctions";
 
 export const NEXT_AUTH = {
@@ -74,13 +75,18 @@ export const NEXT_AUTH = {
             );
 
             if (passwordValidation) {
+              // Send this  to your server
+              const userTimezone =
+                Intl.DateTimeFormat().resolvedOptions().timeZone;
+              const currentDateTime = getCurrentDateTime(userTimezone);
+
               //send signin email notification
               const emailResponse = await sendSignInSuccessfulMail({
                 username: sellerExists.nurseryName,
                 email: sellerExists.email,
                 accountType: "Seller Account",
                 ipAddress: IpAddress,
-                signintime: getCurrentFormattedDateTimeString(),
+                signintime: currentDateTime,
                 location: currentLocation || "",
               });
 

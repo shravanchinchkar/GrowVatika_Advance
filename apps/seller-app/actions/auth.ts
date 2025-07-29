@@ -10,7 +10,7 @@ import {
 } from "@repo/common-types/types";
 import { getIp } from "../helper/get-ip-address";
 import { authRateLimit } from "../lib/rate-limit";
-import { sendVerificationEmail } from "../helper/sendVerificationMail";
+import { sendVerificationEmail } from "../helper/send-verification-mail";
 import { generateVerifyCode, getExpiryDate } from "@repo/shared/utilfunctions";
 
 interface VerifyCodeProps {

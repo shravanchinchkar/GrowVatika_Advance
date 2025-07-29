@@ -81,7 +81,7 @@ export default function SignInEmailTemplate({
               marginBottom: "15px",
             }}
           >
-            {"👋"}
+            {"🏪"}
           </div>
           <h2
             style={{

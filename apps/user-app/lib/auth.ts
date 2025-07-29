@@ -4,6 +4,7 @@ import { authRateLimit } from "./rate-limit";
 import { getIp } from "../helper/get-ip-address";
 import GoogleProvider from "next-auth/providers/google";
 import { SignInSchema } from "@repo/common-types/types";
+import { getLocationFromIP } from "@repo/shared/utilfunctions";
 import { generateVerifyCode } from "@repo/shared/utilfunctions";
 import CredentialsProvider from "next-auth/providers/credentials";
 import { sendVerificationEmail } from "../helper/send-verification-mail";
@@ -12,7 +13,6 @@ import {
   getCurrentFormattedDateTimeString,
   getExpiryDate,
 } from "@repo/shared/utilfunctions";
-import { getLocationFromIP } from "@/helper/get-current-location";
 
 export const NEXT_AUTH = {
   providers: [
@@ -175,8 +175,14 @@ export const NEXT_AUTH = {
 
               if (!emailResponse.success) {
                 console.error(
-                  "user signinde email not send message:",
+                  "Failed to send signin successful email notification:",
                   emailResponse.message
+                );
+                throw new Error(
+                  JSON.stringify({
+                    success: false,
+                    error: "Failed to send signin successful email notification",
+                  })
                 );
               }
 

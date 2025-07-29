@@ -10,7 +10,7 @@ export const SellerDashboardNavBar = () => {
 
   // 
   return (
-    <div className="sticky z-10 top-0 lg:w-[100%] xl:w-[100%]  flex justify-center items-center p-[1rem] backdrop-blur-sm">
+    <div className="sticky z-30 top-0 lg:w-[100%] xl:w-[100%]  flex justify-center items-center p-[1rem] backdrop-blur-sm">
       <div className="w-[100%] h-[87px]  bg-white flex justify-between items-center p-[1rem] rounded-[1.25rem]">
         <div className="lg:text-[1.7rem] xl:text-[1.8rem] 2xl:text-[2rem] font-semibold capitalize">
           {activeSideBar == "dashboard"

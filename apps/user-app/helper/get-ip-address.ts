@@ -11,14 +11,12 @@ export async function getIp(): Promise<string> {
   const forwardedFor = headersList.get("x-forwarded-for");
   if (forwardedFor) {
     // Use type assertion to tell TypeScript we know what we're doing
-    console.log("forwardedfor")
     return (forwardedFor.split(",")[0] as string).trim();
   }
 
   // Try other common headers
   const realIp = headersList.get("x-real-ip");
   if (realIp) {
-    console.log("real IP:",realIp)
     return realIp;
   }
 

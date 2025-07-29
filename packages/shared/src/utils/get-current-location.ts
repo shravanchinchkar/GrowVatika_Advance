@@ -22,12 +22,5 @@ export async function getLocationFromIP(ipAddress: string) {
     return formatted.toString();
   } catch (error) {
     console.error("Error fetching location:", error);
-    // return {
-    //   ip: ipAddress,
-    //   city: "Unknown",
-    //   region: "Unknown",
-    //   country: "Unknown",
-    //   formatted: "Unknown Location",
-    // };
   }
 }

@@ -16,6 +16,7 @@ BE FINAL YEAR PROJECT
 - Turborepo
 - NEXT.js
 - NextAuth for user Validation
+- React Email to create email template
 - Resend to send verification mail
 - googleapi's for storing data in google sheets
 - Zod as the validation library

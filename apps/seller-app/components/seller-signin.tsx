@@ -63,7 +63,10 @@ export const SellerSignin = () => {
         };
         errorMessage =
           errorResponse.error || errorResponse.message || "Signin Failed";
-        console.error("User Signin error response to FE :", errorResponse.error);
+        console.error(
+          "User Signin error response to FE :",
+          errorResponse.error
+        );
       } catch (parseError) {
         // If JSON parsing fails, use the raw error message
         console.error("Seller SignIn error:", res.error);
@@ -123,7 +126,7 @@ export const SellerSignin = () => {
           {/* Following div consist of welcome message */}
           <div className="font-bold flex flex-col gap-0">
             <p className="text-[#000] lg:text-[1.5rem] xl:text-[1.8rem] 2xl:text-[2rem] ">
-              Sign in to your account {userTimezone}
+              Sign in to your account
             </p>
             <p className="text-[#606060] w-[23rem] lg:text-[1rem] xl:text-[1.2rem] 2xl:text-[1.5rem]">
               Enter your credentials to access your seller dashboard

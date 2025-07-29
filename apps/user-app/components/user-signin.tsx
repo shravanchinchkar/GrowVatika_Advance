@@ -161,7 +161,7 @@ export const Sign_In = () => {
           {/* Following div consist of welcome message */}
           <div className="font-bold flex flex-col gap-0">
             <p className="text-[#000] lg:text-[1.5rem] xl:text-[1.8rem] 2xl:text-[2rem]">
-              Hello there! {userTimezone}
+              Hello there!
             </p>
             <p className="text-[#606060] lg:text-[1rem] xl:text-[1.2rem] 2xl:text-[1.5rem]">
               Ready to Grow Green?

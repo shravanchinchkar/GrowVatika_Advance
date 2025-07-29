@@ -59,7 +59,8 @@ export const NEXT_AUTH = {
           );
         } else {
           //extract the email and password send by the user
-          const { email, password } = inputResult.data;
+          const { email, password,userTimezone} = inputResult.data;
+
           //check if the user with the entered email already exists in db
           const userExists = await client.user.findFirst({
             where: {
@@ -161,10 +162,9 @@ export const NEXT_AUTH = {
               userExists.password
             );
             
-            // Send this  to your server
-            const userTimezone =
-              Intl.DateTimeFormat().resolvedOptions().timeZone;
             const currentDateTime = getCurrentDateTime(userTimezone);
+
+            console.log("current date and time:",currentDateTime);
 
             if (passwordValidation) {
               //send signin email notification

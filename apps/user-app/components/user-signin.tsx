@@ -9,22 +9,27 @@ import { useForm } from "react-hook-form";
 import { useRouter } from "next/navigation";
 import { SiteLogo } from "@repo/ui/brand-logo";
 import { AuthButton } from "@repo/ui/auth-button";
-import { zodResolver } from "@hookform/resolvers/zod";
 import { resetPasswordEmail } from "@/actions/auth";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { toastStyle } from "@repo/shared/utilfunctions";
 import { ButtonLoadingSign } from "@repo/ui/loading-sign";
 import { FormType, LabelInput } from "@repo/ui/label-input";
 import { SignInInputs, SignInSchema } from "@repo/common-types/types";
 import AuthImage from "../public/assets/images/AuthImages/AuthImages.png";
-import {
-  toastStyle,
-  limitExhaustedToastStyle,
-} from "@repo/shared/utilfunctions";
 
 export const Sign_In = () => {
   const router = useRouter();
   const [loading, setLoading] = useState(false);
   const [resetPasswordLoading, setResetPasswordLoading] = useState(false);
   const [loadingGoogleLogin, setLoadingGoogleLogin] = useState(false);
+
+  const userTimezone = Intl.DateTimeFormat().resolvedOptions().timeZone;
+  console.log(
+    "typeof userTimeZone:",
+    typeof userTimezone,
+    "value:",
+    userTimezone
+  );
 
   const {
     register,
@@ -44,6 +49,7 @@ export const Sign_In = () => {
     const res = await signIn("credentials", {
       email: data.email,
       password: data.password,
+      userTimeZone: userTimezone,
       redirect: false,
     });
     setLoading(false);
@@ -158,7 +164,7 @@ export const Sign_In = () => {
           {/* Following div consist of welcome message */}
           <div className="font-bold flex flex-col gap-0">
             <p className="text-[#000] lg:text-[1.5rem] xl:text-[1.8rem] 2xl:text-[2rem]">
-              Hello there!
+              Hello there! {userTimezone}
             </p>
             <p className="text-[#606060] lg:text-[1rem] xl:text-[1.2rem] 2xl:text-[1.5rem]">
               Ready to Grow Green?

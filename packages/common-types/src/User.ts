@@ -42,6 +42,7 @@ export const SignInSchema = zod.object({
     .string()
     .min(6, { message: "Password must be atleast of 6 characters" })
     .optional(),
+  userTimezone: zod.string().optional(),
 });
 
 export const EmailOnlySchema = zod.string().email();
@@ -49,4 +50,4 @@ export const EmailOnlySchema = zod.string().email();
 //Following zod schema is used for frontend purpose
 export type SignUpInputs = zod.infer<typeof SignUpSchema>;
 export type SignInInputs = zod.infer<typeof SignInSchema>;
-export type TEmailOnlySchema=zod.infer<typeof EmailOnlySchema>
+export type TEmailOnlySchema = zod.infer<typeof EmailOnlySchema>;

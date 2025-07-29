@@ -20,7 +20,7 @@ export const SiteLogo = memo(() => {
         </div>
 
         {/* Following div consist of site-name and tag-line */}
-        <div className="text-[#123524] new-sm:leading-none leading-[25px]">
+        <div className="text-[#123524] new-sm:leading-none">
           <div className="new-sm:w-max lg:w-[8rem] new-sm:h-max xl:w-[11.25rem] h-[2.9375rem] new-sm:text-[20px] new-sm-3:text-[30px] xl:text-[38.4px] font-[impact]">
             GrowVatika
           </div>

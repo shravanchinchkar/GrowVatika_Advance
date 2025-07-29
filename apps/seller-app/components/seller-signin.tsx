@@ -17,6 +17,8 @@ export const SellerSignin = () => {
   const { data: session } = useSession();
   const [loading, setLoading] = useState(false);
 
+  const userTimezone = Intl.DateTimeFormat().resolvedOptions().timeZone;
+
   useEffect(() => {
     if (session?.user) {
       const sellerId = session.user.id;
@@ -45,6 +47,7 @@ export const SellerSignin = () => {
     const res = await signIn("credentials", {
       email: data.email,
       password: data.password,
+      userTimezone: userTimezone,
       redirect: false,
     });
     setLoading(false);
@@ -94,7 +97,6 @@ export const SellerSignin = () => {
       {/* Following is the left side div which consist of Image */}
 
       <div className="w-[50%] flex justify-center items-center">
-
         <div className="lg:w-[30rem] lg:h-[36rem] new-lg:w-[34rem] xl:w-[37rem]  2xl:w-[42rem] 2xl:h-[42rem] shrink-0 rounded-[28px] overflow-hidden bg-[url(/assets/images/AuthImages/seller-signin.png)] bg-cover bg-no-repeat border-[1px] border-[#8C8C8C]">
           <div className="mx-auto flex flex-col items-center text-[#606060] mt-[2rem]">
             <h1 className="lg:text-[1.5rem] new-lg:text-[1.7rem] xl:text-[1.8rem] 2xl:text-[2rem] font-bold w-[32rem] text-center">
@@ -124,7 +126,7 @@ export const SellerSignin = () => {
           {/* Following div consist of welcome message */}
           <div className="font-bold flex flex-col gap-0">
             <p className="text-[#000] lg:text-[1.5rem] xl:text-[1.8rem] 2xl:text-[2rem] ">
-              Sign in to your account
+              Sign in to your account {userTimezone}
             </p>
             <p className="text-[#606060] w-[23rem] lg:text-[1rem] xl:text-[1.2rem] 2xl:text-[1.5rem]">
               Enter your credentials to access your seller dashboard

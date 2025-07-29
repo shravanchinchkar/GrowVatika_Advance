@@ -1,12 +1,8 @@
-
-export function getCurrentDateTime(
-  userTimezone?: string
-): string {
+export function getCurrentDateTime(userTimezone: string): string {
   const today = new Date();
-
-  // Use user's timezone or default to system timezone
-  const timeZone =
-    userTimezone || Intl.DateTimeFormat().resolvedOptions().timeZone;
+  
+  // Use user's timezone
+  const timeZone = userTimezone;
 
   // Create formatter for the date part
   const dateFormatter = new Intl.DateTimeFormat("en-US", {

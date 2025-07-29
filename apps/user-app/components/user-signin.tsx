@@ -23,13 +23,8 @@ export const Sign_In = () => {
   const [resetPasswordLoading, setResetPasswordLoading] = useState(false);
   const [loadingGoogleLogin, setLoadingGoogleLogin] = useState(false);
 
-  const userTimezone = Intl.DateTimeFormat().resolvedOptions().timeZone;
-  console.log(
-    "typeof userTimeZone:",
-    typeof userTimezone,
-    "value:",
-    userTimezone
-  );
+  //Get the userTimezone in client side
+  const userTimezone: string = Intl.DateTimeFormat().resolvedOptions().timeZone;
 
   const {
     register,
@@ -45,11 +40,10 @@ export const Sign_In = () => {
   // Handle Login with credentials
   async function handleSignIn(data: SignInInputs) {
     setLoading(true);
-    console.log("Signin data is:", data);
     const res = await signIn("credentials", {
       email: data.email,
       password: data.password,
-      userTimeZone: userTimezone,
+      userTimezone: userTimezone,
       redirect: false,
     });
     setLoading(false);
@@ -65,7 +59,10 @@ export const Sign_In = () => {
         };
         errorMessage =
           errorResponse.error || errorResponse.message || "Signin Failed";
-        console.log("User Signin error response to FE :", errorResponse.error);
+        console.error(
+          "User Signin error response to FE :",
+          errorResponse.error
+        );
       } catch (parseError) {
         // If JSON parsing fails, use the raw error message
         console.error("Signin error:", res.error);

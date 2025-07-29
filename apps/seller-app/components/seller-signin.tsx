@@ -17,7 +17,8 @@ export const SellerSignin = () => {
   const { data: session } = useSession();
   const [loading, setLoading] = useState(false);
 
-  const userTimezone = Intl.DateTimeFormat().resolvedOptions().timeZone;
+  // Get the userTimezone in client side
+  const userTimezone: string = Intl.DateTimeFormat().resolvedOptions().timeZone;
 
   useEffect(() => {
     if (session?.user) {
@@ -41,9 +42,7 @@ export const SellerSignin = () => {
 
   // Function to handle Seller Signin
   async function handleSellerSignin(data: SignInInputs) {
-    console.log("Function");
     setLoading(true);
-    console.log("Seller Signin data is:", data);
     const res = await signIn("credentials", {
       email: data.email,
       password: data.password,
@@ -51,7 +50,6 @@ export const SellerSignin = () => {
       redirect: false,
     });
     setLoading(false);
-    console.log("Seller Signin  response is:", res);
 
     // If error
     if (res?.error) {
@@ -65,10 +63,10 @@ export const SellerSignin = () => {
         };
         errorMessage =
           errorResponse.error || errorResponse.message || "Signin Failed";
-        console.log("User Signin error response to FE :", errorResponse.error);
+        console.error("User Signin error response to FE :", errorResponse.error);
       } catch (parseError) {
         // If JSON parsing fails, use the raw error message
-        console.log("Seller SignIn error:", res.error);
+        console.error("Seller SignIn error:", res.error);
         errorMessage = "Internal Server Error!";
       }
       toast.error(errorMessage, toastStyle);
@@ -83,7 +81,6 @@ export const SellerSignin = () => {
       const session = await sessionResponse.json();
       const sellerId = session.user.id;
       if (session?.user?.isVerified) {
-        console.log("Seller Details after signin:", session.user);
         toast.success("Signin successful!", toastStyle);
         router.push(`/sellerdashboard?id=${sellerId}`);
       } else {

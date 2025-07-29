@@ -42,7 +42,6 @@ export const SignInSchema = zod.object({
     .string()
     .min(6, { message: "Password must be atleast of 6 characters" })
     .optional(),
-  userTimezone: zod.string().optional(),
 });
 
 export const EmailOnlySchema = zod.string().email();

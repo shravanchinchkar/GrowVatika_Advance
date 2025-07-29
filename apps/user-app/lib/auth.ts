@@ -26,8 +26,12 @@ export const NEXT_AUTH = {
           type: "password",
           placeholder: "Placeholder",
         },
+        userTimezone: { label: "Time Zone", type: "text" }, // add this line
       },
       async authorize(credentials: any) {
+        //Get the userTimezone in server side from client
+        const userTimezone = credentials?.userTimezone;
+        
         //validate the user Input
         const inputResult = SignInSchema.safeParse(credentials);
         if (!inputResult.success) {
@@ -59,7 +63,7 @@ export const NEXT_AUTH = {
           );
         } else {
           //extract the email and password send by the user
-          const { email, password,userTimezone} = inputResult.data;
+          const { email, password } = inputResult.data;
 
           //check if the user with the entered email already exists in db
           const userExists = await client.user.findFirst({
@@ -161,13 +165,9 @@ export const NEXT_AUTH = {
               password,
               userExists.password
             );
-            
             const currentDateTime = getCurrentDateTime(userTimezone);
-
-            console.log("current date and time:",currentDateTime);
-
             if (passwordValidation) {
-              //send signin email notification
+              // send signin email notification
               const emailResponse = await sendSignInSuccessfulMail({
                 username: userExists.name,
                 email: userExists.email,
@@ -196,6 +196,7 @@ export const NEXT_AUTH = {
                 name: userExists.name,
                 email: userExists.email,
                 isVerified: userExists.isVerified,
+                userTimezone: userTimezone,
                 customResponse: {
                   success: true,
                   message: "Sign-in successful",

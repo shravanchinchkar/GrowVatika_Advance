@@ -5,10 +5,12 @@ import { Footer } from "./footer-section";
 import { LandingPot } from "./landing-pot";
 import { AboutUsSection } from "./about-us";
 import { HeroSection } from "./hero-section";
+import { MobileNavBar } from "./mobile-navbar";
 import { ContactForm } from "./get-started-from";
 import { HeaderSection } from "./header-section";
 import { ExploreSection } from "./explore-section";
 import { FeatureSection } from "./feature-section";
+import { UserProfilePopUp } from "./user-profile-popup";
 import { TestmonialSection } from "./testimonial-section";
 import { MobileGetStartedForm } from "./mobile-get-started-form";
 import {
@@ -17,8 +19,7 @@ import {
   useChangeMobileNavbarVisibility,
   useUserProfileVisibilityStore,
 } from "@repo/shared-store";
-import { MobileNavBar } from "./mobile-navbar";
-import { UserProfilePopUp } from "./user-profile-popup";
+
 
 export const LandingPage = () => {
   const addToCartVisibility = useAddToCartVisibilityStore(

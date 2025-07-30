@@ -1,7 +1,7 @@
 import Link from "next/link";
 import { useState } from "react";
 
-export const NewNavbar = () => {
+export const Navbar = () => {
   const NavLinks = [
     {
       name: "Home",
@@ -68,7 +68,7 @@ export const NewNavbar = () => {
                   className="w-[20%] md:h-[10.5rem] xl:h-[14.7rem] md:mt-[9.5rem] xl:mt-[11rem] md:pt-[2rem] xl:pt-[3.5rem] md:rounded-b-[1.5rem]  xl:rounded-b-[2.5rem] bg-[#649173] flex flex-col justify-center items-center text-[#FFF6F4] md:text-[12px] new-md:text-[16px] xl:text-[19.63px] font-normal"
                   key={index}
                 >
-                  <div className="w-[70%] h-[80%] flex flex-col gap-[1rem] justify-center uppercase">
+                  <div className="w-[60%] h-[80%] flex flex-col gap-[1rem] justify-center uppercase">
                     <Link href={"/explore"}>Explore</Link>
                     <div className="w-[100%] h-[0.125rem] bg-[#FFFFFF]"></div>
                     <Link className="md:w-[5rem] xl:w-[10rem]" href={"/explorebyseller"}>

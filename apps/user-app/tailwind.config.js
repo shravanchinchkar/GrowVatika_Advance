@@ -42,6 +42,10 @@ export default {
         0.8: "0.8px",
       },
       backgroundImage: {
+        "add-to-cart":
+          "linear-gradient(90deg, #0F5889 0%, #1A9AEF 27.88%, #FFF 100%)",
+        "user-popup":
+          "linear-gradient(90deg, #56A430 0%, rgba(86, 164, 48, 0.77) 27.88%, #FFF 100%)",
         "hero-custom-parent-bg":
           "radial-gradient(702.53% 105.84% at 81.38% 29.84%, #DBD5A4 0%, #85A947 41.5%, #35431C 100%)",
         "button-custom-gradient":
@@ -77,9 +81,14 @@ export default {
           "0%": { transform: "translateX(100%)", opacity: "0" },
           "100%": { transform: "translateX(0)", opacity: "1" },
         },
+        "scroll-left": {
+          from: { transform: "translateX(0%)" },
+          to: { transform: "translateX(-25%)" },
+        },
       },
       animation: {
         "slide-in-right": "slide-in-right 0.3s ease-out",
+        "scroll-animation": "scroll-left 60s linear infinite",
       },
     },
   },

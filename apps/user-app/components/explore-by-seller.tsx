@@ -1,19 +1,20 @@
 "use client";
 
 import { Cart } from "./cart";
+import { WishList } from "./wishlist";
 import { Footer } from "./footer-section";
+import { MobileNavBar } from "./mobile-navbar";
+import { HeaderSection } from "./header-section";
+import { UserProfilePopUp } from "./user-profile-popup";
 import { ProductPageButton } from "./product-page-button";
 import { ExploreBySellerGrid } from "./explore-by-seller-grid";
 import {
   useAddToCartVisibilityStore,
   useChangeMobileNavbarVisibility,
+  useUserProfileVisibilityStore,
   useWishListVisibilityStore,
 } from "@repo/shared-store";
 import { ProductSearchBar, SearchBarWorkType } from "./product-search-bar";
-
-import { WishList } from "./wishlist";
-import { HeaderSection } from "./header-section";
-import { MobileNavBar } from "./mobile-navbar";
 
 export const ExplorePlantsBySeller = () => {
   const productPageButton = ["Most Popular", "Newly Added", "NearBy Seller"];
@@ -26,14 +27,18 @@ export const ExplorePlantsBySeller = () => {
   const MobileNavbarVisibility = useChangeMobileNavbarVisibility(
     (state: any) => state.displayMobileNavbar
   );
+  const userProfileVisibility = useUserProfileVisibilityStore(
+    (state: any) => state.userProfileVisibility
+  );
 
   return (
     <div
-      className={`min-h-screen relative flex flex-col items-center bg-[#FFF6F4] font-[Poppins] ${(addToCartVisibility || wishListVisibility || MobileNavbarVisibility) && "h-[100vh] overflow-hidden"}`}
+      className={`min-h-screen relative flex flex-col items-center bg-[#FFF6F4] font-[Poppins] ${(addToCartVisibility || wishListVisibility || MobileNavbarVisibility || userProfileVisibility) && "h-[100vh] overflow-hidden"}`}
     >
       <Cart />
       <WishList />
       <MobileNavBar />
+      <UserProfilePopUp />
       <HeaderSection explorebyseller={true} />
 
       {/* Following is the temporary message shown till the mobile view is readey */}

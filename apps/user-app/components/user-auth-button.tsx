@@ -1,9 +1,9 @@
 "use client";
 import { useState } from "react";
+import Skeleton from "@/app/loading";
 import { useRouter } from "next/navigation";
 import { AuthButton } from "@repo/ui/auth-button";
 import { signOut, useSession } from "next-auth/react";
-import Skeleton from "@/app/loading";
 import { UserProfileIcon } from "./user-profile-icon";
 
 export const UserAuthButton = () => {

@@ -15,8 +15,10 @@ import {
   useAddToCartVisibilityStore,
   useChangeMobileConnectFormVisibility,
   useChangeMobileNavbarVisibility,
+  useUserProfileVisibilityStore,
 } from "@repo/shared-store";
 import { MobileNavBar } from "./mobile-navbar";
+import { UserProfilePopUp } from "./user-profile-popup";
 
 export const LandingPage = () => {
   const addToCartVisibility = useAddToCartVisibilityStore(
@@ -28,15 +30,20 @@ export const LandingPage = () => {
   const MobileNavbarVisibility = useChangeMobileNavbarVisibility(
     (state: any) => state.displayMobileNavbar
   );
+  const userProfileVisibility = useUserProfileVisibilityStore(
+    (state: any) => state.userProfileVisibility
+  );
 
   return (
     <div
-      className={`relative flex flex-col bg-[#FFF6F4] ${(addToCartVisibility || MCFormVisibility || MobileNavbarVisibility) && "h-[100vh] overflow-hidden"}`}
+      className={`relative flex flex-col bg-[#FFF6F4] ${(addToCartVisibility || MCFormVisibility || MobileNavbarVisibility || userProfileVisibility) && "h-[100vh] overflow-hidden"}`}
     >
       <Cart />
       <MobileNavBar />
+      <UserProfilePopUp />
       <MobileGetStartedForm />
       <HeaderSection />
+
       <div>
         <HeroSection />
         <LandingPot />

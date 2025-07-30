@@ -12,8 +12,10 @@ import {
   useAddToCartVisibilityStore,
   useChangeMobileNavbarVisibility,
   useFilterProduct,
+  useUserProfileVisibilityStore,
   useWishListVisibilityStore,
 } from "@repo/shared-store";
+import { UserProfilePopUp } from "./user-profile-popup";
 
 export const ExploreProductCatalogSection = () => {
   const addToCartVisibility = useAddToCartVisibilityStore(
@@ -25,6 +27,9 @@ export const ExploreProductCatalogSection = () => {
   const MobileNavbarVisibility = useChangeMobileNavbarVisibility(
     (state: any) => state.displayMobileNavbar
   );
+   const userProfileVisibility = useUserProfileVisibilityStore(
+    (state: any) => state.userProfileVisibility
+  );
 
   const filterTags = useFilterProduct((state: any) => state.filter);
   const removeFilter = useFilterProduct((state: any) => state.removeFilter);
@@ -32,11 +37,12 @@ export const ExploreProductCatalogSection = () => {
 
   return (
     <div
-      className={`min-h-screen relative flex flex-col items-center bg-[#FFF6F4] font-[Poppins]  ${(addToCartVisibility || wishListVisibility || MobileNavbarVisibility) && "h-[100vh] overflow-hidden"}`}
+      className={`min-h-screen relative flex flex-col items-center bg-[#FFF6F4] font-[Poppins]  ${(addToCartVisibility || wishListVisibility || MobileNavbarVisibility || userProfileVisibility) && "h-[100vh] overflow-hidden"}`}
     >
       <Cart />
       <WishList />
       <MobileNavBar />
+      <UserProfilePopUp/>
       <HeaderSection explore={true} />
 
       {/* Following is the temporary message shown till the mobile view is readey */}

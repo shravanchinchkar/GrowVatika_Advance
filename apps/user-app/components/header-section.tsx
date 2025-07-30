@@ -70,8 +70,8 @@ export const HeaderSection = memo(
 
         <div className="new-sm:hidden md:flex md:w-[96.5%] justify-between items-center z-10 font-[Poppins]">
           <Navbar />
-          {!explore && !explorebyseller && <UserAuthButton />}
-          {explore && (
+          {(!explore && !explorebyseller && !singleProduct) && <UserAuthButton />}
+          {(explore || singleProduct) && (
             <div className="h-[4.05rem] w-[22.5rem] flex justify-between">
               <CustomSelectTag
                 width={"10.5"}

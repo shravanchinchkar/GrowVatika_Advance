@@ -70,12 +70,11 @@ export const ContactForm = memo(() => {
 
   return (
     <div
-      className={`new-sm:w-[100%] new-sm:h-[4.9375rem] new-sm-3:h-[6rem] md:h-max md:w-[45rem] lg:w-[60rem] xl:w-[75rem] 
-        2xl:w-[82rem] flex flex-col justify-between items-center m-auto new-sm-3:pt-[0.3rem] sm:pt-[2rem] md:p-[1.2rem] relative rounded-none sm:rounded-[28px] bg-getstarted-linear-gradient ${displayForm ? "sm:h-[40rem] gap-[2rem]" : "sm:h-[12.8125rem] new-sm:gap-[0.5rem] md:gap-[1rem]"}`}
+      className="new-sm:w-[100%] h-max md:w-[45rem] lg:w-[60rem] xl:w-[75rem] 2xl:w-[82rem] flex flex-col new-sm:py-[1rem] md:py-[2rem] new-sm:gap-[1rem] md:gap-[1.5rem] items-center m-auto relative rounded-none md:rounded-[28px] bg-getstarted-linear-gradient"
     >
       {/* Following is the title of the form */}
 
-      <div className="text-[#123524] font-[Poppins] new-sm:text-[0.8rem] new-sm-1:text-[0.9375rem] new-sm-2:text-[1rem] sm:text-[1.2rem] md:text-[1.5rem] lg:text-[2rem] xl:text-[2.25rem] font-medium  text-center new-sm:mt-[0.5rem] md:m-0">
+      <div className="text-[#123524] font-[Poppins] new-sm:text-[0.8rem] new-sm-1:text-[0.9375rem] new-sm-2:text-[1rem] sm:text-[1.2rem] md:text-[1.5rem] lg:text-[2rem] xl:text-[2.25rem] font-medium text-center leading-none">
         Join Our Growing Network of Trusted Sellers!
       </div>
 
@@ -233,7 +232,7 @@ export const ContactForm = memo(() => {
 
       {/* Mobile View Get Started */}
       <button
-        className={`new-sm:block md:hidden border-[2px] new-sm:w-[10.5625rem] new-sm:h-[2rem] sm:w-[11rem] sm:h-[3rem]  hover:border-none rounded-[2.10294rem] bg-[#56A430] hover:bg-[#123524] shadow-custom-boxshadow backdrop-blur-[6.408869743347168px] text-[#FFF6F4] new-sm:text-[0.725rem] hover:text-[1.33331rem] font-[Poppins] font-normal  hover:font-semibold  uppercase ${loading ? "cursor-not-allowed" : "cursor-pointer"} `}
+        className={`new-sm:block md:hidden border-[2px] new-sm:w-[10.5625rem] new-sm:h-[2rem] sm:w-[11rem] sm:h-[3rem]  hover:border-none rounded-[2.10294rem] bg-[#56A430] hover:bg-[#123524] shadow-custom-boxshadow backdrop-blur-[6.408869743347168px] text-[#FFF6F4] new-sm:text-[0.725rem] sm:text-[1rem] hover:text-[1.2rem] font-[Poppins] font-normal  hover:font-semibold  uppercase ${loading ? "cursor-not-allowed" : "cursor-pointer"} `}
         disabled={loading}
         onClick={displayMobileContactForm}
       >

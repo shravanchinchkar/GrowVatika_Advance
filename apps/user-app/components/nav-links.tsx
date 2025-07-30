@@ -72,7 +72,8 @@ export const NavLinks = memo(
             ? "flex flex-col w-[100%] h-[100%] justify-center items-center transition-all duration-300 ease-in-out hover:bg-[#8FAA83] hover:text-lg hover:font-bold overflow-hidden cursor-pointer rounded-l-full"
             : linkNumber === "5"
               ? "flex flex-col w-[100%] h-[100%] justify-center items-center transition-all duration-300 ease-in-out hover:bg-[#8FAA83] hover:text-lg hover:font-bold overflow-hidden cursor-pointer rounded-r-full pr-[1rem]"
-              : "flex flex-col w-[100%] h-[100%] justify-center items-center transition-all duration-300 ease-in-out hover:bg-[#8FAA83]  md:hover:text-md lg:hover:text-lg overflow-hidden cursor-pointer hover:font-semibold"
+
+              : "flex flex-col w-[100%] h-[100%] justify-center items-center transition-all duration-300 ease-in-out hover:bg-[#8FAA83]  md:hover:text-md xl:hover:text-lg overflow-hidden cursor-pointer hover:font-semibold"
         }
         onMouseEnter={onMouseEnter}
         onMouseLeave={onMouseLeave}
@@ -100,7 +101,7 @@ export const NavLinks = memo(
         {/* Following is the dropdown */}
         {linkName === "Collections" ? (
           <div
-            className={`absolute md:w-[6.5rem] new-md:w-[7.5rem] lg:w-[7.9rem] xl:w-[9.75rem] 2xl:w-[11.49rem] h-[8rem] top-full lg:left-[7.9rem] xl:left-[9.9rem] 2xl:left-[11.57rem] bg-[#649173] rounded-b-3xl shadow-lg transition-none duration-300 overflow-hidden ${
+            className={`absolute md:w-[6.5rem] new-md:w-[7.5rem] lg:w-[7.7rem] xl:w-[9.5rem] 2xl:w-[11.2rem] h-[8rem] top-full lg:left-[7.6rem] xl:left-[9.7rem] 2xl:left-[11.57rem] bg-[#649173] rounded-b-3xl shadow-lg transition-none duration-300 overflow-hidden ${
               isCollectionsOpen ? "opacity-100 visible" : "opacity-0 invisible"
             }`}
           >

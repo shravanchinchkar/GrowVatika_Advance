@@ -19,6 +19,8 @@ import {
 } from "@repo/shared-store";
 import { MobileNavBar } from "./mobile-navbar";
 import { UserProfilePopUp } from "./user-profile-popup";
+import { Navbar } from "./nav-section";
+import { NewNavbar } from "./navbar";
 
 export const LandingPage = () => {
   const addToCartVisibility = useAddToCartVisibilityStore(
@@ -36,7 +38,7 @@ export const LandingPage = () => {
 
   return (
     <div
-      className={`relative flex flex-col bg-[#FFF6F4] ${(addToCartVisibility || MCFormVisibility || MobileNavbarVisibility || userProfileVisibility) && "h-[100vh] overflow-hidden"}`}
+      className={`relative flex flex-col bg-[#FFF6F4] h-screen  ${(addToCartVisibility || MCFormVisibility || MobileNavbarVisibility || userProfileVisibility) && "h-[100vh] overflow-hidden"}`}
     >
       <Cart />
       <MobileNavBar />

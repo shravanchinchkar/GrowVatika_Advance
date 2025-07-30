@@ -36,12 +36,15 @@ export default {
         "4xl": "0 15px 25px rgba(0, 0, 0, 0.85)",
       },
       backdropBlur: {
+        "navbar":"20px",
         "hero-custom-backdropBlur": "16px",
       },
       borderWidth: {
         0.8: "0.8px",
       },
       backgroundImage: {
+        "navbar-bg":
+          "linear-gradient(297deg, rgba(100, 145, 115, 0.53) 14.21%, rgba(219, 213, 164, 0.53) 86.53%)",
         "add-to-cart":
           "linear-gradient(90deg, #0F5889 0%, #1A9AEF 27.88%, #FFF 100%)",
         "user-popup":
@@ -63,6 +66,7 @@ export default {
           "linear-gradient(301deg, rgba(100, 145, 115, 0.30) 18.97%, rgba(219, 213, 164, 0.30) 87.28%)",
       },
       boxShadow: {
+        "navbar-boxshadow": "0 4px 40px -1px rgba(0, 0, 0, 0.25)",
         "custom-boxshadow": "0 3.21px 32.099px -0.802px rgba(0, 0, 0, 0.25)",
         "productcard-custom-boxShadow": "0 0 25px -11px rgba(0, 0, 0, 0.25)",
         "dropdown-custom-boxShadow": "0 3.2px 32px -0.8px rgba(0, 0, 0, 0.25)",

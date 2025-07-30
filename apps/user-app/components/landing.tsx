@@ -5,10 +5,12 @@ import { Footer } from "./footer-section";
 import { LandingPot } from "./landing-pot";
 import { AboutUsSection } from "./about-us";
 import { HeroSection } from "./hero-section";
+import { MobileNavBar } from "./mobile-navbar";
 import { ContactForm } from "./get-started-from";
 import { HeaderSection } from "./header-section";
 import { ExploreSection } from "./explore-section";
 import { FeatureSection } from "./feature-section";
+import { UserProfilePopUp } from "./user-profile-popup";
 import { TestmonialSection } from "./testimonial-section";
 import { MobileGetStartedForm } from "./mobile-get-started-form";
 import {
@@ -17,10 +19,6 @@ import {
   useChangeMobileNavbarVisibility,
   useUserProfileVisibilityStore,
 } from "@repo/shared-store";
-import { MobileNavBar } from "./mobile-navbar";
-import { UserProfilePopUp } from "./user-profile-popup";
-import { Navbar } from "./nav-section";
-import { NewNavbar } from "./navbar";
 
 export const LandingPage = () => {
   const addToCartVisibility = useAddToCartVisibilityStore(
@@ -38,7 +36,7 @@ export const LandingPage = () => {
 
   return (
     <div
-      className={`relative flex flex-col bg-[#FFF6F4] h-screen  ${(addToCartVisibility || MCFormVisibility || MobileNavbarVisibility || userProfileVisibility) && "h-[100vh] overflow-hidden"}`}
+      className={`relative flex flex-col bg-[#FFF6F4] ${(addToCartVisibility || MCFormVisibility || MobileNavbarVisibility || userProfileVisibility) && "h-[100vh] overflow-hidden"}`}
     >
       <Cart />
       <MobileNavBar />

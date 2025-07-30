@@ -1,7 +1,6 @@
 "use client";
 
 import { Hamburg } from "./hamburg";
-import { Navbar } from "./nav-section";
 import { ShoppingCartIcon } from "./cart-icon";
 import { memo, useEffect, useState } from "react";
 import { UserAuthButton } from "./user-auth-button";
@@ -9,7 +8,7 @@ import { HeaderSectionOne } from "./header-section-1";
 import { UserProfileIcon } from "./user-profile-icon";
 import { LikeProductIcon } from "./like-product-icon";
 import { CustomSelectTag } from "./custom-select-tag";
-import { NewNavbar } from "./navbar";
+import { Navbar } from "./navbar";
 
 interface HeaderSectionProp {
   explore?: boolean;
@@ -70,9 +69,8 @@ export const HeaderSection = memo(
         </div>
 
         <div className="new-sm:hidden md:flex md:w-[96.5%] justify-between items-center z-10 font-[Poppins]">
-          {/* <Navbar /> */}
-          <NewNavbar/>
-          {(!explore && !explorebyseller && !singleProduct) && <UserAuthButton />}
+          <Navbar />
+          {!explore && !explorebyseller && !singleProduct && <UserAuthButton />}
           {(explore || singleProduct) && (
             <div className="h-[4.05rem] w-[22.5rem] flex justify-between">
               <CustomSelectTag

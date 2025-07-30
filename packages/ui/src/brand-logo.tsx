@@ -20,14 +20,16 @@ export const SiteLogo = memo(() => {
         </div>
 
         {/* Following div consist of site-name and tag-line */}
-        <div className="text-[#123524] new-sm:leading-none">
-          <div className="new-sm:w-max lg:w-[8rem] new-sm:h-max xl:w-[11.25rem] h-[2.9375rem] new-sm:text-[20px] new-sm-3:text-[30px] xl:text-[38.4px] font-[impact]">
+        <div className="text-[#123524] leading-none">
+          {/* h-[2.9375rem] */}
+          <div className="new-sm:w-max lg:w-[8rem] xl:w-[11.25rem] h-max new-sm:text-[20px] new-sm-3:text-[30px] xl:text-[38.4px] font-[impact]">
             GrowVatika
           </div>
           <div className="font-[Poppins] new-sm:w-max new-sm:h-max md:w-[9.5625rem] md:h-[1.3125rem] new-sm:text-[10px] new-sm-3:text-[12px] xl:text-[13.97px] font-normal">
             Nursery For Everyone
           </div>
         </div>
+
       </Link>
 
       {/* Following is the new-brand-logo */}

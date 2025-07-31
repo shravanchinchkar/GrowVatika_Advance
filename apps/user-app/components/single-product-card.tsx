@@ -1,10 +1,10 @@
 "use client";
 import axios from "axios";
 import Image from "next/image";
+import Skeleton from "@repo/ui/loading";
 import { useState, useEffect } from "react";
 import { useSearchParams } from "next/navigation";
 import { TSingleProductData } from "@repo/common-types";
-import { LocalLoadingSkeleton } from "./local-loading-skeleton";
 
 const StarRating = () => (
   <div className="flex items-center gap-2">
@@ -116,9 +116,7 @@ export const SingleProductCard = () => {
   }
   if (loading) {
     return (
-      <div className="flex justify-center items-center">
-        <LocalLoadingSkeleton />
-      </div>
+      <Skeleton className="flex justify-center items-center"/>
     );
   } else {
     return (
@@ -282,7 +280,8 @@ export const SingleProductCard = () => {
                     className={`w-[14.1875rem] h-[5.9375rem] rounded-[0.625rem] border border-[#56A430] bg-[#DEFFE0] px-[1rem]  py-3 flex flex-col items-start gap-[0.2rem]`}
                   >
                     <div className="text-[#171717] text-[1.25rem] font-[Poppins] font-medium leading-[1.625rem]">
-                      {singleProductData?.productSize}&quot; - ₹{singleProductData?.price}
+                      {singleProductData?.productSize}&quot; - ₹
+                      {singleProductData?.price}
                     </div>
                     <div className="text-[#697F75] text-[0.8rem] font-[Poppins]">
                       {inchesToFeetRange(singleProductData?.productSize || 0)}

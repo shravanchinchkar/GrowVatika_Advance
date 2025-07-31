@@ -1,8 +1,8 @@
 import Image from "next/image";
+import Skeleton from "@repo/ui/loading";
 import { useRouter } from "next/navigation";
 import { AuthButton } from "@repo/ui/auth-button";
 import { useSession, signOut } from "next-auth/react";
-import { LocalLoadingSkeleton } from "./local-loading-skeleton";
 import { useUserProfileVisibilityStore } from "@repo/shared-store";
 
 export const UserProfilePopUp = () => {
@@ -36,7 +36,7 @@ export const UserProfilePopUp = () => {
           className={`w-[90%] h-[95%] rounded-[1.25rem] bg-[#FFFFFF] font-[Poppins] overflow-hidden animate-slide-in-right ${session.status === "loading" ? "flex justify-center items-center" : "flex flex-col"}`}
         >
           {session.status === "loading" ? (
-            <LocalLoadingSkeleton />
+            <Skeleton className="w-[100%] flex justify-center items-center"/>
           ) : (
             <>
               {/* Header */}

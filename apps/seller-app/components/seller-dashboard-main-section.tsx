@@ -3,11 +3,11 @@
 import axios from "axios";
 import Link from "next/link";
 import toast from "react-hot-toast";
+import Skeleton from "@repo/ui/loading";
 import { useSearchParams } from "next/navigation";
 import { memo, useEffect, useState } from "react";
 import { toastStyle } from "@repo/shared/utilfunctions";
 import { useSellerProductDataStore } from "@repo/shared-store";
-import { SellerDashboardLoader } from "./seller-dashboard-loader";
 import { useSellerDataStore, useSpecialties } from "@repo/shared-store";
 import { SellerDashboardProfileSection } from "./seller-dashboard-profile-section";
 import { SellerDashboardAddProductSection } from "./seller-dashboard-add-product-section";
@@ -19,7 +19,8 @@ export const SellerDashboardMainSection = memo(() => {
   const sellerId = searchParams?.get("id") || "";
   const [loading, setLoading] = useState(true);
 
-  //dumy seller data
+  //following data is the dumy data used for testing
+
   // const dumySellerData:SellerData = {
   //   nurseryName: "Shravan Chinchkar",
   //   nurseryBio: "It's a plant nursery",
@@ -44,7 +45,7 @@ export const SellerDashboardMainSection = memo(() => {
     (state) => state.updateSellerProductData
   );
 
-  const setSpecialties=useSpecialties((state:any)=>state.setSpecialties);
+  const setSpecialties = useSpecialties((state: any) => state.setSpecialties);
 
   useEffect(() => {
     if (sellerId) {
@@ -99,9 +100,7 @@ export const SellerDashboardMainSection = memo(() => {
   } else {
     if (loading) {
       return (
-        <div className="w-[100%] h-[100%] flex justify-center items-center">
-          <SellerDashboardLoader />
-        </div>
+        <Skeleton className="w-[100%] h-[100%] flex justify-center items-center" />
       );
     } else {
       return (

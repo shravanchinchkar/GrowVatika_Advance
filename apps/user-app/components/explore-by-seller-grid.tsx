@@ -3,10 +3,10 @@
 import axios from "axios";
 import Image from "next/image";
 import toast from "react-hot-toast";
+import Skeleton from "@repo/ui/loading";
 import { memo, useEffect, useState } from "react";
 import { toastStyle } from "@repo/shared/utilfunctions";
 import { TExploreBySellerData } from "@repo/common-types";
-import { LocalLoadingSkeleton } from "./local-loading-skeleton";
 
 export const ExploreBySellerGrid = memo(() => {
   const [page, setPage] = useState<number>(1);
@@ -128,7 +128,7 @@ export const ExploreBySellerGrid = memo(() => {
     );
   } else {
     if (loading) {
-      return <LocalLoadingSkeleton />;
+      return <Skeleton className="w-[100%] flex justify-center items-center"/>
     }
     return (
       // Nursery Seller Card Start from here

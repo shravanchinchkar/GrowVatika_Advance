@@ -3,12 +3,12 @@
 import axios from "axios";
 import Link from "next/link";
 import Image from "next/image";
+import Skeleton from "@repo/ui/loading";
 import { useEffect, useState } from "react";
 import { ProductCard } from "./product-card";
 import { useSearchParams } from "next/navigation";
 import { useFilterProduct } from "@repo/shared-store";
 import { SellerProductData } from "@repo/common-types";
-import { LocalLoadingSkeleton } from "./local-loading-skeleton";
 
 export const ProductCatalogGrid = () => {
   const searchParams = useSearchParams();
@@ -128,9 +128,7 @@ export const ProductCatalogGrid = () => {
   }
   if (loading) {
     return (
-      <div className="w-[100%] h-[95%] flex justify-center items-start pt-[10rem]">
-        <LocalLoadingSkeleton />
-      </div>
+      <Skeleton className="w-[100%] h-[95%] flex justify-center items-start pt-[10rem]"/>
     );
   } else {
     return (

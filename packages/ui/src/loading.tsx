@@ -1,8 +1,13 @@
 import Image from "next/image";
 
-export const SellerDashboardLoader = () => {
+interface SkeletonProp {
+  className?: string;
+}
+export default function Skeleton({ className }: SkeletonProp) {
   return (
-    <div className="h-[100%] flex justify-center items-center">
+    <div
+      className={`${className ? className : "w-screen h-screen bg-[#FFF6F4] flex justify-center items-center"}`}
+    >
       <div
         role="status"
         className="relative w-[7rem] h-[7rem] flex items-center justify-center"
@@ -29,12 +34,11 @@ export const SellerDashboardLoader = () => {
         <Image
           src="/assets/images/HeaderImages/site-logo.svg"
           alt="Loading Image"
-          width={70}
+          width={70} // Smaller than the loader (w-[5rem] = 80px, so this is ~60% of that)
           height={70}
-          style={{ width: "auto", height: "auto" }} // Add this
-          className="object-contain justify-center ml-[0.2rem] mt-[0.5rem]"
+          className=" object-contain justify-center ml-[0.2rem] mt-[0.5rem]"
         />
       </div>
     </div>
   );
-};
+}

@@ -5,9 +5,9 @@ import toast from "react-hot-toast";
 import { useEffect, useState, memo } from "react";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { toastStyle } from "@repo/shared/utilfunctions";
+import { uploadProduct } from "../actions/uploadProduct";
 import { ButtonLoadingSign } from "@repo/ui/loading-sign";
 import { ApiResponseType } from "@repo/common-types/types";
-import { uploadProduct } from "../actions/uploadProduct";
 import { AddProductLabelInput } from "./add-product-label-input";
 import { ProductImageDropZone } from "./product-image-drop-zone";
 import { useForm, SubmitHandler, Controller } from "react-hook-form";
@@ -397,21 +397,6 @@ export const SellerDashboardAddProductSection = memo(() => {
                 <div
                   className={`w-[80%] flex flex-col ${errors.collection || errors.category || errors.tags ? "gap-0" : "gap-[1rem]"}`}
                 >
-                  {/* Collection DropDown */}
-                  {errors.collection && (
-                    <div className="font-semibold capitalize text-[#FF4B4B] text-start text-sm">
-                      {errors.collection.message}
-                    </div>
-                  )}
-                  <CustomSellerDashboardDropDown
-                    label="Collection"
-                    placeholder="Select Collection"
-                    options={Collections}
-                    value={collection}
-                    onChange={setCollection}
-                    customKey={"Collection"}
-                  />
-
                   {/* Category DropDown */}
                   {errors.category && (
                     <div className="font-semibold capitalize text-[#FF4B4B] text-start text-sm ">
@@ -425,6 +410,21 @@ export const SellerDashboardAddProductSection = memo(() => {
                     value={category}
                     onChange={setCategory}
                     customKey={"Category"}
+                  />
+
+                  {/* Collection DropDown */}
+                  {errors.collection && (
+                    <div className="font-semibold capitalize text-[#FF4B4B] text-start text-sm">
+                      {errors.collection.message}
+                    </div>
+                  )}
+                  <CustomSellerDashboardDropDown
+                    label="Collection"
+                    placeholder="Select Collection"
+                    options={Collections}
+                    value={collection}
+                    onChange={setCollection}
+                    customKey={"Collection"}
                   />
 
                   {/* Tags DropDown */}

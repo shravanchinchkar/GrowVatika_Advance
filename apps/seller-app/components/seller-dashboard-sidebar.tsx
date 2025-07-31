@@ -84,7 +84,7 @@ export const SellerDashboardSideBar = memo(() => {
               {SideBarMainSectionList.map((item, index) => {
                 return (
                   <button
-                    className="capitalize"
+                    className="capitalize outline-none"
                     key={index}
                     id={item}
                     onClick={handleSideBarNavigation}
@@ -229,7 +229,9 @@ export const SellerDashboardSideBar = memo(() => {
                   />
                 ) : (
                   <Image
-                    src={"/assets/images/SellerDashboardImages/seller-image-placeholder.svg"}
+                    src={
+                      "/assets/images/SellerDashboardImages/seller-image-placeholder.svg"
+                    }
                     alt="noimage"
                     className="object-cover"
                     fill

@@ -6,6 +6,8 @@ import {
   SellerDataSchema,
 } from "@repo/common-types/types";
 import toast from "react-hot-toast";
+import { useSpecialties } from "@repo/shared-store";
+import { MultiSelect } from "./custom-multi-select";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { toastStyle } from "@repo/shared/utilfunctions";
 import { useCallback, useEffect, useMemo, useState } from "react";
@@ -31,6 +33,22 @@ export const BusinessInfoCard = memo(
       File | undefined
     >(undefined);
 
+    const Options: string[] = [
+      "Indoor Plants",
+      "Outdoor Plants",
+      "Gardening tools",
+      "Ceramic Pots",
+      "Fertilizers",
+      "Rare Plants",
+    ];
+
+    // Following is the zustand state management code
+    const sepcialties = useSpecialties((state: any) => state.specialties);
+    const removeSpecialties = useSpecialties(
+      (state: any) => state.removeSpecialties
+    );
+
+    // react-hook form configuration
     const {
       control,
       register,
@@ -88,6 +106,11 @@ export const BusinessInfoCard = memo(
       });
       setNewProfilePicture(undefined);
     }, [sellerData, reset]); // Keep reset as it's stable from react-hook-form
+
+    // set the specialties of the seller
+    useEffect(() => {
+      setValue("specialities", sepcialties);
+    }, [sepcialties, setValue]);
 
     // Memoized event handlers to prevent unnecessary re-renders
     const handleEditButton = useCallback(() => {
@@ -177,7 +200,7 @@ export const BusinessInfoCard = memo(
 
     return (
       <form
-        className="relative z-0 w-[100%] rounded-[1.25rem] border-[1px] border-[#E6E6E6] bg-white p-[1.5rem] shadow-md flex flex-col gap-[1rem]"
+        className="relative z-0 w-[100%] rounded-[1.25rem] border-[1px] border-[#FFFFFF] bg-white p-[1.5rem] shadow-md flex flex-col gap-[1rem]"
         onSubmit={handleSubmit(handleSaveBusinessData)}
       >
         <div
@@ -505,23 +528,42 @@ export const BusinessInfoCard = memo(
 
           {/* Nursery Specialties Section */}
           <div className="flex flex-wrap gap-[1rem] mt-2 text-[1.2rem] ">
-            {sellerData.specialities?.length > 0 &&
-              sellerData.specialities.map((items, index) => {
+            {/* Display Seller Specialties */}
+            {sepcialties.length > 0 &&
+              sepcialties.map((specialty: string, index: number) => {
                 return (
                   <div
-                    className="w-[10.46094rem] min-h-[3.0625rem] max-h-max flex justify-center items-center flex-shrink-0 border border-[#56A430] rounded-full text-[#56A430] text-center font-[Poppins] font-medium"
+                    className="min-w-[10.46094rem] max-w-max min-h-[3.0625rem] max-h-max flex justify-between items-center gap-[0.5rem]  flex-shrink-0 border-[1.6px] border-[#56A430] rounded-[5.25rem] text-[#56A430] text-center font-[Poppins] font-medium px-[1rem]"
                     key={index}
                   >
-                    {items}
+                    {specialty}
+
+                    {/* Cancle Button */}
+                    <button
+                      className={`w-[1.5rem] h-[1.5rem] relative rotate-45 outline-none ${!enableEditing && "cursor-default"}`}
+                      onClick={(e) => {
+                        e.preventDefault();
+                        removeSpecialties(specialty);
+                      }}
+                      disabled={!enableEditing}
+                    >
+                      <Image
+                        src="/assets/images/BusinessInformationImage/cancleIcon.svg"
+                        alt="close"
+                        className="object-cover"
+                        fill
+                      />
+                    </button>
                   </div>
                 );
               })}
 
             {/* Add More Button */}
             <button
-              className={`w-[10.46094rem] h-[3.0625rem] flex items-center justify-center gap-2 border border-[#56A430] rounded-full animate-none cursor-pointer ${displayAddMoreButton ? "block" : "hidden"}`}
+              className={`w-[10.46094rem] h-[3.0625rem] flex items-center justify-center gap-2 border-[1.6px] border-[#6CE530] rounded-[5.25rem] ${enableEditing === false ? "block" : "hidden"} ${enableEditing === false ? "cursor-not-allowed" : "cursor-pointer"}`}
               onClick={handleAddMoreButton}
               type="button"
+              disabled={enableEditing === false ? true : false}
             >
               <div className="w-[1.5rem] h-[1.5rem] relative flex-shrink-0">
                 <Image
@@ -537,19 +579,9 @@ export const BusinessInfoCard = memo(
             </button>
 
             {/* Specialties Options */}
-            <select
-              className={`w-[15.9375rem] border-[2px] rounded-[0.625rem] p-[0.5rem] text-[1.22669rem] outline-none ${displayAddMoreButton ? "hidden" : "block"}`}
-              id="specialties"
-              multiple
-              {...register("specialities", { required: true })}
-            >
-              <option value="Rare Plants">Rare Plants</option>
-              <option value="Fertilizers">Fertilizers</option>
-              <option value="Ceramic Pots">Ceramic Pots</option>
-              <option value="Indoor Plants">Indoor Plants</option>
-              <option value="Outdoor Plants">Outdoor Plants</option>
-              <option value="Gardening tools">Gardening tools</option>
-            </select>
+            {enableEditing && (
+              <MultiSelect options={Options} placeholder="Choose Specialties" />
+            )}
           </div>
         </div>
       </form>

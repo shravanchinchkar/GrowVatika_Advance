@@ -1,5 +1,5 @@
-import React, { memo, useEffect } from "react";
 import Image from "next/image";
+import React, { memo, useEffect } from "react";
 import { useDropdownStore } from "@repo/shared-store";
 
 interface DropdownOption {

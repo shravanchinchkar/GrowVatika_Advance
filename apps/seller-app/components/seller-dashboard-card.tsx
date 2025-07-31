@@ -15,11 +15,10 @@ export const SellerDashboardCard = () => {
           </div>
 
           {/* Right Column that consist of navbar and other section */}
-          <div className="relative lg:w-[74%] new-lg:w-[77%] xl:w-[79.375%] flex flex-col items-center max-h-100 xl:p-0 overflow-y-auto [&::-webkit-scrollbar]:w-2 [&::-webkit-scrollbar-track]:bg-[#fff] [&::-webkit-scrollbar-thumb]:bg-[#FFF]">
+          <div className="relative lg:w-[74%] new-lg:w-[77%] xl:w-[79.375%] flex flex-col items-center max-h-100 pb-[1rem] overflow-y-auto [&::-webkit-scrollbar]:w-2 [&::-webkit-scrollbar-track]:bg-[#fff] [&::-webkit-scrollbar-thumb]:bg-[#FFF]">
             <SellerDashboardNavBar />
             <SellerDashboardMainSection />
           </div>
-
         </div>
       </div>
     </div>

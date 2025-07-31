@@ -9,3 +9,5 @@ export * from "./stores/displayMobileContactForm";
 export * from "./stores/displayMobileNavbar";
 export * from "./stores/filterProduct";
 export * from "./stores/userProfileVisibility";
+export * from "./stores/specialties";
+

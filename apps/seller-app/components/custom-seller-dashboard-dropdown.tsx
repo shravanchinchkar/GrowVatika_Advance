@@ -1,16 +1,12 @@
 import Image from "next/image";
 import React, { memo, useEffect } from "react";
 import { useDropdownStore } from "@repo/shared-store";
-
-interface DropdownOption {
-  value: string;
-  label: string;
-}
+import { Check } from "lucide-react";
 
 interface ReusableDropdownProps {
   label: string;
   placeholder: string;
-  options: DropdownOption[] | string[];
+  options: string[];
   value: string;
   onChange: (value: string) => void;
   required?: boolean;
@@ -45,6 +41,7 @@ export const CustomSellerDashboardDropDown = memo(
     };
 
     const handleSelect = (selectedValue: string) => {
+      console.log("selected value:",value);
       onChange(selectedValue);
       setOpenDropdown(null); // Close dropdown after selection
     };
@@ -74,14 +71,6 @@ export const CustomSellerDashboardDropDown = memo(
       }
     }, [isOpen, customKey, setOpenDropdown]);
 
-    // Normalize options to always have value and label
-    const normalizedOptions = options.map((option) => {
-      if (typeof option === "string") {
-        return { value: option, label: option };
-      }
-      return option;
-    });
-
     const displayValue = value || placeholder;
 
     return (
@@ -93,7 +82,7 @@ export const CustomSellerDashboardDropDown = memo(
           {label}
         </div>
 
-        {/* Dropdown Button */}
+        {/* Button that opens the dropdown */}
         <button
           className={`lg:w-[100%] xl:w-[90%] 2xl:w-[100%] h-[3.1875rem] border-[1.5px] border-[#CBD0D3] outline-none rounded-[0.625rem] flex items-center justify-between px-[1rem] ${
             disabled
@@ -130,19 +119,25 @@ export const CustomSellerDashboardDropDown = memo(
           }`}
         >
           <div className="w-[100%] flex flex-col gap-[0.5rem] justify-between">
-            {normalizedOptions.map((option, index) => (
-              <li
-                className="h-[2.4375rem] bg-[#FFF6F4] rounded-[0.625rem] px-[1rem] flex items-center cursor-pointer hover:bg-[#FFE8E3] transition-colors duration-150 text-[1rem]"
-                key={index}
-                onMouseDown={(e) => {
-                  // Prevent the mousedown event from bubbling up
-                  e.preventDefault();
-                  handleSelect(option.value);
-                }}
-              >
-                {option.label}
-              </li>
-            ))}
+            {options.map((option, index) => {
+              const isSelected = value === option;
+              return (
+                <li
+                  className={`h-[2.4375rem] rounded-[0.625rem] px-[1rem] flex items-center gap-[1rem] cursor-pointer hover:bg-[#FFE8E3] transition-colors duration-150 text-[1rem] ${isSelected && "bg-[#FFE8E3]"}`}
+                  key={index}
+                  onMouseDown={(e) => {
+                    // Prevent the mousedown event from bubbling up
+                    e.preventDefault();
+                    handleSelect(option);
+                  }}
+                >
+                  {isSelected && (
+                    <Check size={20} className="text-[#000000] text-[1.5rem]" />
+                  )}
+                  {option}
+                </li>
+              );
+            })}
           </div>
         </ul>
       </div>

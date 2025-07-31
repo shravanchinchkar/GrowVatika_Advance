@@ -148,21 +148,20 @@ export const SellerDashboardAddProductSection = memo(() => {
     e.currentTarget.blur();
   };
 
-  const Collections = [
+  const PlantCollection = [
     "Indoor Plants",
     "Outdoor Plants",
     "Flowering Plants",
     "Tropical Plants",
-    "Potting Mix",
-    "Garden Soil",
-    "Organic Compost",
-    "Ceramic Pots",
-    "Plastic Pots",
-    "Hanging Pots",
+  ];
+  const SoilCollection = ["Potting Mix", "Garden Soil", "Organic Compost"];
+  const PotCollection = ["Ceramic Pots", "Plastic Pots", "Hanging Pots"];
+  const FertilizersCollection = [
     "Organic Fertilizers",
     "Chemical Fertilizers",
     "Plant Food",
   ];
+
   const Category = ["Plants", "Pots", "Soil", "Fertilizers"];
   const Tags = [
     "Best Seller",
@@ -418,12 +417,22 @@ export const SellerDashboardAddProductSection = memo(() => {
                       {errors.collection.message}
                     </div>
                   )}
+                  {/* "Plants", "Pots", "Soil", "Fertilizers" */}
                   <CustomSellerDashboardDropDown
                     label="Collection"
                     placeholder="Select Collection"
-                    options={Collections}
+                    options={
+                      category === "Plants"
+                        ? PlantCollection
+                        : category === "Pots"
+                          ? PotCollection
+                          : category === "Soil"
+                            ? SoilCollection
+                            : FertilizersCollection
+                    }
                     value={collection}
                     onChange={setCollection}
+                    disabled={!category}
                     customKey={"Collection"}
                   />
 
@@ -463,7 +472,6 @@ export const SellerDashboardAddProductSection = memo(() => {
                 options={ProductStatus}
                 value={productStatus}
                 onChange={setProductStatus}
-                required={true}
                 customKey={"Product Status"}
               />
 
@@ -479,7 +487,6 @@ export const SellerDashboardAddProductSection = memo(() => {
                 options={Visibility}
                 value={visibilityStatus}
                 onChange={setVisibilityStatus}
-                required={true}
                 customKey={"Visibility"}
               />
 

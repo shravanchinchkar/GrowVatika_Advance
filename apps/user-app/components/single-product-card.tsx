@@ -122,7 +122,7 @@ export const SingleProductCard = () => {
     return (
       <div className="border-[2px] border-red-500 new-sm:w-[20rem] md:w-[82rem] new-sm:h-[78.125rem] md:h-max new-sm:rounded-[0.27431rem] md:rounded-[0.9375rem] bg-white my-[1rem]">
         {/* Top div */}
-        <div className="flex items-center  md:gap-2 font-[Poppins] new-sm:text-[0.5625rem] md:text-[1.25rem] new-sm:leading-none md:leading-[1.625rem] font-normal border-b-[0.0625rem] border-[#00000033] new-sm:py-[0.1rem] md:py-[0.7rem] md:px-[1rem]">
+        <div className="flex items-center md:gap-2 font-[Poppins] new-sm:text-[0.5625rem] md:text-[1.25rem] new-sm:leading-none md:leading-[1.625rem] font-normal border-b-[0.0625rem] border-[#00000033] new-sm:py-[0.1rem] md:py-[0.7rem] md:px-[1rem]">
           {crumbs.map((text, i) => (
             <span
               key={i}

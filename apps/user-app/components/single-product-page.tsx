@@ -25,12 +25,12 @@ export const SingleProductPage = () => {
     <div
       className={`min-h-screen relative flex flex-col items-center bg-[#FFF6F4] gap-[2rem] font-[Poppins] pb-[2rem] ${(addToCartVisibility || wishListVisibility || MobileNavbarVisibility) && "h-[100vh] overflow-hidden"}`}
     >
-      <Cart />
+      {/* <Cart />
       <WishList />
       <MobileNavBar />
-      <HeaderSection singleProduct={true} />
+      <HeaderSection singleProduct={true} /> */}
       {/* Search Input, Search & Sort Button */}
-      <SearchSort />
+      {/* <SearchSort /> */}
       <SingleProductCard />
     </div>
   );

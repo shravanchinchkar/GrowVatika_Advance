@@ -43,7 +43,7 @@ export const LandingPage = () => {
       <MobileNavBar />
       <UserProfilePopUp />
       <MobileGetStartedForm />
-      <HeaderSection />
+      <HeaderSection isLanding={true} />
 
 
       <div>

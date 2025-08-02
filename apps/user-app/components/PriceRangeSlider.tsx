@@ -19,67 +19,21 @@ export default function PriceRangeSlider() {
     e.preventDefault();
   };
 
-  const handleMouseMove = useCallback(
-    (e: MouseEvent) => {
-      if (!isDragging || !sliderRef.current) return;
-
-      const rect = sliderRef.current.getBoundingClientRect();
-      const percentage = Math.max(
-        0,
-        Math.min(100, ((e.clientX - rect.left) / rect.width) * 100)
-      );
-      const newValue = Math.round(
-        (percentage / 100) * (maxPrice - minPrice) + minPrice
-      );
-
-      if (isDragging === "min") {
-        setMinValue(Math.min(newValue, maxValue - 10));
-      } else if (isDragging === "max") {
-        setMaxValue(Math.max(newValue, minValue + 10));
-      }
-    },
-    [isDragging, minValue, maxValue, minPrice, maxPrice]
-  );
-
-  const handleMouseUp = useCallback(() => {
-    setIsDragging(null);
-  }, []);
-
-  // Add global mouse event listeners
-  React.useEffect(() => {
-    console.log("Price Range Side bar")
-    if (isDragging) {
-      document.addEventListener("mousemove", handleMouseMove);
-      document.addEventListener("mouseup", handleMouseUp);
-      return () => {
-        document.removeEventListener("mousemove", handleMouseMove);
-        document.removeEventListener("mouseup", handleMouseUp);
-      };
-    }
-  }, [isDragging, handleMouseMove, handleMouseUp]);
-
-  const handleInputChange = (type: "min" | "max", value: string) => {
-    const numValue = parseInt(value) || 0;
-    if (type === "min") {
-      setMinValue(Math.max(minPrice, Math.min(numValue, maxValue - 10)));
-    } else {
-      setMaxValue(Math.min(maxPrice, Math.max(numValue, minValue + 10)));
-    }
-  };
-
   return (
     <div className="bg-white rounded-lg font-[Poppins]">
       {/* Price Display */}
       <div className="mb-6">
         <div className="flex justify-between items-center mb-2">
-          <span className="text-[1.25rem] font-medium">Price Range</span>
+          <span className="md:text-[1rem] lg:text-[1.2rem] xl:text-[1.25rem] font-medium">
+            Price Range
+          </span>
         </div>
       </div>
 
       {/* Slider Container */}
       <div className="relative mb-8">
         <div
-          ref={sliderRef} 
+          ref={sliderRef}
           className="relative h-2 bg-[#CBD0D3] rounded-full cursor-pointer"
         >
           {/* Active Range Fill */}
@@ -116,37 +70,13 @@ export default function PriceRangeSlider() {
       </div>
 
       {/* Input Fields */}
-      <div className="grid grid-cols-2 gap-10 mb-6  items-center">
-        <div>
-          <div className="relative">
-            <span className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-500">
-              ₹
-            </span>
-            <input
-              type="number"
-              value={minValue}
-              onChange={(e) => handleInputChange("min", e.target.value)}
-              className="w-[5.6875rem] pl-8 pr-3 py-2 border border-gray-300 rounded-[0.625rem]"
-              min={minPrice}
-              max={maxPrice}
-            />
-          </div>
-        </div>        
-
-        <div>
-          <div className="relative">
-            <span className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-500">
-              ₹
-            </span>
-            <input
-              type="number"
-              value={maxValue}
-              onChange={(e) => handleInputChange("max", e.target.value)}
-              className="w-[5.6875rem] pl-8 pr-3 py-2 border border-gray-300 rounded-[0.625rem]"
-              min={minPrice}
-              max={maxPrice}
-            />
-          </div>
+      <div className="w-[100%] h-[3.0625rem] flex justify-between items-center gap-[0.8rem] text-[#171717] md:text-[0.9rem] lg:text-[1.1rem] xl:text-[1.22669rem] font-normal">
+        <div className="w-[50%] h-[100%] rounded-[0.625rem] border-[1.5px] border-[#CBD0D3] flex justify-center items-center">
+          ₹ 100
+        </div>
+        <p className="text-[#697F75]">To</p>
+        <div className="w-[50%] h-[100%] rounded-[0.625rem] border-[1.5px] border-[#CBD0D3] flex justify-center items-center">
+          ₹ 400
         </div>
       </div>
     </div>

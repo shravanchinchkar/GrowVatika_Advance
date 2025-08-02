@@ -20,20 +20,18 @@ export const ProductFilterSection = memo(() => {
   const SellerRating = ["4 Star", "3 Star", "2 Star"];
 
   // Following are the zustand state
-  const filter = useFilterProduct((state: any) => state.filter);
-  const setFilter = useFilterProduct((state: any) => state.setFilter);
-  const clearFilters = useFilterProduct((state: any) => state.clearFilters);
-  const toggleFilter = useFilterProduct((state: any) => state.toggleFilter);
+  const {filter,setFilter,toggleFilter,clearFilters}=useFilterProduct();
+
 
   // h-[77.125rem]
   return (
-    <div className="w-[23%] h-[77.125rem] pl-[2rem] pr-[1rem] py-[1rem] font-[Poppins] bg-white rounded-[1.25rem] overflow-y-auto">
+    <div className="md:w-[28%] xl:w-[23%] lg:h-[103rem] xl:h-[72rem] pl-[2rem] pr-[1rem] py-[1rem] font-[Poppins] bg-white md:rounded-[1.25rem] xl:rounded-l-[1.25rem] overflow-y-auto [&::-webkit-scrollbar]:w-2 [&::-webkit-scrollbar]:h-[100%] [&::-webkit-scrollbar-track]:bg-[#fff] [&::-webkit-scrollbar-thumb]:bg-[#697F75] shadow-productcard-custom-boxShadow">
       {/* Filter Top Section */}
       <div className="flex justify-between items-center">
-        <div className="text-[1.5rem] font-medium">Filter</div>
+        <div className="lg:text-[1.2rem] xl:text-[1.5rem] font-medium">Filter</div>
         <button
-          className="text-[1.1875rem] text-[#697F75]"
-          onClick={() => clearFilters(filter)}
+          className="lg:text-[1rem] xl:text-[1.1875rem] text-[#697F75] outline-none"
+          onClick={() => clearFilters()}
         >
           Clear all
         </button>
@@ -42,17 +40,17 @@ export const ProductFilterSection = memo(() => {
       {/* Plant Type Section */}
       <div className="pt-[1.69rem] pb-[1.75rem] border-b">
         <ul className="">
-          <li className="text-[1.25rem] text-[#171717] font-medium">
+          <li className="md:text-[1rem] lg:text-[1.2rem] xl:text-[1.25rem] text-[#171717] font-medium">
             Plant Type
           </li>
-          <div className="flex flex-col gap-[0.2rem] text-[1.22669rem] pt-[0.75rem]">
+          <div className="flex flex-col gap-[0.2rem] md:text-[0.9rem] lg:text-[1.1rem] xl:text-[1.22669rem] pt-[0.75rem]">
             {FilterContent.PlantType.map((PlantType, index) => {
               const isChecked = filter.includes(PlantType);
               return (
                 <li key={index} className="flex items-center gap-[0.5rem]">
                   <input
                     type="checkbox"
-                    className="h-[1.25rem] w-[1.25rem] accent-[#000]"
+                    className="md:w-[1rem] md:h-[1rem] lg:w-[1.25rem] lg:h-[1.25rem] accent-[#000]"
                     checked={isChecked}
                     onChange={() => {
                       toggleFilter(PlantType);
@@ -67,17 +65,17 @@ export const ProductFilterSection = memo(() => {
       </div>
 
       {/* Soil Section */}
-      <div className="pt-[1.69rem] pb-[1.75rem] border-b">
+      <div className="pt-[1.69rem] pb-[1.75rem] border-b-[0.0625rem] border-[#00000033]">
         <ul className="">
-          <li className="text-[1.25rem] text-[#171717] font-medium">Soil</li>
-          <div className="flex flex-col gap-[0.2rem] text-[1.22669rem] pt-[0.75rem]">
+          <li className="md:text-[1rem] lg:text-[1.2rem] xl:text-[1.25rem] text-[#171717] font-medium">Soil</li>
+          <div className="flex flex-col gap-[0.2rem] md:text-[0.9rem] lg:text-[1.1rem] xl:text-[1.22669rem] pt-[0.75rem]">
             {FilterContent.Soil.map((soil, index) => {
               const isChecked = filter.includes(soil);
               return (
                 <li key={index} className="flex items-center gap-[0.5rem]">
                   <input
                     type="checkbox"
-                    className="h-[1.25rem] w-[1.25rem] accent-[#000]"
+                    className="md:w-[1rem] md:h-[1rem] lg:w-[1.25rem] lg:h-[1.25rem] accent-[#000]"
                     checked={isChecked}
                     onChange={() => {
                       toggleFilter(soil);
@@ -92,19 +90,19 @@ export const ProductFilterSection = memo(() => {
       </div>
 
       {/* Pots Section */}
-      <div className="pt-[1.69rem] pb-[1.75rem] border-b">
+      <div className="pt-[1.69rem] pb-[1.75rem] border-b-[0.0625rem] border-[#00000033]">
         <ul className="">
-          <li className="text-[1.25rem] text-[#171717] font-medium">
+          <li className="md:text-[1rem] lg:text-[1.2rem] xl:text-[1.25rem] text-[#171717] font-medium">
             Pot Types
           </li>
-          <div className="flex flex-col gap-[0.2rem] text-[1.22669rem] pt-[0.75rem]">
+          <div className="flex flex-col gap-[0.2rem] md:text-[0.9rem] lg:text-[1.1rem] xl:text-[1.22669rem] pt-[0.75rem]">
             {FilterContent.PotTypes.map((pot, index) => {
               const isChecked = filter.includes(pot);
               return (
                 <li key={index} className="flex items-center gap-[0.5rem]">
                   <input
                     type="checkbox"
-                    className="h-[1.25rem] w-[1.25rem] accent-[#000]"
+                    className="md:w-[1rem] md:h-[1rem] lg:w-[1.25rem] lg:h-[1.25rem] accent-[#000]"
                     checked={isChecked}
                     onChange={() => {
                       toggleFilter(pot);
@@ -119,19 +117,19 @@ export const ProductFilterSection = memo(() => {
       </div>
 
       {/* Fertilizers */}
-      <div className="pt-[1.69rem] pb-[1.75rem] border-b">
+      <div className="pt-[1.69rem] pb-[1.75rem] border-b-[0.0625rem] border-[#00000033]">
         <ul className="">
-          <li className="text-[1.25rem] text-[#171717] font-medium">
+          <li className="md:text-[1rem] lg:text-[1.2rem] xl:text-[1.25rem] text-[#171717] font-medium">
             Fertilizers
           </li>
-          <div className="flex flex-col gap-[0.2rem] text-[1.22669rem] pt-[0.75rem]">
+          <div className="flex flex-col gap-[0.2rem] md:text-[0.9rem] lg:text-[1.1rem] xl:text-[1.22669rem] pt-[0.75rem]">
             {FilterContent.Fertilizers.map((fertilizer, index) => {
               const isChecked = filter.includes(fertilizer);
               return (
                 <li key={index} className="flex items-center gap-[0.5rem]">
                   <input
                     type="checkbox"
-                    className="h-[1.25rem] w-[1.25rem] accent-[#000]"
+                    className="md:w-[1rem] md:h-[1rem] lg:w-[1.25rem] lg:h-[1.25rem] accent-[#000]"
                     checked={isChecked}
                     onChange={() => {
                       toggleFilter(fertilizer);
@@ -146,22 +144,22 @@ export const ProductFilterSection = memo(() => {
       </div>
 
       {/* Price Range Section */}
-      <div className="pt-[1.75rem] pb-[1rem] border-b">
+      <div className="pt-[1.75rem] pb-[1rem] border-b-[0.0625rem] border-[#00000033]">
         <PriceRangeSlider />
       </div>
 
       {/* Size Section */}
-      <div className="pt-[1.75rem] pb-[1.75rem] border-b">
+      <div className="pt-[1.75rem] pb-[1.75rem] border-b-[0.0625rem] border-[#00000033]">
         <ul>
-          <li className="text-[1.25rem] text-[#171717] font-medium">Size</li>
-          <div className="flex flex-col gap-[0.2rem] text-[1.22669rem] pt-[1rem]">
+          <li className="md:text-[1rem] lg:text-[1.2rem] xl:text-[1.25rem] text-[#171717] font-medium">Size</li>
+          <div className="flex flex-col gap-[0.2rem] md:text-[0.9rem] lg:text-[1.1rem] xl:text-[1.22669rem] pt-[1rem]">
             {FilterContent.Size.map((potSize, index) => {
               const isChecked = filter.includes(potSize);
               return (
                 <li key={index} className="flex items-center gap-[0.5rem]">
                   <input
                     type="checkbox"
-                    className="h-[1.25rem] w-[1.25rem] accent-[#000]"
+                    className="md:w-[1rem] md:h-[1rem] lg:w-[1.25rem] lg:h-[1.25rem] accent-[#000]"
                     checked={isChecked}
                     onChange={() => {
                       toggleFilter(potSize);
@@ -176,21 +174,21 @@ export const ProductFilterSection = memo(() => {
       </div>
 
       {/* Seller Rating Section */}
-      <div className="pt-[1.75rem] pb-[1.75rem] border-b">
+      <div className="pt-[1.75rem] pb-[1.75rem]">
         <ul>
-          <li className="text-[1.25rem] text-[#171717] font-medium">
+          <li className="md:text-[1rem] lg:text-[1.2rem] xl:text-[1.25rem] text-[#171717] font-medium">
             Seller Rating
           </li>
-          <div className="flex flex-col gap-[0.2rem] text-[1.22669rem] pt-[1rem]">
+          <div className="flex flex-col gap-[0.2rem] md:text-[0.7rem] lg:text-[1.1rem] xl:text-[1.22669rem] pt-[1rem]">
             {SellerRating.map((rating, index) => {
               const rate = Number(rating.slice(0, 1));
               const isChecked = filter.includes(rating);
               const remainingPoints = 5 - rate;
               return (
-                <li key={index} className="flex items-center gap-[0.5rem]">
+                <li key={index} className="flex items-center md:gap-[0.3rem] lg:gap-[0.5rem]">
                   <input
                     type="checkbox"
-                    className="h-[1.25rem] w-[1.25rem] accent-[#000]"
+                    className="md:w-[1rem] md:h-[1rem] lg:w-[1.25rem] lg:h-[1.25rem] accent-[#000]"
                     checked={isChecked}
                     onChange={() => {
                       toggleFilter(rating);
@@ -203,7 +201,7 @@ export const ProductFilterSection = memo(() => {
                           key={index}
                           src="/assets/images/ProductPageImages/yellowStarIcon.svg"
                           alt="yellowStarIcon"
-                          className="h-[1.5rem] w-[1.5rem]"
+                          className="md:w-[1.2rem] md:h-[1.2rem] lg:w-[1.5rem] lg:h-[1.5rem]"
                         />
                       );
                     })}
@@ -215,7 +213,7 @@ export const ProductFilterSection = memo(() => {
                               key={index}
                               src="/assets/images/ProductPageImages/grayStarIcon.svg"
                               alt="grayStarIcon"
-                              className="h-[1.5rem] w-[1.5rem]"
+                              className="md:w-[1.2rem] md:h-[1.2rem] lg:w-[1.5rem] lg:h-[1.5rem]"
                             />
                           );
                         })}
@@ -229,10 +227,10 @@ export const ProductFilterSection = memo(() => {
       </div>
 
       {/* Apply Filter Section */}
-      <div className="h-[3.1875rem] w-[14.625rem] bg-[#56A430] hover:bg-[#213E12] rounded-[0.625rem] flex justify-center items-center">
+      <div className="w-[95%] md:h-[2.9rem] lg:h-[3.1875rem] bg-[#56A430] hover:bg-[#213E12] rounded-[0.625rem] flex justify-center items-center">
         <button
           type="button"
-          className="text-[1.22669rem] text-white font-medium outline-none border-none"
+          className="md:text-[0.9rem] lg:text-[1.1rem] xl:text-[1.22669rem] text-white font-medium outline-none border-none"
           onClick={() => {
             setFilter(filter);
           }}

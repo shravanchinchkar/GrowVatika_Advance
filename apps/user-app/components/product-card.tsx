@@ -31,12 +31,11 @@ export const ProductCard = memo(
   }: ProductCardProps) => {
     const router = useRouter();
 
-
     return (
       <Link
         href={`/product?id=${id}`}
         key={id}
-        className="w-[18rem] h-[29rem] flex flex-col items-center flex-shrink-0 rounded-[1.25rem] bg-white font-[Poppins] overflow-hidden justify-self-end cursor-pointer shadow-productcard-custom-boxShadow"
+        className="md:w-[15rem] md:h-[25rem] new-md:w-[18rem] new-md:h-[29rem] flex flex-col items-center flex-shrink-0 rounded-[1.25rem] bg-white font-[Poppins] overflow-hidden new-md:justify-self-center xl:justify-self-end cursor-pointer shadow-productcard-custom-boxShadow"
       >
         {/* Product Image */}
         <div
@@ -80,53 +79,53 @@ export const ProductCard = memo(
           </div>
         </div>
 
-        <div className="h-[45%] flex flex-col justify-between px-[0.7rem] pt-[0.5rem] pb-[1rem]">
+        <div className="w-[100%] h-[45%] flex flex-col justify-between px-[0.7rem] pt-[0.5rem] pb-[1rem]">
           {/* Following div consist of category,Rating and product name Section */}
           <div className="flex flex-col">
             <div className="flex justify-between items-center">
               {/* Collection */}
-              <p className="text-[#697F75] text-[0.9375rem] font-medium">
+              <p className="text-[#697F75] md:text-[0.8rem] new-md:text-[0.9375rem] font-medium">
                 {collection}
               </p>
 
               {/* Rating Section */}
               <div className="flex justify-center items-center gap-[0.2rem]">
-                <div className="relative w-[1.50469rem] h-[1.50469rem]">
+                <div className="relative md:w-[1.2rem] md:h-[1.2rem] new-md:w-[1.50469rem] new-md:h-[1.50469rem]">
                   <Image
                     src="/assets/images/ExploreImages/star.svg"
                     alt="rating"
                     fill
                   />
                 </div>
-                <span className="text-[#697F75] text-[0.9375rem] font-medium flex items-center">
+                <span className="text-[#697F75] md:text-[0.8rem] new-md:text-[0.9375rem] font-medium flex items-center">
                   4.8 <span className="text-[#B0B0B0]">(81)</span>
                 </span>
               </div>
             </div>
 
             {/* Product Name */}
-            <p className="w-[100%] text-[#000] text-start text-[1.4rem] font-semibold leading-[1.3rem]">
+            <p className="w-[100%] text-[#000] text-start md:text-[1.2rem] new-md:text-[1.4rem] font-semibold leading-[1.3rem]">
               {name}
             </p>
           </div>
 
           {/* Product Size */}
-          <p className="text-start text-[#697F75] text-[0.9375rem] leading-[1.5rem] font-medium">
+          <p className="text-start text-[#697F75] md:text-[0.8rem] new-md:text-[0.9375rem] leading-[1.5rem] font-medium">
             {`Product Size - ${productSize}" Pot`}
           </p>
 
           {/* Price Section */}
           <div className="flex items-center gap-2">
-            <p className="text-[#56A430] text-[1.4rem] font-semibold leading-[130%]">
+            <p className="text-[#56A430] md:text-[1.2rem] new-md:text-[1.4rem] font-semibold leading-[130%]">
               ₹ {price}
             </p>
-            <p className="text-[#CBD0D3] text-[1.25rem] font-semibold leading-[130%] line-through">
+            <p className="text-[#CBD0D3] md:text-[1rem] new-md:text-[1.25rem] font-semibold leading-[130%] line-through">
               ₹ {compareAt}
             </p>
           </div>
 
           {/* Add to Cart Button */}
-          <button className="w-[16.5rem] h-[3.19744rem] bg-[#56A430] rounded-[0.625rem] flex items-center justify-center gap-2 hover:bg-[#213E12]">
+          <button className="md:w-[100%] md:h-[2.8rem] new-md:w-[16.5rem] new-md:h-[3.19744rem] bg-[#56A430] rounded-[0.625rem] flex items-center justify-center gap-2 hover:bg-[#213E12] text-white md:text-[1.1rem] new-md:text-[1.22669rem] font-medium text-center">
             <div className="relative w-[1.53806rem] h-[1.50469rem] flex-shrink-0">
               <Image
                 src="/assets/images/ExploreImages/shopping-cart.svg"
@@ -134,9 +133,7 @@ export const ProductCard = memo(
                 fill
               />
             </div>
-            <span className="text-white text-[1.22669rem] font-medium text-center">
-              Add to Cart
-            </span>
+            Add to Cart
           </button>
         </div>
       </Link>

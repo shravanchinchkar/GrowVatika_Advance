@@ -27,23 +27,21 @@ export const ExploreProductCatalogSection = () => {
   const MobileNavbarVisibility = useChangeMobileNavbarVisibility(
     (state: any) => state.displayMobileNavbar
   );
-   const userProfileVisibility = useUserProfileVisibilityStore(
+  const userProfileVisibility = useUserProfileVisibilityStore(
     (state: any) => state.userProfileVisibility
   );
 
-  const filterTags = useFilterProduct((state: any) => state.filter);
-  const removeFilter = useFilterProduct((state: any) => state.removeFilter);
-  const clearFilters = useFilterProduct((state: any) => state.clearFilters);
+  const { filter, removeFilter, clearFilters } = useFilterProduct();
 
   return (
     <div
-      className={`min-h-screen relative flex flex-col items-center bg-[#FFF6F4] font-[Poppins]  ${(addToCartVisibility || wishListVisibility || MobileNavbarVisibility || userProfileVisibility) && "h-[100vh] overflow-hidden"}`}
+      className={` relative flex flex-col bg-[#FFF6F4] font-[Poppins] ${(addToCartVisibility || wishListVisibility || MobileNavbarVisibility || userProfileVisibility) && "h-[100vh] overflow-hidden"}`}
     >
       <Cart />
       <WishList />
       <MobileNavBar />
-      <UserProfilePopUp/>
-      <HeaderSection explore={true} />
+      <UserProfilePopUp />
+      <HeaderSection explore={true} isLanding={false} />
 
       {/* Following is the temporary message shown till the mobile view is readey */}
       <div className="new-sm:flex md:hidden w-[100%] h-[20rem] justify-center items-center">
@@ -53,21 +51,21 @@ export const ExploreProductCatalogSection = () => {
         </p>
       </div>
 
-      <div className="new-sm:hidden md:flex flex-col items-center gap-[2rem] mt-[1.5rem]">
+      <div className="new-sm:hidden md:flex new-sm:w-[100%] md:w-[95%] 2xl:w-[87%] flex-col items-center gap-[2rem] mt-[1.5rem] mx-auto">
         <SearchSort />
 
         {/* Filter Section and Product Card */}
-        <div className="z-0 flex justify-between w-[82.1875rem] font-[Poppins]">
+        <div className="w-[100%] z-0 flex justify-between font-[Poppins]">
           {/* Sidebar */}
           <ProductFilterSection />
 
-          <div className="w-[75%]">
+          <div className="md:w-[70%] xl:w-[75%]">
             {/* Filter Tags and Clear all button*/}
-            {filterTags.length > 0 && (
+            {filter.length > 0 && (
               <div className="max-w-max min-w-[80%] flex flex-wrap items-center justify-between mb-[1rem]">
                 {/* Following div consist of tag button */}
                 <div className="w-[85%] flex flex-wrap gap-[1rem] ml-[1rem]">
-                  {filterTags.map((tag: string, index: number) => {
+                  {filter.map((tag: string, index: number) => {
                     return (
                       <div
                         key={index}
@@ -110,9 +108,9 @@ export const ExploreProductCatalogSection = () => {
         </div>
       </div>
 
-      <div className="new-sm:hidden md:block">
+      <footer>
         <Footer />
-      </div>
+      </footer>
     </div>
   );
 };

@@ -1,7 +1,7 @@
 import Link from "next/link";
-import { useState } from "react";
+import { memo, useState } from "react";
 
-export const Navbar = () => {
+export const Navbar = memo(() => {
   const NavLinks = [
     {
       name: "Home",
@@ -9,7 +9,7 @@ export const Navbar = () => {
     },
     {
       name: "Collection",
-      path: "/",
+      path: "",
     },
     {
       name: "Offers",
@@ -27,7 +27,7 @@ export const Navbar = () => {
   const [isCollectionHovered, setIsCollectionHovered] = useState(false);
   const [isHovered, setIsHover] = useState("");
   return (
-    <div className="relative sm:hidden md:block md:w-[70%] md:h-[3.5rem] lg:h-[4.05rem] h-[5.0625rem]">
+    <div className="relative sm:hidden md:block md:w-[72%] lg:w-[72%] md:h-[3.5rem] lg:h-[3.7rem] xl:h-[4.05rem]">
       <div className="w-[100%] h-[100%] font-[Poppins] rounded-[6.5625rem] bg-[#85A947] flex justify-around items-center text-[#FFF6F4] md:text-[12px] new-md:text-[16px] xl:text-[19.63px] font-normal uppercase overflow-hidden">
         {NavLinks.map((link, index) => {
           // following are the navlinks
@@ -35,7 +35,7 @@ export const Navbar = () => {
             <Link
               href={link.path ? link.path : "/"}
               key={index}
-              className={`z-30 w-[100%] h-[100%] flex justify-center items-center cursor-pointer hover:md:text-[0.9rem] hover:2xl:text-[1.3rem] hover:font-semibold`}
+              className={`z-30 w-[100%] h-[100%] flex justify-center items-center cursor-pointer hover:md:text-[0.8rem] hover:xl:text-[1.3rem] hover:font-semibold`}
               onMouseEnter={() => {
                 if (link.name === "Collection") {
                   setIsCollectionHovered(true);
@@ -71,7 +71,10 @@ export const Navbar = () => {
                   <div className="w-[60%] h-[80%] flex flex-col gap-[1rem] justify-center uppercase">
                     <Link href={"/explore"}>Explore</Link>
                     <div className="w-[100%] h-[0.125rem] bg-[#FFFFFF]"></div>
-                    <Link className="md:w-[5rem] xl:w-[10rem]" href={"/explorebyseller"}>
+                    <Link
+                      className="md:w-[5rem] xl:w-[10rem]"
+                      href={"/explorebyseller"}
+                    >
                       Explore by Seller
                     </Link>
                   </div>
@@ -91,4 +94,4 @@ export const Navbar = () => {
       <div className="absolute top-0 z-20 w-[100%] h-[100%] rounded-[6.5625rem] border-[1px] border-[FFF] bg-navbar-bg shadow-navbar-boxshadow backdrop-blur-navbar"></div>
     </div>
   );
-};
+});

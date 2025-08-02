@@ -28,7 +28,7 @@ export const SingleProductPage = () => {
       <Cart />
       <WishList />
       <MobileNavBar />
-      <HeaderSection singleProduct={true} />
+      <HeaderSection singleProduct={true} isLanding={false}/>
       {/* Search Input, Search & Sort Button */}
       <SearchSort />
       <SingleProductCard />

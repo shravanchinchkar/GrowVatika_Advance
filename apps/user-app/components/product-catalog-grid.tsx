@@ -3,14 +3,21 @@
 import axios from "axios";
 import Link from "next/link";
 import Image from "next/image";
+import toast from "react-hot-toast";
 import Skeleton from "@repo/ui/loading";
-import { useEffect, useState } from "react";
+import { useRouter } from "next/navigation";
 import { ProductCard } from "./product-card";
+import { memo, useEffect, useState } from "react";
 import { useSearchParams } from "next/navigation";
-import { useFilterProduct } from "@repo/shared-store";
+import {
+  useFilterProduct,
+  usefilterProductByCategoryStore,
+} from "@repo/shared-store";
 import { SellerProductData } from "@repo/common-types";
+import { toastStyle } from "@repo/shared/utilfunctions";
+import test from "node:test";
 
-export const ProductCatalogGrid = () => {
+export const ProductCatalogGrid = memo(() => {
   const searchParams = useSearchParams();
   const searchParamsPage = searchParams.get("page");
 
@@ -22,12 +29,16 @@ export const ProductCatalogGrid = () => {
   >(0);
   const [totalPages, setTotalPages] = useState<number>(0);
   const [pageNotFound, setPageNotFound] = useState(false);
+  const router = useRouter();
+
+  // Following are the zustand state management code
+  const { filter } = useFilterProduct();
+  const { category } = usefilterProductByCategoryStore();
 
   const currentPage =
     typeof searchParamsPage === "string" ? Number(searchParamsPage) : 1;
 
-  const filter = useFilterProduct((state: any) => state.filter);
-
+  // Call to the backend
   useEffect(() => {
     if (currentPage < 1) {
       setPageNotFound(true);
@@ -44,7 +55,6 @@ export const ProductCatalogGrid = () => {
             const res = await axios.get(
               `api/getfilterproductdata?filter=${encodedFilter}&page=${currentPage}`
             );
-            console.log("filter response is :", res.data.success);
             if (!res.data.success) {
               setProductsData([]);
               setTotalProductsCount(0);
@@ -76,20 +86,27 @@ export const ProductCatalogGrid = () => {
           try {
             setLoading(true);
             const res = await axios.get(
-              `api/getallproducts?page=${currentPage}`
+              `api/getallproducts?page=${currentPage}&category=${category}`
             );
-            const productsData = res.data.productsData;
-            const totalProductsCount = res.data.totalProductsCount;
-            const totalPages = res.data.totalPages;
-            if (currentPage > totalPages) {
+            if (res.data.success) {
+              const productsData = res.data.productsData;
+              const totalProductsCount = res.data.totalProductsCount;
+              const totalPages = res.data.totalPages;
+              if (currentPage > totalPages) {
+                setLoading(false);
+                setPageNotFound(true);
+                return;
+              }
+              setProductsData(productsData);
+              setTotalProductsCount(totalProductsCount);
+              setTotalPages(totalPages);
               setLoading(false);
-              setPageNotFound(true);
-              return;
             }
-            setProductsData(productsData);
-            setTotalProductsCount(totalProductsCount);
-            setTotalPages(totalPages);
-            setLoading(false);
+            if (!res.data.success) {
+              setProductsData([]);
+              toast.error("No Product Found :(", toastStyle);
+              setLoading(false);
+            }
           } catch (error) {
             console.error("Error while getting product data", error);
           }
@@ -97,10 +114,11 @@ export const ProductCatalogGrid = () => {
         getProductsData();
       }
     }
-  }, [currentPage, filter]);
+  }, [currentPage, filter, category]);
 
   //Following code helps to display page number at the bottom
   let pageNumber: number[] = [];
+
   for (let i: number = currentPage - 3; i <= currentPage + 3; i++) {
     if (i < 1) {
       continue;
@@ -119,27 +137,27 @@ export const ProductCatalogGrid = () => {
     }
   };
 
-  if (pageNotFound) {
+  if (loading) {
+    return (
+      <Skeleton className="w-[100%] h-[95%] flex justify-center items-start pt-[10rem]" />
+    );
+  }
+  if (pageNotFound || productsData.length === 0) {
     return (
       <div className="w-[100%] h-[95%] flex justify-center items-start pt-[10rem] text-[#CBD0D3] uppercase text-[1.5rem]">
         No Product Data found
       </div>
     );
-  }
-  if (loading) {
-    return (
-      <Skeleton className="w-[100%] h-[95%] flex justify-center items-start pt-[10rem]"/>
-    );
   } else {
     return (
       <div className="w-[100%] flex flex-col gap-[1rem] pb-[1rem]">
         {/* Count of the products */}
-        <div className="w-max text-[2rem] text-[#000] ml-[1.5rem] font-semibold">
+        <div className="w-max md:text-[1.2rem] lg:text-[1.5rem] xl:text-[2rem] text-[#000] ml-[1.5rem] font-semibold">
           {`${totalProductsCount} Products Available`}
         </div>
 
         {/* Product Card  */}
-        <div className="min-h-[60rem] max-h-max grid grid-cols-3 gap-8">
+        <div className="min-h-[60rem] max-h-max grid md:grid-cols-2 xl:grid-cols-3 gap-8">
           {productsData.map((item: SellerProductData) => {
             return (
               <ProductCard
@@ -161,7 +179,7 @@ export const ProductCatalogGrid = () => {
 
         {/*  Page Navigation */}
         <div className="w-[95%] mx-[1.5rem] flex justify-center mt-[4rem]">
-          <div className="min-w-[30%] max-w-max flex justify-between gap-[0.5rem]">
+          <div className="min-w-[20%] max-w-max flex justify-between gap-[0.5rem]">
             {/* Previous Page Button */}
 
             {currentPage - 1 >= 1 ? (
@@ -248,4 +266,4 @@ export const ProductCatalogGrid = () => {
       </div>
     );
   }
-};
+});

@@ -7,6 +7,8 @@ export async function GET(req: NextRequest) {
     const currentPage = searchParams.get("page")
       ? Number(searchParams.get("page"))
       : 1;
+    const categoryParams = searchParams.get("category")?.trim();
+
     const limit: number = 6;
     const skip = (currentPage - 1) * Number(limit); // offset formula
 
@@ -17,60 +19,122 @@ export async function GET(req: NextRequest) {
       });
     }
 
-    const productsData = await client.product.findMany({
-      where: {
-        productStatus: "Active",
-      },
-      select: {
-        id: true,
-        name: true,
-        productSize: true,
-        price: true,
-        compareAt: true,
-        collection: true,
-        tags: true,
-        imageURL: true,
-      },
-      skip: skip, // Skip records based on current page
-      take: limit, // Limit the number of records returned
-      orderBy: {
-        id: "asc", // Optional: Add consistent ordering
-      },
-    });
+    // excute the following block if there is no category filter or category===All
+    if (!categoryParams || categoryParams === "All") {
+      const productsData = await client.product.findMany({
+        where: {
+          productStatus: "Active",
+        },
+        select: {
+          id: true,
+          name: true,
+          productSize: true,
+          price: true,
+          compareAt: true,
+          collection: true,
+          tags: true,
+          imageURL: true,
+        },
+        skip: skip, // Skip records based on current page
+        take: limit, // Limit the number of records returned
+        orderBy: {
+          id: "asc", // Optional: Add consistent ordering
+        },
+      });
+      if (!productsData) {
+        return NextResponse.json({
+          success: false,
+          error: "Error while fetching Products data",
+        });
+      }
 
-    if (!productsData) {
+      const totalProductsCount = await client.product.count({
+        where: {
+          productStatus: "Active",
+        },
+      });
+
+      if (!totalProductsCount) {
+        console.error(
+          "product data found but error while getting count of total products"
+        );
+        return NextResponse.json({
+          success: false,
+          error:
+            "product data found but error while getting count of total products",
+        });
+      }
+
+      const totalPages = Math.ceil(totalProductsCount / Number(limit));
+
       return NextResponse.json({
-        success: false,
-        error: "Error while fetching Products data",
+        success: true,
+        message: "Product data fetch successfully!",
+        productsData,
+        totalProductsCount,
+        totalPages,
       });
     }
+    // Execute the following block only if there is a category filter present
+    else {
+      const productsData = await client.product.findMany({
+        where: {
+          productStatus: "Active",
+          category: categoryParams,
+        },
+        select: {
+          id: true,
+          name: true,
+          productSize: true,
+          price: true,
+          compareAt: true,
+          collection: true,
+          tags: true,
+          imageURL: true,
+        },
+        skip: skip, // Skip records based on current page
+        take: limit, // Limit the number of records returned
+        orderBy: {
+          id: "asc", // Optional: Add consistent ordering
+        },
+      });
 
-    const totalProductsCount = await client.product.count({
-      where: {
-        productStatus: "Active",
-      },
-    });
+      if (productsData.length===0) {
+        console.error(`Error while fetching Products of ${categoryParams} category`)
+        return NextResponse.json({
+          success: false,
+          error: "Error while fetching Products of specific category",
+        });
+      }
     
-    if (!totalProductsCount) {
-      console.error(
-        "product data found but error while getting count of total products"
-      );
+      const totalProductsCount = await client.product.count({
+        where: {
+          productStatus: "Active",
+          category: categoryParams,
+        },
+      });
+
+      if (!totalProductsCount) {
+        console.error(
+          "product data found but error while getting count of total products by category"
+        );
+        return NextResponse.json({
+          success: false,
+          error:
+            "product data found but error while getting count of total products",
+        });
+      }
+
+      const totalPages = Math.ceil(totalProductsCount / Number(limit));
+
       return NextResponse.json({
-        success: false,
-        error:
-          "product data found but error while getting count of total products",
+        success: true,
+        message: "Product data fetch successfully!",
+        productsData,
+        totalProductsCount,
+        totalPages,
       });
     }
-
-    const totalPages = Math.ceil(totalProductsCount / Number(limit));
-
-    return NextResponse.json({
-      success: true,
-      message: "Product data fetch successfully!",
-      productsData,
-      totalProductsCount,
-      totalPages,
-    });
   } catch (error) {
     console.error("Error while fetching product data:", error);
     return NextResponse.json({

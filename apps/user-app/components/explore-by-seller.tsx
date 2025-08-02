@@ -39,7 +39,7 @@ export const ExplorePlantsBySeller = () => {
       <WishList />
       <MobileNavBar />
       <UserProfilePopUp />
-      <HeaderSection explorebyseller={true} />
+      <HeaderSection explorebyseller={true} isLanding={true} />
 
       {/* Following is the temporary message shown till the mobile view is readey */}
       <div className="new-sm:flex md:hidden w-[100%] h-[20rem]  justify-center items-center">

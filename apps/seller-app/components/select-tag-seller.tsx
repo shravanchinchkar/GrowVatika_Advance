@@ -1,7 +1,7 @@
 import Image from "next/image";
+import { Check } from "lucide-react";
 import React, { memo, useEffect } from "react";
 import { useDropdownStore } from "@repo/shared-store";
-import { Check } from "lucide-react";
 
 interface ReusableDropdownProps {
   label: string;
@@ -15,7 +15,7 @@ interface ReusableDropdownProps {
   customKey: string;
 }
 
-export const CustomSellerDashboardDropDown = memo(
+export const SelectTagSeller = memo(
   ({
     label,
     placeholder,
@@ -41,7 +41,7 @@ export const CustomSellerDashboardDropDown = memo(
     };
 
     const handleSelect = (selectedValue: string) => {
-      console.log("selected value:",value);
+      console.log("selected value:", value);
       onChange(selectedValue);
       setOpenDropdown(null); // Close dropdown after selection
     };

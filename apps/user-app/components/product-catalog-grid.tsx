@@ -89,14 +89,14 @@ export const ProductCatalogGrid = () => {
     );
   } else {
     return (
-      <div className="border-[2px] border-red-500 w-[100%] flex flex-col gap-[1rem] pb-[1rem]">
+      <div className="new-sm:w-[100%] flex flex-col gap-[1rem] pb-[1rem]">
         {/* Count of the products */}
-        <div className="w-max text-[2rem] text-[#000] ml-[1.5rem] font-semibold">
+        <div className="hidden md:block w-max text-[2rem] text-[#000] ml-[1.5rem] font-semibold">
           {`${totalProductsCount} Products Available`}
         </div>
 
         {/* Product Card  */}
-        <div className="min-h-[60rem] max-h-max grid grid-cols-3 gap-8">
+        <div className="w-[100%] min-h-[60rem] max-h-max grid new-sm:grid-cols-2 md:grid-cols-3 gap-8">
           {productsData.map((item: SellerProductData) => {
             return (
               <ProductCard
@@ -117,7 +117,7 @@ export const ProductCatalogGrid = () => {
         </div>
 
         {/*  Page Navigation */}
-        <div className="w-[95%] mx-[1.5rem] flex justify-center mt-[4rem]">
+        <div className="new-sm:hidden w-[95%] mx-[1.5rem] md:flex justify-center mt-[4rem]">
           <div className="min-w-[30%] max-w-max flex justify-between">
             {/* Previous Page Button */}
 

@@ -1,4 +1,4 @@
-"use client"
+"use client";
 
 import Image from "next/image";
 import { useState } from "react";
@@ -9,9 +9,11 @@ export const SearchSort = () => {
     setDisplaySortDropDown(!displaySortDropDown);
   };
 
-  {/* Search Input, Search button & Sort Button */}
+  {
+    /* Search Input, Search button & Sort Button */
+  }
   return (
-    <div className="z-10 flex items-start justify-between gap-4 w-[82.1875rem]">
+    <div className="z-10 new-sm:hidden md:flex items-start justify-between gap-4 w-[82.1875rem]">
       {/* Search Input */}
       <div className="flex items-center w-[60rem] h-[3.0625rem] rounded-full border border-[#56A430] bg-white px-4">
         <div className="relative w-[1.8rem] h-[1.8rem] flex-shrink-0 mr-3">

@@ -8,14 +8,13 @@ export enum SearchBarWorkType {
 
 interface ProductSearchBarProps {
   placeholder: string;
-  UseType: SearchBarWorkType;
   parentClassName?:string
   searchInputClassName?:string
   searchButtonClassName?:string
 }
 
 export const ProductSearchBar = memo(
-  ({ placeholder, UseType,parentClassName,searchInputClassName,searchButtonClassName }: ProductSearchBarProps) => {
+  ({ placeholder,parentClassName,searchInputClassName,searchButtonClassName }: ProductSearchBarProps) => {
     return (
       <div className={`${parentClassName} flex items-center justify-between rounded-full border-[1.6px] border-[#56A430] bg-white`}>
         {/* Search Input*/}

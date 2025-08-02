@@ -17,7 +17,6 @@ export const SearchSort = memo(() => {
   return (
     <div className="w-[100%] h-[3.0625rem] z-10 flex justify-between items-center">
       <ProductSearchBar
-        UseType={SearchBarWorkType.PRODUCTSEARCH}
         placeholder="Find your Plants, Pots, Tools..."
         parentClassName="w-[72%] h-[100%]"
         searchInputClassName="w-[100%] pl-[1.5rem] md:text-[0.89rem] lg:text-[1.22669rem]"

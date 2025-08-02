@@ -56,12 +56,12 @@ export const ExplorePlantsBySeller = () => {
         </h1>
 
         {/* Button and Search Bar */}
-        <div className="w-[100%] flex items-center">
+        <div className="w-[100%] h-[4.0625rem] flex items-center">
           {/* Buttons of the product pages */}
-          <div className="w-[70%] flex gap-[1.5rem] justify-end">
+          <div className="w-[70%] h-[100%] flex gap-[1.5rem] justify-end">
             {productPageButton.map((b, index) => {
               return (
-                <div className="w-[12.09619rem] h-[4.0625rem]" key={index}>
+                <div className="w-[12.09619rem] h-[100%]" key={index}>
                   <ProductPageButton
                     uniqueId={index.toString()}
                     buttonName={b}
@@ -71,15 +71,16 @@ export const ExplorePlantsBySeller = () => {
             })}
           </div>
           {/* Search bar*/}
-          <div className="w-[30%] flex justify-end">
-            <div className="w-[12.9375rem] h-[4.0625rem] shrink-0">
-              <ProductSearchBar
-                UseType={SearchBarWorkType.CITYSEARCH}
-                placeholder="Find by city"
-              />
-            </div>
+          <div className="w-[30%] h-[100%] flex justify-end">
+            <ProductSearchBar
+              placeholder="Find by city"
+              parentClassName="w-[90%] h-[100%]"
+              searchInputClassName="text-[1.22669rem] pl-[1rem] w-[90%]"
+              searchButtonClassName="w-[40%] text-[1.1rem]"
+            />
           </div>
         </div>
+
         <ExploreBySellerGrid />
       </div>
 

@@ -4,9 +4,7 @@ import { NextRequest, NextResponse } from "next/server";
 export async function GET(req: NextRequest) {
   try {
     const { searchParams } = new URL(req.url);
-    const currentPage = searchParams.get("page")
-      ? Number(searchParams.get("page"))
-      : 1;
+    const currentPage = searchParams.get("page")? Number(searchParams.get("page")): 1;
     const categoryParams = searchParams.get("category")?.trim();
 
     const limit: number = 6;
@@ -20,7 +18,7 @@ export async function GET(req: NextRequest) {
     }
 
     // excute the following block if there is no category filter or category===All
-    if (!categoryParams || categoryParams === "All") {
+    if (categoryParams === "All") {
       const productsData = await client.product.findMany({
         where: {
           productStatus: "Active",
@@ -41,6 +39,7 @@ export async function GET(req: NextRequest) {
           id: "asc", // Optional: Add consistent ordering
         },
       });
+
       if (!productsData) {
         return NextResponse.json({
           success: false,

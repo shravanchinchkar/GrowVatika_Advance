@@ -120,7 +120,7 @@ export const SingleProductCard = () => {
     );
   } else {
     return (
-      <div className="w-[82rem] h-max rounded-[0.9375rem] bg-white my-[1rem]">
+      <div className="w-[100%] h-max rounded-[0.9375rem] bg-white my-[1rem]">
         {/* Top div */}
         <div className="flex items-center gap-2 font-[Poppins] text-[1.25rem] leading-[1.625rem] font-normal border-b-[0.0625rem] border-[#00000033] py-[0.7rem] px-[1rem]">
           {crumbs.map((text, i) => (

@@ -10,7 +10,7 @@ import {
 } from "@repo/shared-store";
 
 interface SelectTagUserProps {
-  activeValue: string;
+  activeValue?: string;
   values?: string[];
   className?: string;
   custom_Id: string;
@@ -34,7 +34,6 @@ export const SelectTagUser = memo(
 
     //Use useEffect that close the dropdown when click outside
     useEffect(() => {
-      console.log("useEeffect");
       const handleClickOutside = (event: MouseEvent) => {
         const target = event.target as HTMLElement;
         // Check if the click is inside the dropdown container
@@ -76,8 +75,6 @@ export const SelectTagUser = memo(
       const navigate = item.toLowerCase().trim().replaceAll(" ", "");
       router.push(`/${navigate}`);
     };
-
-    const displayValue = category ? category : activeValue;
     return (
       <div
         className={`${className} h-[100%] relative rounded-tl-[2.1875rem] rounded-tr-[2.1875rem] z-10`}

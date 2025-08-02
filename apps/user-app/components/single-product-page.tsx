@@ -28,10 +28,12 @@ export const SingleProductPage = () => {
       <Cart />
       <WishList />
       <MobileNavBar />
-      <HeaderSection singleProduct={true} isLanding={false}/>
+      <HeaderSection singleProduct={true} isLanding={false} />
       {/* Search Input, Search & Sort Button */}
-      <SearchSort />
-      <SingleProductCard />
+      <div className="w-[87%] flex flex-col gap-[1rem]">
+        <SearchSort />
+        <SingleProductCard />
+      </div>
     </div>
   );
 };

@@ -6,6 +6,6 @@ interface FilterProductByCategoryState {
 }
 export const usefilterProductByCategoryStore =
   create<FilterProductByCategoryState>((set) => ({
-    category: "",
+    category: "All",
     setCategory: (newCategory: string) => set({ category: newCategory }),
   }));

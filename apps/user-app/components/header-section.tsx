@@ -74,7 +74,6 @@ export const HeaderSection = memo(
           {(explore || singleProduct) && (
             <div className="flex md:w-[15rem] lg:w-[18rem] xl:w-[22.5rem] md:h-[3.5rem] lg:h-[3.7rem] xl:h-[4.05rem] justify-between">
               <SelectTagUser
-                activeValue="All"
                 values={["All", "Plants", "Pots", "Soil", "Fertilizers"]}
                 className="md:w-[7rem] lg:w-[8.5rem] xl:w-[10.5rem]"
                 custom_Id="Category"

@@ -13,7 +13,6 @@ export const HeaderSectionOne = memo(
         {isLanding && (
           <div className="z-10 new-sm:w-[95%] new-sm:h-[2.8rem] md:w-[55%] md:h-[3.05rem]">
             <ProductSearchBar
-              UseType={SearchBarWorkType.PRODUCTSEARCH}
               parentClassName="w-[100%] h-[100%]"
               searchInputClassName="new-sm:pl-[0.8rem] new-sm-1:pl-[1rem] md:pl-[0.8rem] lg:pl-[1.5rem] new-sm:text-[0.79rem] new-sm-1:text-[1rem] sm:text-[1.1rem] md:text-[0.89rem] lg:text-[1.22669rem]"
               searchButtonClassName="new-sm:w-[35%] sm:w-[25%] md:w-[35%] xl:w-[30%] new-sm:text-[0.7rem] new-sm-1:text-[0.8rem] new-sm-3:text-[1rem] md:text-[0.8rem] lg:text-[1.22669rem]"

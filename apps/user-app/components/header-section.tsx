@@ -45,7 +45,7 @@ export const HeaderSection = memo(
 
     return (
       <div
-        className={`new-sm:w-[100%] md:w-[100%] lg:w-[98%] 2xl:w-[90%] mx-auto z-40 flex flex-col items-center justify-center gap-[1rem] new-sm:h-max md:h-[10rem] md:mt-[1rem] py-[0.5rem] ${isScrollingUp && "sticky top-[1rem] bg-[#FFF6F4] md:border-[#56A430] md:border-[1.6px] md:rounded-[1rem] transition-all md:duration-300"}`}
+        className={`new-sm:w-[100%] md:w-[100%] lg:w-[90%] mx-auto z-40 flex flex-col items-center justify-center gap-[1rem] new-sm:h-max md:h-[10rem] md:mt-[1rem] py-[0.5rem] ${isScrollingUp && "sticky top-[1rem] bg-[#FFF6F4] md:border-[#56A430] md:border-[1.6px] md:rounded-[1rem] transition-all md:duration-300"}`}
       >
         <div className="new-sm:w-[100%] md:w-[96.5%] h-max flex justify-between new-sm:items-start md:items-center">
           <HeaderSectionOne isLanding={isLanding}/>
@@ -90,11 +90,11 @@ export const HeaderSection = memo(
           )}
 
           {explorebyseller && (
-            <div className="h-[4.05rem] w-[22.5rem] flex justify-between">
+            <div className="md:w-[12rem] lg:w-[15rem] 2xl:w-[22.5rem] md:h-[3.5rem] lg:h-[3.7rem] xl:h-[4.05rem] flex justify-between">
               <SelectTagUser
                 activeValue="Explore by seller"
                 values={["Explore", "Explore by seller"]}
-                className="w-[22.4375rem]"
+                className="w-[100%]"
                 custom_Id="ExploreType"
                 isCategory={false}
               />

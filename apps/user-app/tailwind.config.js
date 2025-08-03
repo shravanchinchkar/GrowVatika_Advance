@@ -67,6 +67,7 @@ export default {
       },
       boxShadow: {
         "navbar-boxshadow": "0 4px 40px -1px rgba(0, 0, 0, 0.25)",
+        "explore-by-seller-button":"0 3.2px 32px -0.8px rgba(0, 0, 0, 0.25)",
         "custom-boxshadow": "0 3.21px 32.099px -0.802px rgba(0, 0, 0, 0.25)",
         "productcard-custom-boxShadow": "0 0 25px -11px rgba(0, 0, 0, 0.25)",
         "dropdown-custom-boxShadow": "0 3.2px 32px -0.8px rgba(0, 0, 0, 0.25)",

@@ -115,9 +115,7 @@ export const SingleProductCard = () => {
     );
   }
   if (loading) {
-    return (
-      <Skeleton className="flex justify-center items-center"/>
-    );
+    return <Skeleton className="flex justify-center items-center" />;
   } else {
     return (
       <div className="w-[100%] h-max rounded-[0.9375rem] bg-white my-[1rem]">
@@ -147,22 +145,25 @@ export const SingleProductCard = () => {
           {/* LEFT DIV that consist of Product Photos */}
           <div className="w-[60%] flex flex-col items-center gap-[1rem]">
             {/* Product Image div */}
-            <div
-              className="relative border-[20px] border-[#FFF6F4] flex w-[75%] h-[37.5rem] bg-cover bg-center bg-no-repeat rounded-[0.625rem] overflow-hidden"
-              style={{
-                backgroundImage: `url(${singleProductData?.imageURL || "/assets/images/ExploreBySellerImages/ImagePlaceholder.jpg"})`,
-              }}
-            >
-              <div className="w-[50%] h-[100%] px-[1.2rem] py-[1rem]">
-                <h1 className="w-[9.8125rem] h-[3.0625rem] flex justify-center items-center text-[#FFFFFF] text-[1.5rem] font-semibold rounded-[5.25rem] bg-[#56A430] capitalize">
-                  {`-${percentageoff(singleProductData?.compareAt || 0, singleProductData?.price || 0)}% off`}
-                </h1>
-              </div>
+            <div className="relative border-[20px] border-[#FFF6F4] flex w-[75%] h-[37.5rem] bg-cover bg-center bg-no-repeat rounded-[0.625rem] overflow-hidden">
+              <div className="relative w-[100%] h-[100%] bg-red-500 rounded-[0.625rem] overflow-hidden">
+                <Image
+                  src={`${singleProductData?.imageURL || "/assets/images/ExploreBySellerImages/ImagePlaceholder.jpg"}`}
+                  alt="productImage"
+                  fill
+                  className="object-cover"
+                />
+                <div className="absolute top-0 left-0 w-[50%] h-[100%] px-[1.2rem] py-[1rem]">
+                  <h1 className="w-[9.8125rem] h-[3.0625rem] flex justify-center items-center text-[#FFFFFF] text-[1.5rem] font-semibold rounded-[5.25rem] bg-[#56A430] capitalize">
+                    {`-${percentageoff(singleProductData?.compareAt || 0, singleProductData?.price || 0)}% off`}
+                  </h1>
+                </div>
 
-              <div className="w-[50%] h-[100%] flex justify-end px-[1.2rem] py-[1rem]">
-                <p className="w-[9.625rem] h-[1.625rem] flex justify-center items-center rounded-[5.25rem] bg-[#7FB819] text-[#FFFFFF] text-[1rem] font-semibold">
-                  {singleProductData?.tags}
-                </p>
+                <div className="absolute top-0 right-0 w-[50%] h-[100%] flex justify-end px-[1.2rem] py-[1rem]">
+                  <p className="w-[9.625rem] h-[1.625rem] flex justify-center items-center rounded-[5.25rem] bg-[#7FB819] text-[#FFFFFF] text-[1rem] font-semibold">
+                    {singleProductData?.tags}
+                  </p>
+                </div>
               </div>
             </div>
 

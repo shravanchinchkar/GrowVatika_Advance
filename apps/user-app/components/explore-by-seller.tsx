@@ -33,7 +33,7 @@ export const ExplorePlantsBySeller = () => {
 
   return (
     <div
-      className={`min-h-screen relative flex flex-col items-center bg-[#FFF6F4] font-[Poppins] ${(addToCartVisibility || wishListVisibility || MobileNavbarVisibility || userProfileVisibility) && "h-[100vh] overflow-hidden"}`}
+      className={`min-h-screen relative flex flex-col bg-[#FFF6F4] font-[Poppins] ${(addToCartVisibility || wishListVisibility || MobileNavbarVisibility || userProfileVisibility) && "h-[100vh] overflow-hidden"}`}
     >
       <Cart />
       <WishList />
@@ -49,19 +49,19 @@ export const ExplorePlantsBySeller = () => {
         </p>
       </div>
 
-      <div className="new-sm:hidden md:flex lg:w-[60rem] xl:w-[70rem] 2xl:w-[82.1875rem] h-max mt-[3rem] flex-col gap-[3rem] items-center">
+      <div className="new-sm:hidden md:flex new-sm:w-[100%]  md:w-[90%] h-max mt-[3rem] flex-col gap-[3rem] items-center mx-auto">
         {/* Heading of  Eplore by seller */}
-        <h1 className="w-[67.8125rem] uppercase text-center text-[#123524] font-[Unbounded] text-[2.25rem]">
+        <h1 className="w-[80%] uppercase text-center text-[#123524] font-[Unbounded] md:text-[1.5rem] lg:text-[2rem] xl:text-[2.25rem]">
           Explore by Sellers – Discover Nurseries Near You!
         </h1>
 
         {/* Button and Search Bar */}
-        <div className="w-[100%] h-[4.0625rem] flex items-center">
+        <div className="w-[100%] md:h-[3.5rem] lg:h-[3.7rem] flex items-center">
           {/* Buttons of the product pages */}
           <div className="w-[70%] h-[100%] flex gap-[1.5rem] justify-end">
             {productPageButton.map((b, index) => {
               return (
-                <div className="w-[12.09619rem] h-[100%]" key={index}>
+                <div className="md:w-[8rem] lg:w-[11rem] xl:w-[12.09619rem] h-[100%]" key={index}>
                   <ProductPageButton
                     uniqueId={index.toString()}
                     buttonName={b}
@@ -71,12 +71,12 @@ export const ExplorePlantsBySeller = () => {
             })}
           </div>
           {/* Search bar*/}
-          <div className="w-[30%] h-[100%] flex justify-end">
+          <div className="w-[30%] md:h-[90%] lg:h-[100%] flex justify-end">
             <ProductSearchBar
               placeholder="Find by city"
-              parentClassName="w-[90%] h-[100%]"
-              searchInputClassName="text-[1.22669rem] pl-[1rem] w-[90%]"
-              searchButtonClassName="w-[40%] text-[1.1rem]"
+              parentClassName="w-[90%] md:h-[100%] 2xl:h-[100%]"
+              searchInputClassName="w-[90%] md:text-[0.8rem] lg:text-[1.1rem] xl:text-[1.22669rem] pl-[1rem]"
+              searchButtonClassName="md:w-[35%] lg:w-[25%]"
             />
           </div>
         </div>

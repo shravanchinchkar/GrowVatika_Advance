@@ -20,7 +20,7 @@ export const SearchSort = memo(() => {
         placeholder="Find your Plants, Pots, Tools..."
         parentClassName="w-[72%] h-[100%]"
         searchInputClassName="w-[100%] pl-[1.5rem] md:text-[0.89rem] lg:text-[1.22669rem]"
-        searchButtonClassName="md:w-[25%] lg:w-[20%] xl:w-[15%] md:text-[0.89rem] lg:text-[1.22669rem]"
+        searchButtonClassName="w-[10%]"
       />
       <SelectTagUser
         activeValue="Sort"

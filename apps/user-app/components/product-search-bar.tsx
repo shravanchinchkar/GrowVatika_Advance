@@ -25,8 +25,8 @@ export const ProductSearchBar = memo(
         />
         {/* Search Button */}
         <button className={`h-[100%] rounded-r-full bg-[#56A430] text-white font-poppins capitalize backdrop-blur-[6.408869743347168px] overflow-hidden ${searchButtonClassName}`}> 
-          <div className="w-[100%] h-[100%] flex items-center justify-center new-sm:gap-1 new-sm-3:gap-2 md:gap-1 lg:gap-2 bg-button-custom-gradient overflow-hidden">
-            <div className="relative new-sm:w-[1rem] new-sm:h-[1rem] new-sm-3:w-[1.2rem] new-sm-3:h-[1.2rem] md:w-[1rem] md:h-[1rem] lg:w-[1.5rem] lg:h-[1.5rem] flex-shrink-0">
+          <div className="w-[100%] h-[100%] flex justify-center items-center bg-button-custom-gradient overflow-hidden">
+            <div className="relative new-sm:w-[1rem] new-sm:h-[1rem] new-sm-3:w-[1.2rem] new-sm-3:h-[1.2rem] md:w-[1.5rem] md:h-[1.5rem] flex-shrink-0">
               <Image
                 src="/assets/images/ExploreImages/searchButtonSearchIcon.svg"
                 alt="search icon"
@@ -34,8 +34,8 @@ export const ProductSearchBar = memo(
                 fill
               />
             </div>
-            Search
           </div>
+
         </button>
       </div>
     );

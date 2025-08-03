@@ -51,7 +51,7 @@ export const ExploreProductCatalogSection = () => {
         </p>
       </div>
 
-      <div className="new-sm:hidden md:flex new-sm:w-[100%] md:w-[95%] 2xl:w-[87%] flex-col items-center gap-[2rem] mt-[1.5rem] mx-auto">
+      <div className="new-sm:hidden md:flex new-sm:w-[100%] md:w-[95%] lg:w-[86.5%] 2xl:w-[87%] flex-col items-center gap-[2rem] mt-[1.5rem] mx-auto">
         <SearchSort />
 
         {/* Filter Section and Product Card */}

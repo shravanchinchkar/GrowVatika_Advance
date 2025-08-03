@@ -111,7 +111,7 @@ export const ExploreBySellerGrid = memo(() => {
   };
 
   // reduce the word count present in the nurseryBio
-  function truncateWords(text: string, wordLimit: number = 20): string {
+  function truncateWords(text: string, wordLimit: number = 15): string {
     if (!text) return "";
     const words = text.trim().split(/\s+/);
     if (words.length <= wordLimit) {
@@ -132,8 +132,9 @@ export const ExploreBySellerGrid = memo(() => {
     }
     return (
       // Nursery Seller Card Start from here
-      <div className="flex flex-col">
-        <div className="lg:w-[60rem] xl:w-[70rem] 2xl:w-[82.1875rem] h-max grid grid-cols-3">
+      <div className="w-[100%] flex flex-col">
+
+        <div className="w-[100%] h-max grid md:grid-cols-2 xl:grid-cols-3">
           {sellerData.map((item, index) => {
             return (
               <div
@@ -141,12 +142,12 @@ export const ExploreBySellerGrid = memo(() => {
                 key={index}
               >
                 {/* Following is the nursery card! */}
-                <div className="w-[25rem] h-[50rem] shadow-[0px_0px_25px_-11px_rgba(0,0,0,0.25)] flex flex-col items-center gap-[1rem] shrink-0 bg-[#fff] rounded-[1.8rem] p-[1rem] outline-none border-[1.2px] border-[#56A430]">
+                <div className="md:w-[95%] lg:w-[85%] xl:w-[95%] md:h-[38rem] xl:h-[42rem] 2xl:h-[50rem] shadow-[0px_0px_25px_-11px_rgba(0,0,0,0.25)] flex flex-col items-center md:gap-[0.5rem] xl:gap-[1rem] shrink-0 bg-[#fff] rounded-[1.8rem] md:p-[0.5rem] xl:p-[1rem] outline-none border-[1.2px] border-[#56A430]">
                   {/* Following is the image div */}
-                  <div className="w-[98%] h-[36%] flex justify-between">
+                  <div className="w-[98%] md:h-[38%] new-md:h-[45%] xl:h-[40%] flex justify-between">
                     {/* Nursery profile Photo */}
                     <div
-                      className={`relative w-[14rem] h-[100%] rounded-[1.5625rem] overflow-hidden ${item.profilePictureURL && "border-[1.2px] border-[#56A430]"}`}
+                      className={`relative w-[60%] h-[100%] rounded-[1.5625rem] overflow-hidden ${item.profilePictureURL && "border-[1.2px] border-[#56A430]"}`}
                     >
                       {item.profilePictureURL ? (
                         <Image
@@ -168,11 +169,11 @@ export const ExploreBySellerGrid = memo(() => {
                     </div>
 
                     {/* Nursery product Photos */}
-                    {/* bg-[#DBD5A4] */}
-                    <div className="flex flex-col justify-between">
+                    <div className="w-[37%] flex flex-col justify-between items-end">
+                      {/* If seller has not publish any product then the following block gets displayed */}
                       {item.products.length === 0 ? (
                         <>
-                          <div className="relative overflow-hidden w-[7.8rem] h-[8.2rem] rounded-[1.5625rem]">
+                          <div className="relative overflow-hidden w-[100%] h-[48%] rounded-[1.5625rem]">
                             <Image
                               src={
                                 "/assets/images/ExploreBySellerImages/ImagePlaceholder2.png"
@@ -182,7 +183,7 @@ export const ExploreBySellerGrid = memo(() => {
                               className="object-cover"
                             />
                           </div>
-                          <div className="relative overflow-hidden w-[7.8rem] h-[8.2rem] rounded-[1.5625rem]">
+                          <div className="relative overflow-hidden w-[100%] h-[48%] rounded-[1.5625rem]">
                             <Image
                               src={
                                 "/assets/images/ExploreBySellerImages/ImagePlaceholder2.png"
@@ -193,11 +194,13 @@ export const ExploreBySellerGrid = memo(() => {
                             />
                           </div>
                         </>
-                      ) : item.products.length === 1 ? (
+                      ) : 
+                      // If Seller has published a single product
+                      item.products.length === 1 ? (
                         item.products.map((image, index) => {
                           return (
                             <div
-                              className="relative overflow-hidden w-[7.8rem] h-[8.2rem] border-[1.2px] rounded-[1.5625rem] border-[#56A430]"
+                              className="relative overflow-hidden w-[100%] h-[48%] border-[1.2px] rounded-[1.5625rem] border-[#56A430]"
                               key={index}
                             >
                               <Image
@@ -210,13 +213,14 @@ export const ExploreBySellerGrid = memo(() => {
                           );
                         })
                       ) : (
+                        // If Seller has published 2 or more than 2 products
                         item.products.length >= 2 &&
                         item.products.map((image, index) => {
                           if (item.productCount > 0) {
                             if (index == 1) {
                               return (
                                 <div
-                                  className="relative overflow-hidden w-[7.8rem] h-[8.2rem] border-[1.2px] rounded-[1.5625rem] border-[#56A430]"
+                                  className="relative overflow-hidden w-[100%] h-[48%] border-[1.2px] rounded-[1.5625rem] border-[#56A430]"
                                   key={index}
                                 >
                                   <Image
@@ -225,7 +229,7 @@ export const ExploreBySellerGrid = memo(() => {
                                     src={image}
                                     fill
                                   />
-                                  <div className="w-[100%] h-[100%] absolute top-0 bg-[#00000087] flex justify-center items-center text-[#FFF6F4] font-medium text-[2.25rem] uppercase">
+                                  <div className="w-[100%] h-[100%] absolute top-0 bg-[#00000087] flex justify-center items-center text-[#FFF6F4] font-medium  md:text-[1.5rem] xl:text-[2.25rem] uppercase">
                                     {`+${item.productCount}`}
                                   </div>
                                 </div>
@@ -234,7 +238,7 @@ export const ExploreBySellerGrid = memo(() => {
                           }
                           return (
                             <div
-                              className="relative overflow-hidden w-[7.8rem] h-[8.2rem] border-[1.2px] rounded-[1.5625rem] border-[#56A430]"
+                              className="relative overflow-hidden w-[100%] h-[48%] border-[1.2px] rounded-[1.5625rem] border-[#56A430]"
                               key={index}
                             >
                               <Image
@@ -248,21 +252,24 @@ export const ExploreBySellerGrid = memo(() => {
                         })
                       )}
                       {item.products.length === 1 && (
-                        <div className="relative overflow-hidden w-[7.8rem] h-[8.2rem] bg-[#DBD5A4] rounded-[1.5625rem]"></div>
+                        <div className="relative overflow-hidden w-[100%] h-[48%] bg-[#DBD5A4] rounded-[1.5625rem]"></div>
                       )}
                     </div>
+
                   </div>
 
-                  <div className="w-[98%] min-h-[60%] flex flex-col justify-between">
+                  <div className="w-[98%] md:h-[62%] lg:h-[55%] xl:h-[60%] flex flex-col justify-between">
                     {/* Following div consist of Nursery Name and all that */}
-                    <div className="w-[100%] max-h-max border-b-[0.0625rem] flex flex-col gap-[1rem] pb-[1rem] border-[#00000033]">
+                    <div className="w-[100%] md:h-[60%] new-md:h-[65%] xl:h-[60%] border-b-[0.0625rem] flex flex-col justify-between gap-[1rem] md:pb-[0.7rem] xl:pb-[0.5rem] border-[#00000033]">
+
                       {/* Following div consist of Nursery name,distance and address */}
                       <div className="flex flex-col">
-                        <h1 className="text-[#123524] text-[1.5rem] uppercase font-medium">
+                        <h1 className="text-[#123524] md:text-[1.2rem] 2xl:text-[1.5rem] uppercase font-medium">
                           {item.nurseryName}
                         </h1>
                         {/* Following div consist of distance and address */}
-                        <div className="flex flex-wrap text-[1rem] text-[#123524A1] font-medium">
+                        <div className="flex flex-wrap md:text-[0.8rem] 2xl:text-[1rem] text-[#123524A1] font-medium">
+
                           {/* Distance */}
                           <div className="w-[40%] flex items-center gap-[0.5rem]">
                             <div className="relative w-[1rem] h-[1rem]">
@@ -281,11 +288,12 @@ export const ExploreBySellerGrid = memo(() => {
                             <div className="w-[8px] h-[8px] bg-[#123524A1] rounded-full"></div>
                             <span>{item.address}</span>
                           </div>
+
                         </div>
                       </div>
 
                       {/* Following div consist of Nursery Bio */}
-                      <p className="text-[#606060] text-[1rem] font-medium text-justify capitalize">
+                      <p className="text-[#606060] md:text-[0.8rem] 2xl:text-[1rem] font-medium text-justify capitalize">
                         {truncateWords(item.nurseryBio)}
                       </p>
 
@@ -294,7 +302,7 @@ export const ExploreBySellerGrid = memo(() => {
                         {item.specialities.map((speciality, index) => {
                           return (
                             <p
-                              className="min-w-[8.5rem] max-w-max min-h-[2rem] max-h-max rounded-[5.25rem] border-[1.6px] border-[#56A430] p-[0.3rem] flex justify-center items-center text-[#56A430] font-medium text-[1rem]"
+                              className="md:min-w-[7.5rem] 2xl:min-w-[8.5rem] max-w-max min-h-[2rem] max-h-max rounded-[5.25rem] border-[1.6px] border-[#56A430] p-[0.3rem] flex justify-center items-center text-[#56A430] font-medium md:text-[0.8rem] 2xl:text-[1rem]"
                               key={index}
                             >
                               {speciality}
@@ -302,12 +310,13 @@ export const ExploreBySellerGrid = memo(() => {
                           );
                         })}
                       </div>
+
                     </div>
 
                     {/* Following div consist of working hours,buttons and all that */}
-                    <div className="w-[100%] flex flex-col justify-between gap-[1.5rem] ">
+                    <div className="w-[100%] md:h-[40%] new-md:h-[35%] xl:h-[40%] flex flex-col md:justify-between new-md:justify-around lg:justify-start new-xl:justify-between md:gap-[1rem] lg:gap-[1.5rem] md:pt-[0.5rem] lg:pt-[0.7rem] xl:pt-[0.5rem]">
                       {/* Following div consist of business hours and contact number */}
-                      <div className="flex flex-wrap justify-between gap-[0.5rem] text-[1rem] text-[#606060]">
+                      <div className="flex flex-wrap justify-between gap-[0.5rem] md:text-[0.8rem] 2xl:text-[1rem] text-[#606060]">
                         {/* Following div consist of business hours */}
                         <div className="w-max flex justify-start items-center gap-[0.5rem]">
                           <div className="relative w-[1rem] h-[1rem]">
@@ -336,10 +345,10 @@ export const ExploreBySellerGrid = memo(() => {
                       </div>
 
                       {/* Following div consist of rating,view-map and visit store button */}
-                      <div className="w-[100%] flex flex-wrap justify-evenly gap-[1rem] font-[Poppins] font-medium text-[1rem]">
+                      <div className="w-[100%] flex flex-wrap justify-evenly md:gap-[0.5rem] 2xl:gap-[1rem] font-[Poppins] font-medium md:text-[0.7rem] 2xl:text-[1rem]">
                         {/* View Map Button */}
                         <button
-                          className={`w-[10.5rem] h-[2.5rem] rounded-[5.25rem] border-[1.6px] border-[#56A430] bg-[#fff] flex justify-center items-center gap-[0.5rem] text-[#56A430] uppercase`}
+                          className={`md:w-[7rem] md:h-[2.2rem] 2xl:w-[10.5rem] 2xl:h-[2.5rem] rounded-[5.25rem] border-[1.6px] border-[#56A430] bg-[#fff] flex justify-center items-center gap-[0.5rem] text-[#56A430] uppercase`}
                         >
                           <div className="relative w-[1.3rem] h-[1.3rem]">
                             <Image
@@ -353,7 +362,7 @@ export const ExploreBySellerGrid = memo(() => {
                         </button>
 
                         {/* Visit Store Button */}
-                        <button className="w-[10.5rem] h-[2.5rem] rounded-[5.25rem] border-[1.6px] border-[#56A430] bg-[#56A430] flex justify-center items-center gap-[0.5rem] text-[#fff] uppercase shadow-lg">
+                        <button className="md:w-[7rem] md:h-[2.2rem] 2xl:w-[10.5rem] 2xl:h-[2.5rem] rounded-[5.25rem] border-[1.6px] border-[#56A430] bg-[#56A430] flex justify-center items-center gap-[0.5rem] text-[#fff] uppercase shadow-lg">
                           <p>Visit Store</p>
                           <div className="relative w-[0.6rem] h-[0.6rem]">
                             <Image
@@ -366,8 +375,8 @@ export const ExploreBySellerGrid = memo(() => {
                         </button>
 
                         {/* Rating */}
-                        <div className="w-[6.5rem] h-[2.5rem] rounded-[5.25rem] bg-[#123524] text-[#fff] text-[1rem] font-medium uppercase flex justify-center items-center gap-[0.5rem]">
-                          <div className="relative w-[1rem] h-[1rem]">
+                        <div className="md:w-[6rem] md:h-[2.2rem] 2xl:w-[6.5rem] 2xl:h-[2.5rem] rounded-[5.25rem] bg-[#123524] text-[#fff] md:text-[0.8rem] 2xl:text-[1rem] font-medium uppercase flex justify-center items-center gap-[0.5rem]">
+                          <div className="relative md:w-[0.8rem] md:h-[0.8rem] 2xl:w-[1rem] 2xl:h-[1rem]">
                             <Image
                               alt="rating"
                               src="/assets/images/ProductImages/rating.svg"
@@ -378,7 +387,9 @@ export const ExploreBySellerGrid = memo(() => {
                         </div>
                       </div>
                     </div>
+
                   </div>
+
                 </div>
               </div>
             );
@@ -388,7 +399,7 @@ export const ExploreBySellerGrid = memo(() => {
         {/* Button that loads more seller data */}
         <div className="w-[100%] flex justify-center items-center">
           <button
-            className={`w-[14.875rem] h-[4.0625rem] rounded-[5.25rem] border-[1.6px] border-[#56A430] bg-[#FFFFFF] text-[#697F75] text-[1.22669rem] font-medium uppercase font-[Poppins] ${disableLoadMoreSellers ? "cursor-not-allowed" : "cursor-pointer"}`}
+            className={`md:w-[12rem] md:h-[3.5rem] 2xl:w-[14.875rem] 2xl:h-[4.0625rem] rounded-[5.25rem] border-[1.6px] border-[#56A430] bg-[#FFFFFF] text-[#697F75] md:text-[1rem] 2xl:text-[1.22669rem] font-medium uppercase font-[Poppins] ${disableLoadMoreSellers ? "cursor-not-allowed" : "cursor-pointer"}`}
             onClick={handleLoadMoreSellerData}
             disabled={disableLoadMoreSellers}
           >

@@ -1,15 +1,15 @@
 "use client";
+import { Cart } from "./cart";
+import { WishList } from "./wishlist";
 import { SearchSort } from "./search-sort";
 import { HeaderSection } from "./header-section";
-import { SingleProductCard } from "./single-product-card";
-import { Cart } from "./cart";
 import { MobileNavBar } from "./mobile-navbar";
-import { WishList } from "./wishlist";
 import {
   useAddToCartVisibilityStore,
   useWishListVisibilityStore,
   useChangeMobileNavbarVisibility,
 } from "@repo/shared-store";
+import { SingleProductCard } from "./single-product-card";
 
 export const SingleProductPage = () => {
   const addToCartVisibility = useAddToCartVisibilityStore(
@@ -28,11 +28,11 @@ export const SingleProductPage = () => {
       <Cart />
       <WishList />
       <MobileNavBar />
-      <HeaderSection singleProduct={true} isLanding={false} />
+      <HeaderSection singleProduct={true} isLanding={false}/>
       {/* Search Input, Search & Sort Button */}
-      <div className="w-[87%] flex flex-col gap-[1rem]">
+      <div className="md:w-[90%] xl:w-[87%] 2xl:w-[87%] flex flex-col gap-[2rem]">
         <SearchSort />
-        <SingleProductCard />
+        <SingleProductCard/>
       </div>
     </div>
   );

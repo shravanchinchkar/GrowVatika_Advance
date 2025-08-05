@@ -527,7 +527,7 @@ export const BusinessInfoCard = memo(
           )}
 
           {/* Nursery Specialties Section */}
-          <div className="flex flex-wrap gap-[1rem] mt-2 text-[1.2rem] ">
+          <div className="flex flex-wrap gap-[1rem] mt-2 text-[1.2rem]">
             {/* Display Seller Specialties */}
             {sepcialties.length > 0 &&
               sepcialties.map((specialty: string, index: number) => {
@@ -577,12 +577,14 @@ export const BusinessInfoCard = memo(
                 Add more
               </span>
             </button>
-
-            {/* Specialties Options */}
-            {enableEditing && (
-              <MultiSelect options={Options} placeholder="Choose Specialties" />
-            )}
           </div>
+
+          {/* Specialties Options */}
+          {enableEditing && (
+            <div className="w-[25%] mt-[2rem]">
+              <MultiSelect options={Options} placeholder="Choose Specialties" />
+            </div>
+          )}
         </div>
       </form>
     );

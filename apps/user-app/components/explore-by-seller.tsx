@@ -49,9 +49,9 @@ export const ExplorePlantsBySeller = () => {
         </p>
       </div>
 
-      <div className="new-sm:hidden md:flex new-sm:w-[100%]  md:w-[90%] h-max mt-[3rem] flex-col gap-[3rem] items-center mx-auto">
+      <div className="new-sm:hidden md:flex new-sm:w-[100%] md:w-[90%] h-max mt-[3rem] flex-col gap-[3rem] items-center mx-auto">
         {/* Heading of  Eplore by seller */}
-        <h1 className="w-[80%] uppercase text-center text-[#123524] font-[Unbounded] md:text-[1.5rem] lg:text-[2rem] xl:text-[2.25rem]">
+        <h1 className="w-[80%] uppercase text-center text-[#123524] font-[Unbounded] md:text-[1.7rem] lg:text-[2rem] xl:text-[2.25rem]">
           Explore by Sellers – Discover Nurseries Near You!
         </h1>
 

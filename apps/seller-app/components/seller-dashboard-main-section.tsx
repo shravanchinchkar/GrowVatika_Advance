@@ -75,6 +75,7 @@ export const SellerDashboardMainSection = memo(() => {
             error
           );
           toast.error("Failed to fetch seller data", toastStyle);
+          setLoading(false);
         }
       };
       fetchData();

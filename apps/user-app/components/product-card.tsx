@@ -35,7 +35,7 @@ export const ProductCard = memo(
       <Link
         href={`/product?id=${id}`}
         key={id}
-        className="md:w-[15rem] md:h-[25rem] new-md:w-[18rem] new-md:h-[29rem] flex flex-col items-center flex-shrink-0 rounded-[1.25rem] bg-white font-[Poppins] overflow-hidden new-md:justify-self-center xl:justify-self-end cursor-pointer shadow-productcard-custom-boxShadow"
+        className="md:w-[15rem] md:h-[25rem] new-md:w-[17rem] lg:w-[18rem] new-md:h-[28rem] flex flex-col items-center flex-shrink-0 rounded-[1.25rem] bg-white font-[Poppins] overflow-hidden new-md:justify-self-center xl:justify-self-start 2xl:justify-self-center   cursor-pointer shadow-productcard-custom-boxShadow"
       >
         {/* Product Image */}
         <div
@@ -125,7 +125,7 @@ export const ProductCard = memo(
           </div>
 
           {/* Add to Cart Button */}
-          <button className="md:w-[100%] md:h-[2.8rem] new-md:w-[16.5rem] new-md:h-[3.19744rem] bg-[#56A430] rounded-[0.625rem] flex items-center justify-center gap-2 hover:bg-[#213E12] text-white md:text-[1.1rem] new-md:text-[1.22669rem] font-medium text-center">
+          <button className="md:w-[100%] md:h-[2.8rem] new-md:h-[3.19744rem] bg-[#56A430] rounded-[0.625rem] flex items-center justify-center gap-2 hover:bg-[#213E12] text-white md:text-[1.1rem] new-md:text-[1.22669rem] font-medium text-center">
             <div className="relative w-[1.53806rem] h-[1.50469rem] flex-shrink-0">
               <Image
                 src="/assets/images/ExploreImages/shopping-cart.svg"

@@ -25,7 +25,7 @@ export const ProductFilterSection = memo(() => {
 
   // h-[77.125rem]
   return (
-    <div className="md:w-[28%] xl:w-[23%] lg:h-[103rem] xl:h-[72rem] pl-[2rem] pr-[1rem] py-[1rem] font-[Poppins] bg-white md:rounded-[1.25rem] xl:rounded-l-[1.25rem] overflow-y-auto [&::-webkit-scrollbar]:w-2 [&::-webkit-scrollbar]:h-[100%] [&::-webkit-scrollbar-track]:bg-[#fff] [&::-webkit-scrollbar-thumb]:bg-[#697F75] shadow-productcard-custom-boxShadow">
+    <div className="md:w-[28%] new-xl:w-[23%] md:h-[90rem] new-md:h-[100rem] lg:h-[100rem] new-xl:h-[72rem] pl-[2rem] pr-[1rem] py-[1rem] font-[Poppins] bg-white md:rounded-[1.25rem] xl:rounded-l-[1.25rem] overflow-y-auto [&::-webkit-scrollbar]:w-2 [&::-webkit-scrollbar]:h-[100%] [&::-webkit-scrollbar-track]:bg-[#fff] [&::-webkit-scrollbar-thumb]:bg-[#697F75] shadow-productcard-custom-boxShadow">
       {/* Filter Top Section */}
       <div className="flex justify-between items-center">
         <div className="lg:text-[1.2rem] xl:text-[1.5rem] font-medium">Filter</div>

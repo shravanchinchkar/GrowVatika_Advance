@@ -57,8 +57,9 @@ export const HeaderSection = memo(
               <LikeProductIcon />
             )}
           </div>
+
           <div className="new-sm:hidden md:flex items-center md:gap-[1rem] xl:gap-[1.5rem]">
-            <div className="new-sm:hidden md:block">
+            <div className="new-sm:hidden lg:block">
               <UserProfileIcon />
             </div>
             {(explore || explorebyseller || singleProduct) && (

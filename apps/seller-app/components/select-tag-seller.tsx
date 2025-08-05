@@ -41,7 +41,6 @@ export const SelectTagSeller = memo(
     };
 
     const handleSelect = (selectedValue: string) => {
-      console.log("selected value:", value);
       onChange(selectedValue);
       setOpenDropdown(null); // Close dropdown after selection
     };

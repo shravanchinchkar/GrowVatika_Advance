@@ -278,12 +278,12 @@ export const ProductCatalogGrid = memo(() => {
     return (
       <div className="w-[100%] flex flex-col gap-[1rem] pb-[1rem]">
         {/* Count of the products */}
-        <div className="w-max md:text-[1.2rem] lg:text-[1.5rem] xl:text-[2rem] text-[#000] ml-[1.5rem] font-semibold">
+        <div className="w-max md:text-[1.2rem] new-md:text-[1.5rem] lg:text-[1.5rem] xl:text-[2rem] text-[#000] 2xl:ml-[1.3rem] font-semibold">
           {`${productState.totalProductsCount} Products Available`}
         </div>
 
         {/* Product Card  */}
-        <div className="min-h-[60rem] max-h-max grid md:grid-cols-2 xl:grid-cols-3 gap-8">
+        <div className="min-h-[60rem] max-h-max grid md:grid-cols-2 new-xl:grid-cols-3 gap-8">
           {productState.productsData.map((item: SellerProductData) => {
             return (
               <ProductCard

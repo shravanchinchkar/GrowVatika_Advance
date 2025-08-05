@@ -59,7 +59,7 @@ export const ExploreProductCatalogSection = () => {
           {/* Sidebar */}
           <ProductFilterSection />
 
-          <div className="md:w-[70%] xl:w-[75%]">
+          <div className="md:w-[70%] xl:w-[68%] new-xl:w-[75%]">
             {/* Filter Tags and Clear all button*/}
             {filter.length > 0 && (
               <div className="max-w-max min-w-[80%] flex flex-wrap items-center justify-between mb-[1rem]">
@@ -106,6 +106,7 @@ export const ExploreProductCatalogSection = () => {
             <ProductCatalogGrid />
           </div>
         </div>
+
       </div>
 
       <footer>

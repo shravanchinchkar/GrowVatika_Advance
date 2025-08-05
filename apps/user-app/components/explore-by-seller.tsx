@@ -33,7 +33,7 @@ export const ExplorePlantsBySeller = () => {
 
   return (
     <div
-      className={`min-h-screen relative flex flex-col bg-[#FFF6F4] font-[Poppins] ${(addToCartVisibility || wishListVisibility || MobileNavbarVisibility || userProfileVisibility) && "h-[100vh] overflow-hidden"}`}
+      className={`min-h-screen relative flex flex-col  bg-[#FFF6F4] font-[Poppins] ${(addToCartVisibility || wishListVisibility || MobileNavbarVisibility || userProfileVisibility) && "h-[100vh] overflow-hidden"}`}
     >
       <Cart />
       <WishList />
@@ -49,7 +49,7 @@ export const ExplorePlantsBySeller = () => {
         </p>
       </div>
 
-      <div className="new-sm:hidden md:flex new-sm:w-[100%] md:w-[90%] h-max mt-[3rem] flex-col gap-[3rem] items-center mx-auto">
+      <div className="new-sm:hidden md:flex new-sm:w-[100%] md:w-[90%] mt-[3rem] flex-col gap-[3rem] items-center mx-auto">
         {/* Heading of  Eplore by seller */}
         <h1 className="w-[80%] uppercase text-center text-[#123524] font-[Unbounded] md:text-[1.7rem] lg:text-[2rem] xl:text-[2.25rem]">
           Explore by Sellers – Discover Nurseries Near You!
@@ -87,6 +87,7 @@ export const ExplorePlantsBySeller = () => {
       <div className="new-sm:hidden md:block">
         <Footer />
       </div>
+
     </div>
   );
 };

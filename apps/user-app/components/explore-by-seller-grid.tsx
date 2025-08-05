@@ -121,7 +121,7 @@ export const ExploreBySellerGrid = memo(() => {
     );
   } else {
     if (state.loading) {
-      return <Skeleton className="w-[100%] flex justify-center items-center" />;
+      return <Skeleton className="w-[100%] h-[100%] flex justify-center items-center" />;
     }
     return (
       // Nursery Seller Card Start from here
@@ -136,7 +136,7 @@ export const ExploreBySellerGrid = memo(() => {
                 {/* Following is the nursery card! */}
                 <div className="md:w-[95%] xl:w-[80%] new-xl:w-[95%] md:h-[40rem] lg:h-[45rem] 2xl:h-[50rem] shadow-[0px_0px_25px_-11px_rgba(0,0,0,0.25)] flex flex-col items-center md:gap-[0.5rem] xl:gap-[1rem] shrink-0 bg-[#fff] rounded-[1.8rem] md:p-[0.5rem] xl:p-[1rem] outline-none border-[1.2px] border-[#56A430]">
                   {/* Following is the image div */}
-                  <div className="w-[98%] md:h-[35%] lg:h-[40%] flex justify-between">
+                  <div className="w-[98%] md:h-[35%] new-md:h-[40%] flex justify-between">
                     {/* Nursery profile Photo */}
                     <div
                       className={`relative w-[60%] h-[100%] rounded-[1.5625rem] overflow-hidden ${item.profilePictureURL && "border-[1.2px] border-[#56A430]"}`}
@@ -248,7 +248,7 @@ export const ExploreBySellerGrid = memo(() => {
                     </div>
                   </div>
 
-                  <div className="w-[98%] md:h-[65%] lg:h-[60%] flex flex-col justify-between">
+                  <div className="w-[98%] md:h-[65%] new-md:h-[60%] flex flex-col justify-between">
                     {/* Following div consist of Nursery Name and all that */}
                     <div className="w-[100%] md:h-[60%] xl:h-[65%] new-xl:h-[70%] border-b-[0.0625rem] flex flex-col justify-around gap-[1rem] border-[#00000033] pb-[1.5rem]">
                       {/* Following div consist of Nursery name,distance and address */}

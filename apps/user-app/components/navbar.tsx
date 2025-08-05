@@ -9,7 +9,7 @@ export const Navbar = memo(() => {
     },
     {
       name: "Collection",
-      path: "",
+      path: "#",
     },
     {
       name: "Offers",

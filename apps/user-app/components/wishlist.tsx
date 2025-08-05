@@ -71,11 +71,12 @@ export const WishList = memo(() => {
   if (wishListVisibility === true) {
     return (
       <div className="z-50 absolute top-0 w-[100%] min-h-screen max-h-max bg-black bg-opacity-10 flex justify-center">
-        <div className="new-sm:w-[95%] new-sm:h-max md:w-[82.1875rem] md:h-[41rem] font-[Poppins] bg-white rounded-[1.25rem] shadow-2xl mx-auto my-[1rem] overflow-hidden pb-[1rem] animate-slide-in-right">
+
+        <div className="new-sm:w-[95%] new-sm:h-max md:w-[65%] lg:w-[90%] md:h-[90%] font-[Poppins] bg-white rounded-[1.25rem] shadow-2xl mx-auto my-[1rem] overflow-hidden pb-[1rem] animate-slide-in-right">
           {/* Wishlist header section */}
           <div className="w-[100%] py-[1rem] flex justify-between items-center border-b-[0.0625rem] border-[#00000033]">
             {/* Wishlist title */}
-            <div className="new-sm:w-[85%] new-sm-1:w-[100%] md:w-[100%] h-[100%] flex justify-center items-center new-sm:gap-[0.5rem] md:gap-[1rem]">
+            <div className="new-sm:w-[85%] new-sm-1:w-[100%] md:w-[90%] h-[100%] flex justify-center items-center new-sm:gap-[0.5rem] md:gap-[1rem]">
               <div className="relative new-sm:w-[1.5rem] new-sm:h-[1.5rem] new-sm-1:w-[1.875rem] new-sm-1:h-[1.875rem]">
                 <Image
                   src="/assets/images/WishListImages/wishListIcon.svg"
@@ -90,7 +91,7 @@ export const WishList = memo(() => {
 
             {/* Cancel Icon */}
             <button
-              className="new-sm:w-[15%] new-sm-1:w-[10%] md:w-[5%] flex justify-center new-sm:pr-[0.5rem] new-sm-1:pr-[1rem] md:pr-0"
+              className="new-sm:w-[15%] new-sm-1:w-[10%] md:w-[10%] lg:w-[5%] flex justify-center new-sm:pr-[0.5rem] new-sm-1:pr-[1rem] md:pr-[1rem]"
               onClick={handleWishListVisibility}
             >
               <div className="relative new-sm:w-[1rem] new-sm:h-[1rem] new-sm-1:w-[1.2rem] new-sm-1:h-[1.2rem] md:w-[1.5rem] md:h-[1.5rem]">
@@ -112,17 +113,17 @@ export const WishList = memo(() => {
             </div>
 
             {/* Items section */}
-            <div className="w-[100%] h-[26.5rem] grid sm:grid-cols-2 lg:grid-cols-3 mt-[0.5rem] gap-y-[1rem] justify-items-center pb-[1rem] border-b-[0.0625rem] border-[#00000033] overflow-y-auto [&::-webkit-scrollbar]:w-2 [&::-webkit-scrollbar-track]:bg-[#fff] [&::-webkit-scrollbar-thumb]:bg-[#697F75] px-[1rem]">
+            <div className="w-[100%] h-[26.5rem] grid md:grid-cols-1 lg:grid-cols-2 2xl:grid-cols-3 mt-[0.5rem] gap-y-[1rem] justify-items-center pb-[1rem] border-b-[0.0625rem] border-[#00000033] overflow-y-auto [&::-webkit-scrollbar]:w-2 [&::-webkit-scrollbar-track]:bg-[#fff] [&::-webkit-scrollbar-thumb]:bg-[#697F75] px-[1rem]">
               {wishlistItems.map((item, index) => (
                 <div
                   key={index}
-                  className="new-sm:w-[100%] new-sm:h-[9.4rem] new-sm-2:h-[10rem] md:w-[95%] md:h-[12.1875rem] bg-[#EDE7E4] rounded-[1.25rem] flex flex-col justify-center items-center md:gap-[0.5rem] new-sm:p-[0.2rem] md:p-[0.5rem]"
+                  className="new-sm:w-[100%] new-sm:h-[9.4rem] new-sm-2:h-[10rem] md:w-[95%] lg:w-[95%] md:h-[12.1875rem] bg-[#EDE7E4] rounded-[1.25rem] flex flex-col justify-center items-center md:gap-[0.5rem] new-sm:p-[0.2rem] md:p-[0.5rem]"
                 >
                   <div className="w-[95%] new-sm:h-[87%] md:h-[92%] flex flex-col justify-between">
                     {/* Product Data */}
                     <div className="w-[100%] flex justify-between gap-[1rem]">
                       {/* Product Image */}
-                      <div className="flex justify-center items-start ">
+                      <div className="flex justify-center items-start">
                         <div className="relative new-sm:w-[5.2rem] new-sm:h-[4.6rem] new-sm-1:w-[6.52188rem] new-sm-1:h-[5.26769rem] new-sm-2:w-[6.9rem] new-sm-2:h-[5.7rem] md:w-[8.125rem] md:h-[6.5625rem] rounded-[1.25rem] border-[1.6px] border-white overflow-hidden">
                           <Image
                             className="object-cover"
@@ -197,7 +198,7 @@ export const WishList = memo(() => {
             </div>
 
             {/* Go to Your Cart section */}
-            <button className="new-sm:w-[90%] new-sm:h-[3.0625rem] md:w-[73.625rem] md:h-[3.1875rem] mt-[0.5rem] bg-[#1A9AEF] hover:bg-[#0F5889] rounded-[0.625rem] flex justify-center items-center">
+            <button className="new-sm:w-[90%] new-sm:h-[3.0625rem] md:w-[90%] md:h-[3.1875rem] mt-[0.5rem] bg-[#1A9AEF] hover:bg-[#0F5889] rounded-[0.625rem] flex justify-center items-center">
               <p className="new-sm:text-[1rem] md:text-[1.22669rem] text-white">
                 Go to Your Cart
               </p>

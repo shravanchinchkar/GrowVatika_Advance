@@ -15,7 +15,6 @@ BE FINAL YEAR PROJECT
 
 - Turborepo
 - NEXT.js
-- NextAuth for user Validation
 - React Email to create email template
 - Resend to send verification mail
 - googleapi's for storing data in google sheets
@@ -26,10 +25,7 @@ BE FINAL YEAR PROJECT
 - Zustand for state management
 - Cloudinary for image upload and storage
 
-
 ## Following are the live links of the project
+
 - GrowVatika-userapp: [growvatika.live](https://growvatika.live/)
 - GrowVatika-sellerapp: [seller.growvatika.live](https://seller.growvatika.live/)
-
-
-

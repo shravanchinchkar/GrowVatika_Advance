@@ -9,7 +9,7 @@ export async function successfulCollaboration(
   registrationDate: string,
   email: string,
   verifyCode: string,
-  verificationURL?: string
+  verificationURL: string
 ): Promise<ApiResponseType> {
   try {
     const { data, error } = await resend.emails.send({

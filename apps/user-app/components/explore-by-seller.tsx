@@ -15,6 +15,7 @@ import {
   useWishListVisibilityStore,
 } from "@repo/shared-store";
 import { ProductSearchBar, SearchBarWorkType } from "./product-search-bar";
+import { LikeProductIcon } from "./like-product-icon";
 
 export const ExplorePlantsBySeller = () => {
   const productPageButton = ["Most Popular", "Newly Added", "NearBy Seller"];
@@ -33,7 +34,7 @@ export const ExplorePlantsBySeller = () => {
 
   return (
     <div
-      className={`min-h-screen relative flex flex-col  bg-[#FFF6F4] font-[Poppins] ${(addToCartVisibility || wishListVisibility || MobileNavbarVisibility || userProfileVisibility) && "h-[100vh] overflow-hidden"}`}
+      className={`min-h-screen relative flex flex-col bg-[#FFF6F4] font-[Poppins] ${(addToCartVisibility || wishListVisibility || MobileNavbarVisibility || userProfileVisibility) && "h-[100vh] overflow-hidden"}`}
     >
       <Cart />
       <WishList />
@@ -41,27 +42,30 @@ export const ExplorePlantsBySeller = () => {
       <UserProfilePopUp />
       <HeaderSection explorebyseller={true} isLanding={true} />
 
-      {/* Following is the temporary message shown till the mobile view is readey */}
-      <div className="new-sm:flex md:hidden w-[100%] h-[20rem]  justify-center items-center">
-        <p className="w-[90%] text-center">
-          🚧Mobile View Under Construction🚧, Please view throught Laptop or
-          desktop for better experience
-        </p>
-      </div>
-
-      <div className="new-sm:hidden md:flex new-sm:w-[100%] md:w-[90%] mt-[3rem] flex-col gap-[3rem] items-center mx-auto">
+      <div className="flex new-sm:w-[100%] md:w-[90%] md:mt-[3rem] flex-col new-sm:gap-[1rem] md:gap-[3rem] items-center mx-auto">
         {/* Heading of  Eplore by seller */}
-        <h1 className="w-[80%] uppercase text-center text-[#123524] font-[Unbounded] md:text-[1.7rem] lg:text-[2rem] xl:text-[2.25rem]">
-          Explore by Sellers – Discover Nurseries Near You!
+        <h1 className="new-sm:w-[100%] md:w-[80%] uppercase text-center text-[#123524] new-sm:font-[Poppins] md:font-[Unbounded] new-sm:text-[0.9375rem] new-sm-3:text-[1rem] sm:text-[1.2rem] md:text-[1.7rem] lg:text-[2rem] xl:text-[2.25rem] font-medium new-sm:flex new-sm:flex-row justify-between md:block">
+          <div className="w-[100%] flex flex-col items-center pl-[1rem]">
+            <span className="new-sm:font-bold md:font-medium">
+              Explore by Sellers –
+            </span>{" "}
+            Discover Nurseries Near You!
+          </div>
+          <div className="new-sm:block md:hidden">
+            <LikeProductIcon />
+          </div>
         </h1>
 
         {/* Button and Search Bar */}
-        <div className="w-[100%] md:h-[3.5rem] lg:h-[3.7rem] flex items-center">
+        <div className="new-sm:w-[100%] sm:w-[75%] md:h-[3.5rem] lg:h-[3.7rem] flex new-sm:flex-col md:flex-row items-center new-sm:gap-[1rem] md:gap-0 ">
           {/* Buttons of the product pages */}
-          <div className="w-[70%] h-[100%] flex gap-[1.5rem] justify-end">
+          <div className="new-sm:w-[95%] new-sm-1:w-[95%] md:w-[70%] h-[100%] flex new-sm:gap-[1rem] md:gap-[1.5rem] new-sm:justify-around sm:justify-between md:justify-end">
             {productPageButton.map((b, index) => {
               return (
-                <div className="md:w-[8rem] lg:w-[11rem] xl:w-[12.09619rem] h-[100%]" key={index}>
+                <div
+                  className="new-sm:w-[6.96606rem] new-sm:h-[2.42138rem] sm:w-[8.9rem] sm:h-[2.8rem] md:w-[8rem] md:h-[100%] lg:w-[11rem] xl:w-[12.09619rem]"
+                  key={index}
+                >
                   <ProductPageButton
                     uniqueId={index.toString()}
                     buttonName={b}
@@ -70,13 +74,14 @@ export const ExplorePlantsBySeller = () => {
               );
             })}
           </div>
+
           {/* Search bar*/}
-          <div className="w-[30%] md:h-[90%] lg:h-[100%] flex justify-end">
+          <div className="w-[100%] md:w-[30%] md:h-[90%] lg:h-[100%] flex new-sm:justify-center md:justify-end">
             <ProductSearchBar
               placeholder="Find by city"
-              parentClassName="w-[90%] md:h-[100%] 2xl:h-[100%]"
+              parentClassName="new-sm:w-[95%] new-sm:h-[2.4375rem] md:w-[90%] md:h-[100%] 2xl:h-[100%]"
               searchInputClassName="w-[90%] md:text-[0.8rem] lg:text-[1.1rem] xl:text-[1.22669rem] pl-[1rem]"
-              searchButtonClassName="md:w-[35%] lg:w-[25%]"
+              searchButtonClassName="new-sm:w-[20%] md:w-[35%] lg:w-[25%]"
             />
           </div>
         </div>
@@ -84,10 +89,7 @@ export const ExplorePlantsBySeller = () => {
         <ExploreBySellerGrid />
       </div>
 
-      <div className="new-sm:hidden md:block">
-        <Footer />
-      </div>
-
+      <Footer />
     </div>
   );
 };

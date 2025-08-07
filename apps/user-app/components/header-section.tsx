@@ -49,13 +49,10 @@ export const HeaderSection = memo(
       >
         <div className="new-sm:w-[100%] md:w-[96.5%] h-max flex justify-between new-sm:items-start md:items-center">
           <HeaderSectionOne isLanding={isLanding}/>
-          <div className="flex new-sm:flex-col md:hidden items-center new-sm:gap-[0.3rem] new-sm-1:gap-[0.3rem] md:gap-0">
+          <div className="flex new-sm:flex-col justify-between md:hidden items-center new-sm:gap-[0.6rem] md:gap-0">
             <ShoppingCartIcon />
             <Hamburg />
             <UserProfileIcon />
-            {(explore || explorebyseller || singleProduct) && (
-              <LikeProductIcon />
-            )}
           </div>
 
           <div className="new-sm:hidden md:flex items-center md:gap-[1rem] xl:gap-[1.5rem]">

@@ -52,10 +52,10 @@ export const SellerDataSchema = zod
     }
   );
 
-  
 export type SellerData = zod.infer<typeof SellerDataSchema>;
 
 export type TExploreBySellerData = SellerData & {
   products: string[];
   productCount: number;
+  id: string;
 };

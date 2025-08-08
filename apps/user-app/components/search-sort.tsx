@@ -15,7 +15,7 @@ export const SearchSort = memo(() => {
     /* Search Input, Search button & Sort Button */
   }
   return (
-    <div className="w-[100%] h-[3.0625rem] z-10 flex justify-between items-center">
+    <div className="new-sm:hidden md:flex w-[100%] h-[3.0625rem] z-10 justify-between items-center">
       <ProductSearchBar
         placeholder="Find your Plants, Pots, Tools..."
         parentClassName="w-[72%] h-[100%]"

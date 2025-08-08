@@ -28,7 +28,7 @@ export const SingleProductPage = () => {
       <Cart />
       <WishList />
       <MobileNavBar />
-      <HeaderSection singleProduct={true} isLanding={false}/>
+      <HeaderSection singleProduct={true} isExplore={false}/>
       {/* Search Input, Search & Sort Button */}
       <div className="md:w-[90%] xl:w-[87%] 2xl:w-[87%] flex flex-col gap-[2rem]">
         <SearchSort />

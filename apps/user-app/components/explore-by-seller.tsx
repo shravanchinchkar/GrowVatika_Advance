@@ -5,6 +5,7 @@ import { WishList } from "./wishlist";
 import { Footer } from "./footer-section";
 import { MobileNavBar } from "./mobile-navbar";
 import { HeaderSection } from "./header-section";
+import { LikeProductIcon } from "./like-product-icon";
 import { UserProfilePopUp } from "./user-profile-popup";
 import { ProductPageButton } from "./product-page-button";
 import { ExploreBySellerGrid } from "./explore-by-seller-grid";
@@ -14,8 +15,7 @@ import {
   useUserProfileVisibilityStore,
   useWishListVisibilityStore,
 } from "@repo/shared-store";
-import { ProductSearchBar, SearchBarWorkType } from "./product-search-bar";
-import { LikeProductIcon } from "./like-product-icon";
+import { ProductSearchBar } from "./product-search-bar";
 
 export const ExplorePlantsBySeller = () => {
   const productPageButton = ["Most Popular", "Newly Added", "NearBy Seller"];
@@ -34,22 +34,22 @@ export const ExplorePlantsBySeller = () => {
 
   return (
     <div
-      className={`min-h-screen relative flex flex-col bg-[#FFF6F4] font-[Poppins] ${(addToCartVisibility || wishListVisibility || MobileNavbarVisibility || userProfileVisibility) && "h-[100vh] overflow-hidden"}`}
+      className={`min-h-screen relative flex flex-col justify-between bg-[#FFF6F4] font-[Poppins] ${(addToCartVisibility || wishListVisibility || MobileNavbarVisibility || userProfileVisibility) && "h-[100vh] overflow-hidden"}`}
     >
       <Cart />
       <WishList />
       <MobileNavBar />
       <UserProfilePopUp />
-      <HeaderSection explorebyseller={true} isLanding={true} />
+      <HeaderSection explorebyseller={true} isExplore={true} />
 
       <div className="flex new-sm:w-[100%] md:w-[90%] md:mt-[3rem] flex-col new-sm:gap-[1rem] md:gap-[3rem] items-center mx-auto">
         {/* Heading of  Eplore by seller */}
-        <h1 className="new-sm:w-[100%] md:w-[80%] uppercase text-center text-[#123524] new-sm:font-[Poppins] md:font-[Unbounded] new-sm:text-[0.9375rem] new-sm-3:text-[1rem] sm:text-[1.2rem] md:text-[1.7rem] lg:text-[2rem] xl:text-[2.25rem] font-medium new-sm:flex new-sm:flex-row justify-between md:block">
-          <div className="w-[100%] flex flex-col items-center pl-[1rem]">
+        <h1 className="relative new-sm:w-[100%] md:w-[80%] uppercase text-center text-[#123524] new-sm:font-[Poppins] md:font-[Unbounded]  new-sm:text-[0.85rem] new-sm-1:text-[0.9375rem] new-sm-3:text-[1rem] sm:text-[1.2rem] md:text-[1.7rem] lg:text-[2rem] xl:text-[2.25rem] font-medium new-sm:flex justify-between md:block">
+          <div className="new-sm:w-[90%] md:w-[100%] new-sm:flex flex-col items-center md:block new-sm:pl-[2rem] md:pl-0">
             <span className="new-sm:font-bold md:font-medium">
               Explore by Sellers –
             </span>{" "}
-            Discover Nurseries Near You!
+            <span>Discover Nurseries Near You!</span>
           </div>
           <div className="new-sm:block md:hidden">
             <LikeProductIcon />

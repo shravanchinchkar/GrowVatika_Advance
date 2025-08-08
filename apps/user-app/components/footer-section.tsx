@@ -1,4 +1,5 @@
 import { memo } from "react";
+import Link from "next/link";
 import Image from "next/image";
 import { SiteLogo } from "@repo/ui/brand-logo";
 
@@ -33,7 +34,6 @@ export const Footer = memo(() => {
 
       {/* Following is the right footer div */}
       <div className="new-sm:w-[100%] md:w-[66rem] new-sm:pt-[0.5rem] md:pt-0">
-
         <div className="flex justify-around new-sm:pt-0  font-[Poppins] new-sm:border-b-[0.01675rem] md:border-b-[2px] border-[#123524] new-sm:pb-[0.5rem] new-sm:pl-[0.5rem] md:pl-0 md:py-[2.5rem]">
           {/* Following is the div 1 */}
           <div className="new-sm:w-[90%] md:w-max flex flex-col new-sm:gap-[0.2rem] md:gap-[1rem] md:justify-self-start lg:justify-self-center">
@@ -84,7 +84,6 @@ export const Footer = memo(() => {
                 </div>
 
                 <div className="flex new-sm:gap-[0.4rem] md:gap-[0.5rem] lg:gap-[1rem] items-center">
-
                   <div className="relative new-sm:w-[0.52144rem] new-sm:h-[0.52144rem] new-sm-2:w-[0.8rem] new-sm-2:h-[0.8rem] md:w-[1rem] md:h-[1rem] lg:w-[1.2rem] lg:h-[1.2rem] xl:w-[1.5625rem] xl:h-[1.5rem]">
                     <Image
                       className="object-cover"
@@ -102,6 +101,24 @@ export const Footer = memo(() => {
             {/* Following div consist of Social-Media Account Icons */}
             <div className="flex new-sm:gap-[0.5rem] md:gap-[1rem]">
               {SocialIcons.map((item, index) => {
+                if (index === 2) {
+                  return (
+                    <Link
+                      href={"https://www.instagram.com/growvatikaofficial/"}
+                      target="_blank"
+                      key={index}
+                      className="relative new-sm:w-[0.52144rem] new-sm:h-[0.52144rem] md:w-[1rem] md:h-[1rem] lg:w-[1.2rem] lg:h-[1.2rem] xl:w-[1.5625rem] xl:h-[1.5rem] cursor-pointer"
+                    >
+                      <Image
+                        className="object-cover"
+                        src={item}
+                        alt="facebook"
+                        fill
+                        sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 25vw"
+                      />
+                    </Link>
+                  );
+                }
                 return (
                   <div
                     key={index}

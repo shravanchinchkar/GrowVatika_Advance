@@ -70,13 +70,11 @@ export const ContactForm = memo(() => {
 
   return (
     <div
-      className={`new-sm:w-[100%] new-sm:h-[4.9375rem] new-sm-3:h-[6rem] md:w-[45rem] lg:w-[60rem] xl:w-[75rem] 
-        2xl:w-[82rem] flex flex-col items-center m-auto bg-contact-form new-sm-3:pt-[0.3rem] sm:pt-[2rem] md:pt-[1rem] md:pb-[1rem] 
-        relative rounded-none sm:rounded-[28px] ${displayForm ? "sm:h-[40rem] gap-[2rem]" : "sm:h-[12.8125rem] new-sm:gap-[0.5rem] md:gap-[1rem]"}`}
+      className="new-sm:w-[100%] h-max md:w-[45rem] lg:w-[60rem] xl:w-[75rem] 2xl:w-[82rem] flex flex-col new-sm:py-[1rem] md:py-[2rem] new-sm:gap-[1rem] md:gap-[1.5rem] items-center m-auto relative rounded-none md:rounded-[28px] bg-getstarted-linear-gradient"
     >
       {/* Following is the title of the form */}
 
-      <div className="text-[#123524] font-[Poppins] new-sm:text-[0.8rem] new-sm-1:text-[0.9375rem] new-sm-2:text-[1rem] sm:text-[1.2rem] md:text-[1.5rem] lg:text-[2rem] xl:text-[2.25rem] font-medium  text-center new-sm:mt-[0.5rem] md:mt-[1rem]">
+      <div className="text-[#123524] font-[Poppins] new-sm:text-[0.8rem] new-sm-1:text-[0.9375rem] new-sm-2:text-[1rem] sm:text-[1.2rem] md:text-[1.5rem] lg:text-[2rem] xl:text-[2.25rem] font-medium text-center leading-none">
         Join Our Growing Network of Trusted Sellers!
       </div>
 
@@ -85,10 +83,10 @@ export const ContactForm = memo(() => {
         <>
           <form
             onSubmit={handleSubmit(handleGetStartedForm)}
-            className="new-sm:hidden md:grid w-[90%] lg:grid-cols-[30rem auto 15rem] xl:grid-cols-[35rem auto 20rem] 2xl:grid-cols-[40rem auto 29rem] gap-y-[1rem] gap-x-0 my-[1rem] font-[Poppins]"
+            className="new-sm:hidden md:grid w-[90%] md:grid-cols-[25rem auto 10rem] lg:grid-cols-[30rem auto 15rem] xl:grid-cols-[35rem auto 20rem] 2xl:grid-cols-[40rem auto 29rem] gap-y-[1rem] gap-x-0 my-[1rem] font-[Poppins]"
           >
             {/* Input Field For Full Name */}
-            <div className="lg:w-[30rem] xl:w-[35rem] 2xl:w-[40rem] h-max col-span-2">
+            <div className="md:w-[95%] lg:w-[30rem] xl:w-[35rem] 2xl:w-[40rem] h-max col-span-2">
               {errors.fullName && (
                 <div className="w-[90%] px-[1rem] text-red-500 font-bold">
                   {errors.fullName.message}
@@ -105,7 +103,7 @@ export const ContactForm = memo(() => {
             </div>
 
             {/* Input Field for Phone Number */}
-            <div className="lg:w-[100%] xl:w-[20rem] 2xl:w-[28.6875rem] h-max justify-self-start">
+            <div className="md:w-[100%] xl:w-[20rem] 2xl:w-[28.6875rem] h-max justify-self-start">
               {errors.phoneNumber && (
                 <div className="w-[90%] px-[1rem] text-red-500 font-bold">
                   {errors.phoneNumber.message}
@@ -139,7 +137,7 @@ export const ContactForm = memo(() => {
             </div>
 
             {/* Input Field for Nursery Name */}
-            <div className="lg:w-[30rem] xl:w-[35rem] 2xl:w-[40rem] h-max col-span-2">
+            <div className="md:w-[95%] lg:w-[30rem] xl:w-[35rem] 2xl:w-[40rem] h-max col-span-2">
               {errors.nurseryName && (
                 <div className="w-[90%] px-[1rem] text-red-500 font-bold">
                   {errors.nurseryName.message}
@@ -156,7 +154,7 @@ export const ContactForm = memo(() => {
             </div>
 
             {/* Input Field for City */}
-            <div className="lg:w-[100%] xl:w-[20rem] 2xl:w-[28.6875rem] h-max justify-self-start">
+            <div className="md:w-[100%] lg:w-[100%] xl:w-[20rem] 2xl:w-[28.6875rem] h-max justify-self-start">
               {errors.city && (
                 <div className="w-[90%] px-[1rem] text-red-500 font-bold">
                   {errors.city.message}
@@ -176,7 +174,7 @@ export const ContactForm = memo(() => {
             <div className="flex flex-col items-center col-span-3 mt-[3rem]">
               <div className="flex gap-[0.5rem]">
                 <input
-                  className="w-[2.375rem] h-[1.5rem] accent-[#123524] cursor-pointer rounded-[1rem]"
+                  className="w-[2.375rem] h-[1.5rem] accent-[#123524] cursor-pointer "
                   type="checkbox"
                   id="termsandconditions"
                   {...register("termsandconditions")}
@@ -196,7 +194,7 @@ export const ContactForm = memo(() => {
               {/* Following div consist of Submit Button */}
               <div
                 className={
-                  "lg:w-[15rem] xl:w-[17.625rem] h-[4.0625rem] mt-[2rem]"
+                  "md:w-[15rem] xl:w-[17.625rem] h-[4.0625rem] mt-[2rem]"
                 }
               >
                 <AuthButton
@@ -232,8 +230,9 @@ export const ContactForm = memo(() => {
         </>
       )}
 
+      {/* Mobile View Get Started */}
       <button
-        className={`new-sm:block md:hidden border-[2px] new-sm:w-[10.5625rem] new-sm:h-[2rem] sm:w-[11rem] sm:h-[3rem]  hover:border-none rounded-[2.10294rem] bg-[#56A430] hover:bg-[#123524] shadow-button-custom-boxshadow backdrop-blur-[6.408869743347168px] text-[#FFF6F4] new-sm:text-[0.725rem] hover:text-[1.33331rem] font-[Poppins] font-normal  hover:font-semibold  uppercase ${loading ? "cursor-not-allowed" : "cursor-pointer"} `}
+        className={`new-sm:block md:hidden border-[2px] new-sm:w-[10.5625rem] new-sm:h-[2rem] sm:w-[11rem] sm:h-[3rem]  hover:border-none rounded-[2.10294rem] bg-[#56A430] hover:bg-[#123524] shadow-custom-boxshadow backdrop-blur-[6.408869743347168px] text-[#FFF6F4] new-sm:text-[0.725rem] sm:text-[1rem] hover:text-[1.2rem] font-[Poppins] font-normal  hover:font-semibold  uppercase ${loading ? "cursor-not-allowed" : "cursor-pointer"} `}
         disabled={loading}
         onClick={displayMobileContactForm}
       >

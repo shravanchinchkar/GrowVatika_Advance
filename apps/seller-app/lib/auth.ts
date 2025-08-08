@@ -4,21 +4,30 @@ import { authRateLimit } from "./rate-limit";
 import { getIp } from "../helper/get-ip-address";
 import { SignInSchema } from "@repo/common-types/types";
 import CredentialsProvider from "next-auth/providers/credentials";
-import { cookies } from "next/headers";
+import { sendSignInSuccessfulMail } from "../helper/send-signin-successful-mail";
+import {
+  getCurrentFormattedDateTimeString,
+  getLocationFromIP,
+  getCurrentDateTime,
+} from "@repo/shared/utilfunctions";
 
 export const NEXT_AUTH = {
   providers: [
     CredentialsProvider({
       name: "Credentials",
       credentials: {
-        username: {
-          label: "email",
-          type: "email",
-          placeholder: "abc@gmail.com",
+        email: { label: "Email", type: "text", placeholder: "Email" },
+        password: {
+          label: "Password",
+          type: "password",
+          placeholder: "Placeholder",
         },
-        password: { label: "Password", type: "password" },
+        userTimezone: { label: "Time Zone", type: "text" }, // add this line
       },
       async authorize(credentials: any) {
+        //Get the userTimezone in server side from client
+        const userTimezone = credentials?.userTimezone;
+
         //validate the user Input
         const inputResult = SignInSchema.safeParse(credentials);
         if (!inputResult.success) {
@@ -34,8 +43,9 @@ export const NEXT_AUTH = {
         }
         //If the count of signin request goes beyond 5 wihin 5 minutes then  the user gets blocked for 5 minutes, following is its logic
         const IpAddress = await getIp();
-        const { success, pending, limit, reset, remaining } =
-          await authRateLimit.limit(IpAddress);
+        const currentLocation = await getLocationFromIP(IpAddress);
+
+        const { success } = await authRateLimit.limit(IpAddress);
         if (!success) {
           console.error("Signin Limit Exhausted,try again after 5 minutes.");
           throw new Error(
@@ -70,6 +80,32 @@ export const NEXT_AUTH = {
             );
 
             if (passwordValidation) {
+              const currentDateTime = getCurrentDateTime(userTimezone);
+
+              //send signin email notification
+              const emailResponse = await sendSignInSuccessfulMail({
+                username: sellerExists.nurseryName,
+                email: sellerExists.email,
+                accountType: "Seller Account",
+                ipAddress: IpAddress,
+                signintime: currentDateTime,
+                location: currentLocation || "",
+              });
+
+              if (!emailResponse.success) {
+                console.error(
+                  "Failed to send signin successful email notification:",
+                  emailResponse.message
+                );
+                throw new Error(
+                  JSON.stringify({
+                    success: false,
+                    error:
+                      "Failed to send signin successful email notification",
+                  })
+                );
+              }
+
               return {
                 id: sellerExists.id.toString(),
                 name: sellerExists.firstName,

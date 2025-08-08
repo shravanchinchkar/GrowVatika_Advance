@@ -1,9 +1,9 @@
 import { headers } from "next/headers";
 
-/**
- * Gets the client's IP address from request headers
- * @returns The IP address as a string
- */
+/*
+ Gets the client's IP address from request headers
+ returns The IP address as a string
+*/
 export async function getIp(): Promise<string> {
   const headersList = await headers();
 

@@ -20,6 +20,7 @@ interface SuccessfulEmailProp {
   registrationDate: string;
   email: string;
   verifyCode: string;
+  verificationURL: string;
 }
 
 export const NurseryCollaborationEmail = ({
@@ -28,17 +29,8 @@ export const NurseryCollaborationEmail = ({
   registrationDate,
   email,
   verifyCode,
+  verificationURL
 }: SuccessfulEmailProp) => {
-  // Access environment variable to determine environment
-  const isProduction = process.env.NODE_ENV === "production";
-
-  const baseUrl =
-    isProduction === false
-      ? process.env.SUCCESSFUL_COLLABORATION_DEVELOPMENT_URL
-      : process.env.SUCCESSFUL_COLLABORATION_PRODUCTION_URL;
-
-  const verificationUrl = `${baseUrl}/verify?email=${encodeURIComponent(email)}`;
-
   const main = {
     backgroundColor: "#f6f9fc",
     fontFamily: "Arial, sans-serif",
@@ -155,7 +147,7 @@ export const NurseryCollaborationEmail = ({
             <Text>3. Add your catalog of plants and products</Text>
             <Text>4. Start receiving orders from plant enthusiasts!</Text>
 
-            <Button style={button} href={verificationUrl}>
+            <Button style={button} href={verificationURL}>
               Verify Email Address
             </Button>
             <Hr style={{ margin: "20px 0" }} />
@@ -187,5 +179,4 @@ export const NurseryCollaborationEmail = ({
     </Html>
   );
 };
-
 export default NurseryCollaborationEmail;

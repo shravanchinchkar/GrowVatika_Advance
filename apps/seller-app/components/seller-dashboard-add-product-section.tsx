@@ -2,20 +2,20 @@
 
 import Image from "next/image";
 import toast from "react-hot-toast";
-import { useEffect, useState,memo } from "react";
+import { useEffect, useState, memo } from "react";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { SelectTagSeller } from "./select-tag-seller";
 import { toastStyle } from "@repo/shared/utilfunctions";
+import { uploadProduct } from "../actions/uploadProduct";
 import { ButtonLoadingSign } from "@repo/ui/loading-sign";
 import { ApiResponseType } from "@repo/common-types/types";
-import { uploadProduct } from "../actions/uploadProduct";
 import { AddProductLabelInput } from "./add-product-label-input";
 import { ProductImageDropZone } from "./product-image-drop-zone";
 import { useForm, SubmitHandler, Controller } from "react-hook-form";
 import { useDisplayAddProductSectionStore } from "@repo/shared-store";
 import { addProductSchema, TAddProductSchema } from "@repo/common-types/types";
-import { CustomSellerDashboardDropDown } from "./custom-seller-dashboard-dropdown";
 
-export const SellerDashboardAddProductSection =memo(() => {
+export const SellerDashboardAddProductSection = memo(() => {
   // Zustand Code
   const displayAddProductSection = useDisplayAddProductSectionStore(
     (state: any) => state.displayAddProductSection
@@ -63,6 +63,7 @@ export const SellerDashboardAddProductSection =memo(() => {
 
   useEffect(() => {
     setValue("category", category);
+    setCollection("");
   }, [category, setValue]);
 
   useEffect(() => {
@@ -80,7 +81,6 @@ export const SellerDashboardAddProductSection =memo(() => {
   const handlePublishProduct: SubmitHandler<TAddProductSchema> = async (
     data
   ) => {
-    console.log("Product Data is:", data);
     setLoading(true);
     // Create FormData object
     const formData = new FormData();
@@ -98,13 +98,9 @@ export const SellerDashboardAddProductSection =memo(() => {
     formData.append("productSize", data.productSize.toString()); //number to string
     formData.append("featured", (data.featured || false).toString());
     formData.append("productQuantity", data.productQuantity.toString()); //number to string
-
-    console.log("Final Form Data is:", formData);
-
     try {
       // Hit the backend for product upload
       const res: ApiResponseType = await uploadProduct(formData);
-      console.log("Upload Product Response:", res);
       if (res.success) {
         // Reset React Hook Form
         reset({
@@ -148,12 +144,20 @@ export const SellerDashboardAddProductSection =memo(() => {
     e.currentTarget.blur();
   };
 
-  const Collections = [
-    "Indoor",
-    "Outdoor",
+  const PlantCollection = [
+    "Indoor Plants",
+    "Outdoor Plants",
     "Flowering Plants",
     "Tropical Plants",
   ];
+  const SoilCollection = ["Potting Mix", "Garden Soil", "Organic Compost"];
+  const PotCollection = ["Ceramic Pots", "Plastic Pots", "Hanging Pots"];
+  const FertilizersCollection = [
+    "Organic Fertilizers",
+    "Chemical Fertilizers",
+    "Plant Food",
+  ];
+
   const Category = ["Plants", "Pots", "Soil", "Fertilizers"];
   const Tags = [
     "Best Seller",
@@ -164,6 +168,9 @@ export const SellerDashboardAddProductSection =memo(() => {
   ];
   const ProductStatus = ["Active", "Draft", "Hidden"];
   const Visibility = ["Public", "Private"];
+
+  console.log("category value is:", category);
+  console.log("collection value is:", collection);
 
   if (displayAddProductSection === true) {
     return (
@@ -190,7 +197,9 @@ export const SellerDashboardAddProductSection =memo(() => {
 
             {/* Title */}
             <div>
-              <div className="lg:text-[1.5rem] 2xl:text-[1.7rem] font-semibold">Add Product</div>
+              <div className="lg:text-[1.5rem] 2xl:text-[1.7rem] font-semibold">
+                Add Product
+              </div>
               <div className="lg:text-[1rem] 2xl:text-[1.15rem] text-[#8C8C8C] leading-4">
                 Create the product listing
               </div>
@@ -246,10 +255,8 @@ export const SellerDashboardAddProductSection =memo(() => {
 
           {/* Add Product Form */}
           <div className="pb-[1rem] lg:flex lg:flex-col lg:items-center xl:block">
-
             {/* Following div consist of inputs for product name, price, compareAt, description, product Size, product Quantity */}
             <div className="lg:w-[40rem] new-lg:w-[46rem] xl:w-[34rem] 2xl:w-[41rem] flex flex-col gap-[1rem] h-max p-[2rem] bg-white rounded-xl shadow-md">
-
               {/* Heading */}
               <div>
                 <h1 className="text-[#171717] font-[Poppins] lg:text-[1.5rem] 2xl:text-[1.7rem] font-semibold leading-[2.6rem]">
@@ -344,7 +351,8 @@ export const SellerDashboardAddProductSection =memo(() => {
             </div>
 
             {/* Following div consist of drop-zone to upload Images */}
-            <div className={`lg:w-[40rem] new-lg:w-[46rem]  xl:w-[34rem] border-[2px] 2xl:w-[41rem] h-[33rem] flex flex-col justify-center items-center bg-white rounded-xl mt-5 shadow-md ${errors.image?.message ? "gap-0" : "gap-[1rem]"}`}
+            <div
+              className={`lg:w-[40rem] new-lg:w-[46rem]  xl:w-[34rem] border-[2px] 2xl:w-[41rem] h-[33rem] flex flex-col justify-center items-center bg-white rounded-xl mt-5 shadow-md ${errors.image?.message ? "gap-0" : "gap-[1rem]"}`}
             >
               {/* Media Heading Section */}
               <div className="lg:w-[35rem] new-lg:w-[42rem] xl:w-[30rem] 2xl:w-[37.0625rem]">
@@ -377,10 +385,8 @@ export const SellerDashboardAddProductSection =memo(() => {
 
           {/* Organization,Status & Visibility Section */}
           <div className="flex lg:flex-row lg:justify-evenly xl:flex-col xl:justify-between gap-5 pb-[1rem]">
-
             {/* Organization Section */}
             <div className="lg:w-[19.875rem] xl:w-[18rem] new-xl:w-[21.5rem] 2xl:w-[19.875rem] lg:h-[33rem] xl:h-[35.5rem] bg-white rounded-[1.25rem]  pt-[1.5rem] flex flex-col shadow-md">
-
               <div className="flex flex-col items-center lg:gap-[2rem] xl:gap-[2.7rem]">
                 <div className="w-[100%] lg:text-[1.5rem] 2xl:text-[1.7rem] font-semibold pl-[1.5rem]">
                   Organization
@@ -389,28 +395,13 @@ export const SellerDashboardAddProductSection =memo(() => {
                 <div
                   className={`w-[80%] flex flex-col ${errors.collection || errors.category || errors.tags ? "gap-0" : "gap-[1rem]"}`}
                 >
-                  {/* Collection DropDown */}
-                  {errors.collection && (
-                    <div className="font-semibold capitalize text-[#FF4B4B] text-start text-sm">
-                      {errors.collection.message}
-                    </div>
-                  )}
-                  <CustomSellerDashboardDropDown
-                    label="Collection"
-                    placeholder="Select Collection"
-                    options={Collections}
-                    value={collection}
-                    onChange={setCollection}
-                    customKey={"Collection"}
-                  />
-
                   {/* Category DropDown */}
                   {errors.category && (
                     <div className="font-semibold capitalize text-[#FF4B4B] text-start text-sm ">
                       {errors.category.message}
                     </div>
                   )}
-                  <CustomSellerDashboardDropDown
+                  <SelectTagSeller
                     label="Category"
                     placeholder="Select Category"
                     options={Category}
@@ -419,13 +410,38 @@ export const SellerDashboardAddProductSection =memo(() => {
                     customKey={"Category"}
                   />
 
+                  {/* Collection DropDown */}
+                  {errors.collection && (
+                    <div className="font-semibold capitalize text-[#FF4B4B] text-start text-sm">
+                      {errors.collection.message}
+                    </div>
+                  )}
+                  {/* "Plants", "Pots", "Soil", "Fertilizers" */}
+                  <SelectTagSeller
+                    label="Collection"
+                    placeholder="Select Collection"
+                    options={
+                      category === "Plants"
+                        ? PlantCollection
+                        : category === "Pots"
+                          ? PotCollection
+                          : category === "Soil"
+                            ? SoilCollection
+                            : FertilizersCollection
+                    }
+                    value={collection}
+                    onChange={setCollection}
+                    disabled={!category}
+                    customKey={"Collection"}
+                  />
+
                   {/* Tags DropDown */}
                   {errors.tags && (
                     <div className="font-semibold capitalize text-[#FF4B4B] text-start text-sm ">
                       {errors.tags.message}
                     </div>
                   )}
-                  <CustomSellerDashboardDropDown
+                  <SelectTagSeller
                     label="Tags"
                     placeholder="Add Tags"
                     options={Tags}
@@ -449,13 +465,12 @@ export const SellerDashboardAddProductSection =memo(() => {
                   {errors.productStatus.message}
                 </div>
               )}
-              <CustomSellerDashboardDropDown
+              <SelectTagSeller
                 label="Product Status"
                 placeholder="Select Status"
                 options={ProductStatus}
                 value={productStatus}
                 onChange={setProductStatus}
-                required={true}
                 customKey={"Product Status"}
               />
 
@@ -465,13 +480,12 @@ export const SellerDashboardAddProductSection =memo(() => {
                   {errors.visibility.message}
                 </div>
               )}
-              <CustomSellerDashboardDropDown
+              <SelectTagSeller
                 label="Visibility"
                 placeholder="Select Visibility"
                 options={Visibility}
                 value={visibilityStatus}
                 onChange={setVisibilityStatus}
-                required={true}
                 customKey={"Visibility"}
               />
 
@@ -488,7 +502,6 @@ export const SellerDashboardAddProductSection =memo(() => {
                 </div>
               </div>
             </div>
-
           </div>
         </div>
       </form>

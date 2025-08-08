@@ -27,6 +27,7 @@ export async function GET(req: NextRequest) {
         error: "product not found",
       });
     } else {
+      // exclude id,sellerId,productStatus and visibility from the data and send the remaining data to FE
       const {
         id,
         sellerId,

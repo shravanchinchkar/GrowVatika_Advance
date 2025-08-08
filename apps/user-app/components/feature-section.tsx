@@ -24,23 +24,24 @@ export const FeatureSection =memo(() => {
     },
   ];
   return (
-    <div className="new-sm:h-max sm:h-[10rem] md:h-[11rem] lg:h-[12.6875rem] xl:h-[12.6875rem] flex flex-col items-center justify-between bg-feature-gradient">
+    <div className="new-sm:h-max sm:h-[10rem] md:h-[9rem] lg:h-[10rem] xl:h-[12.6875rem] flex flex-col items-center justify-between bg-feature-linear-gradient ">
       <div
         className="
           font-[Poppins] font-medium text-[#123524] text-center new-sm:mt-[0.5rem] md:mt-[1rem]
           text-[1.25rem]
           sm:text-[1.5rem]
-          md:text-[1.75rem]
+          md:text-[1.5rem]
           lg:text-[2rem]
           xl:text-[2.25rem]
           new-sm:text-[0.9375rem] new-sm:capitalize new-sm:leading-[144.9%]
           new-sm-2:text-[1rem] new-sm-2:capitalize new-sm-2:leading-[144.9%]
+          
         "
       >
         Why GrowVatika
       </div>
 
-      <div className="w-full mt-[0.5rem] new-sm:mb-[0.5rem] md:mb-[2rem] flex justify-around">
+      <div className=" w-full mt-[0.5rem] new-sm:mb-[0.5rem] md:mb-[1rem] lg:mb-[2rem] flex justify-around">
         {features.map((features) => {
           return (
             <div

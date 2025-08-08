@@ -1,13 +1,13 @@
-export type TSingleProductData = {
-  name: string;
+export type TSingleProductData= {
   price: number;
   compareAt: number;
+  productSize: number;
+  productQuantity: number;
+  name: string;
   description: string;
   imageURL: string;
   category: string;
   collection: string;
-  productQuantity: number;
-  productSize: number;
   tags: string;
   seller: {
     nurseryName: string;

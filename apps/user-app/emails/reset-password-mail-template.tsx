@@ -35,6 +35,7 @@ const ResetPasswordMailTemplate = ({ email }: { email: string }) => {
         borderRadius: "8px",
       }}
     >
+      {/* Header */}
       <div
         style={{
           textAlign: "center",

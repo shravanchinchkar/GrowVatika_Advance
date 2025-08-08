@@ -179,5 +179,4 @@ export const NurseryCollaborationEmail = ({
     </Html>
   );
 };
-
 export default NurseryCollaborationEmail;

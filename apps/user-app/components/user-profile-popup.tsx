@@ -54,7 +54,7 @@ export const UserProfilePopUp = () => {
                   onClick={handleUserProfileVisibility}
                 >
                   <Image
-                    src="/assets/images/UserProfilePopUp/cancelIcon.svg"
+                    src="/assets/images/CommonImages/cancelIcon.svg"
                     alt="cancle"
                     className="object-cover"
                     fill

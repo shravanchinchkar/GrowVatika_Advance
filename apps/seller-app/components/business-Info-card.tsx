@@ -209,23 +209,23 @@ export const BusinessInfoCard = memo(
         {/* Card Title and Edit Button */}
         <div className="flex justify-between items-center">
           <div className="flex flex-col">
-            <h1 className="text-[#171717] font-[Poppins] text-[1.5rem] font-semibold leading-[1.5rem]">
+            <h1 className="text-[#171717] font-[Poppins] md:text-[1.3rem] lg:text-[1.5rem] font-semibold leading-[1.5rem]">
               Business Information
             </h1>
-            <p className="text-[#8C8C8C] font-[Poppins] text-[1rem] font-medium leading-[2em]">
+            <p className="text-[#8C8C8C] font-[Poppins] md:text-[0.8rem] lg:text-[1rem] font-medium md:leading-[1.2rem] lg:leading-[2em]">
               This information is displayed on your public store page
             </p>
           </div>
 
           {/* Edit and Save Button */}
-          <div className="flex lg:items-center lg:gap-[1rem] xl:gap-[2rem] z-20">
+          <div className="flex md:items-center md:gap-[1rem] xl:gap-[2rem] z-20">
             {/* Edit Button */}
             <button
-              className={`lg:w-[5rem] lg:h-[2.5rem] xl:w-[6.875rem] xl:h-[3.1875rem] flex justify-center items-center lg:gap-[0.5rem] xl:gap-[1rem] lg:p-[0.5rem] xl:px-4 xl:py-2 rounded-[0.625rem] text-[#000000] font-[Poppins] lg:text-[1.1rem]  xl:text-[1.3rem] font-normal border-[2px] capitalize outline-none bg-white ${blinking && "border-red-500 shadow-editButton"}`}
+              className={`md:w-[5rem] md:h-[2.5rem] xl:w-[6.875rem] xl:h-[3.1875rem] flex justify-center items-center md:gap-[0.5rem] xl:gap-[1rem] md:p-[0.5rem] xl:px-4 xl:py-2 rounded-[0.625rem] text-[#000000] font-[Poppins] md:text-[1.1rem]  xl:text-[1.3rem] font-normal border-[2px] capitalize outline-none bg-white ${blinking && "border-red-500 shadow-editButton"}`}
               onClick={handleEditButton}
               type="button"
             >
-              <div className="lg:w-[1rem] lg:h-[1rem] xl:w-[1.3rem] xl:h-[1.3rem] relative">
+              <div className="md:w-[1rem] md:h-[1rem] xl:w-[1.3rem] xl:h-[1.3rem] relative">
                 <Image
                   src={"/assets/images/SellerDashboardMainImages/editIcon.svg"}
                   alt="editbutton"
@@ -238,14 +238,14 @@ export const BusinessInfoCard = memo(
 
             {/* Save Button */}
             <button
-              className={`lg:w-[5rem] lg:h-[2.5rem]  xl:w-[8rem] xl:h-[3.1875rem] rounded-[0.625rem]  bg-[#56A430] flex justify-center items-center lg:gap-[0.5rem] xl:gap-4 text-white lg:text-[1.1rem] xl:text-[1.3rem] outline-none ${displaySaveButton === true ? "block" : "hidden"} ${loading ? "cursor-not-allowed" : "cursor-pointer"}`}
+              className={`md:w-[5rem] md:h-[2.5rem]  xl:w-[8rem] xl:h-[3.1875rem] rounded-[0.625rem]  bg-[#56A430] flex justify-center items-center md:gap-[0.5rem] xl:gap-4 text-white md:text-[1.1rem] xl:text-[1.3rem] outline-none ${displaySaveButton === true ? "block" : "hidden"} ${loading ? "cursor-not-allowed" : "cursor-pointer"}`}
               type="submit"
             >
               {loading ? (
                 <>Loading...</>
               ) : (
                 <>
-                  <div className="relative lg:w-[1rem] lg:h-[1rem]  xl:h-[1.5rem] xl:w-[1.5rem]">
+                  <div className="relative md:w-[1rem] md:h-[1rem]  xl:h-[1.5rem] xl:w-[1.5rem]">
                     <Image
                       src="/assets/images/AddProductSectionImages/publishProductIcon.svg"
                       alt="publishProductIcon"
@@ -262,7 +262,7 @@ export const BusinessInfoCard = memo(
         {/* Following div consist of Profile Picture,Nursery Name,description and Rating Section */}
         <div className="flex justify-between items-center gap-[2rem]">
           {/* Profile Picture,Nursery Name,description */}
-          <div className="lg:w-[80%] xl:w-[75%] h-max flex items-start lg:gap-[1rem] xl:gap-[0.8rem]">
+          <div className="md:w-[80%] xl:w-[75%] h-max flex items-start md:gap-[1rem] xl:gap-[0.8rem]">
             {/* Nursery Profile Photo goes here! */}
             <Controller
               name="profilePictureURL"
@@ -281,13 +281,13 @@ export const BusinessInfoCard = memo(
 
             {/* Nursery Name and Bio */}
             <div className="min-w-[50%] flex flex-col">
-              <p className="text-[#171717] text-[1.2rem] font-semibold">
+              <p className="text-[#171717] md:text-[1rem] lg:text-[1.2rem] font-semibold">
                 {sellerData.nurseryName}
               </p>
               {sellerData.nurseryBio && sellerData.nurseryBio !== "" ? (
                 !enableEditing ? (
                   <>
-                    <p className="text-[#8C8C8C] text-[0.9rem] font-medium text-justify leading-[1.3rem]">
+                    <p className="text-[#8C8C8C] md:text-[0.8rem] lg:text-[0.9rem] font-medium text-justify leading-[1.3rem]">
                       {sellerData.nurseryBio}
                     </p>
                   </>
@@ -314,7 +314,7 @@ export const BusinessInfoCard = memo(
           </div>
 
           {/* Rating Section */}
-          <div className="lg:w-[5rem] lg:h-[2.5rem] xl:w-[6rem] xl:h-[3rem] flex justify-center items-center gap-2 px-4 py-2 bg-[#123524] text-white rounded-[1.26rem]">
+          <div className="md:w-[5rem] md:h-[2.5rem] xl:w-[6rem] xl:h-[3rem] flex justify-center items-center gap-2 px-4 py-2 bg-[#123524] text-white rounded-[1.26rem]">
             <div className="w-[1.2rem] h-[1.2rem] relative">
               <Image
                 src={"/assets/images/SellerDashboardMainImages/ratingIcon.svg"}
@@ -323,7 +323,7 @@ export const BusinessInfoCard = memo(
                 className="object-contain"
               />
             </div>
-            <span className="font-[Poppins] lg:text-[0.9rem] xl:text-[1.1rem] font-medium uppercase">
+            <span className="font-[Poppins] md:text-[0.9rem] xl:text-[1.1rem] font-medium uppercase">
               4.5
             </span>
           </div>
@@ -331,7 +331,7 @@ export const BusinessInfoCard = memo(
 
         {/* Following div consist of business detail information */}
         <div className="border-t-[0.0625rem] pt-[2rem]">
-          <div className="lg:flex lg:flex-col xl:grid xl:grid-cols-2 gap-y-[1.5rem] gap-x-14 text-[1rem]">
+          <div className="md:flex md:flex-col xl:grid xl:grid-cols-2 gap-y-[1.5rem] gap-x-14 text-[1rem]">
             {/* Address Section */}
             <div className="flex items-center gap-4">
               <div className="w-[1.5rem] h-[1.5rem] flex-shrink-0 relative">
@@ -527,13 +527,13 @@ export const BusinessInfoCard = memo(
           )}
 
           {/* Nursery Specialties Section */}
-          <div className="flex flex-wrap gap-[1rem] mt-2 text-[1.2rem] ">
+          <div className="flex flex-wrap gap-[1rem] mt-2 md:text-[1rem] lg:text-[1.2rem]">
             {/* Display Seller Specialties */}
             {sepcialties.length > 0 &&
               sepcialties.map((specialty: string, index: number) => {
                 return (
                   <div
-                    className="min-w-[10.46094rem] max-w-max min-h-[3.0625rem] max-h-max flex justify-between items-center gap-[0.5rem]  flex-shrink-0 border-[1.6px] border-[#56A430] rounded-[5.25rem] text-[#56A430] text-center font-[Poppins] font-medium px-[1rem]"
+                    className="md:w-max lg:min-w-[10.46094rem] max-w-max min-h-[3.0625rem] max-h-max flex justify-between items-center gap-[0.5rem]  flex-shrink-0 border-[1.6px] border-[#56A430] rounded-[5.25rem] text-[#56A430] text-center font-[Poppins] font-medium px-[1rem]"
                     key={index}
                   >
                     {specialty}
@@ -573,16 +573,18 @@ export const BusinessInfoCard = memo(
                   className="object-cover"
                 />
               </div>
-              <span className="text-[#6CE530] text-center font-[Poppins] text-[1.22669rem] font-medium not-italic leading-none">
+              <span className="text-[#6CE530] text-center font-[Poppins] md:text-[1rem] lg:text-[1.22669rem] font-medium not-italic leading-none">
                 Add more
               </span>
             </button>
-
-            {/* Specialties Options */}
-            {enableEditing && (
-              <MultiSelect options={Options} placeholder="Choose Specialties" />
-            )}
           </div>
+
+          {/* Specialties Options */}
+          {enableEditing && (
+            <div className="w-[25%] mt-[2rem]">
+              <MultiSelect options={Options} placeholder="Choose Specialties" />
+            </div>
+          )}
         </div>
       </form>
     );

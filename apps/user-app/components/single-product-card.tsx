@@ -1,0 +1,620 @@
+import axios from "axios";
+import Image from "next/image";
+import toast from "react-hot-toast";
+import Skeleton from "@repo/ui/loading";
+import { useSearchParams } from "next/navigation";
+import { TSingleProductData } from "@repo/common-types";
+import { toastStyle } from "@repo/shared/utilfunctions";
+import { memo, useCallback, useEffect, useState } from "react";
+
+enum DirectionType {
+  LEFT = "left",
+  RIGHT = "right",
+}
+
+type LeftRigthArrowProps = {
+  direction: string;
+};
+
+type TAvailablePotSizeandPrice = {
+  sizeandPrice: string;
+  approxSize: string;
+  tag?: string;
+};
+
+type PlusMinusButtonProp = {
+  src: string;
+  conditionalStyle: string | boolean;
+  alt: string;
+  disabled: boolean;
+  onClick: React.MouseEventHandler<HTMLButtonElement>;
+};
+
+type TNurseryCardButton = {
+  imagePath: string;
+  buttonName: string;
+};
+
+type TNurseryCardProp = {
+  pictureURL: string;
+  nurseryName: string;
+  nurseryAddress: string;
+};
+
+const NurseryCardButton: TNurseryCardButton[] = [
+  {
+    imagePath: "/assets/images/SingleProductImage/visitStoreIcon.svg",
+    buttonName: "Visit Store",
+  },
+  {
+    imagePath: "/assets/images/SingleProductImage/contactIcon.svg",
+    buttonName: "Contact",
+  },
+];
+
+// Left-Right arrow component
+const LeftRightArrow = memo(({ direction }: LeftRigthArrowProps) => {
+  return (
+    <button
+      className={`md:w-[2.5rem] md:h-[4rem] lg:h-[5rem] xl:w-[3rem] xl:h-[6rem] 2xl:w-[3.4rem] 2xl:h-[6.75rem] flex justify-center items-center bg-[#56A430] cursor-not-allowed ${direction === DirectionType.RIGHT ? "rounded-r-full" : "rounded-l-full"}`}
+      disabled={true}
+    >
+      <div
+        className={`relative md:w-[1.5rem] md:h-[1.5rem] xl:w-[1.7rem] xl:h-[1.7rem] 2xl:w-[2.25rem] 2xl:h-[2.25rem]
+            ${direction === DirectionType.RIGHT && "rotate-180"}`}
+      >
+        <Image
+          src={"/assets/images/SingleProductImage/leftSlideIcon.svg"}
+          alt="slideIcon"
+          fill
+          className="object-contain"
+        />
+      </div>
+    </button>
+  );
+});
+
+// Like Share button Component
+const LikandShare = memo(({ src }: { src: string }) => {
+  return (
+    <button className="md:w-[14%] 2xl:w-[10%] md:h-[2.5rem] 2xl:h-[3.1875rem] border border-[#CBD0D3] rounded-[0.625rem] flex items-center justify-center">
+      <div className="relative md:w-[1.3rem] md:h-[1.3rem] lg:w-[1.5rem] lg:h-[1.5rem] 2xl:w-[1.8rem] 2xl:h-[1.8rem]">
+        <Image src={src} alt="like" fill className="object-cover" />
+      </div>
+    </button>
+  );
+});
+
+// Plus Minus Button Component
+const PlusMinusButton = memo(
+  ({ conditionalStyle, src, alt, disabled, onClick }: PlusMinusButtonProp) => {
+    return (
+      <button
+        className={`md:w-[1.5rem] md:h-[1.5rem] 2xl:w-[2.125rem] 2xl:h-[2.125rem] flex items-center justify-center ${conditionalStyle}`}
+        disabled={disabled}
+        onClick={onClick}
+      >
+        <div className="relative md:w-[1.2rem] md:h-[1.2rem] 2xl:w-[1.5rem] 2xl:h-[1.5rem]">
+          <Image src={src} alt={alt} fill className="object-cover" />
+        </div>
+      </button>
+    );
+  }
+);
+
+// Nursry Card Component
+const NurseryCard = memo(
+  ({ pictureURL, nurseryName, nurseryAddress }: TNurseryCardProp) => {
+    return (
+      <div className="w-[100%] h-[100%] flex justify-center items-center bg-[#FFF6F4] rounded-[0.625rem]">
+        <div className="w-[95%] h-[90%] flex flex-col justify-between bg-[#FFFFFF] rounded-[0.625rem] p-[1rem]">
+          {/* Nursery photo and details */}
+          <div className="h-[60%] flex justify-between">
+            {/* Nursery Image */}
+            <div className="relative md:w-[4.5rem] md:h-[4.5rem] xl:w-[5.5rem] xl:h-[5.5rem] 2xl:w-[6.3125rem] 2xl:h-[6.3125rem] rounded-[6.3125rem] overflow-hidden">
+              <Image
+                src={pictureURL}
+                alt="profil"
+                className="object-cover"
+                fill
+              />
+            </div>
+
+            {/* Nursery Details */}
+            <div className="md:w-[75%] lg:w-[70%] flex flex-col justify-around">
+              {/* Nursery Name and verify badge */}
+              <div className="flex items-center justify-between">
+                <h1 className="md:text-[1.1rem] lg:text-[1rem] xl:text-[1.3rem] 2xl:text-[1.5rem] text-[#171717] font-semibold leading-none">
+                  {nurseryName}
+                </h1>
+                <div className="relative md:w-[1.2rem] md:h-[1.2rem] 2xl:w-[1.5rem] 2xl:h-[1.5rem]">
+                  <Image
+                    src={"/assets/images/SingleProductImage/verifyIcon.svg"}
+                    alt="verify"
+                    className="object-cover"
+                    fill
+                  />
+                </div>
+              </div>
+
+              {/* Nursery Location and rating */}
+              <div className="flex items-center justify-between">
+                {/* Nursery Location */}
+                <div className="flex items-center gap-[0.5rem] md:text-[0.9rem] 2xl:text-[1rem] text-[#697F75] font-medium">
+                  <div className="relative md:w-[1.2rem] md:h-[1.2rem] 2xl:w-[1.5rem] 2xl:h-[1.5rem]">
+                    <Image
+                      src="/assets/images/SingleProductImage/locationIcon.svg"
+                      alt="Location"
+                      fill
+                      className="object-cover"
+                    />
+                  </div>
+                  {`${nurseryAddress} |`}
+                </div>
+
+                {/* Nursery rating */}
+                <div className="flex items-center">
+                  <div className="relative md:w-[1rem] md:h-[1rem] 2xl:w-[1.375rem] 2xl:h-[1.375rem]">
+                    <Image
+                      src="/assets/images/SingleProductImage/ratingIcon.svg"
+                      alt="Star"
+                      fill
+                      className="object-cover"
+                    />
+                  </div>
+                  0
+                </div>
+              </div>
+            </div>
+          </div>
+
+          {/* Visit store and contact button */}
+          <div className="flex items-end gap-[0.5rem] w-[100%] md:h-[40%] lg:h-[50%] 2xl:h-[40%] md:text-[1.1rem] xl:text-[1.2rem] 2xl:text-[1.22669rem] text-[#171717] font-medium">
+            {NurseryCardButton.map((item, index) => {
+              return (
+                <button
+                  key={index}
+                  className="flex justify-evenly items-center w-[50%] md:h-[80%] 2xl:h-[70%] rounded-[0.625rem] border-[1.6px] border-[#CBD0D3]"
+                >
+                  <div className="relative md:w-[1.5rem] md:h-[1.5rem] 2xl:w-[1.53806rem] 2xl:h-[1.53806rem]">
+                    <Image
+                      src={item.imagePath}
+                      alt="Contact"
+                      fill
+                      className="object-cover"
+                    />
+                  </div>
+                  {item.buttonName}
+                </button>
+              );
+            })}
+          </div>
+        </div>
+      </div>
+    );
+  }
+);
+
+export const SingleProductCard = () => {
+  const searchParams = useSearchParams();
+  const productId: string = searchParams.get("id") || "";
+
+  const [productCount, setProductCount] = useState(1);
+  const [singleProductData, setSingleProductData] =
+    useState<TSingleProductData>();
+  const [loading, setLoading] = useState(true);
+  const [disablePlusButton, setDisablePlusButton] = useState<boolean>(false);
+
+  const crumbs = [
+    "Home",
+    singleProductData?.category,
+    singleProductData?.collection,
+    singleProductData?.name,
+  ];
+
+  // call to backend to fetch single product data
+  useEffect(() => {
+    const getSingleProductData = async () => {
+      const res = await axios.get(`api/getsingleproductdata?id=${productId}`);
+      if (!res.data.success) {
+        setLoading(false);
+        toast.error("No Product data found", toastStyle);
+        return;
+      }
+      const beProductData = res.data.productData;
+      console.log("single product data is:", beProductData);
+      setSingleProductData({
+        ...beProductData,
+        price: beProductData.price ? Number(beProductData.price) : 0,
+        compareAt: beProductData.compareAt
+          ? Number(beProductData.compareAt)
+          : 0,
+        productSize: beProductData.productSize
+          ? Number(beProductData.productSize)
+          : 0,
+        productQuantity: beProductData.productQuantity
+          ? Number(beProductData.productQuantity)
+          : 0,
+      });
+      setLoading(false);
+    };
+    if (!productId) {
+      return;
+    } else {
+      getSingleProductData();
+    }
+  }, [productId]);
+
+  const percentageoff = useCallback((compareAt: number, price: number) => {
+    if (compareAt === 0) {
+      return 0;
+    } else {
+      return Math.round(((compareAt - price) / compareAt) * 100);
+    }
+  }, []);
+
+  const inchesToFeetRange = useCallback((inches: number) => {
+    const exactFeet = inches / 12;
+    const lowerFeet = Math.max(1, Math.floor(exactFeet));
+    const upperFeet = Math.max(lowerFeet + 1, Math.ceil(exactFeet));
+    return `${lowerFeet}-${upperFeet} feet`;
+  }, []);
+
+  const disCount = percentageoff(
+    Number(singleProductData?.compareAt),
+    Number(singleProductData?.price)
+  );
+  const sizeInFeet = inchesToFeetRange(Number(singleProductData?.productSize));
+
+  const DummyNavigation: string[] = [
+    "Home",
+    `${singleProductData?.category}`,
+    `${singleProductData?.collection}`,
+    `${singleProductData?.name || "Product Name"}`,
+  ];
+
+  const ProductImages: string[] = [
+    "/assets/images/ExploreBySellerImages/ImagePlaceholder.jpg",
+    `${singleProductData?.imageURL || "/assets/images/SingleProductImage/productImage.jpg"}`,
+    "/assets/images/ExploreBySellerImages/ImagePlaceholder.jpg",
+  ];
+
+  const AvailablePotSizeandPrice: TAvailablePotSizeandPrice[] = [
+    {
+      sizeandPrice: `${singleProductData?.productSize}" Pot - ₹ ${singleProductData?.price}`,
+      approxSize: sizeInFeet,
+      tag: "Best Value",
+    },
+  ];
+
+  if (!productId) {
+    return (
+      <div className="w-[100%] h-[95%] flex justify-center items-start pt-[10rem] text-[#CBD0D3] uppercase text-[1.5rem]">
+        No Product Data found
+      </div>
+    );
+  }
+  if (loading) {
+    return <Skeleton className="flex justify-center items-center" />;
+  } else {
+    return (
+      <div className="w-[100%] md:h-[65rem] lg:h-[65rem] xl:h-[70rem] 2xl:h-[78.8125rem] flex flex-col gap-[2rem] items-center bg-[#FFFFFF] rounded-[0.94rem] font-[Poppins]">
+        {/* Top Div Dummy Navigation */}
+        <div className="w-[100%] h-[4%] flex items-center gap-[1rem] pl-[1rem] md:text-[1rem] xl:text-[1.25rem] font-medium border-b-[0.0625rem] border-[#00000033]">
+          {DummyNavigation.map((item, index) => {
+            return (
+              <div
+                className={`flex items-center justify-between gap-[1rem] ${index !== 3 ? "text-[#697F75]" : "text-[#171717]"}`}
+                key={index}
+              >
+                {item}
+                {index !== 3 && (
+                  <div className="relative w-[0.6875rem] h-[0.6875rem]">
+                    <Image
+                      src={
+                        "/assets/images/SingleProductImage/rightArrowIcon.svg"
+                      }
+                      alt="arrow"
+                      className="object-contain"
+                      fill
+                    />
+                  </div>
+                )}
+              </div>
+            );
+          })}
+        </div>
+
+        {/* Middle div consist of prod images and data */}
+        <div className="w-[100%] md:h-[50%] new-md:h-[75%] lg:h-[65%] xl:h-[75%] flex">
+          {/* Left div Product Images */}
+          <div className="md:w-[55%] xl:w-[60%] md:h-[100%] flex flex-col md:justify-start lg:justify-between md:gap-[1rem] lg:gap-0 items-center">
+            {/* Main Product image */}
+            <div className="md:w-[90%] xl:w-[78%] md:h-[70%] p-[1rem] bg-[#FFF6F4] rounded-[0.625rem] flex justify-center">
+              <div className="relative w-[100%] h-[100%] border-[1px] border-[#00000033] rounded-[0.625rem] overflow-hidden">
+                <Image
+                  src={`${singleProductData?.imageURL || "/assets/images/SingleProductImage/productImage.jpg"}`}
+                  alt="productImage"
+                  className="object-cover"
+                  fill
+                />
+                <div className="absolute top-0 left-0 w-[50%] h-[100%] px-[1.2rem] py-[1rem]">
+                  <h1 className="md:w-[6rem] lg:w-[8rem] lg:h-[2.5rem] 2xl:w-[9.8125rem] 2xl:h-[3.0625rem] flex justify-center items-center text-[#FFFFFF] md:text-[1rem] lg:text-[1.2rem] 2xl:text-[1.5rem] font-semibold rounded-[5.25rem] bg-[#56A430] capitalize">
+                    {`-${disCount ? disCount : "25"}% off`}
+                  </h1>
+                </div>
+
+                <div className="absolute top-0 right-0 w-[50%] h-[100%] flex justify-end px-[1.2rem] py-[1rem]">
+                  <p className="md:w-[5rem] lg:w-[8rem] 2xl:w-[9.625rem] h-[1.625rem] flex justify-center items-center rounded-[5.25rem] bg-[#7FB819] text-[#FFFFFF] text-[0.7rem] lg:text-[0.8rem] 2xl:text-[1rem] font-semibold">
+                    {singleProductData?.tags || "Best Seller"}
+                  </p>
+                </div>
+              </div>
+            </div>
+
+            {/* Dots */}
+            <div className="w-[78%] h-[3%] flex justify-center items-center">
+              <div className="md:w-[20%] 2xl:w-[10%] h-[100%] flex items-center justify-between">
+                {[...Array(4)].map((_, index) => {
+                  return (
+                    <div
+                      key={index}
+                      className="w-[0.75rem] h-[0.75rem] bg-[#CBD0D3] rounded-full"
+                    ></div>
+                  );
+                })}
+              </div>
+            </div>
+
+            {/* Sliding Images */}
+            <div className="w-[100%] md:h-[22%] lg:h-[25%] flex justify-center items-center">
+              {/* Left Button */}
+              <LeftRightArrow direction={DirectionType.LEFT} />
+
+              {/* Product Images */}
+              <div className="md:w-[100%] lg:w-[78%] h-[100%] flex items-center justify-evenly bg-[#FFF6F4] rounded-[0.9375rem]">
+                {ProductImages.map((item, index) => {
+                  return (
+                    <div
+                      key={index}
+                      className="relative w-[29%] h-[80%] rounded-[0.625rem] border-[1.6px] border-[#FFFFFF] overflow-hidden"
+                    >
+                      <Image
+                        src={item}
+                        alt="prodImage"
+                        className="object-cover"
+                        fill
+                      />
+                    </div>
+                  );
+                })}
+              </div>
+
+              {/* Right button */}
+              <LeftRightArrow direction={DirectionType.RIGHT} />
+            </div>
+          </div>
+
+          {/* Right div */}
+          <div className="md:w-[45%] xl:w-[40%] md:h-[100%] flex flex-col md:justify-start lg:justify-between md:gap-[2rem] lg:gap-0 md:pl-[1rem] xl:pl-0">
+            {/* Prod Name, Pot Info, Prod Rating and review */}
+            <div>
+              {/* Product Name */}
+              <h1 className="text-[#000000] md:text-[1.2rem] lg:text-[1.5rem] xl:text-[1.8rem] 2xl:text-[2rem] capitalize font-semibold">
+                {singleProductData?.name || "Product Name"}
+              </h1>
+
+              {/* Pot Size available */}
+              <p className="md:text-[0.9rem] xl:text-[1.2rem] 2xl:text-[1.5rem] text-[#697F75] font-medium">
+                {`Pot - ${singleProductData?.productSize || 'Strelitzia Nicolai - 10" Premium Pot'}" Premium Pot`}
+              </p>
+
+              {/* Product Stars and Product review */}
+              <div className="flex gap-[1rem] md:text-[1rem] 2xl:text-[1.22669rem]">
+                <div className="flex items-center gap-[0.2rem] text-[#171717] font-normal">
+                  {[...Array(5)].map((_, index) => {
+                    return (
+                      <div
+                        className="relative md:w-[1.2rem] md:h-[1.2rem] 2xl:w-[1.5rem] 2xl:h-[1.5rem]"
+                        key={index}
+                      >
+                        <Image
+                          src={`/assets/images/SingleProductImage/whiteStarIcon.svg`}
+                          alt="Star"
+                          fill
+                          className="object-contain"
+                        />
+                      </div>
+                    );
+                  })}
+                  0
+                </div>
+                <p className="text-[#CBD0D3] font-medium">(0 reviews)</p>
+              </div>
+            </div>
+
+            {/* Prod Price,CompareAt Price, Discound and shipping details */}
+            <div className="flex flex-col gap-[0.5rem]">
+              <div className="flex items-center gap-[1rem]">
+                <h1 className="md:text-[1.3rem] lg:text-[1.5rem] xl:text-[1.8rem] 2xl:text-[2rem] text-[#56A430] font-semibold">
+                  {`₹ ${singleProductData?.price}`}
+                </h1>
+                <h3 className="md:text-[0.9rem] lg:text-[1rem] xl:text-[1.1rem] 2xl:text-[1.25rem] text-[#697F75] font-normal line-through">
+                  {`₹ ${singleProductData?.compareAt}`}
+                </h3>
+                <div className="md:w-[6rem] md:h-[2rem] 2xl:w-[7.1875rem] 2xl:h-[2.4375rem] bg-[#DBD5A4] md:text-[0.8rem] xl:text-[0.9rem]  2xl:text-[1rem] text-[#56A430] font-semibold rounded-[5.25rem] flex items-center justify-center">
+                  {`Save ${disCount ? disCount : "25%"}%`}
+                </div>
+              </div>
+              <div className="flex items-center gap-[0.5rem] md:text-[0.8rem] 2xl:text-[0.9375rem] text-[#697F75] font-normal">
+                <div className="relative md:w-[1.2rem] md:h-[1.2rem] 2xl:w-[1.5rem] 2xl:h-[1.5rem]">
+                  <Image
+                    src="/assets/images/SingleProductImage/truckIcon.svg"
+                    alt="Truck"
+                    fill
+                    className="object-contain"
+                  />
+                </div>
+                Free shipping on this item
+              </div>
+            </div>
+
+            {/* Pot Size div */}
+            <div className="md:text-[0.9rem] lg:text-[1rem] xl:text-[1.1rem] 2xl:text-[1.25rem] text-[#171717] font-medium">
+              <h1>Choose Size:</h1>
+              <div className="flex md:flex-col lg:flex-row gap-[0.5rem]">
+                {AvailablePotSizeandPrice.map((item, index) => {
+                  return (
+                    <button
+                      key={index}
+                      className="md:max-w-[60%] lg:min-w-[35%] lg:max-w-[60%] md:h-[5rem] 2xl:h-[5.9375rem] flex flex-col justify-center items-start border-[1.6px] rounded-[0.625rem] border-[#56A430] bg-[#DEFFE0] px-[0.5rem]"
+                    >
+                      <p>{item.sizeandPrice}</p>
+                      <p className="md:text-[0.7rem] 2xl:text-[0.9375rem] text-[#697F75] font-normal">
+                        {item.approxSize}
+                      </p>
+                      {item.tag && (
+                        <p className="md:w-[6rem] 2xl:w-[7.125rem] h-[1.625rem] rounded-[5.25rem] bg-[#7FB819] flex justify-center items-center md:text-[0.7rem] 2xl:text-[0.875rem] text-[#FFFFFF] font-semibold">
+                          {item.tag}
+                        </p>
+                      )}
+                    </button>
+                  );
+                })}
+              </div>
+            </div>
+
+            {/* Quantity,Add to cart and buy-now */}
+            <div className="flex flex-col gap-[1rem]">
+              <div className="flex gap-[1rem] items-center">
+                <h1 className="md:text-[0.9rem] lg:text-[1rem] xl:text-[1.1rem] 2xl:text-[1.25rem] text-[#171717] font-medium">
+                  Quantity:
+                </h1>
+
+                {/* Plus Minus */}
+                <div className="flex w-max bg-[#FFF6F4] rounded-[0.3125rem]">
+                  {/* Minus Button */}
+                  <PlusMinusButton
+                    src="/assets/images/SingleProductImage/minusIcon.svg"
+                    alt="minusButton"
+                    conditionalStyle={
+                      productCount === 1 && "cursor-not-allowed"
+                    }
+                    disabled={productCount === 1 && true}
+                    onClick={() => {
+                      if (singleProductData?.productQuantity) {
+                        if (disablePlusButton) {
+                          setDisablePlusButton(false);
+                        }
+                      }
+                      setProductCount(productCount - 1);
+                    }}
+                  />
+
+                  {/* Product Count */}
+                  <div className="md:w-[1.5rem] md:h-[1.5rem] 2xl:w-[2.5rem] 2xl:h-[2.125rem] my-[0.1rem] flex items-center justify-center bg-white md:text-[1.1rem] 2lx:text-[1.22669rem] text-black">
+                    {productCount}
+                  </div>
+
+                  {/*Plus Button */}
+                  <PlusMinusButton
+                    src="/assets/images/SingleProductImage/plusIcon.svg"
+                    alt="PlusButton"
+                    conditionalStyle={
+                      disablePlusButton
+                        ? "cursor-not-allowed"
+                        : "cursor-pointer"
+                    }
+                    disabled={disablePlusButton}
+                    onClick={() => {
+                      if (singleProductData?.productQuantity) {
+                        if (
+                          productCount === singleProductData.productQuantity
+                        ) {
+                          setDisablePlusButton(true);
+                        } else {
+                          setProductCount((prevCount: number) => prevCount + 1);
+                        }
+                      }
+                    }}
+                  />
+                </div>
+
+                <div className="md:text-[0.9rem] lg:text-[1rem] 2xl:text-[1.22669rem] text-[#CBD0D3] font-medium">
+                  {`(${singleProductData?.productQuantity} available)`}
+                </div>
+              </div>
+
+              {/* Add to cart,like and share button */}
+              <div className="flex justify-start gap-[1rem]">
+                {/* Add to cart */}
+                <button className="md:w-[55%] 2xl:w-[60%] md:h-[2.7rem] 2xl:h-[3.1875rem] bg-[#56A430] hover:bg-[#213E12] rounded-[0.625rem] flex items-center justify-center gap-[1rem] text-white md:text-[1rem] lg:text-[1.1rem] 2xl:text-[1.22669rem] font-[Poppins]">
+                  <div className="relative md:w-[1.3rem] md:h-[1.3rem] lg:w-[1.5rem] lg:h-[1.5rem] 2xl:w-[1.53806rem] 2xl:h-[1.50469rem]">
+                    <Image
+                      src="/assets/images/ExploreImages/shopping-cart.svg"
+                      alt="cart"
+                      className="object-cover"
+                      fill
+                    />
+                  </div>
+                  Add to Cart
+                </button>
+                {/* Like Product button */}
+                <LikandShare src="/assets/images/SingleProductImage/heartIcon.svg" />
+                {/* Share Product Button */}
+                <LikandShare src="/assets/images/SingleProductImage/shareIcon.svg" />
+              </div>
+
+              {/* Buy-Now Button */}
+              <button className="md:w-[95%] lg:w-[85%] md:h-[2.7rem] 2xl:h-[3.1875rem] border border-[#56A430] bg-white rounded-[0.625rem] text-[#56A430]  md:text-[1rem] lg:text-[1.1rem] 2xl:text-[1.22669rem] font-medium">
+                Buy Now - Express Checkout
+              </button>
+            </div>
+
+            {/* Nursery Card */}
+            <div className="md:hidden lg:block lg:w-[90%] 2xl:w-[85%] h-[25%]">
+              <NurseryCard
+                pictureURL={
+                  singleProductData?.seller.profilePictureURL ||
+                  "/assets/images/ExploreBySellerImages/ImagePlaceholder2.pn"
+                }
+                nurseryName={
+                  singleProductData?.seller.nurseryName || "Evergreen Gardens"
+                }
+                nurseryAddress={
+                  singleProductData?.seller.address || "Katraj, Pune |"
+                }
+              />
+            </div>
+          </div>
+        </div>
+
+        {/* Product about section */}
+        <div className="w-[100%] md:h-[50%] lg:h-[20%] flex flex-col md:justify-between lg:justify-start items-center gap-[1rem] md:pb-[1rem] lg:pb-0">
+          <h1 className="md:text-[1.5rem] 2xl:text-[2rem] text-[#000000] font-semibold">
+            About Product
+          </h1>
+          {/* Product Description */}
+          <p className="text-[#171717] md:text-[1rem] lg:text-[1rem] 2xl:text-[1.25rem] font-normal text-center md:px-[2rem] lg:px-[3.5rem]">
+            {singleProductData?.description}
+          </p>
+          {/* Nursery Card  displayed in md and new-md hidden from lg*/}
+          <div className="md:block lg:hidden md:w-[55%] new-md:w-[50%] md:h-[40%] new-md:h-[50%]">
+            <NurseryCard
+              pictureURL={
+                singleProductData?.seller.profilePictureURL ||
+                "/assets/images/ExploreBySellerImages/ImagePlaceholder2.pn"
+              }
+              nurseryName={
+                singleProductData?.seller.nurseryName || "Evergreen Gardens"
+              }
+              nurseryAddress={
+                singleProductData?.seller.address || "Katraj, Pune |"
+              }
+            />
+          </div>
+        </div>
+      </div>
+    );
+  }
+};

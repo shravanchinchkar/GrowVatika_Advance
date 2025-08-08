@@ -8,36 +8,36 @@ export enum SearchBarWorkType {
 
 interface ProductSearchBarProps {
   placeholder: string;
-  UseType: SearchBarWorkType;
+  parentClassName?:string
+  searchInputClassName?:string
+  searchButtonClassName?:string
 }
 
-export const ProductSearchBar =memo(({
-  placeholder,
-  UseType,
-}: ProductSearchBarProps) => {
-  return (
-    <div className="w-[100%] h-[100%] border-[2px] rounded-l-full rounded-r-full border-[#56A430] flex gap-[0.2rem] justify-start items-center bg-white new-sm:pl-[0.7rem] md:pl-[1rem]">
-      {/* Following is the search Image */}
-      <div className="new-sm:w-[1.5rem] new-sm:h-[1.5rem] lg:w-[1.5rem] lg:h-[1.5rem] xl:w-[1.8rem] xl:h-[1.8rem] relative">
-        <Image
-          className="object-cover"
-          src="./assets/images/HeaderImages/search-logo.svg"
-          alt="search-logo"
-          fill
-          sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 25vw"
+export const ProductSearchBar = memo(
+  ({ placeholder,parentClassName,searchInputClassName,searchButtonClassName }: ProductSearchBarProps) => {
+    return (
+      <div className={`${parentClassName} flex items-center justify-between rounded-full border-[1.6px] border-[#56A430] bg-white`}>
+        {/* Search Input*/}
+        <input
+          type="text"
+          placeholder={placeholder}
+          className={`w-[100%] h-[100%] rounded-l-full bg-transparent text-[#CBD0D3] placeholder-[#CBD0D3] font-normal outline-none font-poppins ${searchInputClassName}`}
         />
-      </div>
+        {/* Search Button */}
+        <button className={`h-[100%] rounded-r-full bg-[#56A430] text-white font-poppins capitalize backdrop-blur-[6.408869743347168px] overflow-hidden ${searchButtonClassName}`}> 
+          <div className="w-[100%] h-[100%] flex justify-center items-center bg-button-custom-gradient overflow-hidden">
+            <div className="relative new-sm:w-[1rem] new-sm:h-[1rem] new-sm-3:w-[1.2rem] new-sm-3:h-[1.2rem] md:w-[1.5rem] md:h-[1.5rem] flex-shrink-0">
+              <Image
+                src="/assets/images/ExploreImages/searchButtonSearchIcon.svg"
+                alt="search icon"
+                className="w-full h-full"
+                fill
+              />
+            </div>
+          </div>
 
-      {/* Following is the Search Input Field */}
-      <input
-        className={
-          UseType === SearchBarWorkType.PRODUCTSEARCH
-            ? "new-sm:w-[85%] new-sm-1:w-[87%] lg:w-[11rem] xl:w-[17.3125rem] h-[1.8125rem] font-[Poppins] outline-none font-normal new-sm:text-[0.9rem] new-sm-1:text-[1rem] xl:text-[1.22669rem] placeholder:text-[#CBD0D3] text-[#8C8C8C]"
-            : "w-[7.875rem] h-[1.8125rem] font-[Poppins] text-[1.22669rem] placeholder:text-[#CBD0D3] text-[#8C8C8C] font-normal border-none outline-none"
-        }
-        type="text"
-        placeholder={placeholder}
-      />
-    </div>
-  );
-});
+        </button>
+      </div>
+    );
+  }
+);

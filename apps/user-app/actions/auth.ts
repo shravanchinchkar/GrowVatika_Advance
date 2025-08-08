@@ -8,11 +8,11 @@ import { JWT } from "google-auth-library";
 import { getIp } from "../helper/get-ip-address";
 import { getExpiryDate } from "@repo/shared/utilfunctions";
 import { generateVerifyCode } from "@repo/shared/utilfunctions";
-import { getCurrentFormattedDate } from "@repo/shared/utilfunctions";
 import { authRateLimit, getStartedFromLimit } from "../lib/rate-limit";
-import { sendVerificationEmail } from "../helper/sendVerificationMail";
-import { sendResendPasswordMail } from "../helper/sendResetPasswordMail";
-import { successfulCollaboration } from "../helper/successfulCollaborationMail";
+import { sendVerificationEmail } from "../helper/send-verification-mail";
+import { sendResendPasswordMail } from "../helper/send-reset-password-mail";
+import { getCurrentFormattedDateTimeString } from "@repo/shared/utilfunctions";
+import { successfulCollaboration } from "../helper/send-successful-collaboration-mail";
 import {
   SignUpInputs,
   SignUpSchema,
@@ -367,11 +367,10 @@ export async function storeDataInExcel(
     return { success: false, error: "Invalid Inputs" };
   }
 
-  //If the form request count goes beyond 5 within 5 minutes,the block the user for 5 minutes
+  //If the form request count goes beyond 5 within 5 minutes,then block the user for 5 minutes
   const IpAddress = await getIp(); //get the Ip address of the user
-  console.log("Ip address is:", IpAddress);
-  const { success, pending, limit, reset, remaining } =
-    await getStartedFromLimit.limit(IpAddress);
+
+  const { success, remaining } = await getStartedFromLimit.limit(IpAddress);
   if (!success) {
     console.error("GetStarted form Limit Exhausted try again after 5 minutes");
     return {
@@ -384,6 +383,12 @@ export async function storeDataInExcel(
   else {
     console.log("remaining:", remaining);
     try {
+      const isDevelopment = process.env.NODE_ENV === "development";
+      const baseURL = isDevelopment
+        ? process.env.SUCCESSFUL_COLLABORATION_DEVELOPMENT_URL || ""
+        : process.env.SUCCESSFUL_COLLABORATION_PRODUCTION_URL || "";
+      const verificationURL = `${baseURL}/verify?email=${encodeURIComponent(validateInput.data.email)}`;
+
       const existingSellerByEmail = await client.seller.findUnique({
         where: { email: validateInput.data.email },
       });
@@ -420,9 +425,10 @@ export async function storeDataInExcel(
           const emailResponse = await successfulCollaboration(
             validateInput.data.nurseryName,
             validateInput.data.fullName,
-            getCurrentFormattedDate(),
+            getCurrentFormattedDateTimeString(),
             userDetails.email,
-            verifyCode
+            verifyCode,
+            verificationURL
           );
 
           // If error while sending email
@@ -510,9 +516,10 @@ export async function storeDataInExcel(
         const emailResponse = await successfulCollaboration(
           validateInput.data.nurseryName,
           validateInput.data.fullName,
-          getCurrentFormattedDate(),
+          getCurrentFormattedDateTimeString(),
           userDetails.email,
-          verifyCode
+          verifyCode,
+          verificationURL
         );
 
         // If error while sending email

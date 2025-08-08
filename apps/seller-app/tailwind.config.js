@@ -9,14 +9,19 @@ export default {
   theme: {
     extend: {
       screens: {
+        "new-sm-old":"1px",
+        "new-sm": "320px",
+        "new-sm-1": "360px",
+        "new-sm-2": "430px",
+        "new-sm-3": "535px",
+        "new-md": "888px",
         "new-lg": "1153px",
         "new-xl": "1356px",
       },
       boxShadow: {
         editButton: "0px 0px 2px 5px #FF4B4B",
         "seller-header-custom": "0px 4px 4px 0px rgba(0, 0, 0, 0.25)",
-        "button-custom-boxshadow":
-          "0px 1.282px 12.818px -0.32px rgba(0, 0, 0, 0.25)",
+        "custom-boxshadow": "0px 1.282px 12.818px -0.32px rgba(0, 0, 0, 0.25)",
         "explore-custom": "10px 10px 59px #85A947",
       },
       backgroundImage: {

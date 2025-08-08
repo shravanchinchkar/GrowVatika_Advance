@@ -66,13 +66,13 @@ export const SellerDashboardSideBar = memo(() => {
   };
 
   return (
-    <div className="fixed top-0 left-0 lg:w-[15rem] new-lg:w-[16rem] 2xl:w-max h-[100%] bg-custom-bg rounded-[1.88rem] flex flex-col justify-between overflow-hidden">
+    <div className="fixed top-0 left-0 md:w-[30%] lg:w-[15rem] new-lg:w-[16rem] 2xl:w-[20.5%] h-[100%] bg-custom-bg rounded-[1.88rem] flex flex-col justify-between overflow-hidden">
       {/* Following div consist of Logo, Main Section and setting section */}
       <div className="flex flex-col gap-[0.5rem]">
         {/* Top div logo and main section */}
         <div className="h-max flex-col">
           {/* following div consist of log */}
-          <div className="lg:w-[13rem] new-lg:w-[14rem] 2xl:w-[15.9375rem] h-[4.0625rem] rounded-[24px] flex justify-start items-center m-[1rem] bg-[#fff] overflow-hidden">
+          <div className="md:w-[11rem] lg:w-[13rem] new-lg:w-[14rem] 2xl:w-[15.9375rem] h-[4.0625rem] rounded-[24px] flex justify-start items-center m-[1rem] bg-[#fff] overflow-hidden">
             <SellerDashboardSiteLogo />
           </div>
 
@@ -80,11 +80,11 @@ export const SellerDashboardSideBar = memo(() => {
           <ul className="flex flex-col text-[#fff]">
             <li className="text-[11px] pl-[1.5rem]">Main</li>
 
-            <div className="flex flex-col lg:text-[17px] new-lg:text-[19px] 2xl:text-[19.63px] font-medium capitalize">
+            <div className="flex flex-col md:text-[15px] lg:text-[17px] new-lg:text-[19px] 2xl:text-[19.63px] font-medium capitalize">
               {SideBarMainSectionList.map((item, index) => {
                 return (
                   <button
-                    className="capitalize"
+                    className="capitalize outline-none"
                     key={index}
                     id={item}
                     onClick={handleSideBarNavigation}
@@ -96,7 +96,7 @@ export const SellerDashboardSideBar = memo(() => {
                           : "flex items-center gap-[1rem] cursor-pointer pl-[1.5rem] py-[0.5rem]"
                       }
                     >
-                      <div className="relative lg:w-[21px] lg:h-[21px]  xl:w-[24px] xl:h-[24px]">
+                      <div className="relative md:w-[17px] md:h-[17px] lg:w-[21px] lg:h-[21px] xl:w-[24px] xl:h-[24px]">
                         <Image
                           className={"object-cover pointer-events-none"}
                           src={`/assets/images/SellerDashboardImages/${item}Icon.svg`}
@@ -126,7 +126,7 @@ export const SellerDashboardSideBar = memo(() => {
         {/* Sidebar Setting Section */}
         <ul className="text-[#fff]">
           <li className="text-[11px] pl-[1.5rem]">Settings</li>
-          <div className="flex flex-col lg:text-[17px] new-lg:text-[19px] 2xl:text-[19.63px] font-medium capitalize">
+          <div className="flex flex-col md:text-[15px] lg:text-[17px] new-lg:text-[19px] 2xl:text-[19.63px] font-medium capitalize">
             {SideBarSettingSectionList.map((item, index) => {
               return (
                 <button
@@ -142,7 +142,7 @@ export const SellerDashboardSideBar = memo(() => {
                         : "flex items-center gap-[1rem] cursor-pointer pl-[1.5rem] py-[0.5rem]"
                     }
                   >
-                    <div className="relative lg:w-[21px] lg:h-[21px] xl:w-[24px] xl:h-[24px]">
+                    <div className="relative md:w-[17px] md:h-[17px] lg:w-[21px] lg:h-[21px] xl:w-[24px] xl:h-[24px]">
                       <Image
                         className={"object-cover"}
                         src={`/assets/images/SellerDashboardImages/${item}Icon.svg`}
@@ -175,7 +175,7 @@ export const SellerDashboardSideBar = memo(() => {
         <div
           className={
             display === true
-              ? "absolute top-[-6rem] rounded-[1.5rem] lg:w-[14rem] 2xl:w-[15.9375rem] h-[11.0625rem] py-[1.2rem] bg-[#fff] border-[2px] border-[#697F75]"
+              ? "absolute top-[-6rem] rounded-[1.5rem] md:w-[12rem] lg:w-[14rem] 2xl:w-[15.9375rem] h-[11.0625rem] py-[1.2rem] bg-[#fff] border-[2px] border-[#697F75]"
               : "hidden"
           }
         >
@@ -213,8 +213,9 @@ export const SellerDashboardSideBar = memo(() => {
           </ul>
         </div>
 
-        <div className="z-10 lg:w-[14rem] lg:h-[4rem] 2xl:w-[15.9375rem] 2xl:h-[4.0625rem] rounded-[1.5rem] flex justify-center items-center px-[1rem] gap-[0.8rem] m-[1rem] bg-[#fff] border-[1.5px] border-[#697F75]">
+        <div className="z-10 md:w-[12rem] lg:w-[14rem] md:h-[4rem] 2xl:w-[15.9375rem] 2xl:h-[4.0625rem] rounded-[1.5rem] flex justify-center items-center md:px-[0.5rem] lg:px-[1rem] gap-[0.8rem] m-[1rem] bg-[#fff] border-[1.5px] border-[#697F75]">
           <div className="w-[100%] h-[100%] flex justify-between py-[0.5rem]">
+
             {/* Nursery Profile Photo goes here! */}
             <div className="flex items-center">
               <div className="relative w-[2.425rem] h-[2.425rem] rounded-full overflow-hidden bg-[#56A430]">
@@ -229,7 +230,9 @@ export const SellerDashboardSideBar = memo(() => {
                   />
                 ) : (
                   <Image
-                    src={"/assets/images/SellerDashboardImages/seller-image-placeholder.svg"}
+                    src={
+                      "/assets/images/SellerDashboardImages/seller-image-placeholder.svg"
+                    }
                     alt="noimage"
                     className="object-cover"
                     fill
@@ -238,7 +241,7 @@ export const SellerDashboardSideBar = memo(() => {
               </div>
             </div>
 
-            <div className="w-[77%] h-[100%] flex justify-between items-center gap-[1rem]">
+            <div className="md:w-[75%] lg:w-[77%] h-[100%] flex justify-between items-center gap-[1rem]">
               {/* Nursery Name */}
               <div className="flex flex-col justify-center font-medium capitalize h-[100%]">
                 <h1 className="text-[#123524] text-[0.75rem] max-h-max leading-[15px]">

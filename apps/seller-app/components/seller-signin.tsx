@@ -17,6 +17,9 @@ export const SellerSignin = () => {
   const { data: session } = useSession();
   const [loading, setLoading] = useState(false);
 
+  // Get the userTimezone in client side
+  const userTimezone: string = Intl.DateTimeFormat().resolvedOptions().timeZone;
+
   useEffect(() => {
     if (session?.user) {
       const sellerId = session.user.id;
@@ -39,16 +42,14 @@ export const SellerSignin = () => {
 
   // Function to handle Seller Signin
   async function handleSellerSignin(data: SignInInputs) {
-    console.log("Function");
     setLoading(true);
-    console.log("Seller Signin data is:", data);
     const res = await signIn("credentials", {
       email: data.email,
       password: data.password,
+      userTimezone: userTimezone,
       redirect: false,
     });
     setLoading(false);
-    console.log("Seller Signin  response is:", res);
 
     // If error
     if (res?.error) {
@@ -62,10 +63,13 @@ export const SellerSignin = () => {
         };
         errorMessage =
           errorResponse.error || errorResponse.message || "Signin Failed";
-        console.log("User Signin error response to FE :", errorResponse.error);
+        console.error(
+          "User Signin error response to FE :",
+          errorResponse.error
+        );
       } catch (parseError) {
         // If JSON parsing fails, use the raw error message
-        console.log("Seller SignIn error:", res.error);
+        console.error("Seller SignIn error:", res.error);
         errorMessage = "Internal Server Error!";
       }
       toast.error(errorMessage, toastStyle);
@@ -80,7 +84,6 @@ export const SellerSignin = () => {
       const session = await sessionResponse.json();
       const sellerId = session.user.id;
       if (session?.user?.isVerified) {
-        console.log("Seller Details after signin:", session.user);
         toast.success("Signin successful!", toastStyle);
         router.push(`/sellerdashboard?id=${sellerId}`);
       } else {
@@ -94,7 +97,6 @@ export const SellerSignin = () => {
       {/* Following is the left side div which consist of Image */}
 
       <div className="w-[50%] flex justify-center items-center">
-
         <div className="lg:w-[30rem] lg:h-[36rem] new-lg:w-[34rem] xl:w-[37rem]  2xl:w-[42rem] 2xl:h-[42rem] shrink-0 rounded-[28px] overflow-hidden bg-[url(/assets/images/AuthImages/seller-signin.png)] bg-cover bg-no-repeat border-[1px] border-[#8C8C8C]">
           <div className="mx-auto flex flex-col items-center text-[#606060] mt-[2rem]">
             <h1 className="lg:text-[1.5rem] new-lg:text-[1.7rem] xl:text-[1.8rem] 2xl:text-[2rem] font-bold w-[32rem] text-center">

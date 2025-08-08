@@ -1,14 +1,15 @@
 import { resend } from "../lib/resend";
 import { v4 as uuidv4 } from "uuid";
 import { ApiResponseType } from "@repo/common-types/types";
-import NurseryCollaborationEmail from "../emails/successful-Collaboration-template";
+import NurseryCollaborationEmail from "../emails/successful-collaboration-mail-template";
 
 export async function successfulCollaboration(
   nurseryName: string,
   ownerName: string,
   registrationDate: string,
   email: string,
-  verifyCode: string
+  verifyCode: string,
+  verificationURL: string
 ): Promise<ApiResponseType> {
   try {
     const { data, error } = await resend.emails.send({
@@ -21,7 +22,21 @@ export async function successfulCollaboration(
         registrationDate,
         email,
         verifyCode,
+        verificationURL,
       }),
+      text: `Hello ${ownerName},Congratulations! Your nursery "${nurseryName}" has successfully collaborated with GrowVatika.
+      Collaboration Details:
+      - Nursery Name: ${nurseryName}
+      - Owner Name: ${ownerName}
+      - Registration Date: ${registrationDate}
+      - Email: ${email}
+      Verification Details:
+      - Verification Code: ${verifyCode}
+      - Verification URL: ${verificationURL}
+      Please verify your collaboration by clicking the link above or using the verification code.
+      Best regards,
+      GrowVatika Team
+      https://growvatika.live`,
       headers: {
         "X-Entity-Ref-ID": uuidv4(),
       },

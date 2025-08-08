@@ -4,10 +4,16 @@ import { authRateLimit } from "./rate-limit";
 import { getIp } from "../helper/get-ip-address";
 import GoogleProvider from "next-auth/providers/google";
 import { SignInSchema } from "@repo/common-types/types";
-import { getExpiryDate } from "@repo/shared/utilfunctions";
+import { getLocationFromIP } from "@repo/shared/utilfunctions";
 import { generateVerifyCode } from "@repo/shared/utilfunctions";
 import CredentialsProvider from "next-auth/providers/credentials";
-import { sendVerificationEmail } from "../helper/sendVerificationMail";
+import { sendVerificationEmail } from "../helper/send-verification-mail";
+import { sendSignInSuccessfulMail } from "@/helper/send-signin-successful-mail";
+import {
+  getCurrentFormattedDateTimeString,
+  getCurrentDateTime,
+  getExpiryDate,
+} from "@repo/shared/utilfunctions";
 
 export const NEXT_AUTH = {
   providers: [
@@ -20,8 +26,12 @@ export const NEXT_AUTH = {
           type: "password",
           placeholder: "Placeholder",
         },
+        userTimezone: { label: "Time Zone", type: "text" }, // add this line
       },
       async authorize(credentials: any) {
+        //Get the userTimezone in server side from client
+        const userTimezone = credentials?.userTimezone;
+        
         //validate the user Input
         const inputResult = SignInSchema.safeParse(credentials);
         if (!inputResult.success) {
@@ -37,10 +47,11 @@ export const NEXT_AUTH = {
             })
           );
         }
-        //If the count of signin request gose beyond 5 wihin 5 minutes then  the user gets blocked for 5 minutes, following is its logic
+        //If the count of signin request goes beyond 5 wihin 5 minutes then the user gets blocked for 5 minutes, following is its logic
         const IpAddress = await getIp();
-        const { success, pending, limit, reset, remaining } =
-          await authRateLimit.limit(IpAddress);
+        const currentLocation = await getLocationFromIP(IpAddress);
+
+        const { success } = await authRateLimit.limit(IpAddress);
         if (!success) {
           console.error("Signin Limit Exhausted,try again after 5 minutes.");
           throw new Error(
@@ -53,6 +64,7 @@ export const NEXT_AUTH = {
         } else {
           //extract the email and password send by the user
           const { email, password } = inputResult.data;
+
           //check if the user with the entered email already exists in db
           const userExists = await client.user.findFirst({
             where: {
@@ -69,6 +81,7 @@ export const NEXT_AUTH = {
               })
             );
           }
+
           // User has signedup but not verified then the below block
           else if (!userExists.isVerified) {
             const passwordValidation = await bcrypt.compare(
@@ -152,13 +165,38 @@ export const NEXT_AUTH = {
               password,
               userExists.password
             );
-
+            const currentDateTime = getCurrentDateTime(userTimezone);
             if (passwordValidation) {
+              // send signin email notification
+              const emailResponse = await sendSignInSuccessfulMail({
+                username: userExists.name,
+                email: userExists.email,
+                accountType: "User Account",
+                ipAddress: IpAddress,
+                signintime: currentDateTime,
+                location: currentLocation || "",
+              });
+
+              if (!emailResponse.success) {
+                console.error(
+                  "Failed to send signin successful email notification:",
+                  emailResponse.message
+                );
+                throw new Error(
+                  JSON.stringify({
+                    success: false,
+                    error:
+                      "Failed to send signin successful email notification",
+                  })
+                );
+              }
+
               return {
                 id: userExists.id.toString(),
                 name: userExists.name,
                 email: userExists.email,
                 isVerified: userExists.isVerified,
+                userTimezone: userTimezone,
                 customResponse: {
                   success: true,
                   message: "Sign-in successful",

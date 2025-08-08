@@ -369,7 +369,7 @@ export async function storeDataInExcel(
 
   //If the form request count goes beyond 5 within 5 minutes,then block the user for 5 minutes
   const IpAddress = await getIp(); //get the Ip address of the user
-  console.log("Ip address is:", IpAddress);
+
   const { success, remaining } = await getStartedFromLimit.limit(IpAddress);
   if (!success) {
     console.error("GetStarted form Limit Exhausted try again after 5 minutes");
@@ -383,10 +383,10 @@ export async function storeDataInExcel(
   else {
     console.log("remaining:", remaining);
     try {
-      const isProduction = process.env.NODE_ENV === "production";
-      const baseURL = isProduction
-        ? process.env.SUCCESSFUL_COLLABORATION_PRODUCTION_URL || ""
-        : process.env.SUCCESSFUL_COLLABORATION_DEVELOPMENT_URL || "";
+      const isDevelopment = process.env.NODE_ENV === "development";
+      const baseURL = isDevelopment
+        ? process.env.SUCCESSFUL_COLLABORATION_DEVELOPMENT_URL || ""
+        : process.env.SUCCESSFUL_COLLABORATION_PRODUCTION_URL || "";
       const verificationURL = `${baseURL}/verify?email=${encodeURIComponent(validateInput.data.email)}`;
 
       const existingSellerByEmail = await client.seller.findUnique({

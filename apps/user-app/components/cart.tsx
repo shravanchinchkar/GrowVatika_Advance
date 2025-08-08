@@ -41,7 +41,7 @@ export const Cart = memo(() => {
             >
               <div className="relative new-sm:w-[1rem] new-sm:h-[1rem] new-sm-1:w-[1.2rem] new-sm-1:h-[1.2rem] md:w-[1.5rem] md:h-[1.5rem] cursor-pointer">
                 <Image
-                  src="/assets/images/ExploreImages/cancleIcon.svg"
+                  src="/assets/images/CommonImages/cancelIcon.svg"
                   alt="cancle"
                   className="object-contain"
                   fill

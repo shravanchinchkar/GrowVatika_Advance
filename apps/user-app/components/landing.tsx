@@ -20,7 +20,6 @@ import {
   useUserProfileVisibilityStore,
 } from "@repo/shared-store";
 
-
 export const LandingPage = () => {
   const addToCartVisibility = useAddToCartVisibilityStore(
     (state: any) => state.addToCartDropDownVisibility
@@ -43,8 +42,7 @@ export const LandingPage = () => {
       <MobileNavBar />
       <UserProfilePopUp />
       <MobileGetStartedForm />
-      <HeaderSection />
-
+      <HeaderSection isExplore={true} />
 
       <div>
         <HeroSection />

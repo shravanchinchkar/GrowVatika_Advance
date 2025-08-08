@@ -4,6 +4,7 @@ import Image from "next/image";
 import toast from "react-hot-toast";
 import { useEffect, useState, memo } from "react";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { SelectTagSeller } from "./select-tag-seller";
 import { toastStyle } from "@repo/shared/utilfunctions";
 import { uploadProduct } from "../actions/uploadProduct";
 import { ButtonLoadingSign } from "@repo/ui/loading-sign";
@@ -13,7 +14,6 @@ import { ProductImageDropZone } from "./product-image-drop-zone";
 import { useForm, SubmitHandler, Controller } from "react-hook-form";
 import { useDisplayAddProductSectionStore } from "@repo/shared-store";
 import { addProductSchema, TAddProductSchema } from "@repo/common-types/types";
-import { CustomSellerDashboardDropDown } from "./custom-seller-dashboard-dropdown";
 
 export const SellerDashboardAddProductSection = memo(() => {
   // Zustand Code
@@ -63,6 +63,7 @@ export const SellerDashboardAddProductSection = memo(() => {
 
   useEffect(() => {
     setValue("category", category);
+    setCollection("");
   }, [category, setValue]);
 
   useEffect(() => {
@@ -80,7 +81,6 @@ export const SellerDashboardAddProductSection = memo(() => {
   const handlePublishProduct: SubmitHandler<TAddProductSchema> = async (
     data
   ) => {
-    console.log("Product Data is:", data);
     setLoading(true);
     // Create FormData object
     const formData = new FormData();
@@ -98,13 +98,9 @@ export const SellerDashboardAddProductSection = memo(() => {
     formData.append("productSize", data.productSize.toString()); //number to string
     formData.append("featured", (data.featured || false).toString());
     formData.append("productQuantity", data.productQuantity.toString()); //number to string
-
-    console.log("Final Form Data is:", formData);
-
     try {
       // Hit the backend for product upload
       const res: ApiResponseType = await uploadProduct(formData);
-      console.log("Upload Product Response:", res);
       if (res.success) {
         // Reset React Hook Form
         reset({
@@ -172,6 +168,9 @@ export const SellerDashboardAddProductSection = memo(() => {
   ];
   const ProductStatus = ["Active", "Draft", "Hidden"];
   const Visibility = ["Public", "Private"];
+
+  console.log("category value is:", category);
+  console.log("collection value is:", collection);
 
   if (displayAddProductSection === true) {
     return (
@@ -402,7 +401,7 @@ export const SellerDashboardAddProductSection = memo(() => {
                       {errors.category.message}
                     </div>
                   )}
-                  <CustomSellerDashboardDropDown
+                  <SelectTagSeller
                     label="Category"
                     placeholder="Select Category"
                     options={Category}
@@ -418,7 +417,7 @@ export const SellerDashboardAddProductSection = memo(() => {
                     </div>
                   )}
                   {/* "Plants", "Pots", "Soil", "Fertilizers" */}
-                  <CustomSellerDashboardDropDown
+                  <SelectTagSeller
                     label="Collection"
                     placeholder="Select Collection"
                     options={
@@ -442,7 +441,7 @@ export const SellerDashboardAddProductSection = memo(() => {
                       {errors.tags.message}
                     </div>
                   )}
-                  <CustomSellerDashboardDropDown
+                  <SelectTagSeller
                     label="Tags"
                     placeholder="Add Tags"
                     options={Tags}
@@ -466,7 +465,7 @@ export const SellerDashboardAddProductSection = memo(() => {
                   {errors.productStatus.message}
                 </div>
               )}
-              <CustomSellerDashboardDropDown
+              <SelectTagSeller
                 label="Product Status"
                 placeholder="Select Status"
                 options={ProductStatus}
@@ -481,7 +480,7 @@ export const SellerDashboardAddProductSection = memo(() => {
                   {errors.visibility.message}
                 </div>
               )}
-              <CustomSellerDashboardDropDown
+              <SelectTagSeller
                 label="Visibility"
                 placeholder="Select Visibility"
                 options={Visibility}

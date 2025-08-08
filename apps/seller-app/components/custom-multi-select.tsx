@@ -1,5 +1,5 @@
+import { ChevronDown, Check } from "lucide-react";
 import { useSpecialties } from "@repo/shared-store";
-import { ChevronDown, X, Check } from "lucide-react";
 import React, { useState, useRef, useEffect } from "react";
 
 interface MultiSelectProps {

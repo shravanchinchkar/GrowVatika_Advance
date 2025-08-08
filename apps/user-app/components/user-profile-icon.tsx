@@ -9,7 +9,7 @@ export const UserProfileIcon = memo(() => {
 
   return (
     <button
-      className="new-sm:hidden md:flex z-10 w-[3.95rem] h-[3.05rem] border-[#56A430] border-[1.6px] hover:border-none  hover:bg-[#123524] transform duration-300 group-ease-in-out transition-colors rounded-full group justify-center items-center cursor-pointer bg-[#fff]"
+      className="new-sm:hidden md:flex z-10 md:w-[3.5rem] md:h-[3rem] lg:w-[3.95rem] lg:h-[3.05rem] border-[#56A430] border-[1.6px] hover:border-none  hover:bg-[#123524] transform duration-300 group-ease-in-out transition-colors rounded-full group justify-center items-center cursor-pointer bg-[#fff]"
       onClick={() => {
         updateVisibility(true);
       }}

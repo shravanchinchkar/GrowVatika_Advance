@@ -1,10 +1,19 @@
 import { create } from "zustand";
 
-export const useFilterProduct = create((set) => ({
+interface FilterState {
+  filter: string[];
+  setFilter: (newFilter: string[]) => void;
+  addFilter: (filterItem: string) => void;
+  removeFilter: (filterItem: string) => void;
+  toggleFilter: (filterItem: string) => void;
+  clearFilters: () => void;
+}
+
+export const useFilterProduct = create<FilterState>((set) => ({
   filter: [],
 
   // Set the entire filter array
-  setFilter: (newFilter: string) => set({ filter: newFilter }),
+  setFilter: (newFilter: string[]) => set({ filter: newFilter }),
 
   // Add a filter to the array (if not already present)
   addFilter: (filterItem: string) =>

@@ -1,6 +1,6 @@
+import { memo } from "react";
 import { ExploreCard } from "./explore-card";
 import { ExploreMoreSectionData } from "../data/exploreMoreSectionData";
-import { memo } from "react";
 
 export const ExploreSection = memo(() => {
   return (

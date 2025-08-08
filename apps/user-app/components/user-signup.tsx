@@ -79,7 +79,7 @@ export const Sign_Up = () => {
     <div className="w-screen h-screen bg-[#FFF6F4] flex font-[Poppins] overflow-x-hidden">
       {/* Following div consist of Image */}
       <div className="w-[50%] flex justify-center items-center cursor-pointer">
-        <div className="lg:w-[30rem] lg:h-[30rem] xl:w-[31rem] xl:h-[31rem] 2xl:w-[42rem] 2xl:h-[42rem] shrink-0 relative rounded-[28px] overflow-hidden">
+        <div className="w-[85%] h-[95%] shrink-0 relative rounded-[28px] overflow-hidden">
           <Image
             className="object-cover"
             fill
@@ -93,27 +93,27 @@ export const Sign_Up = () => {
 
       <div className="w-[50%] flex flex-col gap-[1rem]">
         {/* Following div consist of site logo*/}
-        <div className="flex flex-col items-start gap-[2rem] pl-[2rem] pt-[1rem]">
+        <div className="flex flex-col lg:items-start gap-[2rem] lg:pl-[2rem] pt-[1rem]">
           <div>
             <SiteLogo />
           </div>
         </div>
 
         {/* Following div consist of welcome message, signup form, and sign-in option */}
-        <div className="flex flex-col items-start pl-[6.5rem] mt-[1rem]">
+        <div className="flex flex-col items-start lg:pl-[6.5rem] mt-[1rem]">
           {/* Following div consist of welcome message  */}
-          <div className="font-bold flex flex-col gap-0">
-            <p className="text-[#000] lg:text-[1.5rem] xl:text-[1.8rem] 2xl:text-[2rem] ">
+          <div className="font-bold flex flex-col gap-0 md:w-[100%] lg:w-max">
+            <p className="text-[#000] md:text-[1.5rem] xl:text-[1.8rem] 2xl:text-[2rem]">
               Create an account
             </p>
-            <p className="text-[#606060] lg:text-[1rem] xl:text-[1.2rem] 2xl:text-[1.5rem] ">
+            <p className="text-[#606060] md:text-[1rem] xl:text-[1.2rem] 2xl:text-[1.5rem] ">
               Sign up to Explore Your Green World!
             </p>
           </div>
 
           {/* Following div consist of Signup form and sign-in option */}
           <div
-            className={`w-max h-max flex flex-col lg:mt-[0.5rem] ${errors.name || errors.email || errors.password ? "2xl:mt-[1rem]" : "2xl:mt-[1rem]"}`}
+            className={`w-max h-max flex flex-col md:mt-[0.5rem] ${errors.name || errors.email || errors.password ? "2xl:mt-[1rem]" : "2xl:mt-[1rem]"}`}
           >
             {/* Following div consist of Signup form and Signup button */}
             <form
@@ -121,7 +121,7 @@ export const Sign_Up = () => {
               className={`w-max h-max flex flex-col `}
             >
               {/* Following is the input field for Name */}
-              <div className="h-max lg:w-[23rem] xl:w-[28rem] 2xl:w-[30.1875rem] flex flex-col">
+              <div className="h-max md:w-[23rem] xl:w-[28rem] 2xl:w-[30.1875rem] flex flex-col">
                 {errors.name && (
                   <div className="w-[90%] px-[1rem] text-red-500 font-bold">
                     {errors.name.message}
@@ -137,7 +137,7 @@ export const Sign_Up = () => {
 
               {/* Following is the input field for Email */}
               <div
-                className={`h-max lg:w-[23rem] xl:w-[28rem] 2xl:w-[30.1875rem] flex flex-col ${errors.email ? "mt-[0rem]" : "mt-[1rem]"}`}
+                className={`h-max md:w-[23rem] xl:w-[28rem] 2xl:w-[30.1875rem] flex flex-col ${errors.email ? "mt-[0rem]" : "mt-[1rem]"}`}
               >
                 {errors.email && (
                   <div className="w-[90%] px-[1rem] text-red-500 font-bold">
@@ -154,7 +154,7 @@ export const Sign_Up = () => {
 
               {/* Following is the input field for Password */}
               <div
-                className={`h-max lg:w-[23rem] xl:w-[28rem] 2xl:w-[30.1875rem] flex flex-col ${errors.password ? "mt-[0rem]" : "mt-[1rem]"}`}
+                className={`h-max md:w-[23rem] xl:w-[28rem] 2xl:w-[30.1875rem] flex flex-col ${errors.password ? "mt-[0rem]" : "mt-[1rem]"}`}
               >
                 {errors.password && (
                   <div className="w-[90%] px-[1rem] text-red-500 font-bold">
@@ -171,7 +171,7 @@ export const Sign_Up = () => {
 
               {/* Following is the input field for Confirm Password */}
               <div
-                className={`h-max lg:w-[23rem] xl:w-[28rem] 2xl:w-[30.1875rem] flex flex-col ${errors.confirmPassword ? "mt-[0rem]" : "mt-[1rem]"}`}
+                className={`h-max md:w-[23rem] xl:w-[28rem] 2xl:w-[30.1875rem] flex flex-col ${errors.confirmPassword ? "mt-[0rem]" : "mt-[1rem]"}`}
               >
                 {errors.confirmPassword && (
                   <div className="w-[90%] px-[1rem] text-red-500 font-bold">
@@ -188,7 +188,7 @@ export const Sign_Up = () => {
 
               {/*Following div consist of Signup Button*/}
               <div
-                className={`lg:w-[23rem] lg:h-[3.5rem] xl:w-[28rem] 2xl:w-[30.1875rem] 2xl:h-[4.01506rem] ${errors.confirmPassword ? "mt-[0.8rem]" : "mt-[1rem]"}`}
+                className={`md:w-[23rem] md:h-[3.5rem] xl:w-[28rem] 2xl:w-[30.1875rem] 2xl:h-[4.01506rem] ${errors.confirmPassword ? "mt-[0.8rem]" : "mt-[1rem]"}`}
               >
                 <AuthButton
                   buttonName="Sign up"

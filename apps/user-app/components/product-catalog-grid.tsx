@@ -266,7 +266,7 @@ export const ProductCatalogGrid = memo(
       }
     }, [currentEffectivePage, productState.totalPages, handlePageNumber]);
 
-    const handleLikeProduct = (e:any) => {
+    const handleLikeProduct = (e: any) => {
       e.preventDefault();
       if (!likeProduct) {
         setLikeProduct(true);
@@ -326,16 +326,9 @@ export const ProductCatalogGrid = memo(
               return (
                 <ProductCard
                   key={item.id}
-                  id={item.id}
-                  imageURL={item.imageURL}
-                  collection={item.collection}
-                  compareAt={item.compareAt}
                   handleLikeProduct={handleLikeProduct}
                   likeProduct={likeProduct}
-                  name={item.name}
-                  price={item.price}
-                  productSize={item.productSize}
-                  tags={item.tags}
+                  productData={item}
                 />
               );
             })}

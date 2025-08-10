@@ -19,7 +19,6 @@ import {
   useChangeMobileNavbarVisibility,
   useUserProfileVisibilityStore,
 } from "@repo/shared-store";
-import { WishList } from "./wishlist";
 
 export const LandingPage = () => {
   const addToCartVisibility = useAddToCartVisibilityStore(
@@ -43,7 +42,7 @@ export const LandingPage = () => {
       <MobileNavBar />
       <UserProfilePopUp />
       <MobileGetStartedForm />
-      <HeaderSection isLanding={true} />
+      <HeaderSection isExplore={true} />
 
       <div>
         <HeroSection />

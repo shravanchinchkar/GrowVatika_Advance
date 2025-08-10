@@ -24,7 +24,7 @@ export default function PriceRangeSlider() {
       {/* Price Display */}
       <div className="mb-6">
         <div className="flex justify-between items-center mb-2">
-          <span className="md:text-[1rem] lg:text-[1.2rem] xl:text-[1.25rem] font-medium">
+          <span className="new-sm:text-[1rem] lg:text-[1.2rem] xl:text-[1.25rem] font-medium">
             Price Range
           </span>
         </div>

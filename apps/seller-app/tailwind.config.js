@@ -9,6 +9,12 @@ export default {
   theme: {
     extend: {
       screens: {
+        "new-sm-old":"1px",
+        "new-sm": "320px",
+        "new-sm-1": "360px",
+        "new-sm-2": "430px",
+        "new-sm-3": "535px",
+        "new-md": "888px",
         "new-lg": "1153px",
         "new-xl": "1356px",
       },

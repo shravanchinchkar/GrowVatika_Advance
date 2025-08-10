@@ -14,11 +14,11 @@ interface HeaderSectionProp {
   explore?: boolean;
   explorebyseller?: boolean;
   singleProduct?: boolean;
-  isLanding:boolean;
+  isExplore:boolean;
 }
 
 export const HeaderSection = memo(
-  ({ explore, explorebyseller, singleProduct,isLanding}: HeaderSectionProp) => {
+  ({ explore, explorebyseller, singleProduct,isExplore}: HeaderSectionProp) => {
     const [isScrollingUp, setIsScrollingUp] = useState(false);
     const [lastScrollY, setLastScrollY] = useState(0);
 
@@ -45,17 +45,14 @@ export const HeaderSection = memo(
 
     return (
       <div
-        className={`new-sm:w-[100%] md:w-[100%] lg:w-[90%] mx-auto z-40 flex flex-col items-center justify-center gap-[1rem] new-sm:h-max md:h-[10rem] md:mt-[1rem] py-[0.5rem] ${isScrollingUp && "sticky top-[1rem] bg-[#FFF6F4] md:border-[#56A430] md:border-[1.6px] md:rounded-[1rem] transition-all md:duration-300"}`}
+        className={`new-sm:w-[100%] md:w-[100%] lg:w-[100%] new-xl:w-[90%] mx-auto z-40 flex flex-col items-center justify-center gap-[1rem] new-sm:h-max md:h-[10rem] md:mt-[1rem] py-[0.5rem] ${isScrollingUp && "sticky top-[1rem] bg-[#FFF6F4] md:border-[#56A430] md:border-[1.6px] md:rounded-[1rem] transition-all md:duration-300"}`}
       >
         <div className="new-sm:w-[100%] md:w-[96.5%] h-max flex justify-between new-sm:items-start md:items-center">
-          <HeaderSectionOne isLanding={isLanding}/>
-          <div className="flex new-sm:flex-col md:hidden items-center new-sm:gap-[0.3rem] new-sm-1:gap-[0.3rem] md:gap-0">
+          <HeaderSectionOne isExplore={isExplore}/>
+          <div className="flex new-sm:flex-col justify-between md:hidden items-center new-sm:gap-[0.6rem] md:gap-0">
             <ShoppingCartIcon />
             <Hamburg />
             <UserProfileIcon />
-            {(explore || explorebyseller || singleProduct) && (
-              <LikeProductIcon />
-            )}
           </div>
 
           <div className="new-sm:hidden md:flex items-center md:gap-[1rem] xl:gap-[1.5rem]">
@@ -79,6 +76,7 @@ export const HeaderSection = memo(
                 className="md:w-[7rem] lg:w-[8.5rem] xl:w-[10.5rem]"
                 custom_Id="Category"
                 isCategory={true}
+                singleProduct={singleProduct}
               />
               <SelectTagUser
                 activeValue="Explore"

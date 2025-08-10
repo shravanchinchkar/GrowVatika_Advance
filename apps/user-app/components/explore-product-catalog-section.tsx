@@ -1,6 +1,7 @@
 "use client";
 import { Cart } from "./cart";
 import Image from "next/image";
+import { useState } from "react";
 import { WishList } from "./wishlist";
 import { Footer } from "./footer-section";
 import { SearchSort } from "./search-sort";
@@ -32,37 +33,39 @@ export const ExploreProductCatalogSection = () => {
   );
 
   const { filter, removeFilter, clearFilters } = useFilterProduct();
+  const [displayFilter, setDisplayFilter] = useState(false);
 
   return (
     <div
-      className={` relative flex flex-col bg-[#FFF6F4] font-[Poppins] ${(addToCartVisibility || wishListVisibility || MobileNavbarVisibility || userProfileVisibility) && "h-[100vh] overflow-hidden"}`}
+      className={`relative flex flex-col min-h-screen max-h-max justify-between bg-[#FFF6F4] font-[Poppins] ${(addToCartVisibility || wishListVisibility || MobileNavbarVisibility || userProfileVisibility || displayFilter) && "h-[100vh] overflow-hidden"}`}
     >
       <Cart />
       <WishList />
       <MobileNavBar />
       <UserProfilePopUp />
-      <HeaderSection explore={true} isLanding={false} />
+      <HeaderSection explore={true} isExplore={false} />
 
-      {/* Following is the temporary message shown till the mobile view is readey */}
-      <div className="new-sm:flex md:hidden w-[100%] h-[20rem] justify-center items-center">
-        <p className="w-[90%] text-center">
-          🚧Mobile View Under Construction🚧, Please view throught Laptop or
-          desktop for better experience
-        </p>
-      </div>
+      {/* Following filter gets displayed in mobile view */}
+      {displayFilter && (
+        <div className="new-sm:flex md:hidden absolute z-50 items-center top-0 w-screen h-screen bg-[#00000040]">
+          <ProductFilterSection setDisplayFilter={setDisplayFilter}/>
+        </div>
+      )}
 
-      <div className="new-sm:hidden md:flex new-sm:w-[100%] md:w-[95%] lg:w-[86.5%] 2xl:w-[87%] flex-col items-center gap-[2rem] mt-[1.5rem] mx-auto">
+      <div className="relative flex new-sm:w-[100%] md:w-[95%] lg:w-[86.5%] 2xl:w-[87%] flex-col items-center gap-[2rem] new-sm:mt-0 md:mt-[1.5rem] mx-auto">
         <SearchSort />
 
-        {/* Filter Section and Product Card */}
+        {/* Filter Section, filter tags and Product Card Grid */}
         <div className="w-[100%] z-0 flex justify-between font-[Poppins]">
-          {/* Sidebar */}
-          <ProductFilterSection />
+          {/* Filter Section*/}
+          <div className="new-sm:hidden md:block md:w-[28%] new-xl:w-[23%] md:h-[90rem] new-md:h-[100rem] lg:h-[100rem] new-xl:h-[72rem]">
+            <ProductFilterSection setDisplayFilter={setDisplayFilter} />
+          </div>
 
-          <div className="md:w-[70%] xl:w-[68%] new-xl:w-[75%]">
+          <div className="new-sm:w-[100%] md:w-[70%] xl:w-[68%] new-xl:w-[75%]">
             {/* Filter Tags and Clear all button*/}
             {filter.length > 0 && (
-              <div className="max-w-max min-w-[80%] flex flex-wrap items-center justify-between mb-[1rem]">
+              <div className="new-sm:hidden md:flex max-w-max min-w-[80%] flex-wrap items-center justify-between mb-[1rem]">
                 {/* Following div consist of tag button */}
                 <div className="w-[85%] flex flex-wrap gap-[1rem] ml-[1rem]">
                   {filter.map((tag: string, index: number) => {
@@ -103,15 +106,11 @@ export const ExploreProductCatalogSection = () => {
             )}
 
             {/* Main Section */}
-            <ProductCatalogGrid />
+            <ProductCatalogGrid displayFilter={displayFilter} setDisplayFilter={setDisplayFilter} />
           </div>
         </div>
-
       </div>
-
-      <footer>
-        <Footer />
-      </footer>
+      <Footer />
     </div>
   );
 };

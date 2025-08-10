@@ -6,7 +6,6 @@ export async function GET(req: NextRequest) {
     const { searchParams } = new URL(req.url);
     const currentPage = searchParams.get("page")? Number(searchParams.get("page")): 1;
     const categoryParams = searchParams.get("category")?.trim();
-
     const limit: number = 6;
     const skip = (currentPage - 1) * Number(limit); // offset formula
 

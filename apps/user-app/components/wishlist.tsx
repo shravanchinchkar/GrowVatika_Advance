@@ -96,7 +96,7 @@ export const WishList = memo(() => {
             >
               <div className="relative new-sm:w-[1rem] new-sm:h-[1rem] new-sm-1:w-[1.2rem] new-sm-1:h-[1.2rem] md:w-[1.5rem] md:h-[1.5rem]">
                 <Image
-                  src="/assets/images/WishListImages/cancelIcon.svg"
+                  src="/assets/images/CommonImages/cancelIcon.svg"
                   className="object-cover"
                   alt="cancelIcon"
                   fill
@@ -171,7 +171,7 @@ export const WishList = memo(() => {
                       <div className="relative new-sm:w-[0.9375rem] new-sm:h-[0.9375rem] md:w-[1.5rem] md:h-[1.5rem]">
                         <Image
                           className="object-contain"
-                          src="/assets/images/WishListImages/addToCartIcon.svg"
+                          src="/assets/images/CommonImages/addToCartIcon.svg"
                           alt="addToCartIcon"
                           fill
                         />

@@ -291,7 +291,7 @@ export const SingleProductCard = () => {
     return <Skeleton className="flex justify-center items-center" />;
   } else {
     return (
-      <div className="new-sm:w-[100%] new-sm:h-[80rem] new-sm-1:h-[110rem] md:h-[65rem] lg:h-[65rem] xl:h-[70rem] 2xl:h-[78.8125rem] flex flex-col new-sm:gap-[1rem] md:gap-[2rem] items-center bg-[#FFFFFF] rounded-[0.94rem] font-[Poppins] pb-[1rem]">
+      <div className="new-sm:w-[100%] new-sm:h-[90rem] new-sm-1:h-[110rem] new-sm-3:h-[115rem] md:h-[65rem] lg:h-[65rem] xl:h-[70rem] 2xl:h-[78.8125rem] flex flex-col new-sm:gap-[1rem] md:gap-[2rem] items-center bg-[#FFFFFF] rounded-[0.94rem] font-[Poppins] pb-[1rem]">
         {/* Top Div Dummy Navigation */}
         <div className="w-[100%] new-sm:min-h-[2%] md:h-[4%] max-h-max flex items-center gap-[1rem] new-sm:pl-[1rem] md:pl-[1rem] new-sm:text-[0.6rem] new-sm-1:text-[0.7625rem] md:text-[1rem] xl:text-[1.25rem] font-medium border-b-[0.0625rem] border-[#00000033]">
           {DummyNavigation.map((item, index) => {
@@ -319,7 +319,7 @@ export const SingleProductCard = () => {
         </div>
 
         {/* Middle div consist of prod images and data */}
-        <div className="w-[100%] new-sm:h-[80%] new-sm-1:h-[60%] new-sm-3:h-[70%] sm:h-[80%] md:h-[50%] new-md:h-[75%] lg:h-[65%] xl:h-[75%] flex new-sm:flex-col new-sm:gap-[1rem] md:gap-0 md:flex-row">
+        <div className="w-[100%] new-sm:h-[55%] new-sm-1:h-[60%] new-sm-3:h-[70%] sm:h-[80%] md:h-[50%] new-md:h-[75%] lg:h-[65%] xl:h-[75%] flex new-sm:flex-col new-sm:gap-[1rem] md:gap-0 md:flex-row">
           {/* Left div Product Images */}
           <div className="new-sm:w-[100%] md:w-[55%] xl:w-[60%] new-sm:h-[50%] new-sm-1:h-[50%] new-sm-3:h-[60%] sm:h-[75%] md:h-[100%] flex flex-col new-sm:justify-start lg:justify-between new-sm:gap-[0.5rem] md:gap-[1rem] lg:gap-0 items-center">
             {/* Main Product image */}
@@ -583,7 +583,7 @@ export const SingleProductCard = () => {
         </div>
 
         {/* Product about section */}
-        <div className="w-[100%] new-sm:h-[36%] new-sm-3:h-[30%] md:h-[50%] lg:h-[20%] flex flex-col new-sm:justify-between lg:justify-start items-center gap-[1rem] md:pb-[1rem] lg:pb-0">
+        <div className="w-[100%] new-sm:h-[43%] new-sm-3:h-[30%] md:h-[50%] lg:h-[20%] flex flex-col new-sm:justify-between lg:justify-start items-center gap-[1rem] md:pb-[1rem] lg:pb-0">
           <div className="flex flex-col items-center">
             <h1 className="new-sm:text-[1rem] new-sm-1:text-[1.5rem] 2xl:text-[2rem] text-[#000000] font-semibold">
               About Product
@@ -595,7 +595,7 @@ export const SingleProductCard = () => {
           </div>
 
           {/* Nursery Card  displayed in md and new-md hidden from lg*/}
-          <div className="new-sm:block lg:hidden new-sm:w-[95%] new-sm:h-[35%] new-sm-1:h-[30%] new-sm-3:h-[40%] md:w-[55%] new-md:w-[50%] md:h-[40%] new-md:h-[50%]">
+          <div className="new-sm:block lg:hidden new-sm:w-[95%] new-sm:h-[25%] new-sm-1:h-[25%] new-sm-3:h-[40%] md:w-[55%] new-md:w-[50%] md:h-[40%] new-md:h-[50%]">
             <NurseryCard
               pictureURL={
                 singleProductData?.seller.profilePictureURL ||

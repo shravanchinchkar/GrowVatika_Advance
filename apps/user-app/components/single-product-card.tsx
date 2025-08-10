@@ -6,7 +6,6 @@ import { useSearchParams } from "next/navigation";
 import { TSingleProductData } from "@repo/common-types";
 import { toastStyle } from "@repo/shared/utilfunctions";
 import { memo, useCallback, useEffect, useState } from "react";
-import { usefilterProductByCategoryStore } from "@repo/shared-store";
 
 enum DirectionType {
   LEFT = "left",
@@ -196,6 +195,8 @@ const NurseryCard = memo(
   }
 );
 
+// const {setCategory}=usefilterProductByCategoryStore();
+
 export const SingleProductCard = () => {
   const searchParams = useSearchParams();
   const productId: string = searchParams.get("id") || "";
@@ -293,7 +294,7 @@ export const SingleProductCard = () => {
     return (
       <div className="new-sm:w-[100%] new-sm:h-[90rem] new-sm-1:h-[110rem] new-sm-3:h-[115rem] md:h-[65rem] lg:h-[65rem] xl:h-[70rem] 2xl:h-[78.8125rem] flex flex-col new-sm:gap-[1rem] md:gap-[2rem] items-center bg-[#FFFFFF] rounded-[0.94rem] font-[Poppins] pb-[1rem]">
         {/* Top Div Dummy Navigation */}
-        <div className="w-[100%] new-sm:min-h-[2%] md:h-[4%] max-h-max flex items-center gap-[1rem] new-sm:pl-[1rem] md:pl-[1rem] new-sm:text-[0.6rem] new-sm-1:text-[0.7625rem] md:text-[1rem] xl:text-[1.25rem] font-medium border-b-[0.0625rem] border-[#00000033]">
+        <div className="w-[100%] new-sm:h-[2%] md:h-[4%] flex items-center gap-[1rem] new-sm:pl-[1rem] md:pl-[1rem] new-sm:text-[0.6rem] new-sm-1:text-[0.7625rem] md:text-[1rem] xl:text-[1.25rem] font-medium border-b-[0.0625rem] border-[#00000033]">
           {DummyNavigation.map((item, index) => {
             return (
               <div

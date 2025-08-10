@@ -9,10 +9,8 @@ import {
   useAddToCartVisibilityStore,
   useWishListVisibilityStore,
   useChangeMobileNavbarVisibility,
-  usefilterProductByCategoryStore,
 } from "@repo/shared-store";
 import { SingleProductCard } from "./single-product-card";
-import { useEffect } from "react";
 
 export const SingleProductPage = () => {
   const addToCartVisibility = useAddToCartVisibilityStore(
@@ -24,7 +22,7 @@ export const SingleProductPage = () => {
   const MobileNavbarVisibility = useChangeMobileNavbarVisibility(
     (state: any) => state.displayMobileNavbar
   );
-  
+
   return (
     <div
       className={`min-h-screen relative flex flex-col justify-between bg-[#FFF6F4] gap-[2rem] font-[Poppins] ${(addToCartVisibility || wishListVisibility || MobileNavbarVisibility) && "h-[100vh] overflow-hidden"}`}

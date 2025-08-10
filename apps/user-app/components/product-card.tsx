@@ -111,7 +111,7 @@ export const ProductCard = memo(
           </div>
 
           {/* Add to Cart Button */}
-          <button className="new-sm:w-[100%] new-sm:h-[30%] new-sm-1:h-[2.3rem] new-sm-3:h-[2.8rem] new-md:h-[30%] bg-[#56A430] rounded-[0.625rem] flex items-center justify-center gap-2 hover:bg-[#213E12] text-white new-sm:text-[0.74238rem] new-sm-1:text-[0.9rem] new-sm-3:text-[1.1rem] new-md:text-[1.22669rem] font-medium text-center">
+          <button className="new-sm:w-[100%] new-sm:h-[2.3rem] new-sm-1:h-[2.3rem] new-sm-3:h-[2.8rem] new-md:h-[30%] bg-[#56A430] rounded-[0.625rem] flex items-center justify-center gap-2 hover:bg-[#213E12] text-white new-sm:text-[0.74238rem] new-sm-1:text-[0.9rem] new-sm-3:text-[1.1rem] new-md:text-[1.22669rem] font-medium text-center">
             <div className="relative new-sm:w-[0.9375rem] new-sm:h-[0.9375rem] new-sm-1:w-[1.2rem] new-sm-1:h-[1.2rem] new-sm-3:w-[1.53806rem] new-sm-3:h-[1.50469rem] flex-shrink-0">
               <Image
                 src="/assets/images/CommonImages/addToCartIcon.svg"

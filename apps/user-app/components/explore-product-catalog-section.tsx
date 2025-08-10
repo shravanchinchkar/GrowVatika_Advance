@@ -1,6 +1,7 @@
 "use client";
 import { Cart } from "./cart";
 import Image from "next/image";
+import { useState } from "react";
 import { WishList } from "./wishlist";
 import { Footer } from "./footer-section";
 import { SearchSort } from "./search-sort";
@@ -16,7 +17,6 @@ import {
   useWishListVisibilityStore,
 } from "@repo/shared-store";
 import { UserProfilePopUp } from "./user-profile-popup";
-import { useState } from "react";
 
 export const ExploreProductCatalogSection = () => {
   const addToCartVisibility = useAddToCartVisibilityStore(

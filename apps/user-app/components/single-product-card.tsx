@@ -206,13 +206,6 @@ export const SingleProductCard = () => {
   const [loading, setLoading] = useState(true);
   const [disablePlusButton, setDisablePlusButton] = useState<boolean>(false);
 
-  const crumbs = [
-    "Home",
-    singleProductData?.category,
-    singleProductData?.collection,
-    singleProductData?.name,
-  ];
-
   // call to backend to fetch single product data
   useEffect(() => {
     const getSingleProductData = async () => {

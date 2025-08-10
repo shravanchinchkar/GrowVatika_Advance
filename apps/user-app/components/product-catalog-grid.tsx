@@ -136,7 +136,7 @@ export const ProductCatalogGrid = memo(
 
     // Following are the zustand state management code
     const { filter } = useFilterProduct();
-    const { category } = usefilterProductByCategoryStore();
+    const { category, setCategory } = usefilterProductByCategoryStore();
 
     const currentEffectivePage = useMemo(() => {
       if (filter.length > 0) return paginationState.filterCurrentPage;
@@ -170,7 +170,7 @@ export const ProductCatalogGrid = memo(
           let page;
           let response;
 
-          // Execute the following below block is filters are present
+          // Execute the following below block if filters are present
           if (filter.length > 0) {
             page = paginationState.filterCurrentPage;
             response = await fetchFilteredProducts(filter, page);
@@ -227,6 +227,7 @@ export const ProductCatalogGrid = memo(
       paginationState.categoryCurrentPage,
       filter,
       category,
+      // setCategory,
       fetchAllProducts,
       fetchFilteredProducts,
     ]);
@@ -338,7 +339,6 @@ export const ProductCatalogGrid = memo(
           <div className="new-sm:w-[100%] md:w-[95%] md:mx-[1.5rem] new-sm:flex justify-center new-sm:mt-[2rem] md:mt-[4rem]">
             <div className="min-w-[20%] max-w-max flex justify-between gap-[0.5rem]">
               {/* Previous Page Button */}
-
               {currentEffectivePage > 1 ? (
                 // Show the below button if the current page is greater than 1
                 <button
@@ -382,7 +382,7 @@ export const ProductCatalogGrid = memo(
                       handlePageNumber(page);
                     }}
                     key={index}
-                    className={`new-sm:w-[2.5rem] new-sm:h-[2.5rem] md:w-[3.1875rem] md:h-[3.1875rem] text-[1.22669rem] flex justify-center items-center border-[1.5px] border-[#CBD0D3] rounded-[0.625rem] ${currentEffectivePage === page ? "bg-[#EDE7E4]" : "bg-[#FFFFFF]"}`}
+                    className={`new-sm:w-[2.5rem] new-sm:h-[2.5rem] md:w-[3.1875rem] md:h-[3.1875rem] new-sm:text-[1rem] md:text-[1.22669rem] flex justify-center items-center border-[1.5px] border-[#CBD0D3] rounded-[0.625rem] ${currentEffectivePage === page ? "bg-[#EDE7E4]" : "bg-[#FFFFFF]"}`}
                   >
                     {page}
                   </button>

@@ -20,7 +20,7 @@ export const ProductCard = memo(
       <Link
         href={`/product?id=${productData.id}`}
         key={productData.id}
-        className="new-sm:w-[90%] new-sm:h-[10rem] new-sm-2:w-[12.5rem] new-sm-2:h-[20rem]  new-sm-3:w-[15rem] new-sm-3:h-[25rem] new-md:w-[17rem] lg:w-[18rem] new-md:h-[28rem] flex  new-sm:flex-row new-sm-2:flex-col items-center flex-shrink-0 rounded-[1.25rem] bg-white font-[Poppins] overflow-hidden new-sm:justify-self-center xl:justify-self-start 2xl:justify-self-center cursor-pointer shadow-productcard-custom-boxShadow"
+        className="new-sm:w-[90%] new-sm:h-[12rem] new-sm-2:w-[12.5rem] new-sm-2:h-[23rem] new-sm-3:w-[15rem] new-sm-3:h-[25rem] new-md:w-[17rem] lg:w-[18rem] new-md:h-[28rem] flex  new-sm:flex-row new-sm-2:flex-col items-center flex-shrink-0 rounded-[1.25rem] bg-white font-[Poppins] overflow-hidden new-sm:justify-self-center xl:justify-self-start 2xl:justify-self-center cursor-pointer shadow-productcard-custom-boxShadow"
       >
         {/* Product Image */}
         <div
@@ -64,7 +64,8 @@ export const ProductCard = memo(
           </div>
         </div>
 
-        <div className="new-sm:w-[50%] new-sm:h-[100%] new-sm-2:w-[100%] new-sm-2:h-[45%] flex flex-col justify-between px-[0.7rem] pt-[0.5rem] new-sm:pb-[0.5rem] md:pb-[1rem]">
+        <div className="new-sm:w-[50%] new-sm:h-[100%] new-sm-2:w-[100%] new-sm-2:h-[45%] flex flex-col justify-between px-[0.7rem] py-[0.7rem]"> 
+
           {/* Following div consist of category,Rating and product name Section */}
           <div className="flex flex-col">
             <div className="flex justify-between items-center">
@@ -89,7 +90,7 @@ export const ProductCard = memo(
             </div>
 
             {/* Product Name */}
-            <p className="w-[100%] text-[#000] text-start new-sm:text-[0.90781rem] new-sm-1:text-[1rem] new-sm-3:text-[1.2rem] new-md:text-[1.4rem] font-semibold new-sm:leading-[1rem] md:leading-[1.3rem]">
+            <p className="w-[100%] text-[#000] text-start new-sm:text-[0.90781rem] new-sm-3:text-[1.2rem] new-md:text-[1.4rem] font-semibold new-sm:leading-[1rem] md:leading-[1.3rem]">
               {productData.name}
             </p>
           </div>
@@ -110,7 +111,7 @@ export const ProductCard = memo(
           </div>
 
           {/* Add to Cart Button */}
-          <button className="new-sm:w-[100%] new-sm:h-[2rem] new-sm-1:h-[2.3rem] new-sm-3:h-[2.8rem] new-md:h-[3.19744rem] bg-[#56A430] rounded-[0.625rem] flex items-center justify-center gap-2 hover:bg-[#213E12] text-white new-sm:text-[0.74238rem] new-sm-1:text-[0.9rem] new-sm-3:text-[1.1rem] new-md:text-[1.22669rem] font-medium text-center">
+          <button className="new-sm:w-[100%] new-sm:h-[30%] new-sm-1:h-[2.3rem] new-sm-3:h-[2.8rem] new-md:h-[30%] bg-[#56A430] rounded-[0.625rem] flex items-center justify-center gap-2 hover:bg-[#213E12] text-white new-sm:text-[0.74238rem] new-sm-1:text-[0.9rem] new-sm-3:text-[1.1rem] new-md:text-[1.22669rem] font-medium text-center">
             <div className="relative new-sm:w-[0.9375rem] new-sm:h-[0.9375rem] new-sm-1:w-[1.2rem] new-sm-1:h-[1.2rem] new-sm-3:w-[1.53806rem] new-sm-3:h-[1.50469rem] flex-shrink-0">
               <Image
                 src="/assets/images/CommonImages/addToCartIcon.svg"
@@ -120,7 +121,9 @@ export const ProductCard = memo(
             </div>
             Add to Cart
           </button>
+
         </div>
+
       </Link>
     );
   }

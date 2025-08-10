@@ -390,7 +390,7 @@ export const ExploreBySellerGrid = memo(() => {
         {/* Button that loads more seller data */}
         <div className="w-[100%] flex justify-center items-center">
           <button
-            className={`new-sm:w-[12rem] new-sm:h-[3rem] md:h-[3.5rem] 2xl:w-[14.875rem] 2xl:h-[4.0625rem] rounded-[5.25rem] border-[1.6px] border-[#56A430] bg-[#FFFFFF] text-[#697F75] new-sm:text-[1rem] 2xl:text-[1.22669rem] font-medium uppercase font-[Poppins] ${state.disableLoadMoreSellers ? "cursor-not-allowed" : "cursor-pointer"}`}
+            className={`new-sm:w-[12rem] new-sm:h-[3rem] md:h-[3.5rem] 2xl:w-[14.875rem] 2xl:h-[4.0625rem] rounded-[5.25rem] border-[1.6px] border-[#56A430] bg-[#FFFFFF] text-[#697F75] new-sm:text-[0.9rem] 2xl:text-[1.22669rem] font-medium uppercase font-[Poppins] ${state.disableLoadMoreSellers ? "cursor-not-allowed" : "cursor-pointer"}`}
             onClick={handleLoadMoreSellerData}
             disabled={state.disableLoadMoreSellers}
           >

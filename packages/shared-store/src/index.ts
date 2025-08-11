@@ -10,5 +10,5 @@ export * from "./stores/displayMobileNavbar";
 export * from "./stores/filterProduct";
 export * from "./stores/userProfileVisibility";
 export * from "./stores/specialties";
-export * from "./stores/userDropDown"
-export *from "./stores/filterProductByCategory"
+export * from "./stores/userDropDown";
+export * from "./stores/filterProductByCategory";

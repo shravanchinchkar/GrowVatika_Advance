@@ -8,7 +8,7 @@ import { ProductCard } from "./product-card";
 import { useSearchParams } from "next/navigation";
 import {
   useFilterProduct,
-  usefilterProductByCategoryStore,
+  usefilterProductByCategoryStore
 } from "@repo/shared-store";
 import {
   memo,
@@ -86,9 +86,9 @@ const useFetchProductData = () => {
     []
   );
 
-  //Following block execute by default and for category filter
+  // //Following block execute by default and for category filter
   const fetchAllProducts = useCallback(
-    async (page: number, category: string) => {
+    async (page: number, category: string | null) => {
       const res = await axios.get(
         `api/getallproducts?page=${page}&category=${category}`
       );
@@ -102,9 +102,9 @@ const useFetchProductData = () => {
 
 export const ProductCatalogGrid = memo(
   ({ displayFilter, setDisplayFilter }: ProductCatalogGridProp) => {
-    const router = useRouter();
-    const searchParams = useSearchParams();
-    const searchParamsPage = searchParams.get("page");
+    // Following are the zustand states
+    const { filter } = useFilterProduct();
+    const { category } = usefilterProductByCategoryStore();
 
     //useState hook
     const [likeProduct, setLikeProduct] = useState(false);
@@ -123,38 +123,76 @@ export const ProductCatalogGrid = memo(
       }
     );
 
+    // call to the custom hook
+    const { fetchAllProducts, fetchFilteredProducts } = useFetchProductData();
+
+    // following code extract data from the url
+    const router = useRouter();
+    const searchParams = useSearchParams();
+    const searchParamsPage = searchParams.get("page")
+      ? searchParams.get("page")
+      : 1;
+    const searchParamsCategory = searchParams.get("category")
+      ? searchParams.get("category")
+      : category;
+
     // State for different Pages.
     const [paginationState, setPaginationState] = useState<PaginationState>({
-      currentPage:
-        typeof searchParamsPage === "string" ? Number(searchParamsPage) : 1,
+      currentPage: searchParamsPage ? Number(searchParamsPage) : 1,
       filterCurrentPage: 1,
       categoryCurrentPage: 1,
     });
 
-    // call to the custom hook
-    const { fetchAllProducts, fetchFilteredProducts } = useFetchProductData();
-
-    // Following are the zustand state management code
-    const { filter } = useFilterProduct();
-    const { category, setCategory } = usefilterProductByCategoryStore();
-
+    // Following code decides which page-count to consider
     const currentEffectivePage = useMemo(() => {
-      if (filter.length > 0) return paginationState.filterCurrentPage;
-      if (category !== "All") return paginationState.categoryCurrentPage;
-      return paginationState.currentPage;
+      if (filter.length > 0) {
+        return paginationState.filterCurrentPage;
+      }
+      if (category !== "All") {
+        return paginationState.categoryCurrentPage;
+      } else {
+        return paginationState.currentPage;
+      }
     }, [filter.length, category, paginationState]);
 
-    //Following code helps to display page number at the bottom
-    const pageNumbers = useMemo(() => {
-      let pageNumber: number[] = [];
-      const start = Math.max(1, currentEffectivePage - 3);
-      const end = Math.min(productState.totalPages, currentEffectivePage + 3);
+    // Add this useEffect at the beginning to initialize from URL params
+    useEffect(() => {
+      const urlPage = searchParams.get("page");
+      const urlCategory = searchParams.get("category");
 
-      for (let i = start; i <= end; i++) {
-        pageNumber.push(i);
+      if (urlPage) {
+        const pageNumber = Number(urlPage);
+
+        // Initialize the pagination state based on URL and category
+        if (urlCategory && urlCategory !== "All") {
+          setPaginationState((prev) => ({
+            ...prev,
+            categoryCurrentPage: pageNumber,
+          }));
+        } else {
+          setPaginationState((prev) => ({
+            ...prev,
+            currentPage: pageNumber,
+          }));
+        }
       }
-      return pageNumber;
-    }, [currentEffectivePage, productState.totalPages]);
+    }, []); //only run on mount
+
+    // Following useEffect change the URL when the state gets updated
+    useEffect(() => {
+      const productCategory = category;
+      const currentUrl = `/explore?page=${currentEffectivePage}&category=${productCategory}`;
+      const urlPage = searchParams.get("page");
+      const urlCategory = searchParams.get("category");
+
+      // Only push if the URL actually needs to change
+      if (
+        Number(urlPage) !== currentEffectivePage ||
+        urlCategory !== productCategory
+      ) {
+        router.push(currentUrl);
+      }
+    }, [currentEffectivePage, router, category, searchParams]);
 
     // Call to the backend
     useEffect(() => {
@@ -174,14 +212,20 @@ export const ProductCatalogGrid = memo(
           if (filter.length > 0) {
             page = paginationState.filterCurrentPage;
             response = await fetchFilteredProducts(filter, page);
-          } else {
+          }
+          // Execute the following block if filter is not present
+          else {
             page =
-              category !== "All"
+              searchParamsCategory !== "All"
                 ? paginationState.categoryCurrentPage
                 : paginationState.currentPage;
-            response = await fetchAllProducts(page, category);
+            response = await fetchAllProducts(
+              Number(searchParamsPage),
+              searchParamsCategory
+            );
           }
 
+          // If error in the response
           if (!response.success) {
             dispatch({
               type: "FETCH_ERROR",
@@ -222,20 +266,38 @@ export const ProductCatalogGrid = memo(
 
       fetchData();
     }, [
-      paginationState.currentPage,
-      paginationState.filterCurrentPage,
-      paginationState.categoryCurrentPage,
       filter,
-      category,
-      // setCategory,
+      searchParamsPage,
+      searchParamsCategory,
       fetchAllProducts,
       fetchFilteredProducts,
     ]);
 
+    // Set the value of categoryCurrentPage to 1 whenever the category gets changed
     useEffect(() => {
-      const page = currentEffectivePage;
-      router.push(`/explore?page=${page}`);
-    }, [currentEffectivePage, router]);
+      // Only reset to page 1 if the category actually changed
+      // Don't reset if it's just the initial load
+      const urlCategory = searchParams.get("category");
+      if (category !== urlCategory) {
+        setPaginationState((prev) => ({
+          ...prev,
+          categoryCurrentPage: 1,
+        }));
+      }
+    }, [category]);
+
+    // Following are all the functions
+    //Following code helps to display page number at the bottom
+    const pageNumbers = useMemo(() => {
+      let pageNumber: number[] = [];
+      const start = Math.max(1, currentEffectivePage - 3);
+      const end = Math.min(productState.totalPages, currentEffectivePage + 3);
+
+      for (let i = start; i <= end; i++) {
+        pageNumber.push(i);
+      }
+      return pageNumber;
+    }, [currentEffectivePage, productState.totalPages]);
 
     const handlePageNumber = useCallback(
       (newPage: number) => {
@@ -245,7 +307,6 @@ export const ProductCatalogGrid = memo(
           } else if (category !== "All") {
             return { ...prev, categoryCurrentPage: newPage };
           } else {
-            // { ...prev, currentPage: newPage }
             return { ...prev, currentPage: newPage };
           }
         });
@@ -276,19 +337,22 @@ export const ProductCatalogGrid = memo(
       }
     };
 
-    // If Loading then execute the following below block
+    // If Loading then display the below UI
     if (productState.loading) {
       return (
         <Skeleton className="w-[100%] h-[95%] flex justify-center items-start pt-[10rem]" />
       );
     }
+    // If error while fetching data then display the below UI
     if (productState.pageNotFound || productState.productsData.length === 0) {
       return (
         <div className="w-[100%] h-[95%] flex justify-center items-start pt-[10rem] text-[#CBD0D3] uppercase text-[1.5rem]">
           No Product Data found
         </div>
       );
-    } else {
+    }
+    // If everything is ok then display the below UI
+    else {
       return (
         <div className="w-[100%] flex flex-col gap-[1rem] pb-[1rem]">
           {/* Count of the products */}

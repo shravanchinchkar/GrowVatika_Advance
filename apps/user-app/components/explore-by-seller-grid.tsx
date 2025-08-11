@@ -33,14 +33,16 @@ const reducer = (state: SellerData, action: any): SellerData => {
     case "FETCH_SUCCESS":
       return {
         ...state,
-        sellerData: action.payload.sellerData,
+        sellerData:
+          state.page === 1
+            ? action.payload.sellerData
+            : [...state.sellerData, ...action.payload.sellerData],
         loading: action.payload.loading,
       };
     default:
       return state;
   }
 };
-
 
 export const ExploreBySellerGrid = memo(() => {
   const [state, dispatch] = useReducer<SellerData, any>(reducer, {
@@ -103,8 +105,10 @@ export const ExploreBySellerGrid = memo(() => {
   }, [state.page]);
 
   const handleLoadMoreSellerData = useCallback(() => {
-    dispatch({ type: "INCREASE_PAGE_COUNT" });
-  }, [state.page]);
+    if (!state.loading && !state.disableLoadMoreSellers) {
+      dispatch({ type: "INCREASE_PAGE_COUNT" });
+    }
+  }, [state.loading, state.disableLoadMoreSellers]);
 
   // reduce the word count present in the nurseryBio
   const truncateWords = (text: string, wordLimit: number = 15): string => {
@@ -131,9 +135,11 @@ export const ExploreBySellerGrid = memo(() => {
     return (
       // Nursery Seller Card Start from here
       <div className="new-sm:w-[100%] md:w-[100%] flex flex-col gap-[1rem]">
-
         {/* Following is the mobile veiw */}
-        <ExploreBySellerMobileGrid sellerData={state.sellerData} truncateWords={truncateWords}/>
+        <ExploreBySellerMobileGrid
+          sellerData={state.sellerData}
+          truncateWords={truncateWords}
+        />
 
         {/* Following is the tab,laptop and computer view start from md */}
         <div className="w-[100%] h-max new-sm:hidden md:grid md:grid-cols-2 new-xl:grid-cols-3">
@@ -390,11 +396,11 @@ export const ExploreBySellerGrid = memo(() => {
         {/* Button that loads more seller data */}
         <div className="w-[100%] flex justify-center items-center">
           <button
-            className={`new-sm:w-[12rem] new-sm:h-[3rem] md:h-[3.5rem] 2xl:w-[14.875rem] 2xl:h-[4.0625rem] rounded-[5.25rem] border-[1.6px] border-[#56A430] bg-[#FFFFFF] text-[#697F75] new-sm:text-[1rem] 2xl:text-[1.22669rem] font-medium uppercase font-[Poppins] ${state.disableLoadMoreSellers ? "cursor-not-allowed" : "cursor-pointer"}`}
+            className={`new-sm:w-[12rem] new-sm:h-[3rem] md:h-[3.5rem] 2xl:w-[14.875rem] 2xl:h-[4.0625rem] rounded-[5.25rem] border-[1.6px] border-[#56A430] bg-[#FFFFFF] text-[#697F75] new-sm:text-[0.9rem] 2xl:text-[1.22669rem] font-medium uppercase font-[Poppins] ${state.disableLoadMoreSellers ? "cursor-not-allowed" : "cursor-pointer"}`}
             onClick={handleLoadMoreSellerData}
-            disabled={state.disableLoadMoreSellers}
+            disabled={state.disableLoadMoreSellers || state.loading}
           >
-            Load more sellers
+            {state.loading ? "Loading..." : "Load more sellers"}
           </button>
         </div>
       </div>

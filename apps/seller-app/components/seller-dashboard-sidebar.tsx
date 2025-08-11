@@ -171,6 +171,8 @@ export const SellerDashboardSideBar = memo(() => {
 
       {/* Seller Profile Section */}
       <div className="relative w-[100%] border-t-[2px] border-[#FFFFFF8C] flex flex-col items-center mx-auto">
+
+        {/* Following is the pop-up */}
         {/* Logout and Profile Section */}
         <div
           className={
@@ -213,9 +215,12 @@ export const SellerDashboardSideBar = memo(() => {
           </ul>
         </div>
 
-        <div className="z-10 md:w-[12rem] lg:w-[14rem] md:h-[4rem] 2xl:w-[15.9375rem] 2xl:h-[4.0625rem] rounded-[1.5rem] flex justify-center items-center md:px-[0.5rem] lg:px-[1rem] gap-[0.8rem] m-[1rem] bg-[#fff] border-[1.5px] border-[#697F75]">
+        {/* Following div consist of seller-profile,seller-name and other things */}
+        <div
+          className="z-10 md:w-[12rem] lg:w-[14rem] md:h-[4rem] 2xl:w-[15.9375rem] 2xl:h-[4.0625rem] rounded-[1.5rem] flex justify-center items-center md:px-[0.5rem] lg:px-[1rem] gap-[0.8rem] m-[1rem] bg-[#fff] border-[1.5px] border-[#697F75] cursor-pointer"
+          onClick={handleLogoutLogin}
+        >
           <div className="w-[100%] h-[100%] flex justify-between py-[0.5rem]">
-
             {/* Nursery Profile Photo goes here! */}
             <div className="flex items-center">
               <div className="relative w-[2.425rem] h-[2.425rem] rounded-full overflow-hidden bg-[#56A430]">
@@ -252,13 +257,12 @@ export const SellerDashboardSideBar = memo(() => {
                 </h3>
               </div>
 
-              <button
+              <div
                 className={
                   display === true
                     ? "w-[1rem] h-[1rem] relative"
                     : "w-[1rem] h-[1rem] relative rotate-180"
                 }
-                onClick={handleLogoutLogin}
               >
                 <Image
                   src={
@@ -268,7 +272,7 @@ export const SellerDashboardSideBar = memo(() => {
                   fill
                   className="object-contain"
                 />
-              </button>
+              </div>
             </div>
           </div>
         </div>

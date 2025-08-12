@@ -9,15 +9,13 @@ export const MobileNavBar = () => {
   const displayMobileNavbar = useChangeMobileNavbarVisibility(
     (state: any) => state.displayMobileNavbar
   );
-  const updateVisibility = useChangeMobileNavbarVisibility(
-    (state: any) => state.updateMobileNarbarVisibility
-  );
+  const {setVisibilityOfMobileNavbar}=useChangeMobileNavbarVisibility()
   const handleNavbarVisibility = () => {
-    updateVisibility(false);
+    setVisibilityOfMobileNavbar(false);
   };
 
   useEffect(() => {
-    return () => updateVisibility(false);
+    return () => setVisibilityOfMobileNavbar(false);
   }, []);
 
   const pathName = usePathname();

@@ -24,7 +24,7 @@ export const SellerHeroSection = () => {
     return <Skeleton />;
   }
   return (
-    <div className="w-[100%] h-[100%] new-sm-old:hidden md:flex justify-between items-end">
+    <div className="w-[100%] h-[100%] new-sm-old:hidden md:flex justify-between items-end font-[Poppins]">
       {/* Bottomm Left Image  */}
       <div className="new-sm:hidden lg:block w-[20%] h-[100%] relative">
         <Image

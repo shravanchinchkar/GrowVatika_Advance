@@ -1,7 +1,12 @@
 import { create } from "zustand";
 
-export const useChangeMobileNavbarVisibility = create((set) => ({
-  displayMobileNavbar: false,
-  updateMobileNarbarVisibility: (newStatus: boolean) =>
-    set({ displayMobileNavbar: newStatus }),
-}));
+interface MobileNavbarVisibilityProps {
+  isMobileNavbarVisible: boolean;
+  setVisibilityOfMobileNavbar: (newValue: boolean) => void;
+}
+export const useChangeMobileNavbarVisibility =
+  create<MobileNavbarVisibilityProps>((set) => ({
+    isMobileNavbarVisible: false,
+    setVisibilityOfMobileNavbar: (newValue: boolean) =>
+      set({ isMobileNavbarVisible: newValue }),
+  }));

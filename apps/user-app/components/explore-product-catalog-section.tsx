@@ -19,25 +19,18 @@ import {
 import { UserProfilePopUp } from "./user-profile-popup";
 
 export const ExploreProductCatalogSection = () => {
-  const addToCartVisibility = useAddToCartVisibilityStore(
-    (state: any) => state.addToCartDropDownVisibility
-  );
-  const wishListVisibility = useWishListVisibilityStore(
-    (state: any) => state.wishListDropDownVisibility
-  );
-  const MobileNavbarVisibility = useChangeMobileNavbarVisibility(
-    (state: any) => state.displayMobileNavbar
-  );
-  const userProfileVisibility = useUserProfileVisibilityStore(
-    (state: any) => state.userProfileVisibility
-  );
+  const { isWishListVisible } = useWishListVisibilityStore();
+  const { isAddToCartVisible } = useAddToCartVisibilityStore();
+  const { isUserProfileVisible } = useUserProfileVisibilityStore();
+  const { isMobileNavbarVisible } = useChangeMobileNavbarVisibility();
+
 
   const { filter, removeFilter, clearFilters } = useFilterProduct();
   const [displayFilter, setDisplayFilter] = useState(false);
 
   return (
     <div
-      className={`relative flex flex-col min-h-screen max-h-max justify-between bg-[#FFF6F4] font-[Poppins] ${(addToCartVisibility || wishListVisibility || MobileNavbarVisibility || userProfileVisibility || displayFilter) && "h-[100vh] overflow-hidden"}`}
+      className={`relative flex flex-col min-h-screen max-h-max justify-between bg-[#FFF6F4] font-[Poppins] ${(isAddToCartVisible || isWishListVisible || isUserProfileVisible || isMobileNavbarVisible || displayFilter) && "h-[100vh] overflow-hidden"}`}
     >
       <Cart />
       <WishList />
@@ -48,7 +41,7 @@ export const ExploreProductCatalogSection = () => {
       {/* Following filter gets displayed in mobile view */}
       {displayFilter && (
         <div className="new-sm:flex md:hidden absolute z-50 items-center top-0 w-screen h-screen bg-[#00000040]">
-          <ProductFilterSection setDisplayFilter={setDisplayFilter}/>
+          <ProductFilterSection setDisplayFilter={setDisplayFilter} />
         </div>
       )}
 
@@ -106,7 +99,10 @@ export const ExploreProductCatalogSection = () => {
             )}
 
             {/* Main Section */}
-            <ProductCatalogGrid displayFilter={displayFilter} setDisplayFilter={setDisplayFilter} />
+            <ProductCatalogGrid
+              displayFilter={displayFilter}
+              setDisplayFilter={setDisplayFilter}
+            />
           </div>
         </div>
       </div>

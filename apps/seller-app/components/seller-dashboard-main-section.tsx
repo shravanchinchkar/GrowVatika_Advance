@@ -44,8 +44,8 @@ export const SellerDashboardMainSection = memo(() => {
   const updateSellerProductData = useSellerProductDataStore(
     (state) => state.updateSellerProductData
   );
-
-  const setSpecialties = useSpecialties((state: any) => state.setSpecialties);
+  
+  const {setSpecialties}=useSpecialties()
 
   useEffect(() => {
     if (sellerId) {

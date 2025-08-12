@@ -1,7 +1,12 @@
 import { create } from "zustand";
-
-export const useDisplayAddProductSectionStore = create((set) => ({
-  displayAddProductSection: false,
-  updateDisplayAddProductSectionStore: (newVisibility: boolean) =>
-    set({ displayAddProductSection: newVisibility }),
-}));
+interface AddProductSectionProps {
+  displayAddProductSection: boolean;
+  setVisibilityOfAddProductSection: (newValue: boolean) => void;
+}
+export const useDisplayAddProductSectionStore = create<AddProductSectionProps>(
+  (set) => ({
+    displayAddProductSection: false,
+    setVisibilityOfAddProductSection: (newValue: boolean) =>
+      set({ displayAddProductSection: newValue }),
+  })
+);

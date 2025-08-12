@@ -9,10 +9,9 @@ import { SellerDashboardWelcomeMsg } from "./seller-dashboard-welcome-msg";
 
 export const SellerDashboardProfileSection = () => {
   // Following is the Zustand state management code for displaying different section on seller dashboadr
-  const activeSideBar = useActiveSellerDashboardSideBar((state: any) => state.activeSideBar);
-  const displayAddProductSection = useDisplayAddProductSectionStore(
-    (state: any) => state.displayAddProductSection
-  );
+  const { activeSideBar } = useActiveSellerDashboardSideBar();
+  const{displayAddProductSection}=useDisplayAddProductSectionStore();
+
 
   // Following is the Zustand state management code for sellerData
   const sellerData = useSellerDataStore((state) => state.sellerData);

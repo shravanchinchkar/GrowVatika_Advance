@@ -33,10 +33,7 @@ export const MultiSelect: React.FC<MultiSelectProps> = ({
     return () => document.removeEventListener("mousedown", handleClickOutside);
   }, []);
 
-  const specialties = useSpecialties((state: any) => state.specialties);
-  const toggleSpecialties = useSpecialties(
-    (state: any) => state.toggleSpecialties
-  );
+  const {specialties,toggleSpecialties}=useSpecialties();
 
   return (
     <div className={`relative ${className}`} ref={dropdownRef}>

@@ -1,7 +1,10 @@
 import { create } from "zustand";
-
-export const useActiveSellerDashboardSideBar = create((set) => ({
+interface SiderBarProps {
+  activeSideBar: string;
+  setActiveSideBar: (newValue: string) => void;
+}
+// dashboard
+export const useActiveSellerDashboardSideBar = create<SiderBarProps>((set) => ({
   activeSideBar: "dashboard",
-  updateActiveSideBar: (newActiveSideBar: string) =>
-    set({ activeSideBar: newActiveSideBar }),
+  setActiveSideBar: (newValue: string) => set({ activeSideBar: newValue }),
 }));

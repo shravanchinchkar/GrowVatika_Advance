@@ -1,25 +1,16 @@
 "use client";
-
 import { memo } from "react";
 import Image from "next/image";
 import { useAddToCartVisibilityStore } from "@repo/shared-store";
 
 export const Cart = memo(() => {
-  const addToCartVisibility = useAddToCartVisibilityStore(
-    (state: any) => state.addToCartDropDownVisibility
-  );
-  const updateAddToCartVisibility = useAddToCartVisibilityStore(
-    (state: any) => state.updateAddToCartDropDownVisibility
-  );
-  const iconButton =
-    "w-[2.5rem] h-[2.125rem] flex items-center justify-center bg-white rounded-sm flex-shrink-0";
-
+  const {isAddToCartVisible,setVisibilityOfAddToCart}=useAddToCartVisibilityStore()
   const handleAddToCartVisibility = () => {
-    updateAddToCartVisibility(false);
+    setVisibilityOfAddToCart(false);
   };
-  if (addToCartVisibility === true) {
+  if (isAddToCartVisible) {
     return (
-      <div className="w-[100%] h-screen absolute z-50 top-0 flex new-sm:justify-end md:justify-end bg-black bg-opacity-10">
+      <div className="w-[100%] h-screen absolute z-50 top-0 flex new-sm:justify-end md:justify-end bg-[#00000040] bg-opacity-10">
         <div className="new-sm:w-[90%] new-sm-3:w-[70%] md:w-[29.375rem] h-max font-[Poppins] flex-shrink-0 rounded-l-[1.25rem] bg-white shadow-[0px_3.2px_32px_-0.8px_rgba(0,0,0,0.25)] flex flex-col overflow-hidden my-[2rem] animate-slide-in-right">
           {/* Cart Header */}
           <div className="relative border-b-[0.0625rem] border-[#00000033] h-[4.5rem] flex items-center">

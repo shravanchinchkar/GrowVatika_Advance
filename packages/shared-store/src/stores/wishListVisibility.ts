@@ -1,9 +1,14 @@
 import { create } from "zustand";
 
-export const useWishListVisibilityStore = create((set) => ({
-  wishListDropDownVisibility: false,
-  updateWishListDropDownVisibility: (newVisibility: boolean) =>
-    set({
-      wishListDropDownVisibility: newVisibility,
-    }),
-}));
+interface WishListVisibilityProps {
+  isWishListVisible: boolean;
+  setVisibilityOfWishList: (newValue: boolean) => void;
+}
+
+export const useWishListVisibilityStore = create<WishListVisibilityProps>(
+  (set) => ({
+    isWishListVisible: false,
+    setVisibilityOfWishList: (newValue: boolean) =>
+      set({ isWishListVisible: newValue }),
+  })
+);

@@ -9,17 +9,12 @@ import { useDisplayAddProductSectionStore } from "@repo/shared-store";
 import { useSellerProductDataStore } from "@repo/shared-store";
 export const SellerDashboardProductManagementSection = () => {
   // Following is the Zustand state management code for displaying component depending upon active sidebar
-  const activeSideBar = useActiveSellerDashboardSideBar(
-    (state: any) => state.activeSideBar
-  );
+  const { activeSideBar } = useActiveSellerDashboardSideBar();
+  
 
   // Following is the Zustand state management code for displaying add product section
-  const displayAddProductSection = useDisplayAddProductSectionStore(
-    (state: any) => state.displayAddProductSection
-  );
-  const updateVisibility = useDisplayAddProductSectionStore(
-    (state: any) => state.updateDisplayAddProductSectionStore
-  );
+  const{displayAddProductSection,setVisibilityOfAddProductSection}=useDisplayAddProductSectionStore()
+
   // Following is the Zustand state management code for sellerProductData
   const sellerProductData = useSellerProductDataStore(
     (state) => state.productData
@@ -35,7 +30,7 @@ export const SellerDashboardProductManagementSection = () => {
     useState<SellerProductData[]>(sellerProductData);
 
   const handelDisplayofAddProductSection = () => {
-    updateVisibility(true);
+    setVisibilityOfAddProductSection(true);
   };
 
   const handleFilterProducts = (

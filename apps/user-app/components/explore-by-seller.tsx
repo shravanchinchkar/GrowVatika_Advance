@@ -18,23 +18,18 @@ import {
 import { ProductSearchBar } from "./product-search-bar";
 
 export const ExplorePlantsBySeller = () => {
+  // Following is the zustand State code
+  const { isAddToCartVisible } = useAddToCartVisibilityStore();
+  const { isWishListVisible } = useWishListVisibilityStore();
+  const { isUserProfileVisible } = useUserProfileVisibilityStore();
+  const { isMobileNavbarVisible } = useChangeMobileNavbarVisibility();
+  
+
   const productPageButton = ["Most Popular", "Newly Added", "NearBy Seller"];
-  const addToCartVisibility = useAddToCartVisibilityStore(
-    (state: any) => state.addToCartDropDownVisibility
-  );
-  const wishListVisibility = useWishListVisibilityStore(
-    (state: any) => state.wishListDropDownVisibility
-  );
-  const MobileNavbarVisibility = useChangeMobileNavbarVisibility(
-    (state: any) => state.displayMobileNavbar
-  );
-  const userProfileVisibility = useUserProfileVisibilityStore(
-    (state: any) => state.userProfileVisibility
-  );
 
   return (
     <div
-      className={`min-h-screen relative flex flex-col justify-between bg-[#FFF6F4] font-[Poppins] ${(addToCartVisibility || wishListVisibility || MobileNavbarVisibility || userProfileVisibility) && "h-[100vh] overflow-hidden"}`}
+      className={`min-h-screen relative flex flex-col justify-between bg-[#FFF6F4] font-[Poppins] ${(isAddToCartVisible || isWishListVisible || isUserProfileVisible || isMobileNavbarVisible) && "h-[100vh] overflow-hidden"}`}
     >
       <Cart />
       <WishList />

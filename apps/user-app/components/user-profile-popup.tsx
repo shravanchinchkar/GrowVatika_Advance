@@ -12,12 +12,7 @@ export const UserProfilePopUp = () => {
   const text = "🌿 Buy 2 Plants, Get 1 Free!";
   const text1 = "💸 Extra 10% off on your next purchase – Use code: GREEN10";
 
-  const userProfileVisibility = useUserProfileVisibilityStore(
-    (state: any) => state.userProfileVisibility
-  );
-  const updateVisibility = useUserProfileVisibilityStore(
-    (state: any) => state.updateuserProfileVisibility
-  );
+  const {isUserProfileVisible,setVisibilityOfUserProfile}=useUserProfileVisibilityStore()
 
   function handleSignIn() {
     router.push("/signin");
@@ -26,12 +21,12 @@ export const UserProfilePopUp = () => {
     await signOut();
   }
   const handleUserProfileVisibility = () => {
-    updateVisibility(false);
+    setVisibilityOfUserProfile(false);
   };
 
-  if (userProfileVisibility) {
+  if (isUserProfileVisible) {
     return (
-      <div className="w-screen h-screen absolute top-0 z-50 bg-[#00000040] flex justify-center p-[2rem]">
+      <div className="w-[100%] h-screen absolute top-0 z-50 bg-[#00000040] flex justify-center p-[2rem]">
         <div
           className={`w-[90%] h-[95%] rounded-[1.25rem] bg-[#FFFFFF] font-[Poppins] overflow-hidden animate-slide-in-right ${session.status === "loading" ? "flex justify-center items-center" : "flex flex-col"}`}
         >

@@ -1,9 +1,19 @@
 import { create } from "zustand";
 
-export const useSpecialties = create((set) => ({
+interface SpecialtiesProps {
+  specialties: string[];
+  setSpecialties: (newValue: string[]) => void;
+  addSpecialties: (newValue: string) => void;
+  removeSpecialties: (newValue: string) => void;
+  toggleSpecialties: (newValue: string) => void;
+  clearSpecialties: () => void;
+}
+
+export const useSpecialties = create<SpecialtiesProps>((set) => ({
   specialties: [],
 
-  setSpecialties: (newSpecialty: string) => set({ specialties: newSpecialty }),
+  setSpecialties: (newSpecialty: string[]) =>
+    set({ specialties: newSpecialty }),
 
   // Add a specialty to the array (if not already present)
   addSpecialties: (specialty: string) =>

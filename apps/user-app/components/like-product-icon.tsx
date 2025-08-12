@@ -5,11 +5,9 @@ import { RiHeart3Fill, RiHeart3Line } from "@remixicon/react";
 import { useWishListVisibilityStore } from "@repo/shared-store";
 
 export const LikeProductIcon = memo(() => {
-  const wishListVisibility = useWishListVisibilityStore(
-    (state: any) => state.updateWishListDropDownVisibility
-  );
+  const {setVisibilityOfWishList}=useWishListVisibilityStore()
   const handleWishListVisibility = () => {
-    wishListVisibility(true);
+    setVisibilityOfWishList(true);
   };
   return (
     <button

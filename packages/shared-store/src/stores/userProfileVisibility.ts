@@ -1,8 +1,13 @@
 import { create } from "zustand";
-export const useUserProfileVisibilityStore = create((set) => ({
-  userProfileVisibility: false,
-  updateuserProfileVisibility: (newVisibility: boolean) =>
-    set({
-      userProfileVisibility: newVisibility,
-    }),
-}));
+
+interface UserProfileVisibility {
+  isUserProfileVisible: boolean;
+  setVisibilityOfUserProfile: (newValue: boolean) => void;
+}
+export const useUserProfileVisibilityStore = create<UserProfileVisibility>(
+  (set) => ({
+    isUserProfileVisible: false,
+    setVisibilityOfUserProfile: (newValue: boolean) =>
+      set({ isUserProfileVisible: newValue }),
+  })
+);

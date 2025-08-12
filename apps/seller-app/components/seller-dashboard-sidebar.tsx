@@ -12,16 +12,10 @@ export const SellerDashboardSideBar = memo(() => {
   const [display, setDisplay] = useState(false);
   const sellerData = useSellerDataStore((state) => state.sellerData);
 
-  const currentActiveSideBar = useActiveSellerDashboardSideBar(
-    (state: any) => state.activeSideBar
-  );
-  const updateActiveSideBar = useActiveSellerDashboardSideBar(
-    (state: any) => state.updateActiveSideBar
-  );
+  const { activeSideBar,setActiveSideBar } = useActiveSellerDashboardSideBar();
+  
 
-  const updateVisibility = useDisplayAddProductSectionStore(
-    (state: any) => state.updateDisplayAddProductSectionStore
-  );
+  const {setVisibilityOfAddProductSection}=useDisplayAddProductSectionStore()
 
   const SideBarMainSectionList = [
     "dashboard",
@@ -54,8 +48,8 @@ export const SellerDashboardSideBar = memo(() => {
 
     // Only proceed if it's a valid sidebar option
     if (validSidebarOptions.includes(targetSideBar)) {
-      updateVisibility(false);
-      updateActiveSideBar(targetSideBar);
+      setVisibilityOfAddProductSection(false);
+      setActiveSideBar(targetSideBar);
     } else {
       console.warn(`Invalid sidebar option: ${targetSideBar}`);
     }
@@ -91,7 +85,7 @@ export const SellerDashboardSideBar = memo(() => {
                   >
                     <li
                       className={
-                        currentActiveSideBar == item
+                        activeSideBar == item
                           ? "flex items-center gap-[1rem] cursor-pointer pl-[1.5rem] py-[0.5rem] bg-[#FFF6F4] text-[#56A430] animate-bg-bounce-in"
                           : "flex items-center gap-[1rem] cursor-pointer pl-[1.5rem] py-[0.5rem]"
                       }
@@ -105,7 +99,7 @@ export const SellerDashboardSideBar = memo(() => {
                         />
                         <Image
                           className={
-                            currentActiveSideBar == item
+                            activeSideBar == item
                               ? "object-cover opacity-100 group-hover:opacity-100 transition-opacity duration-200 absolute inset-0 pointer-events-none"
                               : "object-cover opacity-0 absolute inset-0 pointer-events-none"
                           }
@@ -137,7 +131,7 @@ export const SellerDashboardSideBar = memo(() => {
                 >
                   <li
                     className={
-                      currentActiveSideBar == item
+                      activeSideBar == item
                         ? "flex items-center gap-[1rem] cursor-pointer pl-[1.5rem] py-[0.5rem] bg-[#FFF6F4] text-[#56A430] animate-bg-bounce-in"
                         : "flex items-center gap-[1rem] cursor-pointer pl-[1.5rem] py-[0.5rem]"
                     }
@@ -151,7 +145,7 @@ export const SellerDashboardSideBar = memo(() => {
                       />
                       <Image
                         className={
-                          currentActiveSideBar == item
+                          activeSideBar == item
                             ? "object-cover opacity-100 group-hover:opacity-100 transition-opacity duration-200 absolute inset-0"
                             : "object-cover opacity-0 absolute inset-0"
                         }

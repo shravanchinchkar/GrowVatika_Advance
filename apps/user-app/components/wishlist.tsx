@@ -5,13 +5,8 @@ import Image from "next/image";
 import { useWishListVisibilityStore } from "@repo/shared-store";
 
 export const WishList = memo(() => {
-  const wishListVisibility = useWishListVisibilityStore(
-    (state: any) => state.wishListDropDownVisibility
-  );
-
-  const updateWishListVisibility = useWishListVisibilityStore(
-    (state: any) => state.updateWishListDropDownVisibility
-  );
+  const { isWishListVisible, setVisibilityOfWishList } =
+    useWishListVisibilityStore();
 
   const wishlistItems = [
     {
@@ -65,13 +60,12 @@ export const WishList = memo(() => {
     },
   ];
   const handleWishListVisibility = () => {
-    updateWishListVisibility(false);
+    setVisibilityOfWishList(false);
   };
 
-  if (wishListVisibility === true) {
+  if (isWishListVisible) {
     return (
-      <div className="z-50 absolute top-0 w-[100%] min-h-screen max-h-max bg-black bg-opacity-10 flex justify-center">
-
+      <div className="z-50 absolute top-0 w-[100%] min-h-screen max-h-max bg-[#00000040] bg-opacity-10 flex justify-center">
         <div className="new-sm:w-[95%] new-sm:h-max md:w-[65%] lg:w-[90%] md:h-[90%] font-[Poppins] bg-white rounded-[1.25rem] shadow-2xl mx-auto my-[1rem] overflow-hidden pb-[1rem] animate-slide-in-right">
           {/* Wishlist header section */}
           <div className="w-[100%] py-[1rem] flex justify-between items-center border-b-[0.0625rem] border-[#00000033]">

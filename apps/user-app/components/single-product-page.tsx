@@ -9,27 +9,26 @@ import {
   useAddToCartVisibilityStore,
   useWishListVisibilityStore,
   useChangeMobileNavbarVisibility,
+  useUserProfileVisibilityStore,
 } from "@repo/shared-store";
+import { UserProfilePopUp } from "./user-profile-popup";
 import { SingleProductCard } from "./single-product-card";
 
 export const SingleProductPage = () => {
-  const addToCartVisibility = useAddToCartVisibilityStore(
-    (state: any) => state.addToCartDropDownVisibility
-  );
-  const wishListVisibility = useWishListVisibilityStore(
-    (state: any) => state.wishListDropDownVisibility
-  );
-  const MobileNavbarVisibility = useChangeMobileNavbarVisibility(
-    (state: any) => state.displayMobileNavbar
-  );
+  const { isAddToCartVisible } = useAddToCartVisibilityStore();
+  const { isWishListVisible } = useWishListVisibilityStore();
+  const { isUserProfileVisible } = useUserProfileVisibilityStore();
+  const { isMobileNavbarVisible } = useChangeMobileNavbarVisibility();
+  
 
   return (
     <div
-      className={`min-h-screen relative flex flex-col justify-between bg-[#FFF6F4] gap-[2rem] font-[Poppins] ${(addToCartVisibility || wishListVisibility || MobileNavbarVisibility) && "h-[100vh] overflow-hidden"}`}
+      className={`min-h-screen relative flex flex-col justify-between bg-[#FFF6F4] gap-[2rem] font-[Poppins] ${(isAddToCartVisible || isWishListVisible || isUserProfileVisible || isMobileNavbarVisible) && "h-[100vh] overflow-hidden"}`}
     >
       <Cart />
       <WishList />
       <MobileNavBar />
+      <UserProfilePopUp />
       <HeaderSection singleProduct={true} isExplore={false} />
       {/* Search Input, Search & Sort Button */}
       <div className="mx-auto new-sm:w-[95%] md:w-[95%] xl:w-[87%] 2xl:w-[87%] flex flex-col gap-[2rem]">

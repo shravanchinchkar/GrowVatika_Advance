@@ -81,6 +81,7 @@ export const HeaderSection = memo(
                 className="md:w-[7rem] lg:w-[8.5rem] xl:w-[10.5rem]"
                 custom_Id="Category"
                 isCategory={true}
+                singleProduct={singleProduct}
               />
               <SelectTagUser
                 activeValue="Explore"

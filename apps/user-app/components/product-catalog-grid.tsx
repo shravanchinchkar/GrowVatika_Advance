@@ -159,7 +159,6 @@ export const ProductCatalogGrid = memo(
     useEffect(() => {
       const urlPage = searchParams.get("page");
       const urlCategory = searchParams.get("category");
-
       if (urlPage) {
         const pageNumber = Number(urlPage);
 

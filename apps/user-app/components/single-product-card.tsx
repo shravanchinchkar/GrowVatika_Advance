@@ -6,6 +6,7 @@ import { useSearchParams } from "next/navigation";
 import { TSingleProductData } from "@repo/common-types";
 import { toastStyle } from "@repo/shared/utilfunctions";
 import { memo, useCallback, useEffect, useState } from "react";
+import { usefilterProductByCategoryStore } from "@repo/shared-store";
 
 enum DirectionType {
   LEFT = "left",
@@ -205,6 +206,8 @@ export const SingleProductCard = () => {
   const [loading, setLoading] = useState(true);
   const [disablePlusButton, setDisablePlusButton] = useState<boolean>(false);
 
+  const { setCategory } = usefilterProductByCategoryStore();
+
   // call to backend to fetch single product data
   useEffect(() => {
     const getSingleProductData = async () => {
@@ -215,6 +218,7 @@ export const SingleProductCard = () => {
         return;
       }
       const beProductData = res.data.productData;
+      setCategory(beProductData.category);
       setSingleProductData({
         ...beProductData,
         price: beProductData.price ? Number(beProductData.price) : 0,
@@ -235,6 +239,7 @@ export const SingleProductCard = () => {
     } else {
       getSingleProductData();
     }
+    return () => setCategory("All");
   }, [productId]);
 
   const percentageoff = useCallback((compareAt: number, price: number) => {

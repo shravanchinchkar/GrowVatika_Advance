@@ -1,20 +1,29 @@
 import Link from "next/link";
-import { memo } from "react";
+import { memo, useState } from "react";
 import Image from "next/image";
 import { SellerProductData } from "@repo/common-types";
+import { useAddToCard } from "@repo/shared-store";
+import { ButtonLoadingSign } from "@repo/ui/loading-sign";
 
 interface ProductCardProps {
-  productData:SellerProductData;
+  productData: SellerProductData;
   likeProduct: boolean;
   handleLikeProduct: React.MouseEventHandler<HTMLButtonElement>;
 }
 
 export const ProductCard = memo(
-  ({
-    productData,
-    handleLikeProduct,
-    likeProduct,
-  }: ProductCardProps) => {
+  ({ productData, handleLikeProduct, likeProduct }: ProductCardProps) => {
+    const { addNewProduct } = useAddToCard();
+    const [loading, setLoading] = useState(false);
+
+    const handleAddToCart = (e: any, productData: SellerProductData) => {
+      e.preventDefault();
+      setLoading(true);
+      addNewProduct(productData);
+      setTimeout(() => {
+        setLoading(false);
+      }, 500);
+    };
 
     return (
       <Link
@@ -64,8 +73,7 @@ export const ProductCard = memo(
           </div>
         </div>
 
-        <div className="new-sm:w-[50%] new-sm:h-[100%] new-sm-2:w-[100%] new-sm-2:h-[45%] flex flex-col justify-between px-[0.7rem] py-[0.7rem]"> 
-
+        <div className="new-sm:w-[50%] new-sm:h-[100%] new-sm-2:w-[100%] new-sm-2:h-[45%] flex flex-col justify-between px-[0.7rem] py-[0.7rem]">
           {/* Following div consist of category,Rating and product name Section */}
           <div className="flex flex-col">
             <div className="flex justify-between items-center">
@@ -111,19 +119,26 @@ export const ProductCard = memo(
           </div>
 
           {/* Add to Cart Button */}
-          <button className="new-sm:w-[100%] new-sm:h-[2.3rem] new-sm-1:h-[2.3rem] new-sm-3:h-[2.8rem] new-md:h-[30%] bg-[#56A430] rounded-[0.625rem] flex items-center justify-center gap-2 hover:bg-[#213E12] text-white new-sm:text-[0.74238rem] new-sm-1:text-[0.9rem] new-sm-3:text-[1.1rem] new-md:text-[1.22669rem] font-medium text-center">
-            <div className="relative new-sm:w-[0.9375rem] new-sm:h-[0.9375rem] new-sm-1:w-[1.2rem] new-sm-1:h-[1.2rem] new-sm-3:w-[1.53806rem] new-sm-3:h-[1.50469rem] flex-shrink-0">
-              <Image
-                src="/assets/images/CommonImages/addToCartIcon.svg"
-                alt="cart icon"
-                fill
-              />
-            </div>
-            Add to Cart
+          <button
+            className={`new-sm:w-[100%] new-sm:h-[2.3rem] new-sm-1:h-[2.3rem] new-sm-3:h-[2.8rem] new-md:h-[30%] bg-[#56A430] rounded-[0.625rem] flex items-center justify-center gap-2 text-white new-sm:text-[0.74238rem] new-sm-1:text-[0.9rem] new-sm-3:text-[1.1rem] new-md:text-[1.22669rem] font-medium text-center ${loading ? "bg-[#213E12]" : "hover:bg-[#213E12]"}`}
+            onClick={(e) => handleAddToCart(e, productData)}
+          >
+            {loading ? (
+              <ButtonLoadingSign />
+            ) : (
+              <>
+                <div className="relative new-sm:w-[0.9375rem] new-sm:h-[0.9375rem] new-sm-1:w-[1.2rem] new-sm-1:h-[1.2rem] new-sm-3:w-[1.53806rem] new-sm-3:h-[1.50469rem] flex-shrink-0">
+                  <Image
+                    src="/assets/images/CommonImages/addToCartIcon.svg"
+                    alt="cart icon"
+                    fill
+                  />
+                </div>
+                Add to Cart
+              </>
+            )}
           </button>
-
         </div>
-
       </Link>
     );
   }

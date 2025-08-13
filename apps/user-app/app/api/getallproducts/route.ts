@@ -32,6 +32,7 @@ export async function GET(req: NextRequest) {
           compareAt: true,
           tags: true,
           imageURL: true,
+          productQuantity:true
         },
         skip: skip, // Skip records based on current page
         take: limit, // Limit the number of records returned
@@ -91,6 +92,7 @@ export async function GET(req: NextRequest) {
           compareAt: true,
           tags: true,
           imageURL: true,
+          productQuantity:true
         },
         skip: skip, // Skip records based on current page
         take: limit, // Limit the number of records returned

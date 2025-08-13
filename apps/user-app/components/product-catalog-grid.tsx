@@ -8,7 +8,7 @@ import { ProductCard } from "./product-card";
 import { useSearchParams } from "next/navigation";
 import {
   useFilterProduct,
-  usefilterProductByCategoryStore
+  usefilterProductByCategoryStore,
 } from "@repo/shared-store";
 import {
   memo,

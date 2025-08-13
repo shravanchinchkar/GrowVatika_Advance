@@ -1,10 +1,9 @@
 "use client";
+import { useState } from "react";
+import { useRouter } from "next/navigation";
 import { SiteLogo } from "@repo/ui/brand-logo";
 import { AuthButton } from "@repo/ui/auth-button";
 import { signOut, useSession } from "next-auth/react";
-import { useRouter } from "next/navigation";
-import { useState } from "react";
-import Skeleton from "../app/loading";
 
 export const SellerNavbar = () => {
   const session = useSession();
@@ -19,11 +18,6 @@ export const SellerNavbar = () => {
   async function handleSignOut() {
     await signOut();
   }
-
-  if (loading) {
-    return <Skeleton />;
-  }
-
   return (
     <nav className="w-[100%] flex justify-between items-center ml-[1rem] mt-[1rem]">
       <SiteLogo />
@@ -39,7 +33,7 @@ export const SellerNavbar = () => {
           onClick={
             session.status === "authenticated" ? handleSignOut : handleSignIn
           }
-          loading={loading}
+          loading={loading || session.status === "loading"}
         />
       </div>
     </nav>

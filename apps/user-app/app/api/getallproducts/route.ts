@@ -23,9 +23,9 @@ export async function GET(req: NextRequest) {
           productStatus: "Active",
         },
         select: {
+          id: true,
           category:true,
           collection: true,
-          id: true,
           name: true,
           productSize: true,
           price: true,
@@ -83,9 +83,9 @@ export async function GET(req: NextRequest) {
           category: categoryParams,
         },
         select: {
+          id: true,
           category:true,
           collection: true,
-          id: true,
           name: true,
           productSize: true,
           price: true,

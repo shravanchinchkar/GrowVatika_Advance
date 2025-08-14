@@ -2,16 +2,24 @@ import axios from "axios";
 import Image from "next/image";
 import Skeleton from "@repo/ui/loading";
 import { useSearchParams } from "next/navigation";
-import { TSingleProductData } from "@repo/common-types";
-import { memo, useCallback, useEffect, useReducer } from "react";
-import { usefilterProductByCategoryStore } from "@repo/shared-store";
+import { SellerProductData, TSingleProductData } from "@repo/common-types";
+import { memo, useCallback, useEffect, useReducer, useState } from "react";
+import {
+  useAddToCard,
+  usefilterProductByCategoryStore,
+} from "@repo/shared-store";
+import toast from "react-hot-toast";
+import { toastStyle } from "@repo/shared/utilfunctions";
+import { ButtonLoadingSign } from "@repo/ui/loading-sign";
 
 type SingleProductDataState = {
-  singleProductData: TSingleProductData | null;
-  loading: boolean;
-  disablePlusButton: boolean;
   error: boolean;
+  loading: boolean;
+  productData: SellerProductData | null;
   productQuantity: number;
+  loadingAddToCart: boolean;
+  disablePlusButton: boolean;
+  singleProductData: TSingleProductData | null;
 };
 
 enum DirectionType {
@@ -225,6 +233,12 @@ const reducer = (
       return { ...state, productQuantity: state.productQuantity + 1 };
     case "ENABLE_PLUS_BUTTON":
       return { ...state, disablePlusButton: true };
+    case "SET_PRODUCT_DATA":
+      return { ...state, productData: action.payload.addToCartData };
+    case "SET_AddToCart_Loading":
+      return { ...state, loadingAddToCart: true };
+    case "SET_AddToCart_Loading_False":
+      return { ...state, loadingAddToCart: false };
     default:
       return state;
   }
@@ -234,15 +248,20 @@ export const SingleProductCard = () => {
   const searchParams = useSearchParams();
   const productId: string = searchParams.get("id") || "";
 
+  // following is the useReducer hook
   const [state, dispatch] = useReducer<SingleProductDataState, any>(reducer, {
-    singleProductData: null,
-    loading: true,
-    disablePlusButton: false,
     error: false,
+    loading: true,
+    productData: null,
     productQuantity: 1,
+    loadingAddToCart: false,
+    singleProductData: null,
+    disablePlusButton: false,
   });
 
+  // Following are the zustand state
   const { setCategory } = usefilterProductByCategoryStore();
+  const { addNewProduct } = useAddToCard();
 
   // call to backend to fetch single product data
   useEffect(() => {
@@ -253,6 +272,14 @@ export const SingleProductCard = () => {
         dispatch({ type: "ERROR" });
         return;
       }
+      const { seller, ...prodData } = res.data.productData;
+      dispatch({
+        type: "SET_PRODUCT_DATA",
+        payload: {
+          addToCartData: prodData,
+        },
+      });
+
       const beProductData = res.data.productData;
       setCategory(beProductData.category);
       const transformData = {
@@ -284,6 +311,7 @@ export const SingleProductCard = () => {
   }, [productId]);
 
   // Following are the functions
+
   const percentageoff = useCallback((compareAt: number, price: number) => {
     if (compareAt === 0) {
       return 0;
@@ -299,12 +327,24 @@ export const SingleProductCard = () => {
     return `${lowerFeet}-${upperFeet} feet`;
   }, []);
 
+  const handleAddToCart = (e: any, addToCartData: any) => {
+    dispatch({ type: "SET_AddToCart_Loading" });
+    addNewProduct(addToCartData);
+    setTimeout(() => {
+      dispatch({ type: "SET_AddToCart_Loading_False" });
+      toast.success("Product Added to Cart", toastStyle);
+    }, 500);
+  };
+
   //Following are the function call
+
   const disCount = percentageoff(
     Number(state.singleProductData?.compareAt),
     Number(state.singleProductData?.price)
   );
-  const sizeInFeet = inchesToFeetRange(Number(state.singleProductData?.productSize));
+  const sizeInFeet = inchesToFeetRange(
+    Number(state.singleProductData?.productSize)
+  );
 
   // Following are objects of type array
   const DummyNavigation: string[] = [
@@ -594,16 +634,25 @@ export const SingleProductCard = () => {
               {/* Add to cart,like and share button */}
               <div className="flex justify-start gap-[1rem]">
                 {/* Add to cart */}
-                <button className="new-sm:w-[55%] 2xl:w-[60%] new-sm:h-[2.3125rem] md:h-[2.7rem] 2xl:h-[3.1875rem] bg-[#56A430] hover:bg-[#213E12] rounded-[0.625rem] flex items-center justify-center gap-[1rem] text-white new-sm:text-[0.75rem] new-sm-1:text-[1rem] lg:text-[1.1rem] 2xl:text-[1.22669rem] font-[Poppins]">
-                  <div className="relative new-sm:w-[1.125rem] new-sm:h-[1.125rem] new-sm-1:w-[1.3rem] new-sm-1:h-[1.3rem] lg:w-[1.5rem] lg:h-[1.5rem] 2xl:w-[1.53806rem] 2xl:h-[1.50469rem]">
-                    <Image
-                      src="/assets/images/CommonImages/addToCartIcon.svg"
-                      alt="cart"
-                      className="object-cover"
-                      fill
-                    />
-                  </div>
-                  Add to Cart
+                <button
+                  className="new-sm:w-[55%] 2xl:w-[60%] new-sm:h-[2.3125rem] md:h-[2.7rem] 2xl:h-[3.1875rem] bg-[#56A430] hover:bg-[#213E12] rounded-[0.625rem] flex items-center justify-center gap-[1rem] text-white new-sm:text-[0.75rem] new-sm-1:text-[1rem] lg:text-[1.1rem] 2xl:text-[1.22669rem] font-[Poppins]"
+                  onClick={(e) => handleAddToCart(e, state.productData)}
+                >
+                  {state.loadingAddToCart ? (
+                    <ButtonLoadingSign />
+                  ) : (
+                    <>
+                      <div className="relative new-sm:w-[1.125rem] new-sm:h-[1.125rem] new-sm-1:w-[1.3rem] new-sm-1:h-[1.3rem] lg:w-[1.5rem] lg:h-[1.5rem] 2xl:w-[1.53806rem] 2xl:h-[1.50469rem]">
+                        <Image
+                          src="/assets/images/CommonImages/addToCartIcon.svg"
+                          alt="cart"
+                          className="object-cover"
+                          fill
+                        />
+                      </div>
+                      Add to Cart
+                    </>
+                  )}
                 </button>
                 {/* Like Product button */}
                 <LikandShare src="/assets/images/SingleProductImage/heartIcon.svg" />
@@ -625,7 +674,8 @@ export const SingleProductCard = () => {
                   "/assets/images/ExploreBySellerImages/ImagePlaceholder2.pn"
                 }
                 nurseryName={
-                  state.singleProductData?.seller.nurseryName || "Evergreen Gardens"
+                  state.singleProductData?.seller.nurseryName ||
+                  "Evergreen Gardens"
                 }
                 nurseryAddress={
                   state.singleProductData?.seller.address || "Katraj, Pune |"
@@ -655,7 +705,8 @@ export const SingleProductCard = () => {
                 "/assets/images/ExploreBySellerImages/ImagePlaceholder2.pn"
               }
               nurseryName={
-                state.singleProductData?.seller.nurseryName || "Evergreen Gardens"
+                state.singleProductData?.seller.nurseryName ||
+                "Evergreen Gardens"
               }
               nurseryAddress={
                 state.singleProductData?.seller.address || "Katraj, Pune |"

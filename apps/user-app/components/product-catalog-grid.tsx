@@ -240,7 +240,7 @@ export const ProductCatalogGrid = memo(
               ? response.totalFilterProductCount
               : response.totalProductsCount;
           const totalPages = response.totalPages;
-
+          
           if (page > totalPages) {
             dispatch({ type: "PAGE_NOT_FOUND" });
             return;

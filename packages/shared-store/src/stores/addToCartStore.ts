@@ -13,6 +13,17 @@ type AddToCardProps = {
   addNewProduct: (newProduct: SellerProductData) => void;
 };
 
+const checkIsProductPresent = (
+  productData: SellerProductData[],
+  newProduct: SellerProductData
+) => {
+  for (const product of productData) {
+    if (product.id === newProduct.id) {
+      return true;
+    }
+  }
+  return false;
+};
 export const useAddToCard = create<AddToCardProps>()(
   persist(
     (set, get) => ({
@@ -26,7 +37,7 @@ export const useAddToCard = create<AddToCardProps>()(
         })),
       addNewProduct: (newProduct: SellerProductData) =>
         set((state) => ({
-          productData: state.productData.includes(newProduct)
+          productData: checkIsProductPresent(state.productData, newProduct)
             ? state.productData
             : [...state.productData, newProduct],
         })),

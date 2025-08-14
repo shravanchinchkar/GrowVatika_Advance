@@ -1,12 +1,18 @@
 import axios from "axios";
 import Image from "next/image";
-import toast from "react-hot-toast";
 import Skeleton from "@repo/ui/loading";
 import { useSearchParams } from "next/navigation";
 import { TSingleProductData } from "@repo/common-types";
-import { toastStyle } from "@repo/shared/utilfunctions";
-import { memo, useCallback, useEffect, useState } from "react";
+import { memo, useCallback, useEffect, useReducer } from "react";
 import { usefilterProductByCategoryStore } from "@repo/shared-store";
+
+type SingleProductDataState = {
+  singleProductData: TSingleProductData | null;
+  loading: boolean;
+  disablePlusButton: boolean;
+  error: boolean;
+  productQuantity: number;
+};
 
 enum DirectionType {
   LEFT = "left",
@@ -196,30 +202,60 @@ const NurseryCard = memo(
   }
 );
 
+const reducer = (
+  state: SingleProductDataState,
+  action: any
+): SingleProductDataState => {
+  switch (action.type) {
+    case "LOADING":
+      return { ...state, loading: true };
+    case "ERROR":
+      return { ...state, loading: false, error: true };
+    case "FETCH_SUCCESS":
+      return {
+        ...state,
+        singleProductData: action.payload.productData,
+        loading: false,
+      };
+    case "DISABLED_PLUS_BUTTON":
+      return { ...state, disablePlusButton: false };
+    case "DECREASE_PRODUCT_QUANTITY":
+      return { ...state, productQuantity: state.productQuantity - 1 };
+    case "INCREASE_PRODUCT_QUANTITY":
+      return { ...state, productQuantity: state.productQuantity + 1 };
+    case "ENABLE_PLUS_BUTTON":
+      return { ...state, disablePlusButton: true };
+    default:
+      return state;
+  }
+};
+
 export const SingleProductCard = () => {
   const searchParams = useSearchParams();
   const productId: string = searchParams.get("id") || "";
 
-  const [productCount, setProductCount] = useState(1);
-  const [singleProductData, setSingleProductData] =
-    useState<TSingleProductData>();
-  const [loading, setLoading] = useState(true);
-  const [disablePlusButton, setDisablePlusButton] = useState<boolean>(false);
+  const [state, dispatch] = useReducer<SingleProductDataState, any>(reducer, {
+    singleProductData: null,
+    loading: true,
+    disablePlusButton: false,
+    error: false,
+    productQuantity: 1,
+  });
 
   const { setCategory } = usefilterProductByCategoryStore();
 
   // call to backend to fetch single product data
   useEffect(() => {
     const getSingleProductData = async () => {
-      const res = await axios.get(`api/getsingleproductdata?id=${productId}`);
+      dispatch({ type: "LOADING" });
+      const res = await axios.get(`api/getsingleproductdata?id=${productId}`); //api call
       if (!res.data.success) {
-        setLoading(false);
-        toast.error("No Product data found", toastStyle);
+        dispatch({ type: "ERROR" });
         return;
       }
       const beProductData = res.data.productData;
       setCategory(beProductData.category);
-      setSingleProductData({
+      const transformData = {
         ...beProductData,
         price: beProductData.price ? Number(beProductData.price) : 0,
         compareAt: beProductData.compareAt
@@ -231,8 +267,13 @@ export const SingleProductCard = () => {
         productQuantity: beProductData.productQuantity
           ? Number(beProductData.productQuantity)
           : 0,
+      };
+      dispatch({
+        type: "FETCH_SUCCESS",
+        payload: {
+          productData: transformData,
+        },
       });
-      setLoading(false);
     };
     if (!productId) {
       return;
@@ -242,6 +283,7 @@ export const SingleProductCard = () => {
     return () => setCategory("All");
   }, [productId]);
 
+  // Following are the functions
   const percentageoff = useCallback((compareAt: number, price: number) => {
     if (compareAt === 0) {
       return 0;
@@ -257,41 +299,43 @@ export const SingleProductCard = () => {
     return `${lowerFeet}-${upperFeet} feet`;
   }, []);
 
+  //Following are the function call
   const disCount = percentageoff(
-    Number(singleProductData?.compareAt),
-    Number(singleProductData?.price)
+    Number(state.singleProductData?.compareAt),
+    Number(state.singleProductData?.price)
   );
-  const sizeInFeet = inchesToFeetRange(Number(singleProductData?.productSize));
+  const sizeInFeet = inchesToFeetRange(Number(state.singleProductData?.productSize));
 
+  // Following are objects of type array
   const DummyNavigation: string[] = [
     "Home",
-    `${singleProductData?.category}`,
-    `${singleProductData?.collection}`,
-    `${singleProductData?.name || "Product Name"}`,
+    `${state.singleProductData?.category}`,
+    `${state.singleProductData?.collection}`,
+    `${state.singleProductData?.name || "Product Name"}`,
   ];
 
   const ProductImages: string[] = [
     "/assets/images/ExploreBySellerImages/ImagePlaceholder.jpg",
-    `${singleProductData?.imageURL || "/assets/images/SingleProductImage/productImage.jpg"}`,
+    `${state.singleProductData?.imageURL || "/assets/images/SingleProductImage/productImage.jpg"}`,
     "/assets/images/ExploreBySellerImages/ImagePlaceholder.jpg",
   ];
 
   const AvailablePotSizeandPrice: TAvailablePotSizeandPrice[] = [
     {
-      sizeandPrice: `${singleProductData?.productSize}" Pot - ₹ ${singleProductData?.price}`,
+      sizeandPrice: `${state.singleProductData?.productSize}" Pot - ₹ ${state.singleProductData?.price}`,
       approxSize: sizeInFeet,
       tag: "Best Value",
     },
   ];
 
-  if (!productId) {
+  if (!productId || state.error) {
     return (
       <div className="w-[100%] h-[95%] flex justify-center items-start pt-[10rem] text-[#CBD0D3] uppercase text-[1.5rem]">
         No Product Data found
       </div>
     );
   }
-  if (loading) {
+  if (state.loading) {
     return <Skeleton className="flex justify-center items-center" />;
   } else {
     return (
@@ -330,7 +374,7 @@ export const SingleProductCard = () => {
             <div className="new-sm:w-[95%] md:w-[90%] xl:w-[78%] new-sm:h-[70%] md:h-[70%] p-[1rem] bg-[#FFF6F4] rounded-[0.625rem] flex justify-center">
               <div className="relative new-sm:w-[100%] new-sm:h-[100%] border-[1px] border-[#00000033] rounded-[0.625rem] overflow-hidden">
                 <Image
-                  src={`${singleProductData?.imageURL || "/assets/images/SingleProductImage/productImage.jpg"}`}
+                  src={`${state.singleProductData?.imageURL || "/assets/images/ExploreBySellerImages/ImagePlaceholder.jpg"}`}
                   alt="productImage"
                   className="object-cover"
                   fill
@@ -343,7 +387,7 @@ export const SingleProductCard = () => {
 
                 <div className="absolute top-0 right-0 w-[50%] h-[100%] flex justify-end new-sm:p-[0.8rem] md:px-[1.2rem] md:py-[1rem]">
                   <p className="new-sm:w-[5rem] new-sm-1:w-[6rem] lg:w-[8rem] 2xl:w-[9.625rem] h-[1.625rem] flex justify-center items-center rounded-[5.25rem] bg-[#7FB819] text-[#FFFFFF] new-sm:text-[0.6rem] new-sm-1:text-[0.7rem] lg:text-[0.8rem] 2xl:text-[1rem] font-semibold">
-                    {singleProductData?.tags || "Best Seller"}
+                    {state.singleProductData?.tags || "Best Seller"}
                   </p>
                 </div>
               </div>
@@ -398,12 +442,12 @@ export const SingleProductCard = () => {
             <div>
               {/* Product Name */}
               <h1 className="text-[#000000] new-sm:text-[1rem] new-sm-1:text-[1.5rem] md:text-[1.2rem] lg:text-[1.5rem] xl:text-[1.8rem] 2xl:text-[2rem] capitalize font-semibold">
-                {singleProductData?.name || "Product Name"}
+                {state.singleProductData?.name || "Product Name"}
               </h1>
 
               {/* Pot Size available */}
               <p className="new-sm:text-[0.75rem] new-sm-1:text-[0.9rem] xl:text-[1.2rem] 2xl:text-[1.5rem] text-[#697F75] font-medium">
-                {`Pot - ${singleProductData?.productSize || 'Strelitzia Nicolai - 10" Premium Pot'}" Premium Pot`}
+                {`Pot - ${state.singleProductData?.productSize || 'Strelitzia Nicolai - 10" Premium Pot'}" Premium Pot`}
               </p>
 
               {/* Product Stars and Product review */}
@@ -434,10 +478,10 @@ export const SingleProductCard = () => {
             <div className="flex flex-col gap-[0.5rem]">
               <div className="flex items-center gap-[1rem]">
                 <h1 className="new-sm:text-[1rem] new-sm-1:text-[1.3rem] lg:text-[1.5rem] xl:text-[1.8rem] 2xl:text-[2rem] text-[#56A430] font-semibold">
-                  {`₹ ${singleProductData?.price}`}
+                  {`₹ ${state.singleProductData?.price}`}
                 </h1>
                 <h3 className="new-sm:text-[0.625rem] new-sm-1:text-[0.9rem] lg:text-[1rem] xl:text-[1.1rem] 2xl:text-[1.25rem] text-[#697F75] font-normal line-through">
-                  {`₹ ${singleProductData?.compareAt}`}
+                  {`₹ ${state.singleProductData?.compareAt}`}
                 </h3>
                 <div className="new-sm:w-[4.26025rem] new-sm:h-[1.44481rem] new-sm-1:w-[6rem] new-sm-1:h-[2rem] 2xl:w-[7.1875rem] 2xl:h-[2.4375rem] bg-[#DBD5A4] new-sm:text-[0.625rem] new-sm-1:text-[0.8rem] xl:text-[0.9rem]  2xl:text-[1rem] text-[#56A430] font-semibold rounded-[5.25rem] flex items-center justify-center">
                   {`Save ${disCount ? disCount : "25%"}%`}
@@ -495,22 +539,24 @@ export const SingleProductCard = () => {
                     src="/assets/images/SingleProductImage/minusIcon.svg"
                     alt="minusButton"
                     conditionalStyle={
-                      productCount === 1 && "cursor-not-allowed"
+                      state.productQuantity === 1 && "cursor-not-allowed"
                     }
-                    disabled={productCount === 1 && true}
+                    disabled={state.productQuantity === 1 && true}
                     onClick={() => {
-                      if (singleProductData?.productQuantity) {
-                        if (disablePlusButton) {
-                          setDisablePlusButton(false);
+                      if (state.singleProductData?.productQuantity) {
+                        if (state.disablePlusButton) {
+                          dispatch({ type: "DISABLED_PLUS_BUTTON" });
+                          // setDisablePlusButton(false);
                         }
                       }
-                      setProductCount(productCount - 1);
+                      dispatch({ type: "DECREASE_PRODUCT_QUANTITY" });
+                      // setProductCount(productCount - 1);
                     }}
                   />
 
                   {/* Product Count */}
                   <div className="new-sm:w-[1.21806rem] new-sm:h-[1.21806rem] new-sm-1:w-[1.5rem] new-sm-1:h-[1.5rem] 2xl:w-[2.5rem] 2xl:h-[2.125rem] my-[0.1rem] flex items-center justify-center bg-white md:text-[1.1rem] 2lx:text-[1.22669rem] text-black">
-                    {productCount}
+                    {state.productQuantity}
                   </div>
 
                   {/*Plus Button */}
@@ -518,19 +564,22 @@ export const SingleProductCard = () => {
                     src="/assets/images/SingleProductImage/plusIcon.svg"
                     alt="PlusButton"
                     conditionalStyle={
-                      disablePlusButton
+                      state.disablePlusButton
                         ? "cursor-not-allowed"
                         : "cursor-pointer"
                     }
-                    disabled={disablePlusButton}
+                    disabled={state.disablePlusButton}
                     onClick={() => {
-                      if (singleProductData?.productQuantity) {
+                      if (state.singleProductData?.productQuantity) {
                         if (
-                          productCount === singleProductData.productQuantity
+                          state.productQuantity ===
+                          state.singleProductData.productQuantity
                         ) {
-                          setDisablePlusButton(true);
+                          dispatch({ type: "ENABLE_PLUS_BUTTON" });
+                          // setDisablePlusButton(true);
                         } else {
-                          setProductCount((prevCount: number) => prevCount + 1);
+                          dispatch({ type: "INCREASE_PRODUCT_QUANTITY" });
+                          // setProductCount((prevCount: number) => prevCount + 1);
                         }
                       }
                     }}
@@ -538,7 +587,7 @@ export const SingleProductCard = () => {
                 </div>
 
                 <div className="new-sm:text-[0.625rem] new-sm-1:text-[0.9rem] lg:text-[1rem] 2xl:text-[1.22669rem] text-[#CBD0D3] font-medium">
-                  {`(${singleProductData?.productQuantity} available)`}
+                  {`(${state.singleProductData?.productQuantity} available)`}
                 </div>
               </div>
 
@@ -572,14 +621,14 @@ export const SingleProductCard = () => {
             <div className="new-sm:hidden lg:block lg:w-[90%] 2xl:w-[85%] h-[25%]">
               <NurseryCard
                 pictureURL={
-                  singleProductData?.seller.profilePictureURL ||
+                  state.singleProductData?.seller.profilePictureURL ||
                   "/assets/images/ExploreBySellerImages/ImagePlaceholder2.pn"
                 }
                 nurseryName={
-                  singleProductData?.seller.nurseryName || "Evergreen Gardens"
+                  state.singleProductData?.seller.nurseryName || "Evergreen Gardens"
                 }
                 nurseryAddress={
-                  singleProductData?.seller.address || "Katraj, Pune |"
+                  state.singleProductData?.seller.address || "Katraj, Pune |"
                 }
               />
             </div>
@@ -594,7 +643,7 @@ export const SingleProductCard = () => {
             </h1>
             {/* Product Description */}
             <p className="text-[#171717] new-sm:text-[0.75rem] new-sm-1:text-[1rem] lg:text-[1rem] 2xl:text-[1.25rem] font-normal text-center new-sm:px-[1rem] md:px-[2rem] lg:px-[3.5rem]">
-              {singleProductData?.description}
+              {state.singleProductData?.description}
             </p>
           </div>
 
@@ -602,14 +651,14 @@ export const SingleProductCard = () => {
           <div className="new-sm:block lg:hidden new-sm:w-[95%] new-sm:h-[25%] new-sm-1:h-[25%] new-sm-3:h-[40%] md:w-[55%] new-md:w-[50%] md:h-[40%] new-md:h-[50%]">
             <NurseryCard
               pictureURL={
-                singleProductData?.seller.profilePictureURL ||
+                state.singleProductData?.seller.profilePictureURL ||
                 "/assets/images/ExploreBySellerImages/ImagePlaceholder2.pn"
               }
               nurseryName={
-                singleProductData?.seller.nurseryName || "Evergreen Gardens"
+                state.singleProductData?.seller.nurseryName || "Evergreen Gardens"
               }
               nurseryAddress={
-                singleProductData?.seller.address || "Katraj, Pune |"
+                state.singleProductData?.seller.address || "Katraj, Pune |"
               }
             />
           </div>

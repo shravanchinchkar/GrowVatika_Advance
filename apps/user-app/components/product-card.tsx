@@ -4,6 +4,8 @@ import Image from "next/image";
 import { SellerProductData } from "@repo/common-types";
 import { useAddToCard } from "@repo/shared-store";
 import { ButtonLoadingSign } from "@repo/ui/loading-sign";
+import toast from "react-hot-toast";
+import { toastStyle } from "@repo/shared/utilfunctions";
 
 interface ProductCardProps {
   productData: SellerProductData;
@@ -22,6 +24,7 @@ export const ProductCard = memo(
       addNewProduct(productData);
       setTimeout(() => {
         setLoading(false);
+        toast.success("Product added to cart", toastStyle);
       }, 500);
     };
 

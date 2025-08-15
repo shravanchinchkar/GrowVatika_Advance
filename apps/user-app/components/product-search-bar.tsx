@@ -21,7 +21,7 @@ export const ProductSearchBar = memo(
         <input
           type="text"
           placeholder={placeholder}
-          className={`w-[100%] h-[100%] rounded-l-full bg-transparent text-[#CBD0D3] placeholder-[#CBD0D3] font-normal outline-none font-poppins ${searchInputClassName}`}
+          className={`w-[100%] h-[100%] rounded-l-full bg-transparent text-[#0B1320] placeholder-[#CBD0D3] font-normal outline-none font-poppins ${searchInputClassName}`}
         />
         {/* Search Button */}
         <button className={`h-[100%] rounded-r-full bg-[#56A430] text-white font-poppins capitalize backdrop-blur-[6.408869743347168px] overflow-hidden ${searchButtonClassName}`}> 

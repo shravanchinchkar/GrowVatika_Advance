@@ -6,7 +6,6 @@ export async function GET(req: NextRequest) {
     const { searchParams } = new URL(req.url);
     const currentPage = searchParams.get("page")? Number(searchParams.get("page")): 1;
     const categoryParams = searchParams.get("category")?.trim();
-
     const limit: number = 6;
     const skip = (currentPage - 1) * Number(limit); // offset formula
 
@@ -25,13 +24,15 @@ export async function GET(req: NextRequest) {
         },
         select: {
           id: true,
+          category:true,
+          collection: true,
           name: true,
           productSize: true,
           price: true,
           compareAt: true,
-          collection: true,
           tags: true,
           imageURL: true,
+          productQuantity:true
         },
         skip: skip, // Skip records based on current page
         take: limit, // Limit the number of records returned
@@ -83,13 +84,15 @@ export async function GET(req: NextRequest) {
         },
         select: {
           id: true,
+          category:true,
+          collection: true,
           name: true,
           productSize: true,
           price: true,
           compareAt: true,
-          collection: true,
           tags: true,
           imageURL: true,
+          productQuantity:true
         },
         skip: skip, // Skip records based on current page
         take: limit, // Limit the number of records returned

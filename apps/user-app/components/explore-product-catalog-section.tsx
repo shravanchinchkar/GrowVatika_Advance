@@ -1,6 +1,7 @@
 "use client";
 import { Cart } from "./cart";
 import Image from "next/image";
+import { useState } from "react";
 import { WishList } from "./wishlist";
 import { Footer } from "./footer-section";
 import { SearchSort } from "./search-sort";
@@ -16,28 +17,20 @@ import {
   useWishListVisibilityStore,
 } from "@repo/shared-store";
 import { UserProfilePopUp } from "./user-profile-popup";
-import { useState } from "react";
 
 export const ExploreProductCatalogSection = () => {
-  const addToCartVisibility = useAddToCartVisibilityStore(
-    (state: any) => state.addToCartDropDownVisibility
-  );
-  const wishListVisibility = useWishListVisibilityStore(
-    (state: any) => state.wishListDropDownVisibility
-  );
-  const MobileNavbarVisibility = useChangeMobileNavbarVisibility(
-    (state: any) => state.displayMobileNavbar
-  );
-  const userProfileVisibility = useUserProfileVisibilityStore(
-    (state: any) => state.userProfileVisibility
-  );
+  const { isWishListVisible } = useWishListVisibilityStore();
+  const { isAddToCartVisible } = useAddToCartVisibilityStore();
+  const { isUserProfileVisible } = useUserProfileVisibilityStore();
+  const { isMobileNavbarVisible } = useChangeMobileNavbarVisibility();
+
 
   const { filter, removeFilter, clearFilters } = useFilterProduct();
   const [displayFilter, setDisplayFilter] = useState(false);
 
   return (
     <div
-      className={`relative flex flex-col min-h-screen max-h-max justify-between bg-[#FFF6F4] font-[Poppins] ${(addToCartVisibility || wishListVisibility || MobileNavbarVisibility || userProfileVisibility || displayFilter) && "h-[100vh] overflow-hidden"}`}
+      className={`relative flex flex-col min-h-screen max-h-max justify-between bg-[#FFF6F4] font-[Poppins] ${(isAddToCartVisible || isWishListVisible || isUserProfileVisible || isMobileNavbarVisible || displayFilter) && "h-[100vh] overflow-hidden"}`}
     >
       <Cart />
       <WishList />

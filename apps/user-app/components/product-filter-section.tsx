@@ -34,7 +34,7 @@ export const ProductFilterSection = memo(
       useFilterProduct();
 
     return (
-      <div className="new-sm:w-[70%] new-sm-1:w-[65%] new-sm-3:w-[50%] sm:w-[40%] new-sm:h-[70%] md:w-[100%] md:h-[100%] pl-[2rem] pr-[1rem] py-[1rem] font-[Poppins] bg-white new-sm:rounded-r-[1.5625rem] new-sm:border-r-[1.6px] new-sm:border-t-[1.6px] new-sm:border-b-[1.6px]  new-sm:border-[#56A430] md:border-0 md:rounded-[1.25rem] xl:rounded-l-[1.25rem] overflow-y-auto [&::-webkit-scrollbar]:w-2 [&::-webkit-scrollbar]:h-[100%] [&::-webkit-scrollbar-track]:bg-[#fff] [&::-webkit-scrollbar-thumb]:bg-[#697F75] shadow-productcard-custom-boxShadow new-sm:animate-slide-in-left md:animate-none">
+      <div className="new-sm:w-[70%] new-sm-1:w-[65%] new-sm-3:w-[50%] sm:w-[40%] new-sm:h-[70%] md:w-[100%] md:h-[100%] pl-[2rem] pr-[1rem] py-[1rem] font-[Poppins] bg-white new-sm:rounded-r-[1.5625rem] new-sm:border-r-[1.6px] new-sm:border-t-[1.6px] new-sm:border-b-[1.6px]  new-sm:border-[#56A430] md:border-0 md:rounded-[1.25rem] overflow-y-auto [&::-webkit-scrollbar]:w-2 [&::-webkit-scrollbar]:h-[100%] [&::-webkit-scrollbar-track]:bg-[#fff] [&::-webkit-scrollbar-thumb]:bg-[#697F75] shadow-productcard-custom-boxShadow new-sm:animate-slide-in-left md:animate-none">
         {/* Cancle Icon displayed in mobile view */}
         <div className="w-[100%] new-sm:flex md:hidden justify-end h-max mb-[1rem]">
           <button

@@ -17,12 +17,7 @@ import { addProductSchema, TAddProductSchema } from "@repo/common-types/types";
 
 export const SellerDashboardAddProductSection = memo(() => {
   // Zustand Code
-  const displayAddProductSection = useDisplayAddProductSectionStore(
-    (state: any) => state.displayAddProductSection
-  );
-  const updateVisibility = useDisplayAddProductSectionStore(
-    (state: any) => state.updateDisplayAddProductSectionStore
-  );
+  const {displayAddProductSection,setVisibilityOfAddProductSection}=useDisplayAddProductSectionStore()
 
   // Following state are for Collection dropdown
   const [collection, setCollection] = useState("");
@@ -138,7 +133,7 @@ export const SellerDashboardAddProductSection = memo(() => {
   };
 
   const hideAddProductSection = () => {
-    updateVisibility(false);
+    setVisibilityOfAddProductSection(false);
   };
   const handleWheel = (e: React.WheelEvent<HTMLInputElement>) => {
     e.currentTarget.blur();

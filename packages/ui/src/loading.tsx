@@ -34,7 +34,7 @@ export default function Skeleton({ className }: SkeletonProp) {
         <Image
           src="/assets/images/HeaderImages/site-logo.svg"
           alt="Loading Image"
-          width={70} // Smaller than the loader (w-[5rem] = 80px, so this is ~60% of that)
+          width={70}
           height={70}
           className=" object-contain justify-center ml-[0.2rem] mt-[0.5rem]"
         />

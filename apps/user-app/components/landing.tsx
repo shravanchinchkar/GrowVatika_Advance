@@ -19,33 +19,23 @@ import {
   useChangeMobileNavbarVisibility,
   useUserProfileVisibilityStore,
 } from "@repo/shared-store";
-import { WishList } from "./wishlist";
-import { ProductFilterSection } from "./product-filter-section";
 
 export const LandingPage = () => {
-  const addToCartVisibility = useAddToCartVisibilityStore(
-    (state: any) => state.addToCartDropDownVisibility
-  );
-  const MCFormVisibility = useChangeMobileConnectFormVisibility(
-    (state: any) => state.displayMCForm
-  );
-  const MobileNavbarVisibility = useChangeMobileNavbarVisibility(
-    (state: any) => state.displayMobileNavbar
-  );
-  const userProfileVisibility = useUserProfileVisibilityStore(
-    (state: any) => state.userProfileVisibility
-  );
+  const { isAddToCartVisible } = useAddToCartVisibilityStore();
+  const { isUserProfileVisible } = useUserProfileVisibilityStore();
+  const { isMobileNavbarVisible } = useChangeMobileNavbarVisibility();
+  const { isMobileContactFormVisible } = useChangeMobileConnectFormVisibility();
 
   return (
     <div
-      className={`relative flex flex-col bg-[#FFF6F4] ${(addToCartVisibility || MCFormVisibility || MobileNavbarVisibility || userProfileVisibility) && "h-[100vh] overflow-hidden"}`}
+      className={`relative flex flex-col bg-[#FFF6F4] ${(isAddToCartVisible || isUserProfileVisible || isMobileContactFormVisible || isMobileNavbarVisible) && "h-[100vh] overflow-hidden"}`}
     >
       <Cart />
       <MobileNavBar />
       <UserProfilePopUp />
       <MobileGetStartedForm />
       <HeaderSection isExplore={true} />
-      
+
       <div>
         <HeroSection />
         <LandingPot />

@@ -12,16 +12,10 @@ export const SellerDashboardSideBar = memo(() => {
   const [display, setDisplay] = useState(false);
   const sellerData = useSellerDataStore((state) => state.sellerData);
 
-  const currentActiveSideBar = useActiveSellerDashboardSideBar(
-    (state: any) => state.activeSideBar
-  );
-  const updateActiveSideBar = useActiveSellerDashboardSideBar(
-    (state: any) => state.updateActiveSideBar
-  );
+  const { activeSideBar,setActiveSideBar } = useActiveSellerDashboardSideBar();
+  
 
-  const updateVisibility = useDisplayAddProductSectionStore(
-    (state: any) => state.updateDisplayAddProductSectionStore
-  );
+  const {setVisibilityOfAddProductSection}=useDisplayAddProductSectionStore()
 
   const SideBarMainSectionList = [
     "dashboard",
@@ -54,8 +48,8 @@ export const SellerDashboardSideBar = memo(() => {
 
     // Only proceed if it's a valid sidebar option
     if (validSidebarOptions.includes(targetSideBar)) {
-      updateVisibility(false);
-      updateActiveSideBar(targetSideBar);
+      setVisibilityOfAddProductSection(false);
+      setActiveSideBar(targetSideBar);
     } else {
       console.warn(`Invalid sidebar option: ${targetSideBar}`);
     }
@@ -91,7 +85,7 @@ export const SellerDashboardSideBar = memo(() => {
                   >
                     <li
                       className={
-                        currentActiveSideBar == item
+                        activeSideBar == item
                           ? "flex items-center gap-[1rem] cursor-pointer pl-[1.5rem] py-[0.5rem] bg-[#FFF6F4] text-[#56A430] animate-bg-bounce-in"
                           : "flex items-center gap-[1rem] cursor-pointer pl-[1.5rem] py-[0.5rem]"
                       }
@@ -105,7 +99,7 @@ export const SellerDashboardSideBar = memo(() => {
                         />
                         <Image
                           className={
-                            currentActiveSideBar == item
+                            activeSideBar == item
                               ? "object-cover opacity-100 group-hover:opacity-100 transition-opacity duration-200 absolute inset-0 pointer-events-none"
                               : "object-cover opacity-0 absolute inset-0 pointer-events-none"
                           }
@@ -137,7 +131,7 @@ export const SellerDashboardSideBar = memo(() => {
                 >
                   <li
                     className={
-                      currentActiveSideBar == item
+                      activeSideBar == item
                         ? "flex items-center gap-[1rem] cursor-pointer pl-[1.5rem] py-[0.5rem] bg-[#FFF6F4] text-[#56A430] animate-bg-bounce-in"
                         : "flex items-center gap-[1rem] cursor-pointer pl-[1.5rem] py-[0.5rem]"
                     }
@@ -151,7 +145,7 @@ export const SellerDashboardSideBar = memo(() => {
                       />
                       <Image
                         className={
-                          currentActiveSideBar == item
+                          activeSideBar == item
                             ? "object-cover opacity-100 group-hover:opacity-100 transition-opacity duration-200 absolute inset-0"
                             : "object-cover opacity-0 absolute inset-0"
                         }
@@ -171,6 +165,8 @@ export const SellerDashboardSideBar = memo(() => {
 
       {/* Seller Profile Section */}
       <div className="relative w-[100%] border-t-[2px] border-[#FFFFFF8C] flex flex-col items-center mx-auto">
+
+        {/* Following is the pop-up */}
         {/* Logout and Profile Section */}
         <div
           className={
@@ -213,9 +209,12 @@ export const SellerDashboardSideBar = memo(() => {
           </ul>
         </div>
 
-        <div className="z-10 md:w-[12rem] lg:w-[14rem] md:h-[4rem] 2xl:w-[15.9375rem] 2xl:h-[4.0625rem] rounded-[1.5rem] flex justify-center items-center md:px-[0.5rem] lg:px-[1rem] gap-[0.8rem] m-[1rem] bg-[#fff] border-[1.5px] border-[#697F75]">
+        {/* Following div consist of seller-profile,seller-name and other things */}
+        <div
+          className="z-10 md:w-[12rem] lg:w-[14rem] md:h-[4rem] 2xl:w-[15.9375rem] 2xl:h-[4.0625rem] rounded-[1.5rem] flex justify-center items-center md:px-[0.5rem] lg:px-[1rem] gap-[0.8rem] m-[1rem] bg-[#fff] border-[1.5px] border-[#697F75] cursor-pointer"
+          onClick={handleLogoutLogin}
+        >
           <div className="w-[100%] h-[100%] flex justify-between py-[0.5rem]">
-
             {/* Nursery Profile Photo goes here! */}
             <div className="flex items-center">
               <div className="relative w-[2.425rem] h-[2.425rem] rounded-full overflow-hidden bg-[#56A430]">
@@ -252,13 +251,12 @@ export const SellerDashboardSideBar = memo(() => {
                 </h3>
               </div>
 
-              <button
+              <div
                 className={
                   display === true
                     ? "w-[1rem] h-[1rem] relative"
                     : "w-[1rem] h-[1rem] relative rotate-180"
                 }
-                onClick={handleLogoutLogin}
               >
                 <Image
                   src={
@@ -268,7 +266,7 @@ export const SellerDashboardSideBar = memo(() => {
                   fill
                   className="object-contain"
                 />
-              </button>
+              </div>
             </div>
           </div>
         </div>

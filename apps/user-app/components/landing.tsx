@@ -17,10 +17,13 @@ import {
   useAddToCartVisibilityStore,
   useChangeMobileConnectFormVisibility,
   useChangeMobileNavbarVisibility,
+  usePaymentMessageStore,
   useUserProfileVisibilityStore,
 } from "@repo/shared-store";
+import { PaymentGatewayMessage } from "./payment-gateway-message";
 
 export const LandingPage = () => {
+  const { isPaymentMessageVisible } = usePaymentMessageStore();
   const { isAddToCartVisible } = useAddToCartVisibilityStore();
   const { isUserProfileVisible } = useUserProfileVisibilityStore();
   const { isMobileNavbarVisible } = useChangeMobileNavbarVisibility();
@@ -28,13 +31,14 @@ export const LandingPage = () => {
 
   return (
     <div
-      className={`relative flex flex-col bg-[#FFF6F4] ${(isAddToCartVisible || isUserProfileVisible || isMobileContactFormVisible || isMobileNavbarVisible) && "h-[100vh] overflow-hidden"}`}
+      className={`relative flex flex-col bg-[#FFF6F4] ${(isAddToCartVisible || isUserProfileVisible || isMobileContactFormVisible || isMobileNavbarVisible || isPaymentMessageVisible) && "h-[100vh] overflow-hidden"}`}
     >
       <Cart />
       <MobileNavBar />
       <UserProfilePopUp />
       <MobileGetStartedForm />
       <HeaderSection isExplore={true} />
+      <PaymentGatewayMessage />
 
       <div>
         <HeroSection />

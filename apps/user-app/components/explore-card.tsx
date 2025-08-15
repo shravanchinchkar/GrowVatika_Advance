@@ -5,7 +5,10 @@ import { v4 as uuidv4 } from "uuid";
 import { SiteButton } from "./shop-button";
 import { useRouter } from "next/navigation";
 import Image, { StaticImageData } from "next/image";
-import { useFilterProduct } from "@repo/shared-store";
+import {
+  useFilterProduct,
+  usefilterProductByCategoryStore,
+} from "@repo/shared-store";
 
 type CardData = {
   id: string;
@@ -19,15 +22,17 @@ type ExploreCardProps = {
 
 export const ExploreCard: React.FC<ExploreCardProps> = memo(({ cardData }) => {
   const router = useRouter();
-  const addFilter = useFilterProduct((state: any) => state.addFilter);
-  const setFilter = useFilterProduct((state: any) => state.setFilter);
 
-  const handleNavigation = (data: string[]) => {
-    setFilter(data);
+  const { addFilter } = useFilterProduct();
+  const { setCategory } = usefilterProductByCategoryStore();
+
+  const handleNavigation = (category: string) => {
+    setCategory(category);
     router.push("/explore");
   };
 
   const handleSelectedProduct = (filterProduct: string) => {
+    console.log("filter data:", filterProduct);
     addFilter(filterProduct);
     router.push("/explore");
   };
@@ -82,7 +87,7 @@ export const ExploreCard: React.FC<ExploreCardProps> = memo(({ cardData }) => {
         <div className="new-sm:ml-[1.2rem] md:ml-[1.5rem] new-sm:mt-[0.25rem] new-sm-2:mt-[0.5rem] lg:mt-[0.5rem]">
           <SiteButton
             buttonName={"Explore"}
-            onClick={() => handleNavigation(cardData.onHover)}
+            onClick={() => handleNavigation(cardData.id)}
           />
         </div>
       </div>

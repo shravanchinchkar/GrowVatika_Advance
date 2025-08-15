@@ -8,7 +8,7 @@ import { ProductCard } from "./product-card";
 import { useSearchParams } from "next/navigation";
 import {
   useFilterProduct,
-  usefilterProductByCategoryStore
+  usefilterProductByCategoryStore,
 } from "@repo/shared-store";
 import {
   memo,
@@ -105,9 +105,6 @@ export const ProductCatalogGrid = memo(
     // Following are the zustand states
     const { filter } = useFilterProduct();
     const { category } = usefilterProductByCategoryStore();
-
-    //useState hook
-    const [likeProduct, setLikeProduct] = useState(false);
 
     // Use useReducer hook instead of useState hook
     const [productState, dispatch] = useReducer<ProductState, any>(
@@ -240,7 +237,7 @@ export const ProductCatalogGrid = memo(
               ? response.totalFilterProductCount
               : response.totalProductsCount;
           const totalPages = response.totalPages;
-
+          
           if (page > totalPages) {
             dispatch({ type: "PAGE_NOT_FOUND" });
             return;
@@ -327,15 +324,6 @@ export const ProductCatalogGrid = memo(
       }
     }, [currentEffectivePage, productState.totalPages, handlePageNumber]);
 
-    const handleLikeProduct = (e: any) => {
-      e.preventDefault();
-      if (!likeProduct) {
-        setLikeProduct(true);
-      } else {
-        setLikeProduct(false);
-      }
-    };
-
     // If Loading then display the below UI
     if (productState.loading) {
       return (
@@ -390,8 +378,6 @@ export const ProductCatalogGrid = memo(
               return (
                 <ProductCard
                   key={item.id}
-                  handleLikeProduct={handleLikeProduct}
-                  likeProduct={likeProduct}
                   productData={item}
                 />
               );

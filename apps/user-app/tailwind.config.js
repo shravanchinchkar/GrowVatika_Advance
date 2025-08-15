@@ -75,6 +75,7 @@ export default {
           "0 2.362px 23.619px -0.59px rgba(0, 0, 0, 0.25)",
         "explorecrad-custom-boxShadow": "0 5px 59.9px 0 #85A947",
         "testinomial-custom": "0px 4px 9.9px 0px rgba(0, 0, 0, 0.44)",
+        "add-to-cart-wishlist":"0 3.2px 32px -0.8px rgba(0, 0, 0, 0.25)"
       },
       borderRadius: {
         lg: "var(--radius)",

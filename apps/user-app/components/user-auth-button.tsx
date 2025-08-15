@@ -1,6 +1,5 @@
 "use client";
 import { useState } from "react";
-import Skeleton from "@/app/loading";
 import { useRouter } from "next/navigation";
 import { AuthButton } from "@repo/ui/auth-button";
 import { signOut, useSession } from "next-auth/react";
@@ -19,9 +18,6 @@ export const UserAuthButton = () => {
   async function handleSignOut() {
     await signOut();
   }
-  if (loading) {
-    return <Skeleton />;
-  }
   return (
     <>
       <div className="new-sm:hidden lg:block lg:w-[140px] xl:w-[168px] md:h-[3.5rem] lg:h-[4.05rem]">
@@ -36,7 +32,7 @@ export const UserAuthButton = () => {
           onClick={
             session.status === "authenticated" ? handleSignOut : handleSignIn
           }
-          loading={loading}
+          loading={loading || session.status === "loading"}
         />
       </div>
       <div className="new-sm:hidden md:block lg:hidden">

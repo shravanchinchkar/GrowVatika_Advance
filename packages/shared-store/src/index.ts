@@ -14,4 +14,4 @@ export * from "./stores/userDropDownStore";
 export * from "./stores/filterProductByCategoryStore";
 export * from "./stores/addToCartStore";
 export * from "./stores/wishListStore";
-export * from "./stores/displayPaymentGatewaymsgStore";
+export * from "./stores/displayPaymentGatewayMsgStore";

@@ -41,7 +41,7 @@ export const Footer = memo(() => {
               Our Company
             </div>
 
-            <div className="text-[#123524A0] new-sm:text-[0.41719rem] new-sm-2:text-[0.5rem] md:text-[0.8rem] xl:text-[1.25rem] font-medium uppercase flex flex-col new-sm:gap-[0.1rem] md:gap-[0.2rem]">
+            <div className="text-[#123524A0] new-sm:text-[0.41719rem] new-sm-1:text-[0.5rem] md:text-[0.8rem] xl:text-[1.25rem] font-medium uppercase flex flex-col new-sm:gap-[0.1rem] md:gap-[0.2rem]">
               <p>Testimonials</p>
               <p>terms & Co.</p>
               <p>more search</p>
@@ -55,7 +55,7 @@ export const Footer = memo(() => {
               Products & Services
             </div>
 
-            <div className="text-[#123524A0] new-sm:text-[0.41719rem] new-sm-2:text-[0.5rem] md:text-[0.8rem] xl:text-[1.25rem] font-medium uppercase flex flex-col new-sm:gap-[0.1rem] md:gap-[0.2rem]">
+            <div className="text-[#123524A0] new-sm:text-[0.41719rem] new-sm-1:text-[0.5rem] md:text-[0.8rem] xl:text-[1.25rem] font-medium uppercase flex flex-col new-sm:gap-[0.1rem] md:gap-[0.2rem]">
               <p>product lists</p>
               <p>return & exchange</p>
               <p>order</p>
@@ -69,7 +69,7 @@ export const Footer = memo(() => {
                 Contact us
               </div>
 
-              <div className="text-[#123524A0] new-sm:text-[0.41719rem] new-sm-2:text-[0.5rem] md:text-[0.8rem] xl:text-[1.25rem] font-medium flex flex-col new-sm:gap-[0.1rem] md:gap-[0.7rem] gap-[0.7rem]">
+              <div className="text-[#123524A0] new-sm:text-[0.41719rem] new-sm-1:text-[0.5rem] md:text-[0.8rem] xl:text-[1.25rem] font-medium flex flex-col new-sm:gap-[0.1rem] md:gap-[0.7rem] gap-[0.7rem]">
                 <div className="flex new-sm:gap-[0.4rem] md:gap-[0.5rem] lg:gap-[1rem] items-center">
                   <div className="relative new-sm:w-[0.52144rem] new-sm:h-[0.50056rem] new-sm-2:w-[0.8rem] new-sm-2:h-[0.8rem] md:w-[1rem] md:h-[1rem] lg:w-[1.2rem] lg:h-[1.2rem] xl:w-[1.5625rem] xl:h-[1.5rem]">
                     <Image

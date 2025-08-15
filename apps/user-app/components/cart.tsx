@@ -1,7 +1,9 @@
 "use client";
 import Image from "next/image";
 import { memo } from "react";
-import { useAddToCardStore } from "@repo/shared-store";
+import { useRouter } from "next/navigation";
+import { useSession } from "next-auth/react";
+import { useAddToCardStore, usePaymentMessageStore } from "@repo/shared-store";
 import { RiShoppingCart2Line } from "@remixicon/react";
 import { useAddToCartVisibilityStore } from "@repo/shared-store";
 
@@ -38,15 +40,15 @@ const PlusMinus = ({
 };
 
 export const Cart = memo(() => {
+  const session = useSession();
+  const router = useRouter();
+
   // Following are the zustand state
   const { isAddToCartVisible, setVisibilityOfAddToCart } =
     useAddToCartVisibilityStore();
+  const { setVisibilityOfPaymentGateway } = usePaymentMessageStore();
   const { productData, removeProduct, quantities, setQuantities } =
     useAddToCardStore();
-
-  const handleAddToCartVisibility = () => {
-    setVisibilityOfAddToCart(false);
-  };
 
   let totalAmountToBePaid: number = 0;
   productData.forEach((item) => {
@@ -71,7 +73,7 @@ export const Cart = memo(() => {
   if (isAddToCartVisible) {
     return (
       <div className="w-[100%] h-screen absolute z-50 top-0 flex new-sm:justify-end md:justify-end bg-[#00000040] bg-opacity-10">
-        <div className="new-sm:w-[90%] new-sm-3:w-[70%] md:w-[29.375rem] min-h-[90%] h-max font-[Poppins] flex-shrink-0 rounded-l-[1.25rem] bg-white shadow-[0px_3.2px_32px_-0.8px_rgba(0,0,0,0.25)] flex flex-col overflow-hidden my-[2rem] animate-slide-in-right">
+        <div className="new-sm:w-[90%] new-sm-3:w-[70%] md:w-[29.375rem] min-h-[90%] h-max font-[Poppins] flex-shrink-0 rounded-l-[1.25rem] bg-white shadow-add-to-cart-wishlist flex flex-col overflow-hidden my-[2rem] animate-slide-in-right">
           {/* Cart Header */}
           <div className="relative border-b-[0.0625rem] border-[#00000033] h-[4.5rem] flex items-center">
             {/* Your Cart tiltle and count */}
@@ -90,7 +92,10 @@ export const Cart = memo(() => {
             {/* Cancle Icon */}
             <button
               className="w-[15%] h-[100%] flex justify-center items-center"
-              onClick={handleAddToCartVisibility}
+              onClick={(e) => {
+                e.preventDefault();
+                setVisibilityOfAddToCart(false);
+              }}
             >
               <div className="relative new-sm:w-[1rem] new-sm:h-[1rem] new-sm-1:w-[1.2rem] new-sm-1:h-[1.2rem] md:w-[1.5rem] md:h-[1.5rem] cursor-pointer">
                 <Image
@@ -181,7 +186,7 @@ export const Cart = memo(() => {
                                   }
                                   updatedQuantities[quantity] = [quantity];
                                 }
-                                removeProduct(product,updatedQuantities);
+                                removeProduct(product, updatedQuantities);
                               }}
                             >
                               <div className="relative new-sm:w-[1.1rem] new-sm:h-[1.1rem] new-sm-1:w-[1.23431rem] new-sm-1:h-[1.23431rem] md:w-[1.25rem] md:h-[1.25rem]">
@@ -264,7 +269,18 @@ export const Cart = memo(() => {
                   </div>
 
                   {/* Checkout Button */}
-                  <button className="w-full new-sm:h-[3rem] new-sm-1:h-[3.0625rem] md:h-[3.1875rem] bg-[#1A9AEF] hover:bg-[#0F5889] rounded-[0.625rem] flex justify-center items-center">
+                  <button
+                    className="w-full new-sm:h-[3rem] new-sm-1:h-[3.0625rem] md:h-[3.1875rem] bg-[#1A9AEF] hover:bg-[#0F5889] rounded-[0.625rem] flex justify-center items-center"
+                    onClick={(e) => {
+                      e.preventDefault();
+                      if (session.status === "unauthenticated") {
+                        router.push("/signin");
+                      } else {
+                        setVisibilityOfAddToCart(false);
+                        setVisibilityOfPaymentGateway(true);
+                      }
+                    }}
+                  >
                     <span className="text-white new-sm:text-[1rem] md:text-[1.22669rem] font-medium text-center">
                       Checkout
                     </span>

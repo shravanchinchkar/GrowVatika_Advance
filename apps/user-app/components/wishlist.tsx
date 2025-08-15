@@ -21,7 +21,7 @@ export const WishList = memo(() => {
   if (isWishListVisible) {
     return (
       <div className="z-50 absolute top-0 w-[100%] h-screen  bg-[#00000040] bg-opacity-10 flex justify-center">
-        <div className="new-sm:w-[95%] md:w-[65%] lg:w-[90%] new-sm:h-[95%] font-[Poppins] bg-white rounded-[1.25rem] shadow-2xl mx-auto my-[1rem] overflow-hidden pb-[1rem] animate-slide-in-right">
+        <div className="new-sm:w-[95%] md:w-[65%] lg:w-[90%] new-sm:h-[95%] font-[Poppins] bg-white rounded-[1.25rem] mx-auto my-[1rem] overflow-hidden pb-[1rem] animate-slide-in-right shadow-add-to-cart-wishlist">
           {/* Wishlist header section */}
           <div className="w-[100%] py-[1rem] flex justify-between items-center border-b-[0.0625rem] border-[#00000033]">
             {/* Wishlist title */}

@@ -13,3 +13,4 @@ export * from "./stores/specialtiesStore";
 export * from "./stores/userDropDownStore";
 export * from "./stores/filterProductByCategoryStore";
 export * from "./stores/addToCartStore";
+export * from "./stores/wishListStore";

@@ -1,7 +1,7 @@
 "use client";
 import Image from "next/image";
 import { memo } from "react";
-import { useAddToCard } from "@repo/shared-store";
+import { useAddToCardStore } from "@repo/shared-store";
 import { RiShoppingCart2Line } from "@remixicon/react";
 import { useAddToCartVisibilityStore } from "@repo/shared-store";
 
@@ -41,8 +41,8 @@ export const Cart = memo(() => {
   // Following are the zustand state
   const { isAddToCartVisible, setVisibilityOfAddToCart } =
     useAddToCartVisibilityStore();
-  const { productData, setTAddToCart, quantities, setQuantities } =
-    useAddToCard();
+  const { productData, removeProduct, quantities, setQuantities } =
+    useAddToCardStore();
 
   const handleAddToCartVisibility = () => {
     setVisibilityOfAddToCart(false);
@@ -66,14 +66,6 @@ export const Cart = memo(() => {
   const handleIncreaseQuantity = (e: any, productId: string) => {
     e.preventDefault();
     setQuantities(productId, (quantities[productId] || 1) + 1);
-  };
-
-  //function that remove product from cart
-  const handleRemoveItemFormCart = (productId: string) => {
-    const filteredProductData = productData.filter(
-      (product) => product.id !== productId
-    );
-    setTAddToCart(filteredProductData);
   };
 
   if (isAddToCartVisible) {
@@ -111,17 +103,17 @@ export const Cart = memo(() => {
             </button>
           </div>
 
-          {/* If no products in the cart then display the below div */}
+          {/* Display the below UI if no productData is Available */}
           {productData.length === 0 ? (
             <div className="w-[100%] h-[30rem] flex flex-col gap-[0.5rem] text-[#697F75] justify-center items-center">
-              <RiShoppingCart2Line className="w-[3rem] h-[3rem] text-gray-500 group-hover:text-white group-hover:hidden" />
+              <RiShoppingCart2Line className="w-[3rem] h-[3rem] text-gray-500" />
               <h1 className="text-[1.5rem] font-semibold">
                 Your Cart is Empty
               </h1>
               <h2>Add items to your cart to checkout</h2>
             </div>
           ) : (
-            // display the following content if there are product in cart
+            // display the following UI if there are product in cart
             <>
               {/* Cart Body */}
               <div className="flex-1 overflow-y-auto new-sm:pl-[1rem] md:pl-[1.5rem] pr-0 py-3 space-y-4 overflow-x-hidden">
@@ -152,7 +144,7 @@ export const Cart = memo(() => {
                               src={
                                 product.imageURL
                                   ? product.imageURL
-                                  : "/assets/images/ExploreImages/product-image.jpg"
+                                  : "/assets/images/ExploreBySellerImages/ImagePlaceholder2.png"
                               }
                               alt={product.name ? product.name : "Product"}
                               fill
@@ -177,11 +169,19 @@ export const Cart = memo(() => {
                                 {`${product.collection ? product.collection : "Indoor Plant"}`}
                               </p>
                             </div>
-
+                            {/* Remove / delete button */}
                             <div
                               className="ml-3 new-sm:w-[1.5rem] new-sm:h-[1.5rem] new-sm-1:w-[1.70569rem] new-sm-1:h-[1.70569rem] md:w-[2.125rem] md:h-[2.125rem] flex items-center justify-center rounded-[0.3125rem] bg-white cursor-pointer"
-                              onClick={() => {
-                                handleRemoveItemFormCart(product.id);
+                              onClick={(e) => {
+                                e.preventDefault();
+                                let updatedQuantities: any = {};
+                                for (const quantity in quantities) {
+                                  if (quantity === product.id) {
+                                    continue;
+                                  }
+                                  updatedQuantities[quantity] = [quantity];
+                                }
+                                removeProduct(product,updatedQuantities);
                               }}
                             >
                               <div className="relative new-sm:w-[1.1rem] new-sm:h-[1.1rem] new-sm-1:w-[1.23431rem] new-sm-1:h-[1.23431rem] md:w-[1.25rem] md:h-[1.25rem]">

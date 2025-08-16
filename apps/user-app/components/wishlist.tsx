@@ -77,8 +77,8 @@ export const WishList = memo(() => {
               </div>
 
               {/* Items section */}
-              <div className="w-[100%] new-sm:h-[35rem] md:h-[25rem] grid md:grid-cols-1 lg:grid-cols-2 2xl:grid-cols-3 mt-[0.5rem] gap-y-[1rem] justify-items-center pb-[1rem] border-b-[0.0625rem] border-[#00000033] overflow-y-auto [&::-webkit-scrollbar]:w-2 [&::-webkit-scrollbar-track]:bg-[#fff] [&::-webkit-scrollbar-thumb]:bg-[#697F75] px-[1rem]">
-                {likeProductData.map((product, index) => (
+              <div className="w-[100%] new-sm:h-[35rem] md:h-[25rem] new-sm:flex flex-col gap-[1rem] md:grid md:grid-cols-1 lg:grid-cols-2 2xl:grid-cols-3 mt-[0.5rem] md:gap-y-[1rem] justify-items-center pb-[1rem] border-b-[0.0625rem] border-[#00000033] overflow-y-auto [&::-webkit-scrollbar]:w-2 [&::-webkit-scrollbar-track]:bg-[#fff] [&::-webkit-scrollbar-thumb]:bg-[#697F75] px-[1rem]">
+                {likeProductData.map((product) => (
                   <WishListCard product={product} key={product.id} />
                 ))}
               </div>

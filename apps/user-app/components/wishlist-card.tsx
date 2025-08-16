@@ -22,10 +22,7 @@ export const WishListCard = ({ product }: WishListCardProps) => {
   const [loading, setLoading] = useState(false);
 
   return (
-    <div
-      key={product.id}
-      className="new-sm:w-[100%] new-sm:h-[9.4rem] new-sm-2:h-[10rem] md:w-[95%] lg:w-[95%] md:h-[12.1875rem] bg-[#EDE7E4] rounded-[1.25rem] flex flex-col justify-center items-center md:gap-[0.5rem] new-sm:p-[0.2rem] md:p-[0.5rem]"
-    >
+    <div className="new-sm:w-[100%] new-sm:h-[9.4rem] new-sm-2:h-[10rem] md:w-[95%] lg:w-[95%] md:h-[12.1875rem] bg-[#EDE7E4] rounded-[1.25rem] flex flex-col justify-center items-center md:gap-[0.5rem] new-sm:p-[0.2rem] md:p-[0.5rem]">
       <div className="w-[95%] new-sm:h-[87%] md:h-[92%] flex flex-col justify-between">
         {/* Product Data */}
         <div className="w-[100%] flex justify-between gap-[1rem]">
@@ -34,7 +31,11 @@ export const WishListCard = ({ product }: WishListCardProps) => {
             <div className="relative new-sm:w-[5.2rem] new-sm:h-[4.6rem] new-sm-1:w-[6.52188rem] new-sm-1:h-[5.26769rem] new-sm-2:w-[6.9rem] new-sm-2:h-[5.7rem] md:w-[8.125rem] md:h-[6.5625rem] rounded-[1.25rem] border-[1.6px] border-white overflow-hidden">
               <Image
                 className="object-cover"
-                src={product.imageURL}
+                src={
+                  product.imageURL
+                    ? product.imageURL
+                    : "/assets/images/ExploreBySellerImages/ImagePlaceholder2.png"
+                }
                 alt={product.name ? product.name : "Product"}
                 fill
               />

@@ -6,11 +6,14 @@ type AddToCardProps = {
   productData: SellerProductData[];
   quantities: { [key: string]: number };
   clearProducts: () => void;
-  setTAddToCart: (product: SellerProductData[]) => void;
-  setQuantities: (productId: string, quantity: number) => void;
-  removeProduct: (newProduct: SellerProductData) => void;
+  setAddToCart: (product: SellerProductData[]) => void;
+  removeProduct: (
+    newProduct: SellerProductData,
+    updatedQuantities: any
+  ) => void;
   toggleProduct: (newProduct: SellerProductData) => void;
   addNewProduct: (newProduct: SellerProductData) => void;
+  setQuantities: (productId: string, quantity: number) => void;
 };
 
 const checkIsProductPresent = (
@@ -24,12 +27,12 @@ const checkIsProductPresent = (
   }
   return false;
 };
-export const useAddToCard = create<AddToCardProps>()(
+export const useAddToCardStore = create<AddToCardProps>()(
   persist(
     (set, get) => ({
       productData: [],
       quantities: {},
-      setTAddToCart: (newProductData: SellerProductData[]) =>
+      setAddToCart: (newProductData: SellerProductData[]) =>
         set({ productData: newProductData }),
       setQuantities: (productId: string, quantity: number) =>
         set((state) => ({
@@ -41,11 +44,12 @@ export const useAddToCard = create<AddToCardProps>()(
             ? state.productData
             : [...state.productData, newProduct],
         })),
-      removeProduct: (newProduct: SellerProductData) =>
+      removeProduct: (newProduct: SellerProductData, newQuantity: any) =>
         set((state) => ({
           productData: state.productData.filter(
             (item: SellerProductData) => item !== newProduct
           ),
+          quantities: newQuantity,
         })),
       toggleProduct: (newProduct: SellerProductData) =>
         set((state) => ({
@@ -55,7 +59,7 @@ export const useAddToCard = create<AddToCardProps>()(
               )
             : [...state.productData, newProduct],
         })),
-      clearProducts: () => set({ productData: [] }),
+      clearProducts: () => set({ productData: [], quantities: {} }),
     }),
     {
       name: "cart-storage", // unique name for localStorage key

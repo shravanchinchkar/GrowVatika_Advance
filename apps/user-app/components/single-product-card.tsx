@@ -1,23 +1,25 @@
 import axios from "axios";
+import {
+  isLikeProductPresent,
+  useAddToCardStore,
+  usefilterProductByCategoryStore,
+  useWishListStore,
+} from "@repo/shared-store";
 import Image from "next/image";
 import Skeleton from "@repo/ui/loading";
 import { useSearchParams } from "next/navigation";
-import { SellerProductData, TSingleProductData } from "@repo/common-types";
-import { memo, useCallback, useEffect, useReducer, useState } from "react";
-import {
-  useAddToCard,
-  usefilterProductByCategoryStore,
-} from "@repo/shared-store";
-import toast from "react-hot-toast";
-import { toastStyle } from "@repo/shared/utilfunctions";
 import { ButtonLoadingSign } from "@repo/ui/loading-sign";
+import { handleAddToCart } from "@/helper/handleAddToCart";
+import { RiHeart3Fill, RiHeart3Line } from "@remixicon/react";
+import { handleLikeProduct } from "@/helper/handleLikeProduct";
+import { memo, useCallback, useEffect, useReducer, useState } from "react";
+import { SellerProductData, TSingleProductData } from "@repo/common-types";
 
 type SingleProductDataState = {
   error: boolean;
   loading: boolean;
   productData: SellerProductData | null;
   productQuantity: number;
-  loadingAddToCart: boolean;
   disablePlusButton: boolean;
   singleProductData: TSingleProductData | null;
 };
@@ -89,16 +91,13 @@ const LeftRightArrow = memo(({ direction }: LeftRigthArrowProps) => {
   );
 });
 
-// Like Share button Component
-const LikandShare = memo(({ src }: { src: string }) => {
-  return (
-    <button className=" new-sm:w-[14%] new-sm-1:w-[12%] md:w-[14%] 2xl:w-[10%] new-sm:h-[2.3125rem] md:h-[2.5rem] 2xl:h-[3.1875rem] border border-[#CBD0D3] rounded-[0.625rem] flex items-center justify-center">
-      <div className="relative  new-sm:w-[1.3rem] new-sm:h-[1.3rem] lg:w-[1.5rem] lg:h-[1.5rem] 2xl:w-[1.8rem] 2xl:h-[1.8rem]">
-        <Image src={src} alt="like" fill className="object-cover" />
-      </div>
-    </button>
-  );
-});
+//Like and Share button Styles
+const LikeShareStyle = {
+  buttonStyle:
+    "new-sm:w-[14%] new-sm-1:w-[12%] md:w-[14%] 2xl:w-[10%] new-sm:h-[2.3125rem] md:h-[2.5rem] 2xl:h-[3.1875rem] border border-[#CBD0D3] rounded-[0.625rem] flex items-center justify-center",
+  imageStyle:
+    "relative new-sm:w-[1.3rem] new-sm:h-[1.3rem] lg:w-[1.5rem] lg:h-[1.5rem] 2xl:w-[1.8rem] 2xl:h-[1.8rem]",
+};
 
 // Plus Minus Button Component
 const PlusMinusButton = memo(
@@ -210,6 +209,7 @@ const NurseryCard = memo(
   }
 );
 
+// Reducer function of useReducer hook
 const reducer = (
   state: SingleProductDataState,
   action: any
@@ -235,10 +235,6 @@ const reducer = (
       return { ...state, disablePlusButton: true };
     case "SET_PRODUCT_DATA":
       return { ...state, productData: action.payload.addToCartData };
-    case "SET_AddToCart_Loading":
-      return { ...state, loadingAddToCart: true };
-    case "SET_AddToCart_Loading_False":
-      return { ...state, loadingAddToCart: false };
     default:
       return state;
   }
@@ -254,14 +250,16 @@ export const SingleProductCard = () => {
     loading: true,
     productData: null,
     productQuantity: 1,
-    loadingAddToCart: false,
     singleProductData: null,
     disablePlusButton: false,
   });
 
+  const [loading, setLoading] = useState(false);
+
   // Following are the zustand state
+  const { addNewProduct } = useAddToCardStore();
   const { setCategory } = usefilterProductByCategoryStore();
-  const { addNewProduct } = useAddToCard();
+  const { likeProductData, toggleLikeProductData } = useWishListStore();
 
   // call to backend to fetch single product data
   useEffect(() => {
@@ -327,17 +325,7 @@ export const SingleProductCard = () => {
     return `${lowerFeet}-${upperFeet} feet`;
   }, []);
 
-  const handleAddToCart = (e: any, addToCartData: any) => {
-    dispatch({ type: "SET_AddToCart_Loading" });
-    addNewProduct(addToCartData);
-    setTimeout(() => {
-      dispatch({ type: "SET_AddToCart_Loading_False" });
-      toast.success("Product Added to Cart", toastStyle);
-    }, 500);
-  };
-
   //Following are the function call
-
   const disCount = percentageoff(
     Number(state.singleProductData?.compareAt),
     Number(state.singleProductData?.price)
@@ -636,9 +624,17 @@ export const SingleProductCard = () => {
                 {/* Add to cart */}
                 <button
                   className="new-sm:w-[55%] 2xl:w-[60%] new-sm:h-[2.3125rem] md:h-[2.7rem] 2xl:h-[3.1875rem] bg-[#56A430] hover:bg-[#213E12] rounded-[0.625rem] flex items-center justify-center gap-[1rem] text-white new-sm:text-[0.75rem] new-sm-1:text-[1rem] lg:text-[1.1rem] 2xl:text-[1.22669rem] font-[Poppins]"
-                  onClick={(e) => handleAddToCart(e, state.productData)}
+                  onClick={(e) => {
+                    const productData = state.productData;
+                    handleAddToCart({
+                      e,
+                      productData,
+                      addNewProduct,
+                      setLoading,
+                    });
+                  }}
                 >
-                  {state.loadingAddToCart ? (
+                  {loading ? (
                     <ButtonLoadingSign />
                   ) : (
                     <>
@@ -655,9 +651,41 @@ export const SingleProductCard = () => {
                   )}
                 </button>
                 {/* Like Product button */}
-                <LikandShare src="/assets/images/SingleProductImage/heartIcon.svg" />
+                <button
+                  className={LikeShareStyle.buttonStyle}
+                  onClick={(e) => {
+                    const productData = state.productData;
+                    handleLikeProduct({
+                      e,
+                      productData,
+                      likeProductData,
+                      toggleLikeProductData,
+                      isLikeProductPresent,
+                    });
+                  }}
+                >
+                  {likeProductData.some(
+                    (item) => item.id === state.productData?.id
+                  ) ? (
+                    <RiHeart3Fill
+                      className={`${LikeShareStyle.imageStyle} text-[#EA4335]`}
+                    />
+                  ) : (
+                    <RiHeart3Line className={LikeShareStyle.imageStyle} />
+                  )}
+                </button>
+
                 {/* Share Product Button */}
-                <LikandShare src="/assets/images/SingleProductImage/shareIcon.svg" />
+                <button className={LikeShareStyle.buttonStyle}>
+                  <div className={LikeShareStyle.imageStyle}>
+                    <Image
+                      src={"/assets/images/SingleProductImage/shareIcon.svg"}
+                      alt="like"
+                      fill
+                      className="object-cover"
+                    />
+                  </div>
+                </button>
               </div>
 
               {/* Buy-Now Button */}

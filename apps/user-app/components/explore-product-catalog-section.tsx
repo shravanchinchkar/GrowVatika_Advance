@@ -13,30 +13,33 @@ import {
   useAddToCartVisibilityStore,
   useChangeMobileNavbarVisibility,
   useFilterProduct,
+  usePaymentMessageStore,
   useUserProfileVisibilityStore,
   useWishListVisibilityStore,
 } from "@repo/shared-store";
 import { UserProfilePopUp } from "./user-profile-popup";
+import { PaymentGatewayMessage } from "./payment-gateway-message";
 
 export const ExploreProductCatalogSection = () => {
   const { isWishListVisible } = useWishListVisibilityStore();
   const { isAddToCartVisible } = useAddToCartVisibilityStore();
+  const { isPaymentMessageVisible } = usePaymentMessageStore();
   const { isUserProfileVisible } = useUserProfileVisibilityStore();
   const { isMobileNavbarVisible } = useChangeMobileNavbarVisibility();
-
 
   const { filter, removeFilter, clearFilters } = useFilterProduct();
   const [displayFilter, setDisplayFilter] = useState(false);
 
   return (
     <div
-      className={`relative flex flex-col min-h-screen max-h-max justify-between bg-[#FFF6F4] font-[Poppins] ${(isAddToCartVisible || isWishListVisible || isUserProfileVisible || isMobileNavbarVisible || displayFilter) && "h-[100vh] overflow-hidden"}`}
+      className={`relative flex flex-col min-h-screen max-h-max justify-between bg-[#FFF6F4] font-[Poppins] ${(isAddToCartVisible || isWishListVisible || isUserProfileVisible || isMobileNavbarVisible || displayFilter || isPaymentMessageVisible) && "h-[100vh] overflow-hidden"}`}
     >
       <Cart />
       <WishList />
       <MobileNavBar />
       <UserProfilePopUp />
       <HeaderSection explore={true} isExplore={false} />
+      <PaymentGatewayMessage />
 
       {/* Following filter gets displayed in mobile view */}
       {displayFilter && (

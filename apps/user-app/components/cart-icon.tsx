@@ -1,11 +1,15 @@
 "use client";
 import { memo } from "react";
 import { RiShoppingCart2Fill, RiShoppingCart2Line } from "@remixicon/react";
-import { useAddToCard, useAddToCartVisibilityStore } from "@repo/shared-store";
+import {
+  useAddToCardStore,
+  useAddToCartVisibilityStore,
+} from "@repo/shared-store";
 
 export const ShoppingCartIcon = memo(() => {
+  // Following are the Zustand States
+  const { productData } = useAddToCardStore();
   const { setVisibilityOfAddToCart } = useAddToCartVisibilityStore();
-  const { productData } = useAddToCard();
 
   const handleAddToCartVisibility = () => {
     setVisibilityOfAddToCart(true);

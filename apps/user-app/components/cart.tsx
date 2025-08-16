@@ -1,9 +1,11 @@
 "use client";
-import Image from "next/image";
 import { memo } from "react";
-import { useAddToCard } from "@repo/shared-store";
+import Image from "next/image";
+import { useRouter } from "next/navigation";
+import { useSession } from "next-auth/react";
 import { RiShoppingCart2Line } from "@remixicon/react";
 import { useAddToCartVisibilityStore } from "@repo/shared-store";
+import { useAddToCardStore, usePaymentMessageStore } from "@repo/shared-store";
 
 type PlusMinusProps = {
   id: string;
@@ -38,15 +40,15 @@ const PlusMinus = ({
 };
 
 export const Cart = memo(() => {
+  const session = useSession();
+  const router = useRouter();
+
   // Following are the zustand state
   const { isAddToCartVisible, setVisibilityOfAddToCart } =
     useAddToCartVisibilityStore();
-  const { productData, setTAddToCart, quantities, setQuantities } =
-    useAddToCard();
-
-  const handleAddToCartVisibility = () => {
-    setVisibilityOfAddToCart(false);
-  };
+  const { setVisibilityOfPaymentGateway } = usePaymentMessageStore();
+  const { productData, removeProduct, quantities, setQuantities } =
+    useAddToCardStore();
 
   let totalAmountToBePaid: number = 0;
   productData.forEach((item) => {
@@ -68,18 +70,10 @@ export const Cart = memo(() => {
     setQuantities(productId, (quantities[productId] || 1) + 1);
   };
 
-  //function that remove product from cart
-  const handleRemoveItemFormCart = (productId: string) => {
-    const filteredProductData = productData.filter(
-      (product) => product.id !== productId
-    );
-    setTAddToCart(filteredProductData);
-  };
-
   if (isAddToCartVisible) {
     return (
       <div className="w-[100%] h-screen absolute z-50 top-0 flex new-sm:justify-end md:justify-end bg-[#00000040] bg-opacity-10">
-        <div className="new-sm:w-[90%] new-sm-3:w-[70%] md:w-[29.375rem] min-h-[90%] h-max font-[Poppins] flex-shrink-0 rounded-l-[1.25rem] bg-white shadow-[0px_3.2px_32px_-0.8px_rgba(0,0,0,0.25)] flex flex-col overflow-hidden my-[2rem] animate-slide-in-right">
+        <div className="new-sm:w-[90%] new-sm-3:w-[70%] md:w-[29.375rem] min-h-[90%] h-max font-[Poppins] flex-shrink-0 rounded-l-[1.25rem] bg-white shadow-add-to-cart-wishlist flex flex-col overflow-hidden my-[2rem] animate-slide-in-right">
           {/* Cart Header */}
           <div className="relative border-b-[0.0625rem] border-[#00000033] h-[4.5rem] flex items-center">
             {/* Your Cart tiltle and count */}
@@ -98,7 +92,10 @@ export const Cart = memo(() => {
             {/* Cancle Icon */}
             <button
               className="w-[15%] h-[100%] flex justify-center items-center"
-              onClick={handleAddToCartVisibility}
+              onClick={(e) => {
+                e.preventDefault();
+                setVisibilityOfAddToCart(false);
+              }}
             >
               <div className="relative new-sm:w-[1rem] new-sm:h-[1rem] new-sm-1:w-[1.2rem] new-sm-1:h-[1.2rem] md:w-[1.5rem] md:h-[1.5rem] cursor-pointer">
                 <Image
@@ -111,17 +108,17 @@ export const Cart = memo(() => {
             </button>
           </div>
 
-          {/* If no products in the cart then display the below div */}
+          {/* Display the below UI if no productData is Available */}
           {productData.length === 0 ? (
             <div className="w-[100%] h-[30rem] flex flex-col gap-[0.5rem] text-[#697F75] justify-center items-center">
-              <RiShoppingCart2Line className="w-[3rem] h-[3rem] text-gray-500 group-hover:text-white group-hover:hidden" />
+              <RiShoppingCart2Line className="w-[3rem] h-[3rem] text-gray-500" />
               <h1 className="text-[1.5rem] font-semibold">
                 Your Cart is Empty
               </h1>
               <h2>Add items to your cart to checkout</h2>
             </div>
           ) : (
-            // display the following content if there are product in cart
+            // display the following UI if there are product in cart
             <>
               {/* Cart Body */}
               <div className="flex-1 overflow-y-auto new-sm:pl-[1rem] md:pl-[1.5rem] pr-0 py-3 space-y-4 overflow-x-hidden">
@@ -152,7 +149,7 @@ export const Cart = memo(() => {
                               src={
                                 product.imageURL
                                   ? product.imageURL
-                                  : "/assets/images/ExploreImages/product-image.jpg"
+                                  : "/assets/images/ExploreBySellerImages/ImagePlaceholder2.png"
                               }
                               alt={product.name ? product.name : "Product"}
                               fill
@@ -177,11 +174,19 @@ export const Cart = memo(() => {
                                 {`${product.collection ? product.collection : "Indoor Plant"}`}
                               </p>
                             </div>
-
+                            {/* Remove / delete button */}
                             <div
                               className="ml-3 new-sm:w-[1.5rem] new-sm:h-[1.5rem] new-sm-1:w-[1.70569rem] new-sm-1:h-[1.70569rem] md:w-[2.125rem] md:h-[2.125rem] flex items-center justify-center rounded-[0.3125rem] bg-white cursor-pointer"
-                              onClick={() => {
-                                handleRemoveItemFormCart(product.id);
+                              onClick={(e) => {
+                                e.preventDefault();
+                                let updatedQuantities: any = {};
+                                for (const quantity in quantities) {
+                                  if (quantity === product.id) {
+                                    continue;
+                                  }
+                                  updatedQuantities[quantity] = [quantity];
+                                }
+                                removeProduct(product, updatedQuantities);
                               }}
                             >
                               <div className="relative new-sm:w-[1.1rem] new-sm:h-[1.1rem] new-sm-1:w-[1.23431rem] new-sm-1:h-[1.23431rem] md:w-[1.25rem] md:h-[1.25rem]">
@@ -264,7 +269,18 @@ export const Cart = memo(() => {
                   </div>
 
                   {/* Checkout Button */}
-                  <button className="w-full new-sm:h-[3rem] new-sm-1:h-[3.0625rem] md:h-[3.1875rem] bg-[#1A9AEF] hover:bg-[#0F5889] rounded-[0.625rem] flex justify-center items-center">
+                  <button
+                    className="w-full new-sm:h-[3rem] new-sm-1:h-[3.0625rem] md:h-[3.1875rem] bg-[#1A9AEF] hover:bg-[#0F5889] rounded-[0.625rem] flex justify-center items-center"
+                    onClick={(e) => {
+                      e.preventDefault();
+                      if (session.status === "unauthenticated") {
+                        router.push("/signin");
+                      } else {
+                        setVisibilityOfAddToCart(false);
+                        setVisibilityOfPaymentGateway(true);
+                      }
+                    }}
+                  >
                     <span className="text-white new-sm:text-[1rem] md:text-[1.22669rem] font-medium text-center">
                       Checkout
                     </span>

@@ -107,9 +107,6 @@ export const ProductCatalogGrid = memo(
     const { filter } = useFilterProduct();
     const { category } = usefilterProductByCategoryStore();
 
-    //useState hook
-    const [likeProduct, setLikeProduct] = useState(false);
-
     // Use useReducer hook instead of useState hook
     const [productState, dispatch] = useReducer<ProductState, any>(
       productReducer,
@@ -328,15 +325,6 @@ export const ProductCatalogGrid = memo(
       }
     }, [currentEffectivePage, productState.totalPages, handlePageNumber]);
 
-    const handleLikeProduct = (e: any) => {
-      e.preventDefault();
-      if (!likeProduct) {
-        setLikeProduct(true);
-      } else {
-        setLikeProduct(false);
-      }
-    };
-
     // If Loading then display the below UI
     if (productState.loading) {
       return (
@@ -391,8 +379,6 @@ export const ProductCatalogGrid = memo(
               return (
                 <ProductCard
                   key={item.id}
-                  handleLikeProduct={handleLikeProduct}
-                  likeProduct={likeProduct}
                   productData={item}
                 />
               );

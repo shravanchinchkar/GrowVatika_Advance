@@ -18,6 +18,7 @@ export default {
         "new-xl": "1330px",
         "new-xl-2": "1400px",
       },
+
       fontFamily: {
         "nunito-sans": ["Nunito Sans", "sans-serif"],
         outfit: ["Outfit", "sans-serif"],
@@ -77,6 +78,7 @@ export default {
         "testinomial-custom": "0px 4px 9.9px 0px rgba(0, 0, 0, 0.44)",
         "add-to-cart-wishlist":"0 3.2px 32px -0.8px rgba(0, 0, 0, 0.25)"
       },
+
       borderRadius: {
         lg: "var(--radius)",
         md: "calc(var(--radius) - 2px)",

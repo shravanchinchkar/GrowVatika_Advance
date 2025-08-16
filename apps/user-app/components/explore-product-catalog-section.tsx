@@ -47,7 +47,6 @@ export const ExploreProductCatalogSection = () => {
           <ProductFilterSection setDisplayFilter={setDisplayFilter} />
         </div>
       )}
-
       <div className="relative flex new-sm:w-[100%] md:w-[95%] lg:w-[86.5%] 2xl:w-[87%] flex-col items-center gap-[2rem] new-sm:mt-0 md:mt-[1.5rem] mx-auto">
         <SearchSort />
 

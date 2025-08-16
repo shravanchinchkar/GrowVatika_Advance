@@ -57,6 +57,7 @@ const productReducer = (state: ProductState, action: any): ProductState => {
         pageNotFound: true,
         error: action.payload,
       };
+
     case "FETCH_SUCCESS":
       return {
         ...state,

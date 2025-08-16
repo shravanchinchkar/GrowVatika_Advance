@@ -147,34 +147,33 @@ export const Sign_In = () => {
   };
 
   return (
-    <div className="w-screen h-screen max-h-max bg-[#FFF6F4] flex new-sm:flex-col-reverse md:flex-row font-[Poppins]">
+    <div className="w-screen h-screen bg-[#FFF6F4] flex new-sm:flex-col-reverse md:flex-row font-[Poppins]">
       {/* Left Div */}
-      <div className="new-sm:w-[100%] new-sm:h-[50%] md:w-[50%] md:h-[100%] flex flex-col md:gap-[0.2rem] lg:gap-[1rem]">
+
+      <div className="new-sm:w-[100%] new-sm:h-[60%] md:w-[50%] md:h-[100%] flex flex-col new-sm:gap-0 md:gap-[0.2rem] lg:gap-[1rem]">
         {/* Site Logo */}
-        <div className="flex flex-col items-start gap-[2rem] pl-[2rem] pt-[1rem]">
-          <div className="new-sm:hidden md:block">
+        <div className="new-sm:hidden md:flex flex-col items-start gap-[2rem] pl-[2rem] pt-[1rem]">
             <SiteLogo />
-          </div>
         </div>
 
         <div
-          className={`flex flex-col new-sm:items-center md:items-center lg:items-start new-sm:px-[1rem] lg:pl-[6.5rem] ${
-            errors.email || errors.password ? "mt-[1rem]" : "mt-[2rem]"
+          className={`flex flex-col new-sm:items-start md:items-center lg:items-start new-sm:px-[1rem] lg:pl-[6.5rem] ${
+            errors.email || errors.password ? "new-sm:mt-0 md:mt-[1rem]" : "new-sm:mt-0 md:mt-[2rem]"
           }`}
         >
           {/* Welcome Message */}
-          <div className="font-bold flex flex-col gap-0 new-sm:text-center md:text-left">
-            <p className="text-[#000] new-sm:text-[1.5rem] md:text-[1.5rem] xl:text-[1.8rem] 2xl:text-[2rem]">
+          <div className="font-bold flex flex-col gap-0 new-sm:text-start md:text-left">
+            <p className="text-[#000] new-sm:text-[1.5rem] xl:text-[1.8rem] 2xl:text-[2rem]">
               Hello there!
             </p>
-            <p className="text-[#606060] new-sm:text-[1rem] md:text-[1rem] xl:text-[1.2rem] 2xl:text-[1.5rem]">
+            <p className="text-[#606060] new-sm:text-[1rem] xl:text-[1.2rem] 2xl:text-[1.5rem]">
               Ready to Grow Green?
             </p>
           </div>
 
           {/* Form + Buttons */}
           <div
-            className={`h-max flex flex-col items-center gap-[1rem] new-sm:mt-[1rem] md:mt-[0.2rem] ${
+            className={`new-sm:w-[100%] md:w-max h-max flex flex-col items-center gap-[1rem] new-sm:mt-[1rem] md:mt-[0.2rem] ${
               errors.email || errors.password
                 ? "2xl:mt-[0.5rem]"
                 : "2xl:mt-[2rem]"
@@ -183,12 +182,12 @@ export const Sign_In = () => {
             {/* Signin form */}
             <form
               onSubmit={handleSubmit(handleSignIn)}
-              className="w-max h-max flex flex-col items-end gap-[1rem]"
+              className="new-sm:w-[100%] md:w-max h-max flex flex-col items-end gap-[1rem]"
             >
               {/* Email */}
-              <div className="new-sm:w-[18rem] md:w-[23rem] xl:w-[28rem] 2xl:w-[30.1875rem] h-max">
+              <div className="new-sm:w-[100%] md:w-[23rem] xl:w-[28rem] 2xl:w-[30.1875rem] h-max">
                 {errors.email && (
-                  <div className="w-[90%] px-[1rem] text-red-500 font-bold">
+                  <div className="w-[90%] new-sm:text-[0.875rem] md:text-[1rem] px-[1rem] text-red-500 font-bold">
                     {errors.email.message}
                   </div>
                 )}
@@ -201,9 +200,9 @@ export const Sign_In = () => {
               </div>
 
               {/* Password */}
-              <div className="new-sm:w-[18rem] md:w-[23rem] xl:w-[28rem] 2xl:w-[30.1875rem] h-max">
+              <div className="new-sm:w-[100%] md:w-[23rem] xl:w-[28rem] 2xl:w-[30.1875rem] h-max">
                 {errors.password && (
-                  <div className="w-[90%] px-[1rem] text-red-500 font-bold">
+                  <div className="new-sm:w-[100%] md:w-[90%] new-sm:text-[0.875rem] md:text-[1rem] px-[1rem] text-red-500 font-bold">
                     {errors.password.message}
                   </div>
                 )}
@@ -218,7 +217,7 @@ export const Sign_In = () => {
               {/* Forgot password */}
               <button
                 type="button"
-                className={`text-[#123524] text-[1rem] font-semibold underline ${
+                className={`text-[#123524] new-sm:text-[0.875rem] md:text-[1rem] font-semibold underline ${
                   resetPasswordLoading ? "cursor-not-allowed" : "cursor-pointer"
                 }`}
                 onClick={handleResetPasswordEmail}
@@ -228,7 +227,7 @@ export const Sign_In = () => {
               </button>
 
               {/* Signin button */}
-              <div className="new-sm:w-[18rem] new-sm:h-[3rem] md:w-[23rem] md:h-[3rem] xl:w-[28rem] 2xl:w-[30.1875rem] 2xl:h-[3.56894rem]">
+              <div className="new-sm:w-[100%] new-sm:h-[3rem] md:w-[23rem] md:h-[3rem] xl:w-[28rem] 2xl:w-[30.1875rem] 2xl:h-[3.56894rem]">
                 <AuthButton
                   buttonName="Sign In"
                   type="submit"
@@ -242,7 +241,7 @@ export const Sign_In = () => {
 
             {/* Google Sign in */}
             <button
-              className={`new-sm:w-[11rem] new-sm:h-[2.5rem] md:w-[13rem] md:h-[3rem] 2xl:w-[15.1rem] 2xl:h-[4.01379rem] flex justify-evenly items-center bg-[#fff] border-[2px] border-[#8C8C8C] rounded-l-full rounded-r-full ${
+              className={`new-sm:w-[11rem] md:w-[13rem] new-sm:h-[3rem]  2xl:w-[15.1rem] 2xl:h-[4.01379rem] flex justify-evenly items-center bg-[#fff] border-[2px] border-[#8C8C8C] rounded-l-full rounded-r-full ${
                 loadingGoogleLogin ? "cursor-not-allowed" : "cursor-pointer"
               }`}
               onClick={handleLoginWithGoogle}
@@ -305,6 +304,7 @@ export const Sign_In = () => {
           />
         </div>
       </div>
+
     </div>
   );
 };

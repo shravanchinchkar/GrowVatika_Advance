@@ -17,9 +17,7 @@ export const ContactForm = memo(() => {
   const [displayForm, setDisplayForm] = useState(false);
   const [successMessage, setSuccessMessage] = useState(false);
 
-  const updateMCFormVisibility = useChangeMobileConnectFormVisibility(
-    (state: any) => state.updateMCFormVisibility
-  );
+  const {setVisibilityOfMobileContactForm}=useChangeMobileConnectFormVisibility();
 
   const {
     register,
@@ -58,7 +56,7 @@ export const ContactForm = memo(() => {
   };
 
   const displayMobileContactForm = () => {
-    updateMCFormVisibility(true);
+    setVisibilityOfMobileContactForm(true);
   };
 
   const handleSuccessMessage = () => {
@@ -232,7 +230,7 @@ export const ContactForm = memo(() => {
 
       {/* Mobile View Get Started */}
       <button
-        className={`new-sm:block md:hidden border-[2px] new-sm:w-[10.5625rem] new-sm:h-[2rem] sm:w-[11rem] sm:h-[3rem]  hover:border-none rounded-[2.10294rem] bg-[#56A430] hover:bg-[#123524] shadow-custom-boxshadow backdrop-blur-[6.408869743347168px] text-[#FFF6F4] new-sm:text-[0.725rem] sm:text-[1rem] hover:text-[1.2rem] font-[Poppins] font-normal  hover:font-semibold  uppercase ${loading ? "cursor-not-allowed" : "cursor-pointer"} `}
+        className={`new-sm:block md:hidden border-[2px] new-sm:w-[10.5625rem] new-sm:h-[2rem] sm:w-[11rem] sm:h-[3rem]  hover:border-none rounded-[2.10294rem] bg-[#56A430] hover:bg-[#123524] shadow-custom-boxshadow backdrop-blur-[6.408869743347168px] text-[#FFF6F4] new-sm:text-[0.725rem] sm:text-[1rem] hover:text-[1.1rem] font-[Poppins] font-normal  hover:font-semibold  uppercase ${loading ? "cursor-not-allowed" : "cursor-pointer"} `}
         disabled={loading}
         onClick={displayMobileContactForm}
       >

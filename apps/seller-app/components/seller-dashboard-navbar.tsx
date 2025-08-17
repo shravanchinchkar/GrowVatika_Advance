@@ -3,12 +3,8 @@ import Image from "next/image";
 import { useActiveSellerDashboardSideBar } from "@repo/shared-store";
 
 export const SellerDashboardNavBar = () => {
-  const navBarTitle = ["Seller Dashboard", "Product Management"];
-  const activeSideBar = useActiveSellerDashboardSideBar(
-    (state: any) => state.activeSideBar
-  );
-
-  // 
+  const { activeSideBar } = useActiveSellerDashboardSideBar();
+  
   return (
     <div className="sticky z-30 top-0 md:w-[100%] xl:w-[100%] flex justify-center items-center p-[1rem] backdrop-blur-sm">
       <div className="w-[100%] md:h-[80px] lg:h-[87px]  bg-white flex justify-between items-center p-[1rem] rounded-[1.25rem]">

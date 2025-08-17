@@ -82,13 +82,13 @@ export const SelectTagUser = memo(
         className={`${className} h-[100%] relative rounded-tl-[2.1875rem] rounded-tr-[2.1875rem] z-10`}
       >
         <button
-          disabled={singleProduct}
           onClick={() => {
             handleDropdown();
           }}
           type="button"
           className={`${className} h-[100%] absolute top-0 left-0 flex items-center border-[1.6px] border-[#56A430] bg-[#FFFFFF] rounded-[5.25rem] md:text-[0.8rem] lg:text-[1rem] xl:text-[1.22669rem] font-[Poppins] font-normal outline-none md:justify-start backdrop-blur-[6.408869743347168px] lg:justify-between overflow-hidden ${isSort ? "text-[#171717] capitalize md:gap-[1rem] lg:gap-0 px-[1.5rem]" : "text-[#697F75] uppercase md:px-[0.5rem] lg:px-[1.2rem] md:gap-[0.5rem] lg:gap-0"} ${singleProduct ? "cursor-not-allowed" : "cursor-pointer"}`}
           data-key={custom_Id}
+          disabled={singleProduct}
         >
           {isSort && (
             <div className="relative md:w-[1.2rem] md:h-[1.2rem] lg:w-[1.5rem] lg:h-[1.5rem] flex-shrink-0">

@@ -2,11 +2,9 @@ import { memo } from "react";
 import Image from "next/image";
 import { useChangeMobileNavbarVisibility } from "@repo/shared-store";
 export const Hamburg = memo(() => {
-  const updateVisibility = useChangeMobileNavbarVisibility(
-    (state: any) => state.updateMobileNarbarVisibility
-  );
+  const {setVisibilityOfMobileNavbar}=useChangeMobileNavbarVisibility()
   const handleMobileNavbar = () => {
-    updateVisibility(true);
+    setVisibilityOfMobileNavbar(true);
   };
   return (
     <button

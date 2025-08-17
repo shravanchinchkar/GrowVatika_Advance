@@ -21,9 +21,10 @@ export const WishList = memo(() => {
   if (isWishListVisible) {
     return (
       <div className="z-50 absolute top-0 w-[100%] h-screen  bg-[#00000040] bg-opacity-10 flex justify-center">
+
         <div className="new-sm:w-[95%] md:w-[65%] lg:w-[90%] new-sm:h-[95%] font-[Poppins] bg-white rounded-[1.25rem] mx-auto my-[1rem] overflow-hidden pb-[1rem] animate-slide-in-right shadow-add-to-cart-wishlist">
           {/* Wishlist header section */}
-          <div className="w-[100%] py-[1rem] flex justify-between items-center border-b-[0.0625rem] border-[#00000033]">
+          <div className=" w-[100%] h-[10%] py-[1rem] flex justify-between items-center border-b-[0.0625rem] border-[#00000033]">
             {/* Wishlist title */}
             <div className="new-sm:w-[85%] new-sm-1:w-[100%] md:w-[90%] h-[100%] flex justify-center items-center new-sm:gap-[0.5rem] md:gap-[1rem]">
               <div className="flex justify-center items-center bg-[#EDE7E4] rounded-full new-sm:w-[1.5rem] new-sm:h-[1.5rem] new-sm-1:w-[1.875rem] new-sm-1:h-[1.875rem]">
@@ -64,9 +65,10 @@ export const WishList = memo(() => {
             </div>
           ) : (
             //display the below UI if productData is Available
-            <div className="new-sm:h-[90%] md:h-[87%] flex flex-col justify-between items-center">
+            <div className="w-[100%] h-[90%] flex flex-col justify-between items-center">
+
               {/* Items in your wishlist section */}
-              <div className="w-[100%] new-sm:text-[0.7rem] new-sm-1:text-[0.9rem] md:text-[1.25rem] font-medium flex justify-between items-center new-sm:px-[1.5rem] new-sm-1:px-[1.7rem] md:px-[2rem] pt-[0.5rem]">
+              <div className="w-[100%] new-sm:h-[5%] md:h-[10%] new-sm:text-[0.7rem] new-sm-1:text-[0.9rem] md:text-[1.25rem] font-medium flex justify-between items-center new-sm:px-[1.5rem] new-sm-1:px-[1.7rem] md:px-[2rem] pt-[0.5rem]">
                 <div>Items in your wishlist</div>
                 <button
                   className="text-[#697F75]"
@@ -77,14 +79,14 @@ export const WishList = memo(() => {
               </div>
 
               {/* Items section */}
-              <div className="w-[100%] new-sm:h-[35rem] md:h-[25rem] new-sm:flex flex-col gap-[1rem] md:grid md:grid-cols-1 lg:grid-cols-2 2xl:grid-cols-3 mt-[0.5rem] md:gap-y-[1rem] justify-items-center pb-[1rem] border-b-[0.0625rem] border-[#00000033] overflow-y-auto [&::-webkit-scrollbar]:w-2 [&::-webkit-scrollbar-track]:bg-[#fff] [&::-webkit-scrollbar-thumb]:bg-[#697F75] px-[1rem]">
+              <div className="w-[100%] new-sm:h-[83%] md:h-[70%] new-sm:grid new-sm:grid-cols-1 lg:grid-cols-2 2xl:grid-cols-3 mt-[0.5rem] new-sm:gap-y-[1rem] justify-items-center pb-[1rem] border-b-[0.0625rem] border-[#00000033] overflow-y-auto [&::-webkit-scrollbar]:w-2 [&::-webkit-scrollbar-track]:bg-[#fff] [&::-webkit-scrollbar-thumb]:bg-[#697F75] px-[1rem] ">
                 {likeProductData.map((product) => (
                   <WishListCard product={product} key={product.id} />
                 ))}
               </div>
 
               {/* Pay online and get extra 5% off section*/}
-              <div className="flex justify-center gap-2 pt-[0.5rem] text-[#697F75] new-sm:text-[0.625rem] md:text-[0.9375rem]">
+              <div className="new-sm:h-[5%] md:h-[10%] flex justify-center items-center gap-2 pt-[0.5rem] text-[#697F75] new-sm:text-[0.625rem] md:text-[0.9375rem]">
                 <div className="relative new-sm:w-[1.08756rem] new-sm:h-[1.08756rem] md:w-[1.5rem] md:h-[1.5rem]">
                   <Image
                     src="/assets/images/WishListImages/discountIcon.svg"
@@ -96,8 +98,7 @@ export const WishList = memo(() => {
               </div>
 
               {/* Go to Your Cart section */}
-              <button
-                className="new-sm:w-[90%] new-sm:h-[3.0625rem] md:w-[90%] md:h-[3.1875rem] mt-[0.5rem] bg-[#1A9AEF] hover:bg-[#0F5889] rounded-[0.625rem] flex justify-center items-center"
+              <button className="new-sm:w-[90%] md:w-[90%] new-sm:h-[7%] md:h-[8%] mt-[0.5rem] bg-[#1A9AEF] hover:bg-[#0F5889] rounded-[0.625rem] flex justify-center items-center"
                 onClick={(e) => {
                   e.preventDefault();
                   setVisibilityOfWishList(false);

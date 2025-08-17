@@ -115,7 +115,7 @@ export const ProductCard = memo(({ productData }: ProductCardProps) => {
 
         {/* Add to Cart Button */}
         <button
-          className={`new-sm:w-[100%] new-sm:h-[2.3rem] new-sm-1:h-[2.3rem] new-sm-3:h-[2.8rem] new-md:h-[30%] bg-[#56A430] rounded-[0.625rem] flex items-center justify-center gap-2 text-white new-sm:text-[0.74238rem] new-sm-1:text-[0.9rem] new-sm-3:text-[1.1rem] new-md:text-[1.22669rem] font-medium text-center outline-none ${loading ? "bg-[#213E12]" : "hover:bg-[#213E12]"}`}
+          className={`new-sm:w-[100%] new-sm:h-[2.3rem] new-sm-1:h-[2.3rem] new-sm-3:h-[2.8rem] new-md:h-[30%] bg-[#56A430] rounded-[0.625rem] flex items-center justify-center gap-2 text-white new-sm:text-[0.74238rem] new-sm-1:text-[0.9rem] new-sm-3:text-[1.1rem] new-md:text-[1.22669rem] font-medium text-center outline-none ${loading ? "bg-[#213E12]" : "md:hover:bg-[#213E12]"}`}
           onClick={(e) =>
             handleAddToCart({ e, productData, setLoading, addNewProduct })
           }

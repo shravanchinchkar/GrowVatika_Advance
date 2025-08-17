@@ -1,12 +1,21 @@
 import Link from "next/link";
 import Image from "next/image";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { AuthButton } from "@repo/ui/auth-button";
+import { signOut, useSession } from "next-auth/react";
 import { usePathname, useRouter } from "next/navigation";
 import { useChangeMobileNavbarVisibility } from "@repo/shared-store";
 
 export const MobileNavBar = () => {
-  const {isMobileNavbarVisible,setVisibilityOfMobileNavbar}=useChangeMobileNavbarVisibility()
+  const router = useRouter();
+  const session = useSession();
+  const pathName = usePathname();
+
+  const [loading, setLoading] = useState(false);
+
+  //zustand states
+  const { isMobileNavbarVisible, setVisibilityOfMobileNavbar } =
+    useChangeMobileNavbarVisibility();
   const handleNavbarVisibility = () => {
     setVisibilityOfMobileNavbar(false);
   };
@@ -14,9 +23,6 @@ export const MobileNavBar = () => {
   useEffect(() => {
     return () => setVisibilityOfMobileNavbar(false);
   }, []);
-
-  const pathName = usePathname();
-  const router = useRouter();
 
   const NavLinks = [
     {
@@ -51,6 +57,16 @@ export const MobileNavBar = () => {
     // Remove spaces and convert to lowercase
     const normalizedText = text.replace(/\s+/g, "").toLowerCase();
     return normalizedPath === normalizedText;
+  }
+
+  function handleSignIn() {
+    setLoading(true);
+    router.push("/signin");
+    setLoading(false);
+  }
+  async function handleSignOut() {
+    await signOut();
+    router.push("/");
   }
 
   if (isMobileNavbarVisible) {
@@ -114,7 +130,21 @@ export const MobileNavBar = () => {
                 })}
               </ul>
               <div className="w-[10.53244rem] h-[4.0625rem] ">
-                <AuthButton buttonName="Log in" />
+                <AuthButton
+                  buttonName={
+                    session.status === "loading"
+                      ? "Loading"
+                      : session.status === "authenticated"
+                        ? "Sign Out"
+                        : "Sign In"
+                  }
+                  onClick={
+                    session.status === "authenticated"
+                      ? handleSignOut
+                      : handleSignIn
+                  }
+                  loading={loading || session.status === "loading"}
+                />
               </div>
             </div>
 

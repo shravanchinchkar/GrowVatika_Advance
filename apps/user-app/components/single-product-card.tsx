@@ -240,7 +240,7 @@ const reducer = (
   }
 };
 
-export const SingleProductCard = () => {
+export const SingleProductCard = memo(() => {
   const searchParams = useSearchParams();
   const productId: string = searchParams.get("id") || "";
 
@@ -367,7 +367,7 @@ export const SingleProductCard = () => {
     return <Skeleton className="flex justify-center items-center" />;
   } else {
     return (
-      <div className="new-sm:w-[100%] new-sm:h-[90rem] new-sm-1:h-[110rem] new-sm-3:h-[115rem] md:h-[65rem] lg:h-[65rem] xl:h-[70rem] 2xl:h-[78.8125rem] flex flex-col new-sm:gap-[1rem] md:gap-[2rem] items-center bg-[#FFFFFF] rounded-[0.94rem] font-[Poppins] pb-[1rem]">
+      <div className="new-sm:w-[100%] new-sm:h-[90rem] new-sm-1:h-[110rem] new-sm-3:h-[115rem] md:h-[65rem] new-md:h-[75rem] lg:h-[65rem] xl:h-[70rem] 2xl:h-[78.8125rem] flex flex-col new-sm:gap-[1rem] md:gap-[2rem] items-center bg-[#FFFFFF] rounded-[0.94rem] font-[Poppins] pb-[1rem]">
         {/* Top Div Dummy Navigation */}
         <div className="w-[100%] new-sm:min-h-[2%] md:min-h-[4%] max-h-max flex items-center gap-[1rem] new-sm:pl-[1rem] md:pl-[1rem] new-sm:text-[0.6rem] new-sm-1:text-[0.7625rem] md:text-[1rem] xl:text-[1.25rem] font-medium border-b-[0.0625rem] border-[#00000033]">
           {DummyNavigation.map((item, index) => {
@@ -465,7 +465,7 @@ export const SingleProductCard = () => {
           </div>
 
           {/* Right */}
-          <div className="new-sm:w-[100%] md:w-[45%] xl:w-[40%] new-sm:h-[50%] new-sm-1:h-[50%] new-sm-3:h-[40%] sm:h-[40%] md:h-[100%] flex flex-col new-sm:justify-between md:justify-start lg:justify-between md:gap-[2rem] lg:gap-0 new-sm:pl-[1rem] md:pl-[1rem] xl:pl-0">
+          <div className="new-sm:w-[100%] md:w-[45%] xl:w-[40%] new-sm:h-[50%] new-sm-1:h-[50%] new-sm-3:h-[40%] sm:h-[40%] md:h-[100%] flex flex-col new-sm:justify-between md:justify-start new-md:justify-between md:gap-[2rem] lg:gap-0 new-sm:pl-[1rem] md:pl-[1rem] xl:pl-0">
             {/* Prod Name, Pot Info, Prod Rating and review */}
             <div>
               {/* Product Name */}
@@ -623,7 +623,7 @@ export const SingleProductCard = () => {
               <div className="flex justify-start gap-[1rem]">
                 {/* Add to cart */}
                 <button
-                  className="new-sm:w-[55%] 2xl:w-[60%] new-sm:h-[2.3125rem] md:h-[2.7rem] 2xl:h-[3.1875rem] bg-[#56A430] hover:bg-[#213E12] rounded-[0.625rem] flex items-center justify-center gap-[1rem] text-white new-sm:text-[0.75rem] new-sm-1:text-[1rem] lg:text-[1.1rem] 2xl:text-[1.22669rem] font-[Poppins]"
+                  className="new-sm:w-[55%] 2xl:w-[60%] new-sm:h-[2.3125rem] md:h-[2.7rem] 2xl:h-[3.1875rem] bg-[#56A430] md:hover:bg-[#213E12] rounded-[0.625rem] flex items-center justify-center gap-[1rem] text-white new-sm:text-[0.75rem] new-sm-1:text-[1rem] lg:text-[1.1rem] 2xl:text-[1.22669rem] font-[Poppins]"
                   onClick={(e) => {
                     const productData = state.productData;
                     handleAddToCart({
@@ -726,7 +726,7 @@ export const SingleProductCard = () => {
           </div>
 
           {/* Nursery Card  displayed in md and new-md hidden from lg*/}
-          <div className="new-sm:block lg:hidden new-sm:w-[95%] new-sm:h-[25%] new-sm-1:h-[25%] new-sm-3:h-[40%] md:w-[55%] new-md:w-[50%] md:h-[40%] new-md:h-[50%]">
+          <div className="new-sm:block lg:hidden new-sm:w-[95%] new-sm:h-[25%] new-sm-1:h-[25%] new-sm-3:h-[40%] md:w-[55%] new-md:w-[50%] md:h-[40%] new-md:h-[40%]">
             <NurseryCard
               pictureURL={
                 state.singleProductData?.seller.profilePictureURL ||
@@ -745,4 +745,4 @@ export const SingleProductCard = () => {
       </div>
     );
   }
-};
+});

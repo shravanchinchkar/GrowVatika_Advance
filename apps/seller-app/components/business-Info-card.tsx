@@ -43,10 +43,7 @@ export const BusinessInfoCard = memo(
     ];
 
     // Following is the zustand state management code
-    const sepcialties = useSpecialties((state: any) => state.specialties);
-    const removeSpecialties = useSpecialties(
-      (state: any) => state.removeSpecialties
-    );
+    const {specialties,removeSpecialties}=useSpecialties();
 
     // react-hook form configuration
     const {
@@ -109,8 +106,8 @@ export const BusinessInfoCard = memo(
 
     // set the specialties of the seller
     useEffect(() => {
-      setValue("specialities", sepcialties);
-    }, [sepcialties, setValue]);
+      setValue("specialities", specialties);
+    }, [specialties, setValue]);
 
     // Memoized event handlers to prevent unnecessary re-renders
     const handleEditButton = useCallback(() => {
@@ -529,8 +526,8 @@ export const BusinessInfoCard = memo(
           {/* Nursery Specialties Section */}
           <div className="flex flex-wrap gap-[1rem] mt-2 md:text-[1rem] lg:text-[1.2rem]">
             {/* Display Seller Specialties */}
-            {sepcialties.length > 0 &&
-              sepcialties.map((specialty: string, index: number) => {
+            {specialties.length > 0 &&
+              specialties.map((specialty: string, index: number) => {
                 return (
                   <div
                     className="md:w-max lg:min-w-[10.46094rem] max-w-max min-h-[3.0625rem] max-h-max flex justify-between items-center gap-[0.5rem]  flex-shrink-0 border-[1.6px] border-[#56A430] rounded-[5.25rem] text-[#56A430] text-center font-[Poppins] font-medium px-[1rem]"

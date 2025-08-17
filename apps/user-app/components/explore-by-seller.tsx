@@ -12,35 +12,33 @@ import { ExploreBySellerGrid } from "./explore-by-seller-grid";
 import {
   useAddToCartVisibilityStore,
   useChangeMobileNavbarVisibility,
+  usePaymentMessageStore,
   useUserProfileVisibilityStore,
   useWishListVisibilityStore,
 } from "@repo/shared-store";
 import { ProductSearchBar } from "./product-search-bar";
+import { PaymentGatewayMessage } from "./payment-gateway-message";
 
 export const ExplorePlantsBySeller = () => {
+  // Following is the zustand State code
+  const { isWishListVisible } = useWishListVisibilityStore();
+  const { isAddToCartVisible } = useAddToCartVisibilityStore();
+  const { isPaymentMessageVisible } = usePaymentMessageStore();
+  const { isUserProfileVisible } = useUserProfileVisibilityStore();
+  const { isMobileNavbarVisible } = useChangeMobileNavbarVisibility();
+
   const productPageButton = ["Most Popular", "Newly Added", "NearBy Seller"];
-  const addToCartVisibility = useAddToCartVisibilityStore(
-    (state: any) => state.addToCartDropDownVisibility
-  );
-  const wishListVisibility = useWishListVisibilityStore(
-    (state: any) => state.wishListDropDownVisibility
-  );
-  const MobileNavbarVisibility = useChangeMobileNavbarVisibility(
-    (state: any) => state.displayMobileNavbar
-  );
-  const userProfileVisibility = useUserProfileVisibilityStore(
-    (state: any) => state.userProfileVisibility
-  );
 
   return (
     <div
-      className={`min-h-screen relative flex flex-col justify-between bg-[#FFF6F4] font-[Poppins] ${(addToCartVisibility || wishListVisibility || MobileNavbarVisibility || userProfileVisibility) && "h-[100vh] overflow-hidden"}`}
+      className={`min-h-screen relative flex flex-col justify-between bg-[#FFF6F4] font-[Poppins] ${(isAddToCartVisible || isWishListVisible || isUserProfileVisible || isMobileNavbarVisible || isPaymentMessageVisible) && "h-[100vh] overflow-hidden"}`}
     >
       <Cart />
       <WishList />
       <MobileNavBar />
       <UserProfilePopUp />
       <HeaderSection explorebyseller={true} isExplore={true} />
+      <PaymentGatewayMessage />
 
       <div className="flex new-sm:w-[100%] md:w-[90%] md:mt-[3rem] flex-col new-sm:gap-[1rem] md:gap-[3rem] items-center mx-auto">
         {/* Heading of  Eplore by seller */}

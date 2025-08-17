@@ -1,27 +1,28 @@
 import Link from "next/link";
 import Image from "next/image";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { AuthButton } from "@repo/ui/auth-button";
+import { signOut, useSession } from "next-auth/react";
 import { usePathname, useRouter } from "next/navigation";
 import { useChangeMobileNavbarVisibility } from "@repo/shared-store";
 
 export const MobileNavBar = () => {
-  const displayMobileNavbar = useChangeMobileNavbarVisibility(
-    (state: any) => state.displayMobileNavbar
-  );
-  const updateVisibility = useChangeMobileNavbarVisibility(
-    (state: any) => state.updateMobileNarbarVisibility
-  );
+  const router = useRouter();
+  const session = useSession();
+  const pathName = usePathname();
+
+  const [loading, setLoading] = useState(false);
+
+  //zustand states
+  const { isMobileNavbarVisible, setVisibilityOfMobileNavbar } =
+    useChangeMobileNavbarVisibility();
   const handleNavbarVisibility = () => {
-    updateVisibility(false);
+    setVisibilityOfMobileNavbar(false);
   };
 
   useEffect(() => {
-    return () => updateVisibility(false);
+    return () => setVisibilityOfMobileNavbar(false);
   }, []);
-
-  const pathName = usePathname();
-  const router = useRouter();
 
   const NavLinks = [
     {
@@ -58,7 +59,17 @@ export const MobileNavBar = () => {
     return normalizedPath === normalizedText;
   }
 
-  if (displayMobileNavbar) {
+  function handleSignIn() {
+    setLoading(true);
+    router.push("/signin");
+    setLoading(false);
+  }
+  async function handleSignOut() {
+    await signOut();
+    router.push("/");
+  }
+
+  if (isMobileNavbarVisible) {
     return (
       <div className="w-screen h-screen absolute z-50 new-sm:flex md:hidden bg-black bg-opacity-10 justify-end py-[3.8rem] font-[Poppins]">
         <div className="w-[98%] h-[93%] flex flex-col items-end border-l-[1.6px] border-t-[1.6px] border-b-[1.6px] border-[#56A430] rounded-l-[1.5625rem] bg-[#FFFFFF] animate-slide-in-right">
@@ -119,7 +130,21 @@ export const MobileNavBar = () => {
                 })}
               </ul>
               <div className="w-[10.53244rem] h-[4.0625rem] ">
-                <AuthButton buttonName="Log in" />
+                <AuthButton
+                  buttonName={
+                    session.status === "loading"
+                      ? "Loading"
+                      : session.status === "authenticated"
+                        ? "Sign Out"
+                        : "Sign In"
+                  }
+                  onClick={
+                    session.status === "authenticated"
+                      ? handleSignOut
+                      : handleSignIn
+                  }
+                  loading={loading || session.status === "loading"}
+                />
               </div>
             </div>
 

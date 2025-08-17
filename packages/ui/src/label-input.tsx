@@ -57,7 +57,7 @@ export const LabelInput = ({
             useType === FormType.Seller
               ? legendClassName
               : useType === FormType.AUTH
-                ? "text-[0.99138rem] text-[#8C8C8C] font-medium"
+                ? "new-sm:text-[0.875rem] md:text-[0.99138rem] text-[#8C8C8C] font-medium"
                 : ""
           }
         >
@@ -66,7 +66,7 @@ export const LabelInput = ({
         <input
           className={`
             ${legendName === "Password" ? "w-[130%]" : readonly ? "cursor-not-allowed w-[100%]" : "w-[100%]"} 
-            placeholder:text-[#8C8C8C] new-sm-1:placeholder:text-[1rem] md:placeholder:text-[1rem] lg:placeholder:text-[1.25rem] pl-[0.4rem]  text-[#0B1320] outline-none text-[1.1rem] font-normal rounded-l-full rounded-r-full bg-transparent`}
+            placeholder:text-[#8C8C8C] new-sm:placeholder:text-[1rem] md:placeholder:text-[1rem] lg:placeholder:text-[1.25rem] pl-[0.4rem]  text-[#0B1320] outline-none new-sm:text-[1rem] md:text-[1.1rem] font-normal rounded-l-full rounded-r-full bg-transparent`}
           type={
             legendName === "Phone Number"
               ? "tel"
@@ -92,7 +92,7 @@ export const LabelInput = ({
         legendName === "Confirm Password" ? (
           <button
             type="button"
-            className="w-[3rem] h-[2rem] relative border-none outline-none"
+            className="new-sm:w-[2rem] new-sm:h-[2rem] md:w-[3rem] md:h-[2rem] relative border-none outline-none"
             onClick={handlePasswordVisibility}
           >
             {viewPassword === false ? (

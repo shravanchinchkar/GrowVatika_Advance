@@ -15,13 +15,8 @@ import { GetStartedFromInput, GetStartedFromSchema } from "@repo/common-types";
 
 export const MobileGetStartedForm = () => {
   const [loading, setLoading] = useState(false);
-  const MCFormVisibility = useChangeMobileConnectFormVisibility(
-    (state: any) => state.displayMCForm
-  );
 
-  const updateMCFormVisibility = useChangeMobileConnectFormVisibility(
-    (state: any) => state.updateMCFormVisibility
-  );
+  const {isMobileContactFormVisible,setVisibilityOfMobileContactForm}=useChangeMobileConnectFormVisibility();
 
   const {
     register,
@@ -61,10 +56,10 @@ export const MobileGetStartedForm = () => {
   };
 
   const handleCancleButton = () => {
-    updateMCFormVisibility(false);
+    setVisibilityOfMobileContactForm(false);
   };
 
-  if (MCFormVisibility) {
+  if (isMobileContactFormVisible) {
     return (
       <div className="new-sm:block md:hidden w-[100%] h-[100vh] absolute z-50 top-0 flex items-center justify-center bg-[#00000040] font-[Poppins] p-[1rem] overflow-scroll">
         <div className="w-[100%] h-max bg-[#fff] rounded-[1.5625rem] border-[1.6px] border-[#56A430] overflow-hidden flex flex-col gap-[1rem] py-[1rem]">

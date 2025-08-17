@@ -10,17 +10,14 @@ export const SellerDashboardWelcomeMsg = ({
   nurseryName: string;
 }) => {
   // Following is the zustan state management code
-  const updatedisplayAddProductSection = useDisplayAddProductSectionStore(
-    (state: any) => state.updateDisplayAddProductSectionStore
-  );
+  const{setVisibilityOfAddProductSection}=useDisplayAddProductSectionStore()
 
-  const updateActiveSideBar = useActiveSellerDashboardSideBar(
-    (state: any) => state.updateActiveSideBar
-  );
+  const { setActiveSideBar } = useActiveSellerDashboardSideBar();
+  
 
   const handleDisplayAddProductSection = () => {
-    updatedisplayAddProductSection(true);
-    updateActiveSideBar("products");
+    setVisibilityOfAddProductSection(true);
+    setActiveSideBar("products");
   };
   
   const sellerData = useSellerDataStore((state) => state.sellerData);

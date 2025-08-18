@@ -1,5 +1,5 @@
-import { TProductData } from "./productData.js";
-import { TSingleProductData } from "./singleProductData.js";
+import { TProductData } from "./product-data-type.js";
+import { TSingleProductData } from "./single-product-data-type.js";
 
 type SellerData = {
   nurseryName: string;
@@ -26,6 +26,6 @@ export type TApiResponse = {
   totalProductsCount?: number;
   productsData?: TProductData[];
   filterProductsData?: TProductData[];
-  singleProductData?:TSingleProductData;
+  singleProductData?: TSingleProductData;
   totalFilterProductsCount?: number;
 };

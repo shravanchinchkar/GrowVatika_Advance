@@ -1,7 +1,8 @@
+import { TApiResponse } from "@repo/common-types";
 import client from "@repo/db/client";
 import { NextResponse, NextRequest } from "next/server";
 
-export async function GET(req: NextRequest) {
+export async function GET(req: NextRequest):Promise<NextResponse<TApiResponse>> {
   try {
     const { searchParams } = new URL(req.url);
     const productId = searchParams.get("id");
@@ -32,15 +33,19 @@ export async function GET(req: NextRequest) {
         sellerId,
         productStatus,
         visibility,
-        ...filteredProductData
+        ...filteredSingleProductData
       } = productData;
       return NextResponse.json({
         success: true,
         message: "product data found!",
-        productData: filteredProductData,
+        singleProductData: filteredSingleProductData,
       });
     }
   } catch (error) {
     console.error("Error while fetching single product data:", error);
+    return NextResponse.json({
+      success:false,
+      error:"Error while fetching single Product Data"
+    })
   }
 }

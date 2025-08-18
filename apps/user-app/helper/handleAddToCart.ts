@@ -1,12 +1,12 @@
 import toast from "react-hot-toast";
-import { SellerProductData } from "@repo/common-types";
+import { TProductData } from "@repo/common-types";
 import { toastStyle } from "@repo/shared/utilfunctions";
 
 type HandleAddToCartProps = {
   e: any;
-  productData: SellerProductData | any;
+  productData: TProductData;
   setLoading: (newValue: boolean) => void;
-  addNewProduct: (data: SellerProductData) => void;
+  addNewProduct: (data: TProductData) => void;
 };
 
 export const handleAddToCart = ({

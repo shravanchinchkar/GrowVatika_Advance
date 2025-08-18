@@ -4,7 +4,7 @@ import Link from "next/link";
 import Image from "next/image";
 import { memo, useState } from "react";
 import { useAddToCardStore } from "@repo/shared-store";
-import { SellerProductData } from "@repo/common-types";
+import { SellerProductData, TProductData } from "@repo/common-types";
 import { ButtonLoadingSign } from "@repo/ui/loading-sign";
 import { handleAddToCart } from "@/helper/handleAddToCart";
 import { RiHeart3Fill, RiHeart3Line } from "@remixicon/react";
@@ -12,7 +12,7 @@ import { handleLikeProduct } from "@/helper/handleLikeProduct";
 import { useWishListStore, isLikeProductPresent } from "@repo/shared-store";
 
 interface ProductCardProps {
-  productData: SellerProductData;
+  productData: TProductData;
 }
 
 export const ProductCard = memo(({ productData }: ProductCardProps) => {

@@ -1,8 +1,8 @@
-export type TSingleProductData= {
-  price: number;
-  compareAt: number;
-  productSize: number;
-  productQuantity: number;
+export type TSingleProductData = {
+  price: string;
+  compareAt: string;
+  productSize: string;
+  productQuantity: string;
   name: string;
   description: string;
   imageURL: string;
@@ -11,7 +11,7 @@ export type TSingleProductData= {
   tags: string;
   seller: {
     nurseryName: string;
-    address: string;
-    profilePictureURL: string;
+    address: string | null;
+    profilePictureURL: string | null;
   };
 };

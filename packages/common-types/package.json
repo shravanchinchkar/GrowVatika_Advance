@@ -20,8 +20,7 @@
   "scripts": {
     "build": "tsc",
     "dev": "tsc --watch",
-    "clean": "rimraf dist",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "clean": "rimraf dist"
   },
   "dependencies": {
     "zod": "^3.24.2"

@@ -3,7 +3,11 @@ import Skeleton from "@repo/ui/loading";
 import { useRouter } from "next/navigation";
 import { AuthButton } from "@repo/ui/auth-button";
 import { useSession, signOut } from "next-auth/react";
-import { useUserProfileVisibilityStore } from "@repo/shared-store";
+import {
+  useAddToCartVisibilityStore,
+  useUserProfileVisibilityStore,
+  useWishListVisibilityStore,
+} from "@repo/shared-store";
 
 export const UserProfilePopUp = () => {
   const router = useRouter();
@@ -12,7 +16,11 @@ export const UserProfilePopUp = () => {
   const text = "🌿 Buy 2 Plants, Get 1 Free!";
   const text1 = "💸 Extra 10% off on your next purchase – Use code: GREEN10";
 
-  const {isUserProfileVisible,setVisibilityOfUserProfile}=useUserProfileVisibilityStore()
+  // Following are the zustand state
+  const { isUserProfileVisible, setVisibilityOfUserProfile } =
+    useUserProfileVisibilityStore();
+  const { setVisibilityOfAddToCart } = useAddToCartVisibilityStore();
+  const { setVisibilityOfWishList } = useWishListVisibilityStore();
 
   function handleSignIn() {
     router.push("/signin");
@@ -31,7 +39,7 @@ export const UserProfilePopUp = () => {
           className={`w-[90%] h-[95%] rounded-[1.25rem] bg-[#FFFFFF] font-[Poppins] overflow-hidden animate-slide-in-right shadow-add-to-cart-wishlist ${session.status === "loading" ? "flex justify-center items-center" : "flex flex-col"}`}
         >
           {session.status === "loading" ? (
-            <Skeleton className="w-[100%] flex justify-center items-center"/>
+            <Skeleton className="w-[100%] flex justify-center items-center" />
           ) : (
             <>
               {/* Header */}
@@ -64,7 +72,14 @@ export const UserProfilePopUp = () => {
                       {/* Wishlist,add-to-cart and special offers section */}
                       <div className="h-[65%] p-[2rem] flex flex-col justify-between text-[#FFFFFF] text-[1.25rem] font-medium">
                         {/* WishList section */}
-                        <div className="w-[13.625rem] h-[2.5rem] flex items-center justify-around bg-[#1A9AEF] rounded-[6.25rem]">
+                        <div
+                          className="w-[13.625rem] h-[2.5rem] flex items-center justify-around bg-[#1A9AEF] rounded-[6.25rem] cursor-pointer"
+                          onClick={(e) => {
+                            e.preventDefault();
+                            setVisibilityOfWishList(true);
+                            setVisibilityOfUserProfile(false);
+                          }}
+                        >
                           <p>View Wishlist</p>
                           <div className="relative w-[1.875rem] h-[1.875rem] bg-[#FFFFFF] rounded-full">
                             <Image
@@ -75,8 +90,16 @@ export const UserProfilePopUp = () => {
                             />
                           </div>
                         </div>
+
                         {/* Add to Cart section */}
-                        <div className="w-[16.1875rem] h-[2.5rem] flex items-center justify-around bg-[#1A9AEF] rounded-[6.25rem]">
+                        <div
+                          className="w-[16.1875rem] h-[2.5rem] flex items-center justify-around bg-[#1A9AEF] rounded-[6.25rem] cursor-pointer"
+                          onClick={(e) => {
+                            e.preventDefault();
+                            setVisibilityOfAddToCart(true);
+                            setVisibilityOfUserProfile(false);
+                          }}
+                        >
                           <p>View Your Cart</p>
                           <div className="w-[1.875rem] h-[1.875rem] flex justify-center items-center bg-[#FFFFFF] rounded-full">
                             <div className="relative w-[1.3rem] h-[1.3rem]">
@@ -89,6 +112,7 @@ export const UserProfilePopUp = () => {
                             </div>
                           </div>
                         </div>
+
                         <div className="w-[50.625rem] h-[2.5rem] pl-[1rem] flex items-center rounded-l-[6.25rem] bg-user-popup">
                           Special Offer Just for You!
                         </div>

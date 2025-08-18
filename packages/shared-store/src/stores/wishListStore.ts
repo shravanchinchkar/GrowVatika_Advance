@@ -1,17 +1,17 @@
 import { create } from "zustand";
-import { SellerProductData } from "@repo/common-types";
+import {  TProductData } from "@repo/common-types";
 import { persist, createJSONStorage } from "zustand/middleware";
 
 type WishListState = {
-  likeProductData: SellerProductData[];
+  likeProductData: TProductData[];
   clearWishList: () => void;
-  removeProductData: (data: SellerProductData) => void;
-  toggleLikeProductData: (data: SellerProductData) => void;
+  removeProductData: (data: TProductData) => void;
+  toggleLikeProductData: (data: TProductData) => void;
 };
 
 export const isLikeProductPresent = (
-  productData: SellerProductData[],
-  newData: SellerProductData
+  productData: TProductData[],
+  newData: TProductData
 ) => {
   for (const product of productData) {
     if (product.id === newData.id) {
@@ -25,7 +25,7 @@ export const useWishListStore = create<WishListState>()(
   persist(
     (set, get) => ({
       likeProductData: [],
-      toggleLikeProductData: (data: SellerProductData) =>
+      toggleLikeProductData: (data: TProductData) =>
         set((state) => ({
           likeProductData: isLikeProductPresent(state.likeProductData, data)
             ? state.likeProductData.filter((item) => {
@@ -33,7 +33,7 @@ export const useWishListStore = create<WishListState>()(
               })
             : [...state.likeProductData, data],
         })),
-      removeProductData: (data: SellerProductData) =>
+      removeProductData: (data: TProductData) =>
         set((state) => ({
           likeProductData: state.likeProductData.filter((item) => {
             return item.id !== data.id;

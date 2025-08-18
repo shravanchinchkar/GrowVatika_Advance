@@ -14,7 +14,6 @@ import { RiHeart3Fill, RiHeart3Line } from "@remixicon/react";
 import { handleLikeProduct } from "@/helper/handleLikeProduct";
 import { memo, useCallback, useEffect, useReducer, useState } from "react";
 import {
-  SellerProductData,
   TApiResponse,
   TProductData,
   TSingleProductData,

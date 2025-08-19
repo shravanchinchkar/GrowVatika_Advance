@@ -19,10 +19,13 @@ import {
   useChangeMobileNavbarVisibility,
   usePaymentMessageStore,
   useUserProfileVisibilityStore,
+  useWishListVisibilityStore,
 } from "@repo/shared-store";
 import { PaymentGatewayMessage } from "./payment-gateway-message";
+import { WishList } from "./wishlist";
 
 export const LandingPage = () => {
+  const { isWishListVisible } = useWishListVisibilityStore();
   const { isPaymentMessageVisible } = usePaymentMessageStore();
   const { isAddToCartVisible } = useAddToCartVisibilityStore();
   const { isUserProfileVisible } = useUserProfileVisibilityStore();
@@ -31,9 +34,10 @@ export const LandingPage = () => {
 
   return (
     <div
-      className={`relative flex flex-col bg-[#FFF6F4] ${(isAddToCartVisible || isUserProfileVisible || isMobileContactFormVisible || isMobileNavbarVisible || isPaymentMessageVisible) && "h-[100vh] overflow-hidden"}`}
+      className={`relative flex flex-col bg-[#FFF6F4] ${(isWishListVisible || isAddToCartVisible || isUserProfileVisible || isMobileContactFormVisible || isMobileNavbarVisible || isPaymentMessageVisible) && "h-[100vh] overflow-hidden"}`}
     >
       <Cart />
+      <WishList />
       <MobileNavBar />
       <UserProfilePopUp />
       <MobileGetStartedForm />

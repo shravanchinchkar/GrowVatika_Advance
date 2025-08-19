@@ -1,16 +1,16 @@
 import toast from "react-hot-toast";
-import { SellerProductData } from "@repo/common-types";
+import { TProductData } from "@repo/common-types";
 import { toastStyle } from "@repo/shared/utilfunctions";
 import { isLikeProductPresent, useWishListStore } from "@repo/shared-store";
 
 type handleLikeProductProps = {
   e: any;
-  productData: SellerProductData | any;
-  likeProductData: SellerProductData[];
-  toggleLikeProductData: (data: SellerProductData) => void;
+  productData: TProductData | any;
+  likeProductData: TProductData[];
+  toggleLikeProductData: (data: TProductData) => void;
   isLikeProductPresent: (
-    likeProductData: SellerProductData[],
-    data: SellerProductData
+    likeProductData: TProductData[],
+    data: TProductData
   ) => boolean;
 };
 

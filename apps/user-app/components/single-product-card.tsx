@@ -7,18 +7,22 @@ import {
 } from "@repo/shared-store";
 import Image from "next/image";
 import Skeleton from "@repo/ui/loading";
-import { useSearchParams } from "next/navigation";
+import { useParams, useSearchParams } from "next/navigation";
 import { ButtonLoadingSign } from "@repo/ui/loading-sign";
 import { handleAddToCart } from "@/helper/handleAddToCart";
 import { RiHeart3Fill, RiHeart3Line } from "@remixicon/react";
 import { handleLikeProduct } from "@/helper/handleLikeProduct";
 import { memo, useCallback, useEffect, useReducer, useState } from "react";
-import { SellerProductData, TSingleProductData } from "@repo/common-types";
+import {
+  TApiResponse,
+  TProductData,
+  TSingleProductData,
+} from "@repo/common-types";
 
 type SingleProductDataState = {
   error: boolean;
   loading: boolean;
-  productData: SellerProductData | null;
+  productData: TProductData | null;
   productQuantity: number;
   disablePlusButton: boolean;
   singleProductData: TSingleProductData | null;
@@ -241,9 +245,9 @@ const reducer = (
 };
 
 export const SingleProductCard = memo(() => {
-  const searchParams = useSearchParams();
-  const productId: string = searchParams.get("id") || "";
-
+  const params = useParams();
+  const productId = params["productId"];
+  
   // following is the useReducer hook
   const [state, dispatch] = useReducer<SingleProductDataState, any>(reducer, {
     error: false,
@@ -265,40 +269,47 @@ export const SingleProductCard = memo(() => {
   useEffect(() => {
     const getSingleProductData = async () => {
       dispatch({ type: "LOADING" });
-      const res = await axios.get(`api/getsingleproductdata?id=${productId}`); //api call
-      if (!res.data.success) {
+      const { data } = await axios.get(
+        `/api/getsingleproductdata/${productId}`
+      ); //api call
+
+      const response: TApiResponse = data;
+      console.log("response:", response);
+
+      if (!response.success || !response.singleProductData) {
         dispatch({ type: "ERROR" });
         return;
-      }
-      const { seller, ...prodData } = res.data.productData;
-      dispatch({
-        type: "SET_PRODUCT_DATA",
-        payload: {
-          addToCartData: prodData,
-        },
-      });
+      } else {
+        const { seller, ...prodData } = response.singleProductData;
+        dispatch({
+          type: "SET_PRODUCT_DATA",
+          payload: {
+            addToCartData: prodData,
+          },
+        });
 
-      const beProductData = res.data.productData;
-      setCategory(beProductData.category);
-      const transformData = {
-        ...beProductData,
-        price: beProductData.price ? Number(beProductData.price) : 0,
-        compareAt: beProductData.compareAt
-          ? Number(beProductData.compareAt)
-          : 0,
-        productSize: beProductData.productSize
-          ? Number(beProductData.productSize)
-          : 0,
-        productQuantity: beProductData.productQuantity
-          ? Number(beProductData.productQuantity)
-          : 0,
-      };
-      dispatch({
-        type: "FETCH_SUCCESS",
-        payload: {
-          productData: transformData,
-        },
-      });
+        const beProductData = response.singleProductData;
+        setCategory(beProductData.category);
+        const transformData = {
+          ...beProductData,
+          price: beProductData.price ? Number(beProductData.price) : 0,
+          compareAt: beProductData.compareAt
+            ? Number(beProductData.compareAt)
+            : 0,
+          productSize: beProductData.productSize
+            ? Number(beProductData.productSize)
+            : 0,
+          productQuantity: beProductData.productQuantity
+            ? Number(beProductData.productQuantity)
+            : 0,
+        };
+        dispatch({
+          type: "FETCH_SUCCESS",
+          payload: {
+            productData: transformData,
+          },
+        });
+      }
     };
     if (!productId) {
       return;
@@ -600,14 +611,12 @@ export const SingleProductCard = memo(() => {
                     onClick={() => {
                       if (state.singleProductData?.productQuantity) {
                         if (
-                          state.productQuantity ===
-                          state.singleProductData.productQuantity
+                          Number(state.productQuantity) ===
+                          Number(state.singleProductData.productQuantity)
                         ) {
                           dispatch({ type: "ENABLE_PLUS_BUTTON" });
-                          // setDisablePlusButton(true);
                         } else {
                           dispatch({ type: "INCREASE_PRODUCT_QUANTITY" });
-                          // setProductCount((prevCount: number) => prevCount + 1);
                         }
                       }
                     }}
@@ -626,12 +635,14 @@ export const SingleProductCard = memo(() => {
                   className="new-sm:w-[55%] 2xl:w-[60%] new-sm:h-[2.3125rem] md:h-[2.7rem] 2xl:h-[3.1875rem] bg-[#56A430] md:hover:bg-[#213E12] rounded-[0.625rem] flex items-center justify-center gap-[1rem] text-white new-sm:text-[0.75rem] new-sm-1:text-[1rem] lg:text-[1.1rem] 2xl:text-[1.22669rem] font-[Poppins]"
                   onClick={(e) => {
                     const productData = state.productData;
-                    handleAddToCart({
-                      e,
-                      productData,
-                      addNewProduct,
-                      setLoading,
-                    });
+                    if (productData) {
+                      handleAddToCart({
+                        e,
+                        productData,
+                        addNewProduct,
+                        setLoading,
+                      });
+                    }
                   }}
                 >
                   {loading ? (

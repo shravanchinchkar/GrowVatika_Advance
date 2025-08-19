@@ -1,7 +1,10 @@
 import client from "@repo/db/client";
+import { TApiResponse } from "@repo/common-types";
 import { NextRequest, NextResponse } from "next/server";
 
-export async function GET(req: NextRequest) {
+export async function GET(
+  req: NextRequest
+): Promise<NextResponse<TApiResponse>> {
   try {
     const { searchParams } = new URL(req.url);
     const filterParams = searchParams.get("filter");
@@ -56,12 +59,24 @@ export async function GET(req: NextRequest) {
       });
     }
 
-    const filterProduct = await client.product.findMany({
+    const filterProducts = await client.product.findMany({
       where: {
         productStatus: "Active",
         collection: {
           in: filterArray, // 'in' operator matches any of the values in the array
         },
+      },
+      select: {
+        id: true,
+        category: true,
+        collection: true,
+        name: true,
+        productSize: true,
+        price: true,
+        compareAt: true,
+        tags: true,
+        imageURL: true,
+        productQuantity: true,
       },
       skip: skip, // Skip records based on current page
       take: limit, // Limit the number of records returned
@@ -71,20 +86,20 @@ export async function GET(req: NextRequest) {
     });
 
     // findMany can return an empty array, so we check length instead of falsy
-    if (filterProduct.length === 0) {
+    if (filterProducts.length === 0) {
       return NextResponse.json({
         success: false,
         error: "No products found matching the filter criteria!",
       });
     }
 
-    const totalFilterProductCount = filterProduct.length;
-    const totalPages = Math.ceil(totalFilterProductCount / Number(limit));
+    const totalFilterProductsCount = filterProducts.length;
+    const totalPages = Math.ceil(totalFilterProductsCount / Number(limit));
 
     return NextResponse.json({
       success: true,
-      filterProduct,
-      totalFilterProductCount,
+      filterProducts,
+      totalFilterProductsCount,
       totalPages,
     });
   } catch (error) {

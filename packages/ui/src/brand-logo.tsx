@@ -13,7 +13,7 @@ export const SiteLogo = memo(() => {
         <div className="relative new-sm:w-[3rem] new-sm:h-[3rem] new-sm-3:w-[4rem] new-sm-3:h-[4rem] md:w-[4rem] xl:w-[4.75rem] xl:h-[3.35rem]">
           <Image
             className="new-sm:object-contain lg:object-contain"
-            src="./assets/images/HeaderImages/site-logo.svg"
+            src="/assets/images/HeaderImages/site-logo.svg"
             alt="site-logo"
             fill
           />

@@ -1,7 +1,8 @@
 import client from "@repo/db/client";
+import { TApiResponse } from "@repo/common-types";
 import { NextRequest, NextResponse } from "next/server";
 
-export async function GET(req: NextRequest) {
+export async function GET(req: NextRequest):Promise<NextResponse<TApiResponse>> {
   try {
     const { searchParams } = new URL(req.url);
     const currentPage = searchParams.get("page")? Number(searchParams.get("page")): 1;

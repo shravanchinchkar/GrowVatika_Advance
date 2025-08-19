@@ -19,7 +19,10 @@ import {
   useState,
 } from "react";
 import { LikeProductIcon } from "./like-product-icon";
-import { SellerProductData } from "@repo/common-types";
+import {
+  TApiResponse,
+  TProductData,
+} from "@repo/common-types";
 
 interface ProductCatalogGridProp {
   displayFilter: boolean;
@@ -28,7 +31,7 @@ interface ProductCatalogGridProp {
 
 // ProductState type
 interface ProductState {
-  productsData: SellerProductData[];
+  productsData: TProductData[];
   loading: boolean;
   totalProductsCount: number | undefined;
   totalPages: number;
@@ -203,7 +206,7 @@ export const ProductCatalogGrid = memo(
       const fetchData = async () => {
         try {
           let page;
-          let response;
+          let response: TApiResponse;
 
           // Execute the following below block if filters are present
           if (filter.length > 0) {
@@ -232,13 +235,13 @@ export const ProductCatalogGrid = memo(
           }
 
           const productsdata =
-            filter.length > 0 ? response.filterProduct : response.productsData;
+            filter.length > 0 ? response.filterProductsData : response.productsData;
           const totalProductsCount =
             filter.length > 0
-              ? response.totalFilterProductCount
+              ? response.totalFilterProductsCount
               : response.totalProductsCount;
-          const totalPages = response.totalPages;
-          
+          const totalPages = response.totalPages ? response.totalPages : 0;
+
           if (page > totalPages) {
             dispatch({ type: "PAGE_NOT_FOUND" });
             return;
@@ -375,13 +378,8 @@ export const ProductCatalogGrid = memo(
 
           {/* Product Card  */}
           <div className="w-[100%] min-h-[60rem] max-h-max grid new-sm:grid-cols-1 new-sm-2:grid-cols-2 new-xl:grid-cols-3 new-sm:space-y-[1rem] new-sm-2:space-y-0 new-sm-2:gap-[1rem] md:gap-8">
-            {productState.productsData.map((item: SellerProductData) => {
-              return (
-                <ProductCard
-                  key={item.id}
-                  productData={item}
-                />
-              );
+            {productState.productsData.map((item: TProductData) => {
+              return <ProductCard key={item.id} productData={item} />;
             })}
           </div>
 

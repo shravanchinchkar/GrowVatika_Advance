@@ -1,24 +1,19 @@
 import { create } from "zustand";
-import { SellerProductData } from "@repo/common-types";
+import { TProductData } from "@repo/common-types";
 import { persist, createJSONStorage } from "zustand/middleware";
 
 type AddToCardProps = {
-  productData: SellerProductData[];
+  productData: TProductData[];
   quantities: { [key: string]: number };
   clearProducts: () => void;
-  setAddToCart: (product: SellerProductData[]) => void;
-  removeProduct: (
-    newProduct: SellerProductData,
-    updatedQuantities: any
-  ) => void;
-  toggleProduct: (newProduct: SellerProductData) => void;
-  addNewProduct: (newProduct: SellerProductData) => void;
+  addNewProduct: (newProduct: TProductData) => void;
   setQuantities: (productId: string, quantity: number) => void;
+  removeProduct: (newProduct: TProductData, updatedQuantities: any) => void;
 };
 
 const checkIsProductPresent = (
-  productData: SellerProductData[],
-  newProduct: SellerProductData
+  productData: TProductData[],
+  newProduct: TProductData
 ) => {
   for (const product of productData) {
     if (product.id === newProduct.id) {
@@ -32,32 +27,22 @@ export const useAddToCardStore = create<AddToCardProps>()(
     (set, get) => ({
       productData: [],
       quantities: {},
-      setAddToCart: (newProductData: SellerProductData[]) =>
-        set({ productData: newProductData }),
       setQuantities: (productId: string, quantity: number) =>
         set((state) => ({
           quantities: { ...state.quantities, [productId]: quantity },
         })),
-      addNewProduct: (newProduct: SellerProductData) =>
+      addNewProduct: (newProduct: TProductData) =>
         set((state) => ({
           productData: checkIsProductPresent(state.productData, newProduct)
             ? state.productData
             : [...state.productData, newProduct],
         })),
-      removeProduct: (newProduct: SellerProductData, newQuantity: any) =>
+      removeProduct: (newProduct: TProductData, newQuantity: any) =>
         set((state) => ({
           productData: state.productData.filter(
-            (item: SellerProductData) => item !== newProduct
+            (item: TProductData) => item !== newProduct
           ),
           quantities: newQuantity,
-        })),
-      toggleProduct: (newProduct: SellerProductData) =>
-        set((state) => ({
-          productData: state.productData.includes(newProduct)
-            ? state.productData.filter(
-                (item: SellerProductData) => item !== newProduct
-              )
-            : [...state.productData, newProduct],
         })),
       clearProducts: () => set({ productData: [], quantities: {} }),
     }),

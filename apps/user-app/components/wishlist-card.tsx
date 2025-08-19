@@ -1,7 +1,7 @@
 import Image from "next/image";
 import { useState } from "react";
 import toast from "react-hot-toast";
-import { SellerProductData } from "@repo/common-types";
+import { TProductData } from "@repo/common-types";
 import { toastStyle } from "@repo/shared/utilfunctions";
 import { handleAddToCart } from "@/helper/handleAddToCart";
 import { ButtonLoadingSign } from "@repo/ui/loading-sign";
@@ -12,10 +12,10 @@ import {
 } from "@repo/shared-store";
 
 type WishListCardProps = {
-  product: SellerProductData;
+  product: TProductData;
 };
 
-export const WishListCard = ({ product }: WishListCardProps) => {
+export const WishListCard = ({ product}:WishListCardProps) => {
   const { likeProductData, removeProductData } = useWishListStore();
   const { addNewProduct } = useAddToCardStore();
 

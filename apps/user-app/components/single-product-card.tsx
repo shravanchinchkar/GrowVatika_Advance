@@ -7,7 +7,7 @@ import {
 } from "@repo/shared-store";
 import Image from "next/image";
 import Skeleton from "@repo/ui/loading";
-import { useSearchParams } from "next/navigation";
+import { useParams, useSearchParams } from "next/navigation";
 import { ButtonLoadingSign } from "@repo/ui/loading-sign";
 import { handleAddToCart } from "@/helper/handleAddToCart";
 import { RiHeart3Fill, RiHeart3Line } from "@remixicon/react";
@@ -245,9 +245,9 @@ const reducer = (
 };
 
 export const SingleProductCard = memo(() => {
-  const searchParams = useSearchParams();
-  const productId: string = searchParams.get("id") || "";
-
+  const params = useParams();
+  const productId = params["productId"];
+  
   // following is the useReducer hook
   const [state, dispatch] = useReducer<SingleProductDataState, any>(reducer, {
     error: false,
@@ -270,10 +270,11 @@ export const SingleProductCard = memo(() => {
     const getSingleProductData = async () => {
       dispatch({ type: "LOADING" });
       const { data } = await axios.get(
-        `api/getsingleproductdata?id=${productId}`
+        `/api/getsingleproductdata/${productId}`
       ); //api call
 
       const response: TApiResponse = data;
+      console.log("response:", response);
 
       if (!response.success || !response.singleProductData) {
         dispatch({ type: "ERROR" });

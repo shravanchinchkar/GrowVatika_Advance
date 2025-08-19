@@ -2,10 +2,13 @@ import { TApiResponse } from "@repo/common-types";
 import client from "@repo/db/client";
 import { NextResponse, NextRequest } from "next/server";
 
-export async function GET(req: NextRequest):Promise<NextResponse<TApiResponse>> {
+export async function GET(
+  req: NextRequest,
+  { params }: { params: Promise<{ productId: string }> }
+): Promise<NextResponse<TApiResponse>> {
   try {
-    const { searchParams } = new URL(req.url);
-    const productId = searchParams.get("id");
+    const { productId } = await params;
+    console.log("productId in Backend:", productId);
 
     const productData = await client.product.findUnique({
       where: {
@@ -44,8 +47,8 @@ export async function GET(req: NextRequest):Promise<NextResponse<TApiResponse>> 
   } catch (error) {
     console.error("Error while fetching single product data:", error);
     return NextResponse.json({
-      success:false,
-      error:"Error while fetching single Product Data"
-    })
+      success: false,
+      error: "Error while fetching single Product Data",
+    });
   }
 }

@@ -267,7 +267,7 @@ export const Sign_In = () => {
             </button>
 
             {/* Signup link */}
-            <div className="mt-[0.5rem] text-[#123524] text-[0.9rem] md:text-[1rem] 2xl:text-[1.25rem] font-normal flex">
+            <div className="mt-[0.5rem] gap-[0.5rem] text-[#123524] text-[0.9rem] md:text-[1rem] 2xl:text-[1.25rem] font-normal flex">
               <p>Don’t have an account?</p>
               <Link href={"/signup"} className="font-bold">
                 Sign up

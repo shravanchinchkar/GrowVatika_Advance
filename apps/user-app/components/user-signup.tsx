@@ -200,9 +200,9 @@ export const Sign_Up = () => {
 
             {/* Following is the Sign-in Option */}
             <div
-              className={`m-auto text-[#123524] text-[1.25rem] font-normal flex ${errors.confirmPassword ? "mt-[1rem]" : "mt-[2rem]"}`}
+              className={`m-auto gap-[0.5rem] text-[#123524] text-[1.25rem] font-normal flex ${errors.confirmPassword ? "mt-[1rem]" : "mt-[2rem]"}`}
             >
-              <p>Don’t have an account?</p>
+              <p>Already have an account?</p>
               <Link href={"/signin"} className="font-bold">
                 Sign in
               </Link>

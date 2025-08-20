@@ -76,10 +76,10 @@ export const Sign_Up = () => {
   };
 
   return (
-    <div className="w-screen h-screen bg-[#FFF6F4] flex font-[Poppins] overflow-x-hidden">
+    <div className="new-sm:w-[412px] md:w-screen new-sm:h-screen md:h-screen bg-[#FFF6F4] new-sm:flex new-sm:flex-col md:flex md:flex-row font-[Poppins] overflow-x-hidden new-sm:items-center">
       {/* Following div consist of Image */}
-      <div className="w-[50%] flex justify-center items-center cursor-pointer">
-        <div className="w-[85%] h-[95%] shrink-0 relative rounded-[28px] overflow-hidden">
+      <div className="new-sm:w-[410px] md:w-[50%] new-sm:h-[220px] md:h-screen flex justify-center items-center cursor-pointer">
+        <div className="new-sm:w-[380px] md:w-[85%] new-sm:h-[216px] md:h-[95%] shrink-0 relative new-sm:rounded-[20.317px] md:rounded-[28px] overflow-hidden">
           <Image
             className="object-cover"
             fill
@@ -91,7 +91,7 @@ export const Sign_Up = () => {
         </div>
       </div>
 
-      <div className="w-[50%] flex flex-col gap-[1rem]">
+      <div className="new-sm:w-[341px] md:w-[50%] flex flex-col">
         {/* Following div consist of site logo*/}
         <div className="flex flex-col lg:items-start gap-[2rem] lg:pl-[2rem] pt-[1rem]">
           <div>
@@ -103,17 +103,17 @@ export const Sign_Up = () => {
         <div className="flex flex-col items-start lg:pl-[6.5rem] mt-[1rem]">
           {/* Following div consist of welcome message  */}
           <div className="font-bold flex flex-col gap-0 md:w-[100%] lg:w-max">
-            <p className="text-[#000] md:text-[1.5rem] xl:text-[1.8rem] 2xl:text-[2rem]">
+            <p className="text-[#000] new-sm:text-[24px] md:text-[1.5rem] xl:text-[1.8rem] 2xl:text-[2rem]">
               Create an account
             </p>
-            <p className="text-[#606060] md:text-[1rem] xl:text-[1.2rem] 2xl:text-[1.5rem] ">
+            <p className="text-[#606060] new-sm:text-[16px] md:text-[1rem] xl:text-[1.2rem] 2xl:text-[1.5rem] ">
               Sign up to Explore Your Green World!
             </p>
           </div>
 
           {/* Following div consist of Signup form and sign-in option */}
           <div
-            className={`w-max h-max flex flex-col md:mt-[0.5rem] ${errors.name || errors.email || errors.password ? "2xl:mt-[1rem]" : "2xl:mt-[1rem]"}`}
+            className={`w-max h-max flex flex-col new-sm:mt-[1.5rem] md:mt-[0.5rem] ${errors.name || errors.email || errors.password ? "2xl:mt-[1rem]" : "2xl:mt-[1rem]"}`}
           >
             {/* Following div consist of Signup form and Signup button */}
             <form
@@ -121,7 +121,7 @@ export const Sign_Up = () => {
               className={`w-max h-max flex flex-col `}
             >
               {/* Following is the input field for Name */}
-              <div className="h-max md:w-[23rem] xl:w-[28rem] 2xl:w-[30.1875rem] flex flex-col">
+              <div className="h-max new-sm:w-[21rem] md:w-[23rem] xl:w-[28rem] 2xl:w-[30.1875rem] flex flex-col">
                 {errors.name && (
                   <div className="w-[90%] px-[1rem] text-red-500 font-bold">
                     {errors.name.message}
@@ -188,7 +188,7 @@ export const Sign_Up = () => {
 
               {/*Following div consist of Signup Button*/}
               <div
-                className={`md:w-[23rem] md:h-[3.5rem] xl:w-[28rem] 2xl:w-[30.1875rem] 2xl:h-[4.01506rem] ${errors.confirmPassword ? "mt-[0.8rem]" : "mt-[1rem]"}`}
+                className={`md:w-[23rem] new-sm:h-[3.0625rem] md:h-[3.5rem] xl:w-[28rem] 2xl:w-[30.1875rem] 2xl:h-[4.01506rem] ${errors.confirmPassword ? "mt-[0.8rem]" : "mt-[1rem]"}`}
               >
                 <AuthButton
                   buttonName="Sign up"
@@ -200,11 +200,10 @@ export const Sign_Up = () => {
 
             {/* Following is the Sign-in Option */}
             <div
-              className={`m-auto text-[#123524] text-[1.25rem] font-normal flex ${errors.confirmPassword ? "mt-[1rem]" : "mt-[2rem]"}`}
-            >
-              <p>Don’t have an account?</p>
+              className={`m-auto gap-[0.4rem] text-[#123524] new-sm:text-[0.875rem] md:text-[1.25rem] font-normal flex ${errors.confirmPassword ? "mt-[1rem]" : "mt-[2rem]"}`}>
+              <p>Already have an account ? </p>
               <Link href={"/signin"} className="font-bold">
-                Sign in
+                Log In
               </Link>
             </div>
           </div>

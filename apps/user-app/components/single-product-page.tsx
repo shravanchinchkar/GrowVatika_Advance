@@ -27,7 +27,7 @@ export const SingleProductPage = () => {
     <div
       className={`min-h-screen relative flex flex-col justify-between bg-[#FFF6F4] gap-[2rem] font-[Poppins] ${(isAddToCartVisible || isWishListVisible || isUserProfileVisible || isMobileNavbarVisible || isPaymentMessageVisible) && "h-[100vh] overflow-hidden"}`}
     >
-      <Cart />
+      {/* <Cart />
       <WishList />
       <MobileNavBar />
       <UserProfilePopUp />

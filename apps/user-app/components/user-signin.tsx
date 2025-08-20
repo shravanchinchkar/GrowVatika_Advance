@@ -149,7 +149,6 @@ export const Sign_In = () => {
   return (
     <div className="w-screen h-screen bg-[#FFF6F4] flex new-sm:flex-col-reverse md:flex-row font-[Poppins]">
       {/* Left Div */}
-
       <div className="new-sm:w-[100%] new-sm:h-[60%] md:w-[50%] md:h-[100%] flex flex-col new-sm:gap-0 md:gap-[0.2rem] lg:gap-[1rem]">
         {/* Site Logo */}
         <div className="new-sm:hidden md:flex flex-col items-start gap-[2rem] pl-[2rem] pt-[1rem]">
@@ -227,7 +226,7 @@ export const Sign_In = () => {
               </button>
 
               {/* Signin button */}
-              <div className="new-sm:w-[100%] new-sm:h-[3rem] md:w-[23rem] md:h-[3rem] xl:w-[28rem] 2xl:w-[30.1875rem] 2xl:h-[3.56894rem]">
+              <div className="new-sm:w-[100%]  md:w-[23rem] new-sm:h-[3rem] xl:w-[28rem] 2xl:w-[30.1875rem] 2xl:h-[3.56894rem]">
                 <AuthButton
                   buttonName="Sign In"
                   type="submit"
@@ -267,14 +266,16 @@ export const Sign_In = () => {
             </button>
 
             {/* Signup link */}
-            <div className="mt-[0.5rem] gap-[0.5rem] text-[#123524] text-[0.9rem] md:text-[1rem] 2xl:text-[1.25rem] font-normal flex">
+            <div className="mt-[0.5rem] gap-[0.5rem] text-[#123524] new-sm:text-[0.9rem] md:text-[1rem] 2xl:text-[1.25rem] font-normal flex">
               <p>Don’t have an account?</p>
               <Link href={"/signup"} className="font-bold">
                 Sign up
               </Link>
             </div>
           </div>
+
         </div>
+
       </div>
 
       {/* Right div */}

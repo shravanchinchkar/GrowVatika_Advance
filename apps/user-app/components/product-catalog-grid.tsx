@@ -94,7 +94,7 @@ const useFetchProductData = () => {
   const fetchAllProducts = useCallback(
     async (page: number, category: string | null) => {
       const res = await axios.get(
-        `api/getallproducts?page=${page}&category=${category}`
+        `api/getproductsdata?page=${page}&category=${category}`
       );
       return res.data;
     },

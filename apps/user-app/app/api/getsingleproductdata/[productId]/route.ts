@@ -8,7 +8,18 @@ export async function GET(
 ): Promise<NextResponse<TApiResponse>> {
   try {
     const { productId } = await params;
-    console.log("productId in Backend:", productId);
+
+    if (!productId) {
+      return NextResponse.json(
+        {
+          success: false,
+          error: "Invalid Id",
+        },
+        {
+          status: 400, // Bad request
+        }
+      );
+    }
 
     const productData = await client.product.findUnique({
       where: {
@@ -26,10 +37,15 @@ export async function GET(
     });
 
     if (!productData) {
-      return NextResponse.json({
-        success: false,
-        error: "product not found",
-      });
+      return NextResponse.json(
+        {
+          success: false,
+          error: "product not found",
+        },
+        {
+          status: 404, // Not Found
+        }
+      );
     } else {
       // exclude id,sellerId,productStatus and visibility from the data and send the remaining data to FE
       const {
@@ -38,17 +54,27 @@ export async function GET(
         visibility,
         ...filteredSingleProductData
       } = productData;
-      return NextResponse.json({
-        success: true,
-        message: "product data found!",
-        singleProductData: filteredSingleProductData,
-      });
+      return NextResponse.json(
+        {
+          success: true,
+          message: "product data found!",
+          singleProductData: filteredSingleProductData,
+        },
+        {
+          status: 200, //Everything is Ok
+        }
+      );
     }
   } catch (error) {
     console.error("Error while fetching single product data:", error);
-    return NextResponse.json({
-      success: false,
-      error: "Error while fetching single Product Data",
-    });
+    return NextResponse.json(
+      {
+        success: false,
+        error: "Error while fetching single Product Data",
+      },
+      {
+        status: 500, //Internal Server Error
+      }
+    );
   }
 }

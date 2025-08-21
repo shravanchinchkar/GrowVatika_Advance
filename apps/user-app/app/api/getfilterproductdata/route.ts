@@ -16,17 +16,27 @@ export async function GET(
 
     // return if the filterParams is empty
     if (!filterParams) {
-      return NextResponse.json({
-        success: false,
-        error: "Invalid Filter",
-      });
+      return NextResponse.json(
+        {
+          success: false,
+          error: "Invalid Filter",
+        },
+        {
+          status: 400, //Bad request
+        }
+      );
     }
 
     if (currentPage < 1) {
-      return NextResponse.json({
-        success: false,
-        error: "Invalid page number",
-      });
+      return NextResponse.json(
+        {
+          success: false,
+          error: "Invalid page number",
+        },
+        {
+          status: 400, // bad request
+        }
+      );
     }
 
     // Parse the filter parameter as JSON array
@@ -38,25 +48,40 @@ export async function GET(
 
       // Validate that it's an array
       if (!Array.isArray(filterArray)) {
-        return NextResponse.json({
-          success: false,
-          error: "Filter must be an array of collection names.",
-        });
+        return NextResponse.json(
+          {
+            success: false,
+            error: "Filter must be an array of collection names.",
+          },
+          {
+            status: 400, // bad request
+          }
+        );
       }
 
       // Validate that all items in the array are strings
       if (!filterArray.every((item) => typeof item === "string")) {
-        return NextResponse.json({
-          success: false,
-          error: "All filter items must be strings.",
-        });
+        return NextResponse.json(
+          {
+            success: false,
+            error: "All filter items must be strings.",
+          },
+          {
+            status: 400, // Bad request
+          }
+        );
       }
     } catch (parseError) {
       console.error("Parse error:", parseError);
-      return NextResponse.json({
-        success: false,
-        error: "Invalid filter format. Expected a JSON array.",
-      });
+      return NextResponse.json(
+        {
+          success: false,
+          error: "Invalid filter format. Expected a JSON array.",
+        },
+        {
+          status: 400, // Bad request
+        }
+      );
     }
 
     const filterProducts = await client.product.findMany({
@@ -85,28 +110,56 @@ export async function GET(
       },
     });
 
-    // findMany can return an empty array, so we check length instead of falsy
-    if (filterProducts.length === 0) {
-      return NextResponse.json({
-        success: false,
-        error: "No products found matching the filter criteria!",
-      });
-    }
-
     const totalFilterProductsCount = filterProducts.length;
     const totalPages = Math.ceil(totalFilterProductsCount / Number(limit));
 
-    return NextResponse.json({
-      success: true,
-      filterProducts,
-      totalFilterProductsCount,
-      totalPages,
-    });
+    // If current page is greater than totalPages
+    if (currentPage > totalPages) {
+      return NextResponse.json(
+        {
+          success: false,
+          error: "Invalid page number",
+        },
+        {
+          status: 400, // Bad request
+        }
+      );
+    }
+
+    // findMany can return an empty array, so we check length instead of falsy
+    if (filterProducts.length === 0) {
+      return NextResponse.json(
+        {
+          success: false,
+          error: "No products found matching the filter criteria!",
+        },
+        {
+          status: 400, // Bad request
+        }
+      );
+    }
+
+    return NextResponse.json(
+      {
+        success: true,
+        filterProducts,
+        totalFilterProductsCount,
+        totalPages,
+      },
+      {
+        status: 200, // Everything is Ok
+      }
+    );
   } catch (error) {
     console.error("Error while getting filter product data:", error);
-    return NextResponse.json({
-      success: false,
-      error: "Internal server error",
-    });
+    return NextResponse.json(
+      {
+        success: false,
+        error: "Internal server error",
+      },
+      {
+        status: 500, // Internal server error
+      }
+    );
   }
 }

@@ -56,7 +56,7 @@ export const ExploreBySellerGrid = memo(() => {
   const fetchSellerData = useCallback(async () => {
     try {
       const res = await axios.get(
-        `api/getexplorebysellerdata?page=${state.page}`
+        `api/getnurseriesdata?page=${state.page}`
       );
       const transformData = res.data.sellerWithProductData.map((data: any) => ({
         ...data,

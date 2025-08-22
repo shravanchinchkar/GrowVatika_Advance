@@ -8,6 +8,18 @@ export async function GET(req: NextRequest) {
     const { searchParams } = new URL(req.url);
     const sellerId = searchParams.get("id");
 
+    if (!sellerId) {
+      return NextResponse.json(
+        {
+          success: false,
+          error: "Invalid Id",
+        },
+        {
+          status: 400, // Bad request
+        }
+      );
+    }
+
     // get seller data from the database
     const existingSellerData = await client.seller.findUnique({
       where: {
@@ -28,10 +40,15 @@ export async function GET(req: NextRequest) {
     // Return error if seller data not found
     if (!existingSellerData) {
       console.error("Seller Not Found!");
-      return NextResponse.json({
-        success: false,
-        error: "Seller not found!",
-      });
+      return NextResponse.json(
+        {
+          success: false,
+          error: "Seller not found!",
+        },
+        {
+          status: 400, // Bad request
+        }
+      );
     }
 
     //get seller product data from database
@@ -73,10 +90,15 @@ export async function GET(req: NextRequest) {
       "Error while getting the data of the seller and their products for seller dashboard",
       error
     );
-    return NextResponse.json({
-      success: false,
-      error:
-        "Error while getting the data of the seller and their products for seller dashboard",
-    });
+    return NextResponse.json(
+      {
+        success: false,
+        error:
+          "Error while getting the data of the seller and their products for seller dashboard",
+      },
+      {
+        status: 500, // Internal Server Error
+      }
+    );
   }
 }

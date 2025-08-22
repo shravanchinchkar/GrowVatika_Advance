@@ -7,7 +7,10 @@ export async function GET(req: NextRequest) {
   const email = searchParams.get("email");
   const validateInput = EmailOnlySchema.safeParse(email);
   if (!validateInput.success) {
-    return NextResponse.json({ success: false, error: "Invalid Email" });
+    return NextResponse.json(
+      { success: false, error: "Invalid Email" },
+      { status: 400 } // Bad request
+    );
   } else {
     try {
       const existingSellerData = await client.seller.findUnique({
@@ -22,23 +25,38 @@ export async function GET(req: NextRequest) {
       });
       if (!existingSellerData) {
         console.error("Seller not found", existingSellerData);
-        return NextResponse.json({
-          success: false,
-          error: "Seller not found",
-        });
+        return NextResponse.json(
+          {
+            success: false,
+            error: "Seller not found",
+          },
+          {
+            status: 404, //Not Found
+          }
+        );
       } else {
-        return NextResponse.json({
-          success: true,
-          message: "Seller Data found!",
-          sellerData: existingSellerData,
-        });
+        return NextResponse.json(
+          {
+            success: true,
+            message: "Seller Data found!",
+            sellerData: existingSellerData,
+          },
+          {
+            status: 200, // Everything is Ok
+          }
+        );
       }
     } catch (err) {
       console.error("Error while getting the data of the seller", err);
-      return NextResponse.json({
-        success: false,
-        error: "Error while getting seller data",
-      });
+      return NextResponse.json(
+        {
+          success: false,
+          error: "Error while getting seller data",
+        },
+        {
+          status: 500, // Internal Server Error
+        }
+      );
     }
   }
 }

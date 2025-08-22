@@ -4,6 +4,7 @@ import axios from "axios";
 import Link from "next/link";
 import toast from "react-hot-toast";
 import Skeleton from "@repo/ui/loading";
+import { SellerData } from "@repo/common-types";
 import { useSearchParams } from "next/navigation";
 import { memo, useEffect, useState } from "react";
 import { toastStyle } from "@repo/shared/utilfunctions";
@@ -12,7 +13,6 @@ import { useSellerDataStore, useSpecialties } from "@repo/shared-store";
 import { SellerDashboardProfileSection } from "./seller-dashboard-profile-section";
 import { SellerDashboardAddProductSection } from "./seller-dashboard-add-product-section";
 import { SellerDashboardProductManagementSection } from "./seller-dashboard-product-management-section";
-import { SellerData } from "@repo/common-types";
 
 export const SellerDashboardMainSection = memo(() => {
   const searchParams = useSearchParams();
@@ -53,7 +53,7 @@ export const SellerDashboardMainSection = memo(() => {
       const fetchData = async () => {
         try {
           const res = await axios.get(
-            `/api/getdataforsellerdashboard?id=${encodeURIComponent(sellerId)}`
+            `/api/getsellerdashboarddata?id=${encodeURIComponent(sellerId)}`
           );
           updateSellerData({
             email: res.data.sellerData.email,

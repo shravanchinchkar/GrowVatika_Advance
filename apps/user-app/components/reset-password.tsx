@@ -60,7 +60,7 @@ export const ResetPasswordComponent = () => {
   }
 
   return (
-    <div className="bg-[#FFF6F4] w-screen h-screen flex justify-center items-center font-[Poppins]">
+    <div className="bg-[#FFF6F4] w-screen h-screen flex justify-center items-center font-poppins">
       {/* Following is the main card section */}
       <div className="w-[35rem] h-[35rem] rounded-[28px] border-[2px] border-[#56A430] shadow-md flex flex-col gap-[2rem] items-center pt-[1rem] bg-white">
         {/* Following div consist of SiteLogo and heading message */}

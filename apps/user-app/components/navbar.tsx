@@ -28,7 +28,7 @@ export const Navbar = memo(() => {
   const [isHovered, setIsHover] = useState("");
   return (
     <div className="relative sm:hidden md:block md:w-[65%] lg:w-[65%] 2xl:w-[72%] md:h-[3.5rem] lg:h-[3.7rem] xl:h-[4.05rem]">
-      <div className="w-[100%] h-[100%] font-[Poppins] rounded-[6.5625rem] bg-[#85A947] flex justify-around items-center text-[#FFF6F4] md:text-[12px] new-md:text-[16px] xl:text-[19.63px] font-normal uppercase overflow-hidden">
+      <div className="w-[100%] h-[100%] font-poppins rounded-[6.5625rem] bg-[#85A947] flex justify-around items-center text-[#FFF6F4] md:text-[12px] new-md:text-[16px] xl:text-[19.63px] font-normal uppercase overflow-hidden">
         {NavLinks.map((link, index) => {
           // following are the navlinks
           return (

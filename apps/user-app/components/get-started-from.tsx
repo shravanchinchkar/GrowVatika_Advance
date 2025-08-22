@@ -17,7 +17,8 @@ export const ContactForm = memo(() => {
   const [displayForm, setDisplayForm] = useState(false);
   const [successMessage, setSuccessMessage] = useState(false);
 
-  const {setVisibilityOfMobileContactForm}=useChangeMobileConnectFormVisibility();
+  const { setVisibilityOfMobileContactForm } =
+    useChangeMobileConnectFormVisibility();
 
   const {
     register,
@@ -67,12 +68,10 @@ export const ContactForm = memo(() => {
   };
 
   return (
-    <div
-      className="new-sm:w-[100%] h-max md:w-[45rem] lg:w-[60rem] xl:w-[75rem] 2xl:w-[82rem] flex flex-col new-sm:py-[1rem] md:py-[2rem] new-sm:gap-[1rem] md:gap-[1.5rem] items-center m-auto relative rounded-none md:rounded-[28px] bg-getstarted-linear-gradient"
-    >
+    <div className="new-sm:w-[100%] h-max md:w-[45rem] lg:w-[60rem] xl:w-[75rem] 2xl:w-[82rem] flex flex-col new-sm:py-[1rem] md:py-[2rem] new-sm:gap-[1rem] md:gap-[1.5rem] items-center m-auto relative rounded-none md:rounded-[28px] bg-getstarted-linear-gradient">
       {/* Following is the title of the form */}
 
-      <div className="text-[#123524] font-[Poppins] new-sm:text-[0.8rem] new-sm-1:text-[0.9375rem] new-sm-2:text-[1rem] sm:text-[1.2rem] md:text-[1.5rem] lg:text-[2rem] xl:text-[2.25rem] font-medium text-center leading-none">
+      <div className="text-[#123524] font-poppins new-sm:text-[0.8rem] new-sm-1:text-[0.9375rem] new-sm-2:text-[1rem] sm:text-[1.2rem] md:text-[1.5rem] lg:text-[2rem] xl:text-[2.25rem] font-medium text-center leading-none">
         Join Our Growing Network of Trusted Sellers!
       </div>
 
@@ -81,7 +80,7 @@ export const ContactForm = memo(() => {
         <>
           <form
             onSubmit={handleSubmit(handleGetStartedForm)}
-            className="new-sm:hidden md:grid w-[90%] md:grid-cols-[25rem auto 10rem] lg:grid-cols-[30rem auto 15rem] xl:grid-cols-[35rem auto 20rem] 2xl:grid-cols-[40rem auto 29rem] gap-y-[1rem] gap-x-0 my-[1rem] font-[Poppins]"
+            className="new-sm:hidden md:grid w-[90%] md:grid-cols-[25rem auto 10rem] lg:grid-cols-[30rem auto 15rem] xl:grid-cols-[35rem auto 20rem] 2xl:grid-cols-[40rem auto 29rem] gap-y-[1rem] gap-x-0 my-[1rem] font-poppins"
           >
             {/* Input Field For Full Name */}
             <div className="md:w-[95%] lg:w-[30rem] xl:w-[35rem] 2xl:w-[40rem] h-max col-span-2">
@@ -178,7 +177,7 @@ export const ContactForm = memo(() => {
                   {...register("termsandconditions")}
                 />
                 <div
-                  className={`text-[1rem] font-[Poppins] font-normal capitalize ${errors.termsandconditions ? "text-red-500" : "text-[#123524]"}`}
+                  className={`text-[1rem] font-poppins font-normal capitalize ${errors.termsandconditions ? "text-red-500" : "text-[#123524]"}`}
                 >
                   {errors.termsandconditions
                     ? "Agree to the "
@@ -230,7 +229,7 @@ export const ContactForm = memo(() => {
 
       {/* Mobile View Get Started */}
       <button
-        className={`new-sm:block md:hidden border-[2px] new-sm:w-[10.5625rem] new-sm:h-[2rem] sm:w-[11rem] sm:h-[3rem]  hover:border-none rounded-[2.10294rem] bg-[#56A430] hover:bg-[#123524] shadow-custom-boxshadow backdrop-blur-[6.408869743347168px] text-[#FFF6F4] new-sm:text-[0.725rem] sm:text-[1rem] hover:text-[1.1rem] font-[Poppins] font-normal  hover:font-semibold  uppercase ${loading ? "cursor-not-allowed" : "cursor-pointer"} `}
+        className={`new-sm:block md:hidden border-[2px] new-sm:w-[10.5625rem] new-sm:h-[2rem] sm:w-[11rem] sm:h-[3rem]  hover:border-none rounded-[2.10294rem] bg-[#56A430] hover:bg-[#123524] shadow-custom-boxshadow backdrop-blur-[6.408869743347168px] text-[#FFF6F4] new-sm:text-[0.725rem] sm:text-[1rem] hover:text-[1.1rem] font-poppins font-normal  hover:font-semibold  uppercase ${loading ? "cursor-not-allowed" : "cursor-pointer"} `}
         disabled={loading}
         onClick={displayMobileContactForm}
       >

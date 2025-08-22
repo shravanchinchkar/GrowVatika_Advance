@@ -9,7 +9,7 @@ export default {
   theme: {
     extend: {
       screens: {
-        "new-sm-old":"1px",
+        "new-sm-old": "1px",
         "new-sm": "320px",
         "new-sm-1": "360px",
         "new-sm-2": "430px",
@@ -17,6 +17,14 @@ export default {
         "new-md": "888px",
         "new-lg": "1153px",
         "new-xl": "1356px",
+      },
+      fontFamily: {
+        nunito: ["var(--font-nunito)", "sans-serif"],
+        outfit: ["var(--font-outfit)", "sans-serif"],
+        poppins: ["var(--font-poppins)", "sans-serif"],
+        roboto: ["var(--font-roboto)", "sans-serif"],
+        ubuntu: ["var(--font-ubuntu)", "sans-serif"],
+        unbounded: ["var(--font-unbounded)", "sans-serif"],
       },
       boxShadow: {
         editButton: "0px 0px 2px 5px #FF4B4B",
@@ -29,10 +37,6 @@ export default {
           "linear-gradient(297deg, rgba(100, 145, 115, 0.53) 14.21%, rgba(219, 213, 164, 0.53) 86.53%)",
         "custom-bg":
           "linear-gradient(90deg, #56A430 34.13%, #8EB961 62.02%, #B6C783 83.17%, #C4CD90 99.99%, #DBD5A4 100%)",
-      },
-      fontFamily: {
-        Poppins: ["Poppins", "sans-serif"],
-        Unbounded: ["Unbounded", "sans-serif"],
       },
       colors: {
         "custom-fill": "#FFF6F4",

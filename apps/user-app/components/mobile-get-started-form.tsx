@@ -16,7 +16,8 @@ import { GetStartedFromInput, GetStartedFromSchema } from "@repo/common-types";
 export const MobileGetStartedForm = () => {
   const [loading, setLoading] = useState(false);
 
-  const {isMobileContactFormVisible,setVisibilityOfMobileContactForm}=useChangeMobileConnectFormVisibility();
+  const { isMobileContactFormVisible, setVisibilityOfMobileContactForm } =
+    useChangeMobileConnectFormVisibility();
 
   const {
     register,
@@ -61,7 +62,7 @@ export const MobileGetStartedForm = () => {
 
   if (isMobileContactFormVisible) {
     return (
-      <div className="new-sm:block md:hidden w-[100%] h-[100vh] absolute z-50 top-0 flex items-center justify-center bg-[#00000040] font-[Poppins] p-[1rem] overflow-scroll">
+      <div className="new-sm:block md:hidden w-[100%] h-[100vh] absolute z-50 top-0 flex items-center justify-center bg-[#00000040] font-poppins p-[1rem] overflow-scroll">
         <div className="w-[100%] h-max bg-[#fff] rounded-[1.5625rem] border-[1.6px] border-[#56A430] overflow-hidden flex flex-col gap-[1rem] py-[1rem]">
           {/* Following is the heading of the form and cancle button */}
           <div className="w-[100%] h-[10%] flex justify-center items-center">
@@ -186,7 +187,7 @@ export const MobileGetStartedForm = () => {
                   {...register("termsandconditions")}
                 />
                 <div
-                  className={`new-sm:text-[0.7rem] new-sm-1:text-[0.875rem] font-[Poppins] font-normal capitalize ${errors.termsandconditions ? "text-red-500" : "text-[#123524]"}`}
+                  className={`new-sm:text-[0.7rem] new-sm-1:text-[0.875rem] font-poppins font-normal capitalize ${errors.termsandconditions ? "text-red-500" : "text-[#123524]"}`}
                 >
                   {errors.termsandconditions
                     ? "Agree to the "
@@ -223,7 +224,6 @@ export const MobileGetStartedForm = () => {
                   <p>Help</p>
                 </div>
               </div>
-              
             </div>
           </div>
         </div>

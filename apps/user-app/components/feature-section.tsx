@@ -1,7 +1,7 @@
 import { memo } from "react";
 import Image from "next/image";
 
-export const FeatureSection =memo(() => {
+export const FeatureSection = memo(() => {
   const features = [
     {
       id: "feature1",
@@ -27,7 +27,7 @@ export const FeatureSection =memo(() => {
     <div className="new-sm:h-max sm:h-[10rem] md:h-[9rem] lg:h-[10rem] xl:h-[12.6875rem] flex flex-col items-center justify-between bg-feature-linear-gradient ">
       <div
         className="
-          font-[Poppins] font-medium text-[#123524] text-center new-sm:mt-[0.5rem] md:mt-[1rem]
+          font-poppins font-medium text-[#123524] text-center new-sm:mt-[0.5rem] md:mt-[1rem]
           text-[1.25rem]
           sm:text-[1.5rem]
           md:text-[1.5rem]
@@ -68,7 +68,7 @@ export const FeatureSection =memo(() => {
                   sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 25vw"
                 />
               </div>
-              <div className="font-[Poppins] new-sm:text-[0.5rem] new-sm-2:text-[0.7rem] new-sm:w-[5.9375rem] new-sm-2:w-[9rem] md:w-max new-sm:text-center lg:text-[1rem] xl:text-[1.1875rem] font-medium text-[#123524A1]">
+              <div className="font-poppins new-sm:text-[0.5rem] new-sm-2:text-[0.7rem] new-sm:w-[5.9375rem] new-sm-2:w-[9rem] md:w-max new-sm:text-center lg:text-[1rem] xl:text-[1.1875rem] font-medium text-[#123524A1]">
                 {features.featureDescription}
               </div>
             </div>

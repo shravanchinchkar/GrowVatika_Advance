@@ -32,7 +32,7 @@ export const ExploreProductCatalogSection = () => {
 
   return (
     <div
-      className={`relative flex flex-col min-h-screen max-h-max justify-between bg-[#FFF6F4] font-[Poppins] ${(isAddToCartVisible || isWishListVisible || isUserProfileVisible || isMobileNavbarVisible || displayFilter || isPaymentMessageVisible) && "h-[100vh] overflow-hidden"}`}
+      className={`relative flex flex-col min-h-screen max-h-max justify-between bg-[#FFF6F4] font-poppins ${(isAddToCartVisible || isWishListVisible || isUserProfileVisible || isMobileNavbarVisible || displayFilter || isPaymentMessageVisible) && "h-[100vh] overflow-hidden"}`}
     >
       <Cart />
       <WishList />
@@ -51,7 +51,7 @@ export const ExploreProductCatalogSection = () => {
         <SearchSort />
 
         {/* Filter Section, filter tags and Product Card Grid */}
-        <div className="w-[100%] z-0 flex justify-between font-[Poppins]">
+        <div className="w-[100%] z-0 flex justify-between font-poppins">
           {/* Filter Section*/}
           <div className="new-sm:hidden md:block md:w-[28%] new-xl:w-[23%] md:h-[90rem] new-md:h-[100rem] lg:h-[100rem] new-xl:h-[72rem]">
             <ProductFilterSection setDisplayFilter={setDisplayFilter} />

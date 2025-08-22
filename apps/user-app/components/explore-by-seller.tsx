@@ -31,7 +31,7 @@ export const ExplorePlantsBySeller = () => {
 
   return (
     <div
-      className={`min-h-screen relative flex flex-col justify-between bg-[#FFF6F4] font-[Poppins] ${(isAddToCartVisible || isWishListVisible || isUserProfileVisible || isMobileNavbarVisible || isPaymentMessageVisible) && "h-[100vh] overflow-hidden"}`}
+      className={`min-h-screen relative flex flex-col justify-between bg-[#FFF6F4] font-poppins ${(isAddToCartVisible || isWishListVisible || isUserProfileVisible || isMobileNavbarVisible || isPaymentMessageVisible) && "h-[100vh] overflow-hidden"}`}
     >
       <Cart />
       <WishList />
@@ -42,7 +42,7 @@ export const ExplorePlantsBySeller = () => {
 
       <div className="flex new-sm:w-[100%] md:w-[90%] md:mt-[3rem] flex-col new-sm:gap-[1rem] md:gap-[3rem] items-center mx-auto">
         {/* Heading of  Eplore by seller */}
-        <h1 className="relative new-sm:w-[100%] md:w-[80%] uppercase text-center text-[#123524] new-sm:font-[Poppins] md:font-[Unbounded]  new-sm:text-[0.85rem] new-sm-1:text-[0.9375rem] new-sm-3:text-[1rem] sm:text-[1.2rem] md:text-[1.7rem] lg:text-[2rem] xl:text-[2.25rem] font-medium new-sm:flex justify-between md:block">
+        <h1 className="relative new-sm:w-[100%] md:w-[80%] uppercase text-center text-[#123524] new-sm:font-poppins md:font-unbounded  new-sm:text-[0.85rem] new-sm-1:text-[0.9375rem] new-sm-3:text-[1rem] sm:text-[1.2rem] md:text-[1.7rem] lg:text-[2rem] xl:text-[2.25rem] font-medium new-sm:flex justify-between md:block">
           <div className="new-sm:w-[90%] md:w-[100%] new-sm:flex flex-col items-center md:block new-sm:pl-[2rem] md:pl-0">
             <span className="new-sm:font-bold md:font-medium">
               Explore by Sellers –

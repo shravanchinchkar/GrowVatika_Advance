@@ -65,7 +65,7 @@ export const ExploreCard: React.FC<ExploreCardProps> = memo(({ cardData }) => {
       </div>
 
       {/* Following div appears on hover */}
-      <div className="transform transition-transform duration-300 translate-y-full group-hover:translate-y-0 font-[Poppins] bg-[#123524B8] w-[100%] flex flex-col items-start lg:gap-0 xl:gap-[0.2rem]">
+      <div className="transform transition-transform duration-300 translate-y-full group-hover:translate-y-0 font-poppins bg-[#123524B8] w-[100%] flex flex-col items-start lg:gap-0 xl:gap-[0.2rem]">
         <div className="new-sm:h-[2rem] md:h-max lg:h-[4rem] new-sm:px-[1.2rem] md:px-[2rem] new-sm:py-[0.5rem] md:py-[0.5rem] lg:py-[0.5rem] xl:py-[1rem] new-sm:text-[0.8rem] new-sm-2:text-[0.9rem] md:text-[1rem] lg:text-[1.22688rem] font-semibold text-white">
           {cardData.title}
         </div>

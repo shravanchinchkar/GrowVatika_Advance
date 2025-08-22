@@ -36,7 +36,7 @@ export const UserProfilePopUp = () => {
     return (
       <div className="w-[100%] h-screen absolute top-0 z-50 bg-[#00000040] flex justify-center p-[2rem]">
         <div
-          className={`w-[90%] h-[95%] rounded-[1.25rem] bg-[#FFFFFF] font-[Poppins] overflow-hidden animate-slide-in-right shadow-add-to-cart-wishlist ${session.status === "loading" ? "flex justify-center items-center" : "flex flex-col"}`}
+          className={`w-[90%] h-[95%] rounded-[1.25rem] bg-[#FFFFFF] font-poppins overflow-hidden animate-slide-in-right shadow-add-to-cart-wishlist ${session.status === "loading" ? "flex justify-center items-center" : "flex flex-col"}`}
         >
           {session.status === "loading" ? (
             <Skeleton className="w-[100%] flex justify-center items-center" />

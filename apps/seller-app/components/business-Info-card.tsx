@@ -43,7 +43,7 @@ export const BusinessInfoCard = memo(
     ];
 
     // Following is the zustand state management code
-    const {specialties,removeSpecialties}=useSpecialties();
+    const { specialties, removeSpecialties } = useSpecialties();
 
     // react-hook form configuration
     const {
@@ -206,10 +206,10 @@ export const BusinessInfoCard = memo(
         {/* Card Title and Edit Button */}
         <div className="flex justify-between items-center">
           <div className="flex flex-col">
-            <h1 className="text-[#171717] font-[Poppins] md:text-[1.3rem] lg:text-[1.5rem] font-semibold leading-[1.5rem]">
+            <h1 className="text-[#171717] font-poppins md:text-[1.3rem] lg:text-[1.5rem] font-semibold leading-[1.5rem]">
               Business Information
             </h1>
-            <p className="text-[#8C8C8C] font-[Poppins] md:text-[0.8rem] lg:text-[1rem] font-medium md:leading-[1.2rem] lg:leading-[2em]">
+            <p className="text-[#8C8C8C] font-poppins md:text-[0.8rem] lg:text-[1rem] font-medium md:leading-[1.2rem] lg:leading-[2em]">
               This information is displayed on your public store page
             </p>
           </div>
@@ -218,7 +218,7 @@ export const BusinessInfoCard = memo(
           <div className="flex md:items-center md:gap-[1rem] xl:gap-[2rem] z-20">
             {/* Edit Button */}
             <button
-              className={`md:w-[5rem] md:h-[2.5rem] xl:w-[6.875rem] xl:h-[3.1875rem] flex justify-center items-center md:gap-[0.5rem] xl:gap-[1rem] md:p-[0.5rem] xl:px-4 xl:py-2 rounded-[0.625rem] text-[#000000] font-[Poppins] md:text-[1.1rem]  xl:text-[1.3rem] font-normal border-[2px] capitalize outline-none bg-white ${blinking && "border-red-500 shadow-editButton"}`}
+              className={`md:w-[5rem] md:h-[2.5rem] xl:w-[6.875rem] xl:h-[3.1875rem] flex justify-center items-center md:gap-[0.5rem] xl:gap-[1rem] md:p-[0.5rem] xl:px-4 xl:py-2 rounded-[0.625rem] text-[#000000] font-poppins md:text-[1.1rem]  xl:text-[1.3rem] font-normal border-[2px] capitalize outline-none bg-white ${blinking && "border-red-500 shadow-editButton"}`}
               onClick={handleEditButton}
               type="button"
             >
@@ -320,7 +320,7 @@ export const BusinessInfoCard = memo(
                 className="object-contain"
               />
             </div>
-            <span className="font-[Poppins] md:text-[0.9rem] xl:text-[1.1rem] font-medium uppercase">
+            <span className="font-poppins md:text-[0.9rem] xl:text-[1.1rem] font-medium uppercase">
               4.5
             </span>
           </div>
@@ -343,12 +343,10 @@ export const BusinessInfoCard = memo(
                 {sellerData.address && sellerData.address !== "" ? (
                   !enableEditing ? (
                     <>
-                      <p
-                        className={"font-[Poppins] font-medium text-[#171717]"}
-                      >
+                      <p className={"font-poppins font-medium text-[#171717]"}>
                         Address
                       </p>
-                      <p className="text-[#8C8C8C] font-[Poppins] font-normal">
+                      <p className="text-[#8C8C8C] font-poppins font-normal">
                         {sellerData.address}
                       </p>
                     </>
@@ -387,10 +385,8 @@ export const BusinessInfoCard = memo(
               </div>
 
               <div>
-                <p className="text-[#171717] font-[Poppins] font-medium">
-                  Phone
-                </p>
-                <p className="text-[#8C8C8C] font-[Poppins] font-normal">
+                <p className="text-[#171717] font-poppins font-medium">Phone</p>
+                <p className="text-[#8C8C8C] font-poppins font-normal">
                   {sellerData.phoneNumber}
                 </p>
               </div>
@@ -408,10 +404,8 @@ export const BusinessInfoCard = memo(
               </div>
 
               <div>
-                <p className="text-[#171717] font-[Poppins] font-medium">
-                  Email
-                </p>
-                <p className="text-[#8C8C8C] font-[Poppins] font-normal">
+                <p className="text-[#171717] font-poppins font-medium">Email</p>
+                <p className="text-[#8C8C8C] font-poppins font-normal">
                   {sellerData.email}
                 </p>
               </div>
@@ -432,12 +426,10 @@ export const BusinessInfoCard = memo(
                 {sellerData.businesshours && sellerData.businesshours !== "" ? (
                   !enableEditing ? (
                     <>
-                      <p
-                        className={"font-[Poppins] font-medium text-[#171717]"}
-                      >
+                      <p className={"font-poppins font-medium text-[#171717]"}>
                         Business Hours
                       </p>
-                      <p className="text-[#8C8C8C] font-[Poppins] font-normal">
+                      <p className="text-[#8C8C8C] font-poppins font-normal">
                         {sellerData.businesshours}
                       </p>
                     </>
@@ -478,12 +470,10 @@ export const BusinessInfoCard = memo(
                 {sellerData.location && sellerData.location !== "" ? (
                   !enableEditing ? (
                     <>
-                      <p
-                        className={"font-[Poppins] font-medium text-[#171717]"}
-                      >
+                      <p className={"font-poppins font-medium text-[#171717]"}>
                         Location (Google Map Link)
                       </p>
-                      <p className="text-[#8C8C8C] font-[Poppins] font-normal">
+                      <p className="text-[#8C8C8C] font-poppins font-normal">
                         {sellerData.location}
                       </p>
                     </>
@@ -512,7 +502,7 @@ export const BusinessInfoCard = memo(
 
           {/* Specialties Section */}
           <div className="mt-6">
-            <p className="text-[#171717] font-[Poppins] text-[1.2rem] font-semibold leading-[1.95rem]">
+            <p className="text-[#171717] font-poppins text-[1.2rem] font-semibold leading-[1.95rem]">
               Specialties
             </p>
           </div>
@@ -530,7 +520,7 @@ export const BusinessInfoCard = memo(
               specialties.map((specialty: string, index: number) => {
                 return (
                   <div
-                    className="md:w-max lg:min-w-[10.46094rem] max-w-max min-h-[3.0625rem] max-h-max flex justify-between items-center gap-[0.5rem]  flex-shrink-0 border-[1.6px] border-[#56A430] rounded-[5.25rem] text-[#56A430] text-center font-[Poppins] font-medium px-[1rem]"
+                    className="md:w-max lg:min-w-[10.46094rem] max-w-max min-h-[3.0625rem] max-h-max flex justify-between items-center gap-[0.5rem]  flex-shrink-0 border-[1.6px] border-[#56A430] rounded-[5.25rem] text-[#56A430] text-center font-poppins font-medium px-[1rem]"
                     key={index}
                   >
                     {specialty}
@@ -570,7 +560,7 @@ export const BusinessInfoCard = memo(
                   className="object-cover"
                 />
               </div>
-              <span className="text-[#6CE530] text-center font-[Poppins] md:text-[1rem] lg:text-[1.22669rem] font-medium not-italic leading-none">
+              <span className="text-[#6CE530] text-center font-poppins md:text-[1rem] lg:text-[1.22669rem] font-medium not-italic leading-none">
                 Add more
               </span>
             </button>

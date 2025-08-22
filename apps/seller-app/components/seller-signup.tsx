@@ -123,7 +123,7 @@ export const SellerRegister = () => {
 
   if (!searchParamsEmail) {
     return (
-      <div className="w-screen h-screen bg-[#FFF6F4] flex justify-center items-center font-[Poppins]">
+      <div className="w-screen h-screen bg-[#FFF6F4] flex justify-center items-center font-poppins">
         <div className="flex flex-col items-center text-center gap-[0.5rem] text-[1.22669rem]">
           <p>
             Please Register through the link send in your{" "}
@@ -142,7 +142,7 @@ export const SellerRegister = () => {
     );
   }
   return (
-    <div className="w-screen relative bg-[#FFF6F4] flex font-[Poppins] overflow-x-hidden">
+    <div className="w-screen relative bg-[#FFF6F4] flex font-poppins overflow-x-hidden">
       {/* Following is the left side div*/}
       <div className="w-[50%] flex justify-center items-center relative">
         {/* Following div consist of image */}

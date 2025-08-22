@@ -18,14 +18,13 @@ export default {
         "new-xl": "1330px",
         "new-xl-2": "1400px",
       },
-
       fontFamily: {
-        "nunito-sans": ["Nunito Sans", "sans-serif"],
-        outfit: ["Outfit", "sans-serif"],
-        poppins: ["Poppins", "sans-serif"],
-        roboto: ["Roboto", "sans-serif"],
-        ubuntu: ["Ubuntu", "sans-serif"],
-        unbounded: ["Unbounded", "sans-serif"],
+        nunito: ["var(--font-nunito)", "sans-serif"],
+        outfit: ["var(--font-outfit)", "sans-serif"],
+        poppins: ["var(--font-poppins)", "sans-serif"],
+        roboto: ["var(--font-roboto)", "sans-serif"],
+        ubuntu: ["var(--font-ubuntu)", "sans-serif"],
+        unbounded: ["var(--font-unbounded)", "sans-serif"],
       },
       colors: {
         background: "var(--background)",
@@ -76,9 +75,8 @@ export default {
           "0 2.362px 23.619px -0.59px rgba(0, 0, 0, 0.25)",
         "explorecrad-custom-boxShadow": "0 5px 59.9px 0 #85A947",
         "testinomial-custom": "0px 4px 9.9px 0px rgba(0, 0, 0, 0.44)",
-        "add-to-cart-wishlist":"0 3.2px 32px -0.8px rgba(0, 0, 0, 0.25)"
+        "add-to-cart-wishlist": "0 3.2px 32px -0.8px rgba(0, 0, 0, 0.25)",
       },
-
       borderRadius: {
         lg: "var(--radius)",
         md: "calc(var(--radius) - 2px)",
@@ -100,7 +98,7 @@ export default {
       },
       animation: {
         "slide-in-right": "slide-in-right 0.3s ease-out",
-        "slide-in-left":"slide-in-left 0.3s ease-out",
+        "slide-in-left": "slide-in-left 0.3s ease-out",
         "scroll-animation": "scroll-left 60s linear infinite",
       },
     },

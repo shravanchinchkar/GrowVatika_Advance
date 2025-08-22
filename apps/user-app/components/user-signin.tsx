@@ -43,8 +43,8 @@ export const Sign_In = () => {
   async function handleSignIn(data: SignInInputs) {
     setLoading(true);
     const ipResponse = await axios.get("https://api.ipify.org");
-    const ip=ipResponse.data
-    console.log("client IP address:",ip)
+    const ip = ipResponse.data;
+    console.log("client IP address:", ip);
     const res = await signIn("credentials", {
       email: data.email,
       password: data.password,
@@ -152,7 +152,7 @@ export const Sign_In = () => {
   };
 
   return (
-    <div className="w-screen h-screen bg-[#FFF6F4] flex new-sm:flex-col-reverse md:flex-row font-[Poppins]">
+    <div className="w-screen h-screen bg-[#FFF6F4] flex new-sm:flex-col-reverse md:flex-row font-poppins">
       {/* Left Div */}
       <div className="new-sm:w-[100%] new-sm:h-[60%] md:w-[50%] md:h-[100%] flex flex-col new-sm:gap-0 md:gap-[0.2rem] lg:gap-[1rem]">
         {/* Site Logo */}
@@ -263,7 +263,7 @@ export const Sign_In = () => {
                       fill
                     />
                   </div>
-                  <div className="font-[Roboto] text-[#1F1F1F] text-[0.9rem] md:text-[1rem] 2xl:text-[1.18963rem] font-medium">
+                  <div className="font-roboto text-[#1F1F1F] text-[0.9rem] md:text-[1rem] 2xl:text-[1.18963rem] font-medium">
                     Sign in with Google
                   </div>
                 </>

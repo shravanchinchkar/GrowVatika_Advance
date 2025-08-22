@@ -42,7 +42,7 @@ export const LabelInput = ({
   };
 
   return (
-    <div className="font-[Poppins]">
+    <div className="font-poppins">
       <fieldset
         className={
           useType == FormType.Seller
@@ -65,7 +65,7 @@ export const LabelInput = ({
         </legend>
         <input
           className={`
-            ${legendName === "Password" || legendName==="Confirm Password" ? "w-[130%]" : readonly ? "cursor-not-allowed w-[100%]" : "w-[100%]"} 
+            ${legendName === "Password" || legendName === "Confirm Password" ? "w-[130%]" : readonly ? "cursor-not-allowed w-[100%]" : "w-[100%]"} 
             placeholder:text-[#8C8C8C] new-sm:placeholder:text-[1rem] md:placeholder:text-[1rem] lg:placeholder:text-[1.25rem] pl-[0.4rem]  text-[#0B1320] outline-none new-sm:text-[1rem] md:text-[1.1rem] font-normal rounded-l-full rounded-r-full bg-transparent`}
           type={
             legendName === "Phone Number"

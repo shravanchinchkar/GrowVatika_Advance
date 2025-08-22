@@ -71,7 +71,7 @@ export const MobileNavBar = () => {
 
   if (isMobileNavbarVisible) {
     return (
-      <div className="w-screen h-screen absolute z-50 new-sm:flex md:hidden bg-black bg-opacity-10 justify-end py-[3.8rem] font-[Poppins]">
+      <div className="w-screen h-screen absolute z-50 new-sm:flex md:hidden bg-black bg-opacity-10 justify-end py-[3.8rem] font-poppins">
         <div className="w-[98%] h-[93%] flex flex-col items-end border-l-[1.6px] border-t-[1.6px] border-b-[1.6px] border-[#56A430] rounded-l-[1.5625rem] bg-[#FFFFFF] animate-slide-in-right">
           {/* Cancle Icon */}
           <button

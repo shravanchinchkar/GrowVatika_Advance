@@ -50,8 +50,8 @@ export const VerifyCodeFooter = ({ email }: { email: string }) => {
         <button
           className={
             disableResendMail
-              ? "w-[100%] h-[100%] font-[Poppins] leading-[29.44px] tracking-wider bg-gradient-to-r from-[#73735A] to-[#445A4A] text-white rounded-full outline-[2px] text-[1rem] font-normal shadow-lg border-[3px] text-center border-white uppercase cursor-not-allowed"
-              : "w-[100%] h-[100%] font-[Poppins] leading-[29.44px] tracking-wider bg-gradient-to-r from-[#73735A] to-[#445A4A] text-white rounded-full transition-transform duration-300 ease-in-out hover:bg-[#123524] hover:bg-none hover:font-bold outline-[2px] text-[1rem] font-normal shadow-lg border-[3px] text-center border-white hover:border-none uppercase cursor-pointer"
+              ? "w-[100%] h-[100%] font-poppins leading-[29.44px] tracking-wider bg-gradient-to-r from-[#73735A] to-[#445A4A] text-white rounded-full outline-[2px] text-[1rem] font-normal shadow-lg border-[3px] text-center border-white uppercase cursor-not-allowed"
+              : "w-[100%] h-[100%] font-poppins leading-[29.44px] tracking-wider bg-gradient-to-r from-[#73735A] to-[#445A4A] text-white rounded-full transition-transform duration-300 ease-in-out hover:bg-[#123524] hover:bg-none hover:font-bold outline-[2px] text-[1rem] font-normal shadow-lg border-[3px] text-center border-white hover:border-none uppercase cursor-pointer"
           }
           disabled={disableResendMail}
           onClick={handleResendOTP}

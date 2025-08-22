@@ -5,7 +5,7 @@ import { MobileMessage } from "./mobile-message";
 
 export const SellerDashboardCard = () => {
   return (
-    <div className="bg-[#FFF6F4] w-screen h-screen flex justify-center items-center font-[Poppins]">
+    <div className="bg-[#FFF6F4] w-screen h-screen flex justify-center items-center font-poppins">
       <MobileMessage />
       <div className="new-sm-old:hidden md:flex w-[95%] h-[95%] border-[2px] border-[#1235244D] rounded-[40px] overflow-hidden p-[1rem] justify-center items-center">
         <div className="relative w-[98%] h-[98%] rounded-[1.88rem] bg-[#FFF6F4] drop-shadow-custom backdrop-blur-xl flex justify-between overflow-hidden pb-[0.5rem]">

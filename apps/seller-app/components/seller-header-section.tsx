@@ -8,7 +8,7 @@ export const SellerHeaderSection = () => {
       <SellerNavbar />
 
       <div className="flex h-[70%]">
-        <div className="md:w-[25rem] md:h-[6rem] lg:w-[40rem] lg:h-[7rem] xl:w-[43rem] xl:h-[9rem] new-xl:w-[45rem]  2xl:w-[55rem] 2xl:h-[9rem] flex justify-center items-center bg-custom-bg font-[Unbounded] rounded-r-[6.25rem]"> 
+        <div className="md:w-[25rem] md:h-[6rem] lg:w-[40rem] lg:h-[7rem] xl:w-[43rem] xl:h-[9rem] new-xl:w-[45rem]  2xl:w-[55rem] 2xl:h-[9rem] flex justify-center items-center bg-custom-bg font-unbounded rounded-r-[6.25rem]"> 
 
           <div className="w-[90%] flex flex-col md:text-[1.5rem] lg:text-[2rem] xl:text-[2.5rem] new-xl:text-[2.7rem] 2xl:text-[3rem] h-max md:leading-[25px] lg:leading-[40px] xl:leading-[45px] 2xl:leading-[50px] text-start font-bold text-[#fff]">
             <span>Welcome to</span> 

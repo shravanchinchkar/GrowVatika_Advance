@@ -17,7 +17,8 @@ import { addProductSchema, TAddProductSchema } from "@repo/common-types/types";
 
 export const SellerDashboardAddProductSection = memo(() => {
   // Zustand Code
-  const {displayAddProductSection,setVisibilityOfAddProductSection}=useDisplayAddProductSectionStore()
+  const { displayAddProductSection, setVisibilityOfAddProductSection } =
+    useDisplayAddProductSectionStore();
 
   // Following state are for Collection dropdown
   const [collection, setCollection] = useState("");
@@ -254,10 +255,10 @@ export const SellerDashboardAddProductSection = memo(() => {
             <div className="lg:w-[40rem] new-lg:w-[46rem] xl:w-[34rem] 2xl:w-[41rem] flex flex-col gap-[1rem] h-max p-[2rem] bg-white rounded-xl shadow-md">
               {/* Heading */}
               <div>
-                <h1 className="text-[#171717] font-[Poppins] lg:text-[1.5rem] 2xl:text-[1.7rem] font-semibold leading-[2.6rem]">
+                <h1 className="text-[#171717] font-poppins lg:text-[1.5rem] 2xl:text-[1.7rem] font-semibold leading-[2.6rem]">
                   Product Information
                 </h1>
-                <p className="text-[#8C8C8C] font-[Poppins] lg:text-[1rem] 2xl:text-[1.15rem] font-medium leading-[1.54375rem]">
+                <p className="text-[#8C8C8C] font-poppins lg:text-[1rem] 2xl:text-[1.15rem] font-medium leading-[1.54375rem]">
                   Add the basic information about your product
                 </p>
               </div>
@@ -351,10 +352,10 @@ export const SellerDashboardAddProductSection = memo(() => {
             >
               {/* Media Heading Section */}
               <div className="lg:w-[35rem] new-lg:w-[42rem] xl:w-[30rem] 2xl:w-[37.0625rem]">
-                <h1 className="text-[#171717] font-[Poppins] lg:text-[1.5rem] new-lg:text-[1.7rem] 2xl:text-[2rem] font-semibold">
+                <h1 className="text-[#171717] font-poppins lg:text-[1.5rem] new-lg:text-[1.7rem] 2xl:text-[2rem] font-semibold">
                   Media
                 </h1>
-                <h2 className="text-[#8C8C8C] font-[Poppins] lg:text-[1rem] xl:text-[1.1875rem] font-medium">
+                <h2 className="text-[#8C8C8C] font-poppins lg:text-[1rem] xl:text-[1.1875rem] font-medium">
                   Add photos of your product
                 </h2>
               </div>

@@ -22,11 +22,10 @@ export const SellerDashboardSiteLogo = () => {
         <div className="md:w-[8rem] md:h-max 2xl:w-[11.25rem] h-[2.9375rem] md:text-[22px] lg:text-[25px] 2xl:text-[2.00613rem] font-[impact]">
           GrowVatika
         </div>
-        <div className="font-[Poppins] w-[9.5625rem] h-[1.3125rem] md:text-[10px] lg:text-[12px] 2xl:text-[0.72975rem] font-normal leading-[5px]">
+        <div className="font-poppins w-[9.5625rem] h-[1.3125rem] md:text-[10px] lg:text-[12px] 2xl:text-[0.72975rem] font-normal leading-[5px]">
           Nursery For Everyone
         </div>
       </div>
-
     </Link>
   );
 };

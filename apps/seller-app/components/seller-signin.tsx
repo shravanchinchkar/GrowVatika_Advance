@@ -93,7 +93,7 @@ export const SellerSignin = () => {
   }
 
   return (
-    <div className="w-screen min-h-screen max-h-max bg-[#FFF6F4] flex font-[Poppins]">
+    <div className="w-screen min-h-screen max-h-max bg-[#FFF6F4] flex font-poppins">
       {/* Following is the left side div which consist of Image */}
 
       <div className="w-[50%] flex justify-center items-center">

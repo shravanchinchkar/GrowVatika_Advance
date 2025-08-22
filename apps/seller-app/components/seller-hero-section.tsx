@@ -1,7 +1,7 @@
 "use client";
 import Link from "next/link";
 import Image from "next/image";
-import { use, useState } from "react";
+import { useState } from "react";
 import Skeleton from "../app/loading";
 import { useRouter } from "next/navigation";
 import { useSession } from "next-auth/react";
@@ -24,7 +24,7 @@ export const SellerHeroSection = () => {
     return <Skeleton />;
   }
   return (
-    <div className="w-[100%] h-[100%] new-sm-old:hidden md:flex justify-between items-end font-[Poppins]">
+    <div className="w-[100%] h-[100%] new-sm-old:hidden md:flex justify-between items-end font-poppins">
       {/* Bottomm Left Image  */}
       <div className="new-sm:hidden lg:block w-[20%] h-[100%] relative">
         <Image
@@ -55,7 +55,7 @@ export const SellerHeroSection = () => {
 
           {/* Hero Button */}
           <button
-            className={`md:w-[15rem] md:h-[3.5rem] 2xl:w-[17rem] 2xl:h-[4rem] group border-[2px] hover:border-none rounded-[2.10294rem] bg-[#56A430] hover:bg-[#123524] shadow-custom-boxshadow backdrop-blur-[6.408869743347168px] text-[#FFF6F4] md:text-[1.2rem] 2xl:text-[1.23044rem] hover:text-[1.33331rem] font-[Poppins] font-normal  hover:font-semibold  uppercase ${session.status === "loading" && "cursor-not-allowed"}`}
+            className={`md:w-[15rem] md:h-[3.5rem] 2xl:w-[17rem] 2xl:h-[4rem] group border-[2px] hover:border-none rounded-[2.10294rem] bg-[#56A430] hover:bg-[#123524] shadow-custom-boxshadow backdrop-blur-[6.408869743347168px] text-[#FFF6F4] md:text-[1.2rem] 2xl:text-[1.23044rem] hover:text-[1.33331rem] font-poppins font-normal  hover:font-semibold  uppercase ${session.status === "loading" && "cursor-not-allowed"}`}
             disabled={session.status === "loading" && true}
             onClick={handleStartSellingNow}
           >

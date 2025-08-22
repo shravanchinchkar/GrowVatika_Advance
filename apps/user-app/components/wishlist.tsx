@@ -21,8 +21,7 @@ export const WishList = memo(() => {
   if (isWishListVisible) {
     return (
       <div className="z-50 absolute top-0 w-[100%] h-screen  bg-[#00000040] bg-opacity-10 flex justify-center">
-
-        <div className="new-sm:w-[95%] md:w-[65%] lg:w-[90%] new-sm:h-[95%] font-[Poppins] bg-white rounded-[1.25rem] mx-auto my-[1rem] overflow-hidden pb-[1rem] animate-slide-in-right shadow-add-to-cart-wishlist">
+        <div className="new-sm:w-[95%] md:w-[65%] lg:w-[90%] new-sm:h-[95%] font-poppins bg-white rounded-[1.25rem] mx-auto my-[1rem] overflow-hidden pb-[1rem] animate-slide-in-right shadow-add-to-cart-wishlist">
           {/* Wishlist header section */}
           <div className=" w-[100%] h-[10%] py-[1rem] flex justify-between items-center border-b-[0.0625rem] border-[#00000033]">
             {/* Wishlist title */}
@@ -66,7 +65,6 @@ export const WishList = memo(() => {
           ) : (
             //display the below UI if productData is Available
             <div className="w-[100%] h-[90%] flex flex-col justify-between items-center">
-
               {/* Items in your wishlist section */}
               <div className="w-[100%] new-sm:h-[5%] md:h-[10%] new-sm:text-[0.7rem] new-sm-1:text-[0.9rem] md:text-[1.25rem] font-medium flex justify-between items-center new-sm:px-[1.5rem] new-sm-1:px-[1.7rem] md:px-[2rem] pt-[0.5rem]">
                 <div>Items in your wishlist</div>
@@ -98,7 +96,8 @@ export const WishList = memo(() => {
               </div>
 
               {/* Go to Your Cart section */}
-              <button className="new-sm:w-[90%] md:w-[90%] new-sm:h-[7%] md:h-[8%] mt-[0.5rem] bg-[#1A9AEF] hover:bg-[#0F5889] rounded-[0.625rem] flex justify-center items-center"
+              <button
+                className="new-sm:w-[90%] md:w-[90%] new-sm:h-[7%] md:h-[8%] mt-[0.5rem] bg-[#1A9AEF] hover:bg-[#0F5889] rounded-[0.625rem] flex justify-center items-center"
                 onClick={(e) => {
                   e.preventDefault();
                   setVisibilityOfWishList(false);

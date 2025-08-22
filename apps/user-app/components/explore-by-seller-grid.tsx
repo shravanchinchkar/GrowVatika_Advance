@@ -55,9 +55,7 @@ export const ExploreBySellerGrid = memo(() => {
 
   const fetchSellerData = useCallback(async () => {
     try {
-      const res = await axios.get(
-        `api/getnurseriesdata?page=${state.page}`
-      );
+      const res = await axios.get(`api/getnurseriesdata?page=${state.page}`);
       const transformData = res.data.sellerWithProductData.map((data: any) => ({
         ...data,
         productCount: data.productCount - 2,
@@ -347,7 +345,7 @@ export const ExploreBySellerGrid = memo(() => {
                       </div>
 
                       {/* Following div consist of rating,view-map and visit store button */}
-                      <div className="w-[100%] flex justify-between md:gap-[0.5rem] 2xl:gap-[1rem] font-[Poppins] font-medium md:text-[0.8rem] lg:text-[0.9rem] 2xl:text-[1rem]">
+                      <div className="w-[100%] flex justify-between md:gap-[0.5rem] 2xl:gap-[1rem] font-poppins font-medium md:text-[0.8rem] lg:text-[0.9rem] 2xl:text-[1rem]">
                         {/* Rating */}
                         <div className="md:w-[5rem] lg:w-[6rem] 2xl:w-[5.5rem] md:h-[2.5rem] lg:h-[3rem] xl:h-[3.2rem] new-xl:h-[2.8rem] 2xl:h-[2.5rem] rounded-[5.25rem] bg-[#123524] text-[#fff] flex justify-center items-center gap-[0.5rem] uppercase">
                           <div className="relative md:w-[0.8rem] md:h-[0.8rem] 2xl:w-[1rem] 2xl:h-[1rem]">
@@ -396,7 +394,7 @@ export const ExploreBySellerGrid = memo(() => {
         {/* Button that loads more seller data */}
         <div className="w-[100%] flex justify-center items-center">
           <button
-            className={`new-sm:w-[12rem] new-sm:h-[3rem] md:h-[3.5rem] 2xl:w-[14.875rem] 2xl:h-[4.0625rem] rounded-[5.25rem] border-[1.6px] border-[#56A430] bg-[#FFFFFF] text-[#697F75] new-sm:text-[0.9rem] 2xl:text-[1.22669rem] font-medium uppercase font-[Poppins] ${state.disableLoadMoreSellers ? "cursor-not-allowed" : "cursor-pointer"}`}
+            className={`new-sm:w-[12rem] new-sm:h-[3rem] md:h-[3.5rem] 2xl:w-[14.875rem] 2xl:h-[4.0625rem] rounded-[5.25rem] border-[1.6px] border-[#56A430] bg-[#FFFFFF] text-[#697F75] new-sm:text-[0.9rem] 2xl:text-[1.22669rem] font-medium uppercase font-poppins ${state.disableLoadMoreSellers ? "cursor-not-allowed" : "cursor-pointer"}`}
             onClick={handleLoadMoreSellerData}
             disabled={state.disableLoadMoreSellers || state.loading}
           >

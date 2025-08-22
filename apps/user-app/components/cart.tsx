@@ -73,7 +73,7 @@ export const Cart = memo(() => {
   if (isAddToCartVisible) {
     return (
       <div className="w-[100%] h-screen absolute z-50 top-0 flex new-sm:justify-end md:justify-end bg-[#00000040] bg-opacity-10">
-        <div className="new-sm:w-[90%] new-sm-3:w-[70%] md:w-[29.375rem] min-h-[90%] h-max font-[Poppins] flex-shrink-0 rounded-l-[1.25rem] bg-white shadow-add-to-cart-wishlist flex flex-col overflow-hidden my-[2rem] animate-slide-in-right">
+        <div className="new-sm:w-[90%] new-sm-3:w-[70%] md:w-[29.375rem] min-h-[90%] h-max font-poppins flex-shrink-0 rounded-l-[1.25rem] bg-white shadow-add-to-cart-wishlist flex flex-col overflow-hidden my-[2rem] animate-slide-in-right">
           {/* Cart Header */}
           <div className="relative border-b-[0.0625rem] border-[#00000033] h-[4.5rem] flex items-center">
             {/* Your Cart tiltle and count */}

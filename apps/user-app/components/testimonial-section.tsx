@@ -84,14 +84,14 @@ export const TestmonialSection = () => {
       </div>
 
       <div className="relative flex flex-col lg:gap-[2rem] xl:gap-[4rem]">
-        <div className="text-[#123524] lg:text-[2rem] xl:text-[2.25rem] pl-[22rem] font-[Poppins] font-medium h-max">
+        <div className="text-[#123524] lg:text-[2rem] xl:text-[2.25rem] pl-[22rem] font-poppins font-medium h-max">
           Testimonial
         </div>
 
         {/* Following div consist of Opinions, arrow buttons and Pot Image */}
         <div className="xl:w-[64rem] new-xl:w-[66rem] new-xl-2:w-[76rem]  2xl:w-[78rem] h-[14.875rem] relative border-l-none border-t-[5px] border-b-[5px] border-[#FFF6F4] rounded-l-full bg-testimonial/footer-linear-gradient">
           {/*Following div consist of Feedback of testmonial */}
-          <div className="w-[60%] h-[85%] lg:ml-[8rem] xl:ml-[10rem] lg:my-[2rem] xl:my-[0.7rem]  2xl:my-[1.5rem] font-[Poppins] flex flex-col gap-[2rem]">
+          <div className="w-[60%] h-[85%] lg:ml-[8rem] xl:ml-[10rem] lg:my-[2rem] xl:my-[0.7rem]  2xl:my-[1.5rem] font-poppins flex flex-col gap-[2rem]">
             <div className="flex justify-between gap-[1rem]">
               {/* Following div consist of testmonila name,destignation and image */}
               <div className="flex gap-[1rem]">

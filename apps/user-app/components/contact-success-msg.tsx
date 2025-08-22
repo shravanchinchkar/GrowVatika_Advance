@@ -12,7 +12,7 @@ export const ContactSuccess = ({
     <div
       className={
         successMessage
-          ? "w-[100%] h-[100%] flex justify-center items-end bg-[#123524] bg-opacity-80 absolute top-0 rounded-[28px] font-[Outfit] pb-[1rem]"
+          ? "w-[100%] h-[100%] flex justify-center items-end bg-[#123524] bg-opacity-80 absolute top-0 rounded-[28px] font-outfit pb-[1rem]"
           : "hidden"
       }
     >

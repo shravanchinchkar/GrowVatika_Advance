@@ -20,7 +20,7 @@ export default function PriceRangeSlider() {
   };
 
   return (
-    <div className="bg-white rounded-lg font-[Poppins]">
+    <div className="bg-white rounded-lg font-poppins">
       {/* Price Display */}
       <div className="mb-6">
         <div className="flex justify-between items-center mb-2">

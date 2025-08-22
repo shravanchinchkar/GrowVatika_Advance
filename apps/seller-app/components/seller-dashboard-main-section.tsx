@@ -44,8 +44,8 @@ export const SellerDashboardMainSection = memo(() => {
   const updateSellerProductData = useSellerProductDataStore(
     (state) => state.updateSellerProductData
   );
-  
-  const {setSpecialties}=useSpecialties()
+
+  const { setSpecialties } = useSpecialties();
 
   useEffect(() => {
     if (sellerId) {
@@ -84,7 +84,7 @@ export const SellerDashboardMainSection = memo(() => {
 
   if (!sellerId) {
     return (
-      <div className="w-[95%] h-[100%] flex justify-center items-center font-[Poppins] text-[#171717] text-[1.22669rem]">
+      <div className="w-[95%] h-[100%] flex justify-center items-center font-poppins text-[#171717] text-[1.22669rem]">
         <p className="w-[60%] text-center">
           Please go on the seller website{" "}
           <Link

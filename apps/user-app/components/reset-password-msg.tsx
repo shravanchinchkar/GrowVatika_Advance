@@ -10,7 +10,7 @@ export const ResetPasswordMsg = () => {
   const email = searchParams?.get("email") || "";
 
   useEffect(() => {
-    console.log("reset password msg useEffect")
+    console.log("reset password msg useEffect");
     if (email === "") {
       toast.error("Invalid email", toastStyle);
     }
@@ -22,7 +22,7 @@ export const ResetPasswordMsg = () => {
         <div className="flex justify-center">
           <SiteLogo />
         </div>
-        <div className="w-[80%] text-[1.5rem] font-[Poppins] font-semibold text-[#123524] text-center">
+        <div className="w-[80%] text-[1.5rem] font-poppins font-semibold text-[#123524] text-center">
           <p>
             A password reset link has been sent to your registered{" "}
             <span className="underline">{email}</span> address. Please check

@@ -49,7 +49,7 @@ export const VerifyCodeFooter = ({ email }: { email: string }) => {
 
       <div className="w-[8rem] h-[2.5rem]">
         <button
-          className={`group w-[100%] h-[100%] border-[1.605px] rounded-[2.10294rem] bg-[#56A430] shadow-custom-boxshadow backdrop-blur-[6.408869743347168px] text-[#FFF6F4] new-sm-1:text-[1rem] md:text-[1.1rem] lg:text-[1rem] font-[Poppins] font-normal uppercase ${disableResendMail ? "uppercase cursor-not-allowed" : "transition-transform duration-300 ease-in-out hover:bg-[#123524] hover:bg-none hover:font-bold hover:border-none uppercase cursor-pointer"}`}
+          className={`group w-[100%] h-[100%] border-[1.605px] rounded-[2.10294rem] bg-[#56A430] shadow-custom-boxshadow backdrop-blur-[6.408869743347168px] text-[#FFF6F4] new-sm-1:text-[1rem] md:text-[1.1rem] lg:text-[1rem] font-poppins font-normal uppercase ${disableResendMail ? "uppercase cursor-not-allowed" : "transition-transform duration-300 ease-in-out hover:bg-[#123524] hover:bg-none hover:font-bold hover:border-none uppercase cursor-pointer"}`}
           disabled={disableResendMail}
           onClick={handleResendOTP}
         >

@@ -34,7 +34,7 @@ export const Footer = memo(() => {
 
       {/* Following is the right footer div */}
       <div className="new-sm:w-[100%] md:w-[66rem] new-sm:pt-[0.5rem] md:pt-0">
-        <div className="flex justify-around new-sm:pt-0  font-[Poppins] new-sm:border-b-[0.01675rem] md:border-b-[2px] border-[#123524] new-sm:pb-[0.5rem] new-sm:pl-[0.5rem] md:pl-0 md:py-[2.5rem]">
+        <div className="flex justify-around new-sm:pt-0  font-poppins new-sm:border-b-[0.01675rem] md:border-b-[2px] border-[#123524] new-sm:pb-[0.5rem] new-sm:pl-[0.5rem] md:pl-0 md:py-[2.5rem]">
           {/* Following is the div 1 */}
           <div className="new-sm:w-[90%] md:w-max flex flex-col new-sm:gap-[0.2rem] md:gap-[1rem] md:justify-self-start lg:justify-self-center">
             <div className="new-sm:text-[0.50056rem] new-sm-2:text-[0.6rem] md:text-[1rem] lg:text-[1.2rem] xl:text-[1.5rem] text-[#123524] font-bold uppercase">
@@ -138,7 +138,7 @@ export const Footer = memo(() => {
           </div>
         </div>
 
-        <div className="font-[Poppins] flex justify-between text-[#3E7B27] uppercase">
+        <div className="font-poppins flex justify-between text-[#3E7B27] uppercase">
           <div className="flex new-sm:gap-[0.5rem] md:gap-[1rem] font-medium w-max new-sm:ml-[0.5rem] md:ml-[2rem] new-sm:mt-[0.25rem] md:mt-[1rem]">
             <div className="new-sm:text-[0.5rem] md:text-[0.8rem] xl:text-[1rem] new-sm:border-r-[0.1px] md:border-r-[2px] border-black new-sm:pr-[0.5rem] md:pr-[1rem]">
               2025@Company.Ltd

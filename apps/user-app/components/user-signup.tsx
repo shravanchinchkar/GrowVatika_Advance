@@ -77,7 +77,7 @@ export const Sign_Up = () => {
   };
 
   return (
-    <div className="w-screen h-screen  bg-[#FFF6F4] new-sm:flex new-sm:flex-col md:flex md:flex-row font-[Poppins] overflow-x-hidden new-sm:items-center">
+    <div className="w-screen h-screen  bg-[#FFF6F4] new-sm:flex new-sm:flex-col md:flex md:flex-row font-poppins overflow-x-hidden new-sm:items-center">
       {/* Following div consist of Image */}
       <div className="new-sm:w-[100%] new-sm:h-[35%] md:w-[50%] md:h-[100%] flex new-sm:flex-col md:flex-row justify-center items-center new-sm:gap-[0.5rem] md:gap-0  cursor-pointer">
         {/* Brand Logo for mobile view */}

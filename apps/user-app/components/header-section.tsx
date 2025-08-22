@@ -71,7 +71,7 @@ export const HeaderSection = memo(
           </div>
         </div>
 
-        <div className="new-sm:hidden md:flex md:w-[96.5%] justify-between items-center z-10 font-[Poppins]">
+        <div className="new-sm:hidden md:flex md:w-[96.5%] justify-between items-center z-10 font-poppins">
           <Navbar />
           {!explore && !explorebyseller && !singleProduct && <UserAuthButton />}
           {(explore || singleProduct) && (

@@ -26,7 +26,7 @@ export const ProductCard = memo(({ productData }: ProductCardProps) => {
     <Link
       href={`/explore/${productData.id}`}
       key={productData.id}
-      className="new-sm:w-[90%] new-sm:h-[12rem] new-sm-2:w-[12.5rem] new-sm-2:h-[23rem] new-sm-3:w-[15rem] new-sm-3:h-[25rem] new-md:w-[17rem] lg:w-[18rem] new-md:h-[28rem] flex  new-sm:flex-row new-sm-2:flex-col items-center flex-shrink-0 rounded-[1.25rem] bg-white font-[Poppins] overflow-hidden new-sm:justify-self-center xl:justify-self-start 2xl:justify-self-center cursor-pointer shadow-productcard-custom-boxShadow"
+      className="new-sm:w-[90%] new-sm:h-[12rem] new-sm-2:w-[12.5rem] new-sm-2:h-[23rem] new-sm-3:w-[15rem] new-sm-3:h-[25rem] new-md:w-[17rem] lg:w-[18rem] new-md:h-[28rem] flex  new-sm:flex-row new-sm-2:flex-col items-center flex-shrink-0 rounded-[1.25rem] bg-white font-poppins overflow-hidden new-sm:justify-self-center xl:justify-self-start 2xl:justify-self-center cursor-pointer shadow-productcard-custom-boxShadow"
     >
       {/* Product Image */}
       <div

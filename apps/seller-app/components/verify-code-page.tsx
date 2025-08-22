@@ -59,7 +59,7 @@ export const VerifyCodePage = () => {
   };
 
   return (
-    <div className="bg-[#FFF6F4] w-screen h-screen flex justify-center items-center font-[Poppins]">
+    <div className="bg-[#FFF6F4] w-screen h-screen flex justify-center items-center font-poppins">
       <div className="w-[30rem] h-[30rem] rounded-[28px] border-[2px] border-[#56A430] shadow-md flex flex-col gap-[2rem] items-center pt-[1rem] bg-white">
         <div className="mr-[2.5rem]">
           <SiteLogo />
@@ -77,7 +77,7 @@ export const VerifyCodePage = () => {
         <div className="mt-[1rem] flex flex-col gap-[0.3rem] items-center text-[#123524]">
           <p className="font-medium">Enter Your OTP:</p>
           <input
-            className="font-[Poppins] lg:w-[11rem] xl:w-[17.3125rem] h-[1.8125rem] border-[2px] border-[#56A430] text-center outline-none placeholder:font-[Poppins] lg:text-[1rem] xl:text-[1.1rem] px-[2rem] py-[1.5rem] rounded-[28px] text-[#123524] text-3xl"
+            className="font-poppins lg:w-[11rem] xl:w-[17.3125rem] h-[1.8125rem] border-[2px] border-[#56A430] text-center outline-none placeholder:font-poppins lg:text-[1rem] xl:text-[1.1rem] px-[2rem] py-[1.5rem] rounded-[28px] text-[#123524] text-3xl"
             type="text"
             value={userVerifyCode}
             onChange={(e) => {

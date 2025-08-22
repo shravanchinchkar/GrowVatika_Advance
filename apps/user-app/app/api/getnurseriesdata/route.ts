@@ -27,6 +27,9 @@ export async function GET(
 
     // Get sellers with their products in a single query
     const sellersWithProducts = await client.seller.findMany({
+      where: {
+        isVerified: true,
+      },
       select: {
         id: true,
         nurseryName: true,

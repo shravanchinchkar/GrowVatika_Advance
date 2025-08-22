@@ -29,24 +29,25 @@ export const NurseryCollaborationEmail = ({
   registrationDate,
   email,
   verifyCode,
-  verificationURL
+  verificationURL = "",
 }: SuccessfulEmailProp) => {
+  const backgroundColor = "#f5f5f5";
   const main = {
-    backgroundColor: "#f6f9fc",
+    backgroundColor,
     fontFamily: "Arial, sans-serif",
+    margin: "0",
+    padding: "0",
   };
 
   const container = {
+    margin: "40px auto",
+    maxWidth: "600px",
     backgroundColor: "#ffffff",
-    margin: "0 auto",
-    padding: "20px",
-    borderRadius: "5px",
-    boxShadow: "0 0 10px rgba(0, 0, 0, 0.1)",
+    overflow: "hidden",
   };
 
   const header = {
-    backgroundColor: "#f0f7f0",
-    borderRadius: "5px 5px 0 0",
+    backgroundColor: "#FFF6F4",
     padding: "20px",
     textAlign: "center" as const,
   };
@@ -88,6 +89,7 @@ export const NurseryCollaborationEmail = ({
     lineHeight: "1.2",
   };
   const mainColor = "#2e7d32"; // Forest green color
+  const textColor = "#333333";
 
   return (
     <Html>
@@ -97,11 +99,14 @@ export const NurseryCollaborationEmail = ({
       </Preview>
       <Body style={main}>
         <Container style={container}>
+          {/* Header section */}
           <Section style={header}>
             <div style={brandTitle}>GrowVatika</div>
             <div style={brandTagLine}>Nursery For EveryOne</div>
           </Section>
-          <Section>
+
+          {/* Main Content */}
+          <Section style={{ padding: "30px" }}>
             <Heading as="h1" style={{ color: "#123524" }}>
               Welcome to GrowVatika!
             </Heading>
@@ -117,8 +122,11 @@ export const NurseryCollaborationEmail = ({
               team will review your details shortly, and once approved, you'll
               be able to start listing your plants and products.
             </Text>
-            <Text style={{ fontWeight: "bold" }}>Next Steps:</Text>
-            <Text>
+            
+            {/* <Text style={{ fontWeight: "bold" }}>
+              Follow the below steps to setup your seller account! :
+            </Text>
+            <div>
               Your One-Time Password(OTP) is:
               <Section style={{ textAlign: "center", margin: "10px 0" }}>
                 <Text
@@ -137,41 +145,69 @@ export const NurseryCollaborationEmail = ({
                   {verifyCode}
                 </Text>
               </Section>
-            </Text>
-            <Text>
-              1. Verify your email address by clicking the button below.
-            </Text>
-            <Text>
-              2. Complete your nursery profile with high-quality images
-            </Text>
-            <Text>3. Add your catalog of plants and products</Text>
-            <Text>4. Start receiving orders from plant enthusiasts!</Text>
+            </div>
+            <p style={{ color: "#FF4B4B" }}>
+              1. Open the below Link in tablet, laptop, desktop or computer
+              only.
+            </p>
+            <p>2. Verify your email address by clicking the button below.</p>
+            <p>3. Complete your nursery profile with high-quality images</p>
+            <p>4. Add your catalog of plants and products</p>
+            <p>5. Start receiving orders from plant enthusiasts!</p> */}
 
-            <Button style={button} href={verificationURL}>
+            {/* <p
+              style={{
+                fontSize: "14px",
+                wordBreak: "break-all",
+                backgroundColor: "#f5f5f5",
+                padding: "10px",
+                borderRadius: "4px",
+                marginBottom: "25px",
+              }}
+            >
+              {verificationURL}
+            </p> */}
+
+            {/* <Button style={button} href={verificationURL}>
               Verify Email Address
-            </Button>
+            </Button> */}
+
             <Hr style={{ margin: "20px 0" }} />
             <Text>
               If you have any questions or need assistance, please don't
-              hesitate to contact our support team at support@growvatika.live.
+              hesitate to contact our support team at growvatika@gmail.com.
             </Text>
-            <Text style={{ marginTop: "20px" }}>
-              Happy Growing!
-              <br />
-              The Growvatika Team
+
+            <Hr style={{ borderColor: "#e0e0e0", margin: "30px 0" }} />
+
+            <Text style={{ fontSize: "16px", color: textColor }}>
+              Happy Gardening!
+            </Text>
+            <Text
+              style={{ fontSize: "16px", fontWeight: "bold", color: mainColor }}
+            >
+              The GrowVatika Team
             </Text>
           </Section>
-          <Hr />
-          <Section style={footer}>
-            <Text>
-              © 2025 Growvatika. All rights reserved.
-              <br />
-              Pune, India
+
+          {/* Footer Section */}
+          <Section
+            style={{
+              backgroundColor: "#f0f7f0",
+              padding: "20px",
+              textAlign: "center",
+            }}
+          >
+            <Text
+              style={{ fontSize: "14px", color: textColor, margin: "0 0 10px" }}
+            >
+              © {new Date().getFullYear()} growvatika.live | All Rights
+              Reserved
             </Text>
-            <Text>
-              <Link href="https://growvatika.live/privacy">Privacy Policy</Link>{" "}
-              •{" "}
-              <Link href="https://growvatika.live/terms">Terms of Service</Link>
+            <Text
+              style={{ fontSize: "12px", color: "#777777", marginTop: "15px" }}
+            >
+              Please do not reply to this email. This mailbox is not monitored.
             </Text>
           </Section>
         </Container>

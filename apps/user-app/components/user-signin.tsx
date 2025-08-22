@@ -1,5 +1,6 @@
 "use client";
 
+import axios from "axios";
 import Link from "next/link";
 import Image from "next/image";
 import { useState } from "react";
@@ -41,10 +42,14 @@ export const Sign_In = () => {
   // Handle Login with credentials
   async function handleSignIn(data: SignInInputs) {
     setLoading(true);
+    const ipResponse = await axios.get("https://api.ipify.org");
+    const ip=ipResponse.data
+    console.log("client IP address:",ip)
     const res = await signIn("credentials", {
       email: data.email,
       password: data.password,
       userTimezone: userTimezone,
+      IpAddress: ip,
       redirect: false,
     });
     setLoading(false);
@@ -152,12 +157,14 @@ export const Sign_In = () => {
       <div className="new-sm:w-[100%] new-sm:h-[60%] md:w-[50%] md:h-[100%] flex flex-col new-sm:gap-0 md:gap-[0.2rem] lg:gap-[1rem]">
         {/* Site Logo */}
         <div className="new-sm:hidden md:flex flex-col items-start gap-[2rem] pl-[2rem] pt-[1rem]">
-            <SiteLogo />
+          <SiteLogo />
         </div>
 
         <div
           className={`flex flex-col new-sm:items-start md:items-center lg:items-start new-sm:px-[1rem] lg:pl-[6.5rem] ${
-            errors.email || errors.password ? "new-sm:mt-0 md:mt-[1rem]" : "new-sm:mt-0 md:mt-[2rem]"
+            errors.email || errors.password
+              ? "new-sm:mt-0 md:mt-[1rem]"
+              : "new-sm:mt-0 md:mt-[2rem]"
           }`}
         >
           {/* Welcome Message */}
@@ -273,9 +280,7 @@ export const Sign_In = () => {
               </Link>
             </div>
           </div>
-
         </div>
-
       </div>
 
       {/* Right div */}
@@ -305,7 +310,6 @@ export const Sign_In = () => {
           />
         </div>
       </div>
-
     </div>
   );
 };

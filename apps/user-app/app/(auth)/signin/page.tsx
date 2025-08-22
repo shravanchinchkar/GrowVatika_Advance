@@ -5,7 +5,6 @@ import { Sign_In } from "../../../components/user-signin";
 
 export default async function Signin() {
   const session = await getServerSession(NEXT_AUTH);
-  console.log("Userapp session is:", session);
   if (session?.user) {
     redirect("/");
   } else {

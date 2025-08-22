@@ -50,7 +50,6 @@ const ResetPasswordEmail = ({ name, verifyCode }: GrowVatikaVerifyEmailProp) => 
             margin: "40px auto",
             maxWidth: "600px",
             backgroundColor: "#ffffff",
-            borderRadius: "8px",
             overflow: "hidden",
           }}
         >
@@ -109,7 +108,7 @@ const ResetPasswordEmail = ({ name, verifyCode }: GrowVatikaVerifyEmailProp) => 
             >
               This code will expire in 2 minutes. If you did not request this
               verification, please ignore this email or contact our support
-              team.
+              team at growvatika@gmail.com
             </Text>
 
             <Hr style={{ borderColor: "#e0e0e0", margin: "30px 0" }} />
@@ -120,7 +119,7 @@ const ResetPasswordEmail = ({ name, verifyCode }: GrowVatikaVerifyEmailProp) => 
             <Text
               style={{ fontSize: "16px", fontWeight: "bold", color: mainColor }}
             >
-              The Growvatika Team
+              The GrowVatika Team
             </Text>
           </Section>
 
@@ -135,7 +134,7 @@ const ResetPasswordEmail = ({ name, verifyCode }: GrowVatikaVerifyEmailProp) => 
             <Text
               style={{ fontSize: "14px", color: textColor, margin: "0 0 10px" }}
             >
-              © {new Date().getFullYear()} Growvatika.live | All Rights
+              © {new Date().getFullYear()} growvatika.live | All Rights
               Reserved
             </Text>
             <Text

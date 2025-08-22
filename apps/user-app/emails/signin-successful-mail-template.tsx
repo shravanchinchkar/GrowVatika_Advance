@@ -1,5 +1,13 @@
 import React from "react";
-import { Section } from "@react-email/components";
+import {
+  Body,
+  Head,
+  Html,
+  Preview,
+  Section,
+  Text,
+  Hr,
+} from "@react-email/components";
 
 interface SignInEmailTemplateProps {
   username: string;
@@ -28,201 +36,198 @@ export default function SignInEmailTemplate({
     color: "#123524",
     lineHeight: "1.2",
   };
+  const backgroundColor = "#f5f5f5";
+  const textColor = "#333333";
+  const mainColor = "#2e7d32"; // Forest green color
 
   return (
-    <div
-      style={{
-        fontFamily: "Arial, sans-serif",
-        maxWidth: "600px",
-        margin: "0 auto",
-        padding: "20px",
-        backgroundColor: "#f9f9f9",
-        borderRadius: "8px",
-      }}
-    >
-      {/* Header */}
-      <div
+    <Html>
+      <Head />
+      <Preview>GrowVatika user-accout signin notification</Preview>
+      <Body
         style={{
-          textAlign: "center",
-          marginBottom: "30px",
+          backgroundColor,
+          fontFamily: "Arial, sans-serif",
+          margin: "0",
+          padding: "0",
         }}
       >
-        <Section
-          style={{
-            backgroundColor: "#FFF6F4",
-            padding: "20px",
-            textAlign: "center",
-          }}
-        >
-          <div style={brandTitle}>GrowVatika</div>
-          <div style={brandTagLine}>Nursery For EveryOne</div>
-        </Section>
-      </div>
-
-      {/* Main Content */}
-      <div
-        style={{
-          backgroundColor: "#ffffff",
-          padding: "30px",
-          borderRadius: "5px",
-          boxShadow: "0 2px 5px rgba(0,0,0,0.1)",
-        }}
-      >
-        {/* Welcome Message */}
         <div
           style={{
-            textAlign: "center",
-            marginBottom: "30px",
+            margin: "40px auto",
+            maxWidth: "600px",
           }}
         >
+          {/* Header */}
+          <Section
+            style={{
+              backgroundColor: "#FFF6F4",
+              padding: "20px",
+              textAlign: "center",
+            }}
+          >
+            <div style={brandTitle}>GrowVatika</div>
+            <div style={brandTagLine}>Nursery For EveryOne</div>
+          </Section>
+
+          {/* Main Content */}
           <div
             style={{
-              fontSize: "48px",
-              marginBottom: "15px",
+              backgroundColor: "#ffffff",
+              padding: "10px 30px",
             }}
           >
-            {"👋"}
+            {/* Welcome Message */}
+            <div
+              style={{
+                textAlign: "center",
+                marginBottom: "30px",
+              }}
+            >
+              <h2
+                style={{
+                  color: "#2e7d32",
+                  fontSize: "24px",
+                  marginBottom: "5px",
+                  fontWeight: "600",
+                }}
+              >
+                Welcome Back, {username}!
+              </h2>
+              <p
+                style={{
+                  color: "#666666",
+                  margin: "0",
+                  fontSize: "16px",
+                }}
+              >
+                You've successfully signed in to your {accountType}
+              </p>
+            </div>
+
+            {/* Sign-in Details */}
+            <div
+              style={{
+                backgroundColor,
+                padding: "25px",
+                borderRadius: "8px",
+                borderLeft: "4px solid #2e7d32",
+                marginBottom: "30px",
+              }}
+            >
+              <h3
+                style={{
+                  color: "#2e7d32",
+                  margin: "0 0 15px 0",
+                  fontSize: "18px",
+                  display: "flex",
+                  alignItems: "center",
+                }}
+              >
+              Sign-in Details
+              </h3>
+              <div
+                style={{
+                  color: "#666666",
+                  fontSize: "14px",
+                  lineHeight: "1.6",
+                }}
+              >
+                <p style={{ margin: "5px 0" }}>
+                  <strong>Account Type:</strong> {accountType}
+                </p>
+                <p style={{ margin: "5px 0" }}>
+                  <strong>Time:</strong> {signintime}
+                </p>
+                <p style={{ margin: "5px 0" }}>
+                  <strong>IP Address:</strong> {ipAddress}
+                </p>
+                <p style={{ margin: "5px 0" }}>
+                  <strong>Location:</strong> {location}
+                </p>
+              </div>
+            </div>
+
+            {/* Security Notice */}
+            <div
+              style={{
+                backgroundColor: "#fff3cd",
+                padding: "20px",
+                borderRadius: "8px",
+                border: "1px solid #ffeaa7",
+                marginBottom: "30px",
+              }}
+            >
+              <h4
+                style={{
+                  color: "#856404",
+                  margin: "0 0 10px 0",
+                  fontSize: "16px",
+                  display: "flex",
+                  alignItems: "center",
+                }}
+              >
+              Security Notice
+              </h4>
+              <p
+                style={{
+                  color: "#856404",
+                  margin: "0",
+                  fontSize: "14px",
+                  lineHeight: "1.5",
+                }}
+              >
+                If this wasn't you, please secure your account immediately by
+                changing your password and contacting our support team.
+              </p>
+            </div>
+
+            {/* Help Message */}
+            <p
+              style={{
+                color: "#333333",
+                fontSize: "16px",
+                lineHeight: "1.5",
+                marginBottom: "25px",
+              }}
+            >
+              If you need any assistance, please contact our customer support
+              team at growvatika@gmail.com.
+            </p>
+
+            <Hr style={{ borderColor: "#e0e0e0", margin: "10px 0" }} />
+            <Text style={{ fontSize: "16px", color: textColor }}>
+              Happy Gardening!
+            </Text>
+            <Text
+              style={{ fontSize: "16px", fontWeight: "bold", color: mainColor }}
+            >
+              The GrowVatika Team
+            </Text>
           </div>
-          <h2
+
+          {/* Footer description */}
+          <Section
             style={{
-              color: "#2e7d32",
-              fontSize: "24px",
-              marginBottom: "5px",
-              fontWeight: "600",
+              backgroundColor: "#f0f7f0",
+              padding: "20px",
+              textAlign: "center",
             }}
           >
-            Welcome Back, {username}!
-          </h2>
-          <p
-            style={{
-              color: "#666666",
-              margin: "0",
-              fontSize: "16px",
-            }}
-          >
-            You've successfully signed in to your{" "}
-            {accountType}
-          </p>
+            <Text
+              style={{ fontSize: "14px", color: "#333333", margin: "0 0 10px" }}
+            >
+              © {new Date().getFullYear()} growvatika.live | All Rights
+              Reserved
+            </Text>
+            <Text
+              style={{ fontSize: "12px", color: "#777777", marginTop: "15px" }}
+            >
+              Please do not reply to this email. This mailbox is not monitored.
+            </Text>
+          </Section>
         </div>
-
-        {/* Sign-in Details */}
-        <div
-          style={{
-            backgroundColor: "#f8f9fa",
-            padding: "25px",
-            borderRadius: "8px",
-            borderLeft: "4px solid #2e7d32",
-            marginBottom: "30px",
-          }}
-        >
-          <h3
-            style={{
-              color: "#2e7d32",
-              margin: "0 0 15px 0",
-              fontSize: "18px",
-              display: "flex",
-              alignItems: "center",
-            }}
-          >
-            🔐 Sign-in Details
-          </h3>
-          <div
-            style={{ color: "#666666", fontSize: "14px", lineHeight: "1.6" }}
-          >
-            <p style={{ margin: "5px 0" }}>
-              <strong>Account Type:</strong>{" "}
-              {accountType}
-            </p>
-            <p style={{ margin: "5px 0" }}>
-              <strong>Time:</strong> {signintime}
-            </p>
-            <p style={{ margin: "5px 0" }}>
-              <strong>IP Address:</strong> {ipAddress}
-            </p>
-            <p style={{ margin: "5px 0" }}>
-              <strong>Location:</strong> {location}
-            </p>
-          </div>
-        </div>
-
-        {/* Security Notice */}
-        <div
-          style={{
-            backgroundColor: "#fff3cd",
-            padding: "20px",
-            borderRadius: "8px",
-            border: "1px solid #ffeaa7",
-            marginBottom: "30px",
-          }}
-        >
-          <h4
-            style={{
-              color: "#856404",
-              margin: "0 0 10px 0",
-              fontSize: "16px",
-              display: "flex",
-              alignItems: "center",
-            }}
-          >
-            ⚠️ Security Notice
-          </h4>
-          <p
-            style={{
-              color: "#856404",
-              margin: "0",
-              fontSize: "14px",
-              lineHeight: "1.5",
-            }}
-          >
-            If this wasn't you, please secure your account immediately by
-            changing your password and contacting our support team.
-          </p>
-        </div>
-
-        {/* Help Message */}
-        <p
-          style={{
-            color: "#333333",
-            fontSize: "16px",
-            lineHeight: "1.5",
-            marginBottom: "25px",
-          }}
-        >
-          If you need any assistance, please contact our customer support team
-          at support@growvatika.com.
-        </p>
-      </div>
-
-      {/* Footer description */}
-      <div
-        style={{
-          textAlign: "center",
-          margin: "30px 0 10px",
-          color: "#666666",
-          fontSize: "14px",
-          lineHeight: "1.5",
-        }}
-      >
-        <p>© 2025 Growvatika. All rights reserved.</p>
-        <p>
-          <a
-            href="https://growvatika.live/"
-            style={{
-              color: "#2e7d32",
-              textDecoration: "none",
-              marginRight: "15px",
-            }}
-          >
-            Terms of Service
-          </a>
-          <a
-            href="https://growvatika.live/"
-            style={{ color: "#2e7d32", textDecoration: "none" }}
-          >
-            Privacy Policy
-          </a>
-        </p>
-      </div>
-    </div>
+      </Body>
+    </Html>
   );
 }

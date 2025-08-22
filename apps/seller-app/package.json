@@ -7,7 +7,7 @@
     "build": "next build",
     "dev": "next dev --turbopack --port 3001",
     "start": "next start",
-    "email": "email dev",
+    "email": "email dev --port 3003",
     "lint": "next lint --max-warnings 0",
     "check-types": "tsc --noEmit",
     "clean": "rimraf .next .turbo"

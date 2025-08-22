@@ -135,7 +135,7 @@ const ResetPasswordEmail = ({ name, verifyCode }: GrowVatikaVerifyEmailProp) => 
             <Text
               style={{ fontSize: "14px", color: textColor, margin: "0 0 10px" }}
             >
-              © {new Date().getFullYear()} Growvatika.live | All Rights
+              © {new Date().getFullYear()} growvatika.live | All Rights
               Reserved
             </Text>
             <Text

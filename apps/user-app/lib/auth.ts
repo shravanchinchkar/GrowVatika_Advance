@@ -1,16 +1,14 @@
 import bcrypt from "bcrypt";
 import client from "@repo/db/client";
 import { authRateLimit } from "./rate-limit";
-import { getIp } from "../helper/get-ip-address";
-import GoogleProvider from "next-auth/providers/google";
 import { SignInSchema } from "@repo/common-types/types";
+import GoogleProvider from "next-auth/providers/google";
 import { getLocationFromIP } from "@repo/shared/utilfunctions";
 import { generateVerifyCode } from "@repo/shared/utilfunctions";
 import CredentialsProvider from "next-auth/providers/credentials";
 import { sendVerificationEmail } from "../helper/send-verification-mail";
 import { sendSignInSuccessfulMail } from "@/helper/send-signin-successful-mail";
 import {
-  getCurrentFormattedDateTimeString,
   getCurrentDateTime,
   getExpiryDate,
 } from "@repo/shared/utilfunctions";
@@ -27,11 +25,13 @@ export const NEXT_AUTH = {
           placeholder: "Placeholder",
         },
         userTimezone: { label: "Time Zone", type: "text" }, // add this line
+        IpAddress: { label: "IP Address", type: "text" },
       },
       async authorize(credentials: any) {
         //Get the userTimezone in server side from client
         const userTimezone = credentials?.userTimezone;
-        
+        const IpAddress = credentials?.IpAddress;
+
         //validate the user Input
         const inputResult = SignInSchema.safeParse(credentials);
         if (!inputResult.success) {
@@ -48,7 +48,6 @@ export const NEXT_AUTH = {
           );
         }
         //If the count of signin request goes beyond 5 wihin 5 minutes then the user gets blocked for 5 minutes, following is its logic
-        const IpAddress = await getIp();
         const currentLocation = await getLocationFromIP(IpAddress);
 
         const { success } = await authRateLimit.limit(IpAddress);

@@ -44,7 +44,6 @@ export const Sign_In = () => {
     setLoading(true);
     const ipResponse = await axios.get("https://api.ipify.org");
     const ip = ipResponse.data;
-    console.log("client IP address:", ip);
     const res = await signIn("credentials", {
       email: data.email,
       password: data.password,

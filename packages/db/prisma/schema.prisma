@@ -33,14 +33,15 @@ model Seller {
   specialities      String[]
   verifyCode        String?
   verifyCodeExpiry  DateTime?
+  isAdminVerified   Boolean   @default(false)
   isVerified        Boolean   @default(false)
   profilePictureURL String?
   products          Product[]
 }
 
 model Product {
-  id              String @id @default(uuid())
-  seller          Seller @relation(fields: [sellerId], references: [id])
+  id              String  @id @default(uuid())
+  seller          Seller  @relation(fields: [sellerId], references: [id])
   sellerId        String
   name            String
   price           String
@@ -54,4 +55,12 @@ model Product {
   tags            String
   productStatus   String
   visibility      String
+  isAdminVerified Boolean @default(false)
+}
+
+model GrowVatika_Admin {
+  id       String @id @default(uuid())
+  name     String
+  email    String @unique
+  password String
 }

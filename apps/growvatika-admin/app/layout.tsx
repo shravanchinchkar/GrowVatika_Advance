@@ -1,3 +1,5 @@
+import type { Metadata } from "next";
+import "./globals.css";
 import {
   Nunito_Sans,
   Outfit,
@@ -6,9 +8,6 @@ import {
   Ubuntu,
   Unbounded,
 } from "next/font/google";
-import "./globals.css";
-import type { Metadata } from "next";
-import { Providers } from "./providers";
 
 const nunitoSans = Nunito_Sans({
   subsets: ["latin"],
@@ -45,10 +44,9 @@ const unbounded = Unbounded({
   weight: ["200", "300", "400", "500", "600", "700", "800", "900"],
   variable: "--font-unbounded",
 });
-
 export const metadata: Metadata = {
-  title: "GrowVatika",
-  description: "Plant Nursery for everyone",
+  title: "GrowVatika Admin",
+  description: "Its a growvatika super admin platform",
 };
 
 export default function RootLayout({
@@ -61,7 +59,7 @@ export default function RootLayout({
       <body
         className={`${nunitoSans.variable} ${outfit.variable} ${poppins.variable} ${roboto.variable} ${ubuntu.variable} ${unbounded.variable}`}
       >
-        <Providers>{children}</Providers>
+        {children}
       </body>
     </html>
   );

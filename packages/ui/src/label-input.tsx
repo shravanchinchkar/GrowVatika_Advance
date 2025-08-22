@@ -1,5 +1,5 @@
 import { useState } from "react";
-import Image from "next/image";
+import { RiEyeCloseLine, RiEyeLine } from "@remixicon/react";
 
 export enum FormType {
   AUTH = "authForm",
@@ -96,17 +96,9 @@ export const LabelInput = ({
             onClick={handlePasswordVisibility}
           >
             {viewPassword === false ? (
-              <Image
-                src="/assets/images/AuthImages/eye_close.svg"
-                alt="eye_open"
-                fill
-              />
+              <RiEyeCloseLine/>
             ) : (
-              <Image
-                src="/assets/images/AuthImages/eye_open.svg"
-                alt="eye_open"
-                fill
-              />
+              <RiEyeLine/>
             )}
           </button>
         ) : null}

@@ -2,13 +2,9 @@ import zod from "zod";
 
 // Following zod schema is used for the backend purpose
 export const SignUpSchema = zod.object({
-  firstName: zod
+  fullName: zod
     .string()
-    .min(2, { message: "Must contain atleast 2 characters" })
-    .optional(),
-  lastName: zod
-    .string()
-    .min(2, { message: "Must contain atleast 2 characters" })
+    .min(2, { message: "Name must be atleast of 2 characters" })
     .optional(),
   nurseryName: zod
     .string()

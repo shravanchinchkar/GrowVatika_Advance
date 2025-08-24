@@ -18,8 +18,9 @@ export async function GET(req: NextRequest) {
           email: validateInput.data,
         },
         select: {
-          nurseryName: true,
           email: true,
+          fullName:true,
+          nurseryName: true,
           phoneNumber: true,
         },
       });

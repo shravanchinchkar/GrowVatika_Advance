@@ -1,6 +1,6 @@
 import zod from "zod";
 
-export const GetStartedFromSchema = zod.object({
+export const GetStartedFormSchema = zod.object({
   fullName: zod
     .string()
     .min(2, { message: "Name must be atleast of 2 characters" }),
@@ -20,4 +20,5 @@ export const GetStartedFromSchema = zod.object({
   }),
 });
 
-export type GetStartedFromInput = zod.infer<typeof GetStartedFromSchema>;
+export type TGetStartedFormSchema = zod.infer<typeof GetStartedFormSchema>;
+ 

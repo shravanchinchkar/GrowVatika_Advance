@@ -4,9 +4,7 @@ import client from "@repo/db/client";
 import {
   SignUpInputs,
   SignupResponse,
-  ApiResponseType,
   SignUpSchema,
-  EmailOnlySchema,
 } from "@repo/common-types/types";
 import { getIp } from "../helper/get-ip-address";
 import { authRateLimit } from "../lib/rate-limit";
@@ -30,9 +28,7 @@ export async function sellerRegistration(
 
   //If the count of signup request goes beyond 5 wihin 5 minutes then  the user gets blocked for 5 minutes, following is its logic
   const IpAddress = await getIp();
-  console.log("Ip address is:", IpAddress);
-  const { success, pending, limit, reset, remaining } =
-    await authRateLimit.limit(IpAddress);
+  const { success } = await authRateLimit.limit(IpAddress);
   if (!success) {
     console.error("Signup Limit Exhausted,try again after 5 minutes.");
     return {
@@ -41,7 +37,6 @@ export async function sellerRegistration(
       status: 429,
     };
   } else {
-    console.log("Remaining:", remaining);
     try {
       const sellerExists = await client.seller.findUnique({
         where: {
@@ -71,8 +66,6 @@ export async function sellerRegistration(
               email: sellerExists.email,
             },
             data: {
-              firstName: registrationCredentials.firstName,
-              lastName: registrationCredentials.lastName,
               password: hashPassword,
               verifyCode: verifyCode,
               verifyCodeExpiry: expiryDate,
@@ -86,20 +79,17 @@ export async function sellerRegistration(
               errors: "Please try again :(",
             };
           }
-          console.log("New seller Created", createNewSeller);
 
           const emailResponse = await sendVerificationEmail(
-            sellerExists.firstName,
+            sellerExists.fullName,
             sellerExists.email,
             verifyCode
           );
 
           // If error while sending email
           if (!emailResponse.success) {
-            console.log("email not send message:", emailResponse.message);
             return { success: false, message: emailResponse.message };
           }
-          console.log("email success message:", emailResponse);
 
           return {
             success: true,
@@ -117,8 +107,6 @@ export async function sellerRegistration(
               email: sellerExists.email,
             },
             data: {
-              firstName: registrationCredentials.firstName,
-              lastName: registrationCredentials.lastName,
               password: hashPassword,
             },
           });
@@ -130,7 +118,6 @@ export async function sellerRegistration(
               errors: "Please try again! Can't create the seller account",
             };
           }
-          console.log("New seller Created", createNewSeller);
           return {
             success: true,
             message: "Seller account created successfully!",
@@ -191,15 +178,11 @@ export async function verifyCode({
     }
 
     if (!updateSeller.password) {
-      console.log("Seller Verified in first step");
-      console.log("updated Seller Password:", updateSeller.password);
       return {
         success: true,
         message: "Seller's Email verified successfully in first step",
       };
     }
-    console.log("Seller Verified in 2nd step!");
-    console.log("updated Seller Password:", updateSeller.password);
     return {
       success: true,
       message: "Seller's Email verified successfully in 2nd step",
@@ -250,18 +233,16 @@ export async function resendOTP({
 
     //Resend the OTP to the which is to be verified
     const emailResponse = await sendVerificationEmail(
-      seller.firstName,
+      seller.fullName,
       seller.email,
       newOTP
     );
 
     // If fail to send mail
     if (!emailResponse.success) {
-      console.log("resend email not send message:", emailResponse.message);
       return { success: false, errors: emailResponse.message };
     }
     // If success in send mail
-    console.log("resend email send message:", emailResponse.message);
     return {
       success: true,
       message: "New OTP sent successfully. Please verify your email",

@@ -1,19 +1,20 @@
-"use client";
+"use client"
+
 import { useState } from "react";
-import {toast} from "react-hot-toast";
+import { toast } from "react-hot-toast";
+import { signIn } from "next-auth/react";
 import { useForm } from "react-hook-form";
 import { useRouter } from "next/navigation";
 import { SiteLogo } from "@repo/ui/brand-logo";
-import { signIn, signOut } from "next-auth/react";
 import { AuthButton } from "@repo/ui/auth-button";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { toastStyle } from "@repo/shared/utilfunctions";
 import { LabelInput, FormType } from "@repo/ui/label-input";
 import { adminSigninSchema, TAdminSigninSchema } from "@repo/common-types";
 
-export const AdminLogin = () => {
-  const [loading, setLoading] = useState(false);
+export const AdminSignin = () => {
   const router = useRouter();
+  const [loading, setLoading] = useState(false);
   const {
     register,
     setValue,
@@ -43,13 +44,10 @@ export const AdminLogin = () => {
         };
         errorMessage =
           errorResponse.error || errorResponse.message || "Signin Failed";
-        console.error(
-          "User Signin error response to FE :",
-          errorResponse.error
-        );
+        console.error("Admin Signin error response:", errorResponse.error);
       } catch (parseError) {
         // If JSON parsing fails, use the raw error message
-        console.error("Signin error:", res.error);
+        console.error("Signin error:", res.error, parseError);
         errorMessage = "Internal Server Error!";
       }
       toast.error(errorMessage, {
@@ -63,23 +61,13 @@ export const AdminLogin = () => {
       const sessionResponse = await fetch("/api/auth/session");
       const session = await sessionResponse.json();
       if (session?.user) {
-        toast.success("Signin successful!", {
-          ...toastStyle,
-          position: "bottom-left",
-        });
+        toast.success("Signin successful!", toastStyle);
         router.push("/adminpanel");
       }
     }
   };
-
-  const handleSignOut = async () => {
-    await signOut();
-  };
   return (
     <div className="w-[100%] h-[100%] flex flex-col gap-[1rem] justify-center items-center">
-      <div className="w-[20%] h-[10%]">
-        <AuthButton buttonName="sign out" onClick={handleSignOut} />
-      </div>
       <div className="w-[35%] h-[60%] rounded-[1.6rem] border-[1px] border-[#56A430] bg-[#ffffff] flex flex-col items-start p-[1rem]">
         {/* Header Section */}
         <div className="w-[100%] h-[30%] flex flex-col items-center justify-between">

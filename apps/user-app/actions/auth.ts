@@ -2,9 +2,7 @@
 
 // Following is the backend SignUp route
 import bcrypt from "bcrypt";
-import { google } from "googleapis";
 import client from "@repo/db/client";
-import { JWT } from "google-auth-library";
 import { getIp } from "../helper/get-ip-address";
 import { getExpiryDate } from "@repo/shared/utilfunctions";
 import { generateVerifyCode } from "@repo/shared/utilfunctions";
@@ -19,8 +17,8 @@ import {
   SignupResponse,
   EmailOnlySchema,
   ApiResponseType,
-  GetStartedFromInput,
-  GetStartedFromSchema,
+  TGetStartedFormSchema,
+  GetStartedFormSchema,
   SignInInputs,
   TEmailOnlySchema,
   SignInSchema,
@@ -49,9 +47,7 @@ export async function signup(
 
   //If the signup request count goes beyond 5 within 5 minutes,the block the user for 5 minutes
   const IpAddress = await getIp(); //get the Ip address of the user
-  console.log("Ip address is:", IpAddress);
-  const { success, pending, limit, reset, remaining } =
-    await authRateLimit.limit(IpAddress);
+  const { success } = await authRateLimit.limit(IpAddress);
   if (!success) {
     console.error("Signup Limit Exhausted,try again after");
     return {
@@ -61,7 +57,6 @@ export async function signup(
     };
   } else {
     try {
-      console.log("remaining:", remaining);
       //check if the user already exists
       const existingUserByEmail = await client.user.findUnique({
         where: {
@@ -359,10 +354,10 @@ export async function resendOTP({
 
 // Following server action is used to store data in google sheets
 export async function storeDataInExcel(
-  userDetails: GetStartedFromInput
+  userDetails: TGetStartedFormSchema
 ): Promise<ApiResponseType> {
   //  First Validate the input
-  const validateInput = GetStartedFromSchema.safeParse(userDetails);
+  const validateInput = GetStartedFormSchema.safeParse(userDetails);
   if (!validateInput.success) {
     return { success: false, error: "Invalid Inputs" };
   }
@@ -370,7 +365,7 @@ export async function storeDataInExcel(
   //If the form request count goes beyond 5 within 5 minutes,then block the user for 5 minutes
   const IpAddress = await getIp(); //get the Ip address of the user
 
-  const { success, remaining } = await getStartedFromLimit.limit(IpAddress);
+  const { success } = await getStartedFromLimit.limit(IpAddress);
   if (!success) {
     console.error("GetStarted form Limit Exhausted try again after 5 minutes");
     return {
@@ -381,18 +376,10 @@ export async function storeDataInExcel(
   }
   // If above everything succeed then execute the following block
   else {
-    console.log("remaining:", remaining);
     try {
-      const isDevelopment = process.env.NODE_ENV === "development";
-      const baseURL = isDevelopment
-        ? process.env.SUCCESSFUL_COLLABORATION_DEVELOPMENT_URL || ""
-        : process.env.SUCCESSFUL_COLLABORATION_PRODUCTION_URL || "";
-      const verificationURL = `${baseURL}/verify?email=${encodeURIComponent(validateInput.data.email)}`;
-
       const existingSellerByEmail = await client.seller.findUnique({
         where: { email: validateInput.data.email },
       });
-
       //If the seller already exists then evaluate the seller as follows:
       if (existingSellerByEmail) {
         //If the seller already exists and is verified
@@ -405,19 +392,13 @@ export async function storeDataInExcel(
         }
         //If the seller already exists but is not verified
         else {
-          const verifyCode = generateVerifyCode(); //Generate the verify Code for email Authentication
-          const expiryDate = getExpiryDate();
-
           await client.seller.update({
             where: { email: validateInput.data.email },
             data: {
-              firstName: "",
-              lastName: "",
+              fullName: validateInput.data.fullName,
               nurseryName: validateInput.data.nurseryName,
               phoneNumber: validateInput.data.phoneNumber,
-              password: "",
-              verifyCode: verifyCode,
-              verifyCodeExpiry: expiryDate,
+              address: validateInput.data.city,
             },
           });
 
@@ -426,9 +407,7 @@ export async function storeDataInExcel(
             validateInput.data.nurseryName,
             validateInput.data.fullName,
             getCurrentFormattedDateTimeString(),
-            userDetails.email,
-            verifyCode,
-            verificationURL
+            userDetails.email
           );
 
           // If error while sending email
@@ -440,67 +419,20 @@ export async function storeDataInExcel(
           // If success in sending email
           return {
             success: true,
-            message:
-              "Email verification mail send to the seller successsfully!",
+            message: "Email send to the seller successsfully!",
           };
         }
       } else {
         //If the Seller Email address is unique then first store the details of the seller in the google spread sheet
 
-        // Load credentials from environment variables or a secure config
-        const credentials = {
-          email: process.env.GOOGLE_SERVICE_ACCOUNT_EMAIL,
-          key: process.env.GOOGLE_PRIVATE_KEY?.replace(/\\n/g, "\n"),
-          scopes: ["https://www.googleapis.com/auth/spreadsheets"],
-        };
-
-        // Authenticate with Google
-        const auth = new JWT({
-          email: credentials.email,
-          key: credentials.key,
-          scopes: credentials.scopes,
-        });
-
-        const sheets = google.sheets({ version: "v4", auth });
-
-        // Spreadsheet ID from your Google Sheet URL
-        const spreadsheetId = process.env.SPREADSHEET_ID;
-
-        // Prepare the data to be inserted
-        const values = [
-          [
-            validateInput.data.fullName,
-            validateInput.data.phoneNumber,
-            validateInput.data?.email,
-            validateInput.data.nurseryName,
-            validateInput.data.city,
-          ],
-        ];
-
-        // Append data to the spreadsheet
-        const response = await sheets.spreadsheets.values.append({
-          spreadsheetId,
-          range: "Sheet1!A:D", // Adjust range based on your sheet structure
-          valueInputOption: "USER_ENTERED",
-          requestBody: {
-            values,
-          },
-        });
-
-        //After Storing the seller's data in the spread sheet, then store the data in the db
-        const verifyCode = generateVerifyCode(); //Generate the verify Code for email Authentication
-        const expiryDate = getExpiryDate();
-
         const createNewSeller = await client.seller.create({
           data: {
-            firstName: "",
-            lastName: "",
+            fullName: validateInput.data.fullName,
             nurseryName: validateInput.data.nurseryName,
             email: validateInput.data.email,
             phoneNumber: validateInput.data.phoneNumber,
             password: "",
-            verifyCode: verifyCode,
-            verifyCodeExpiry: expiryDate,
+            address: validateInput.data.city,
           },
         });
 
@@ -517,9 +449,7 @@ export async function storeDataInExcel(
           validateInput.data.nurseryName,
           validateInput.data.fullName,
           getCurrentFormattedDateTimeString(),
-          userDetails.email,
-          verifyCode,
-          verificationURL
+          userDetails.email
         );
 
         // If error while sending email
@@ -530,7 +460,6 @@ export async function storeDataInExcel(
         return {
           success: true,
           message: "Form submitted successfully",
-          status: response.statusText,
         };
       }
     } catch (error) {

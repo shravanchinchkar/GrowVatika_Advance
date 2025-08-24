@@ -1,13 +1,10 @@
 import {
   Body,
-  Button,
   Container,
   Head,
   Heading,
   Hr,
   Html,
-  Img,
-  Link,
   Preview,
   Section,
   Text,
@@ -18,18 +15,12 @@ interface SuccessfulEmailProp {
   nurseryName: string;
   ownerName: string;
   registrationDate: string;
-  email: string;
-  verifyCode: string;
-  verificationURL: string;
 }
 
 export const NurseryCollaborationEmail = ({
   nurseryName,
   ownerName,
   registrationDate,
-  email,
-  verifyCode,
-  verificationURL = "",
 }: SuccessfulEmailProp) => {
   const backgroundColor = "#f5f5f5";
   const main = {
@@ -51,31 +42,6 @@ export const NurseryCollaborationEmail = ({
     padding: "20px",
     textAlign: "center" as const,
   };
-
-  const logo = {
-    margin: "0 auto",
-    width: "120px",
-  };
-
-  const button = {
-    backgroundColor: "#f0f7f0",
-    borderRadius: "5px",
-    color: "#123524",
-    fontSize: "16px",
-    fontWeight: "bold",
-    textDecoration: "none",
-    textAlign: "center" as const,
-    display: "block",
-    padding: "12px 20px",
-  };
-
-  const footer = {
-    color: "#8898aa",
-    fontSize: "12px",
-    marginTop: "20px",
-    textAlign: "center" as const,
-  };
-
   const brandTitle = {
     fontSize: "30px",
     fontFamily: "'Impact', 'Poppins', sans-serif",
@@ -122,56 +88,7 @@ export const NurseryCollaborationEmail = ({
               team will review your details shortly, and once approved, you'll
               be able to start listing your plants and products.
             </Text>
-            
-            {/* <Text style={{ fontWeight: "bold" }}>
-              Follow the below steps to setup your seller account! :
-            </Text>
-            <div>
-              Your One-Time Password(OTP) is:
-              <Section style={{ textAlign: "center", margin: "10px 0" }}>
-                <Text
-                  style={{
-                    fontSize: "28px",
-                    fontWeight: "bold",
-                    letterSpacing: "4px",
-                    padding: "15px 25px",
-                    backgroundColor: "#f0f7f0",
-                    color: mainColor,
-                    borderRadius: "6px",
-                    display: "inline-block",
-                    border: `2px dashed ${mainColor}`,
-                  }}
-                >
-                  {verifyCode}
-                </Text>
-              </Section>
-            </div>
-            <p style={{ color: "#FF4B4B" }}>
-              1. Open the below Link in tablet, laptop, desktop or computer
-              only.
-            </p>
-            <p>2. Verify your email address by clicking the button below.</p>
-            <p>3. Complete your nursery profile with high-quality images</p>
-            <p>4. Add your catalog of plants and products</p>
-            <p>5. Start receiving orders from plant enthusiasts!</p> */}
-
-            {/* <p
-              style={{
-                fontSize: "14px",
-                wordBreak: "break-all",
-                backgroundColor: "#f5f5f5",
-                padding: "10px",
-                borderRadius: "4px",
-                marginBottom: "25px",
-              }}
-            >
-              {verificationURL}
-            </p> */}
-
-            {/* <Button style={button} href={verificationURL}>
-              Verify Email Address
-            </Button> */}
-
+          
             <Hr style={{ margin: "20px 0" }} />
             <Text>
               If you have any questions or need assistance, please don't

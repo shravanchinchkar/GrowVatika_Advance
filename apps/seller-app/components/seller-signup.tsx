@@ -3,8 +3,8 @@
 import axios from "axios";
 import Link from "next/link";
 import { toast } from "react-hot-toast";
-import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
+import { useState, useEffect } from "react";
 import { SiteLogo } from "@repo/ui/brand-logo";
 import { AuthButton } from "@repo/ui/auth-button";
 import { useSearchParams } from "next/navigation";
@@ -24,7 +24,6 @@ export const SellerRegister = () => {
   const [loading, setLoading] = useState(false);
   const searchParams = useSearchParams();
   const searchParamsEmail = searchParams?.get("email") || "";
-  console.log("search params email is:", !searchParamsEmail);
 
   const {
     register,
@@ -34,8 +33,7 @@ export const SellerRegister = () => {
   } = useForm<SignUpInputs>({
     resolver: zodResolver(SignUpSchema),
     defaultValues: {
-      firstName: "",
-      lastName: "",
+      fullName: "",
       nurseryName: "",
       email: "",
       password: "",
@@ -63,9 +61,10 @@ export const SellerRegister = () => {
           toast.error(res.data.error.toString(), toastStyle);
         } else {
           const { sellerData } = res.data;
-          setValue("nurseryName", sellerData?.nurseryName || "");
-          setValue("email", sellerData?.email || "");
-          setValue("phoneNumber", sellerData?.phoneNumber || "");
+          setValue("fullName", sellerData.fullName);
+          setValue("nurseryName", sellerData.nurseryName);
+          setValue("email", sellerData.email);
+          setValue("phoneNumber", sellerData.phoneNumber);
         }
       } catch (error) {
         if (!isCancelled) {
@@ -104,8 +103,6 @@ export const SellerRegister = () => {
         console.error("Error While registrating the seller:", res.errors);
         toast.error(res.errors.toString(), toastStyle);
       } else if (res.success) {
-        setValue("firstName", "");
-        setValue("lastName", "");
         setValue("password", "");
         setValue("confirmPassword", "");
         if (
@@ -185,36 +182,20 @@ export const SellerRegister = () => {
               className="flex flex-col items-start lg:gap-[1.5rem] 2xl:gap-[1rem] lg:mt-[0.5rem]"
               onSubmit={handleSubmit(handelSellerRegistration)}
             >
-              {/* Following div consist of firstName and lastName */}
-              <div className="lg:w-[23rem] lg:h-[3rem] xl:w-[28rem]  2xl:w-[30.1875rem] 2xl:h-max grid grid-cols-2 gap-x-[1rem]">
-                {/* Following div consist of firstName*/}
-                <div>
-                  {errors.firstName && (
-                    <div className="ml-[1rem] text-red-500 font-bold text-start">
-                      {errors.firstName.message}
-                    </div>
-                  )}
-                  <LabelInput
-                    legendName="First Name"
-                    useType={FormType.AUTH}
-                    placeHolder="First Name"
-                    {...register("firstName", { required: true })}
-                  />
-                </div>
-                {/* Following div consist of lastName */}
-                <div>
-                  {errors.lastName && (
-                    <div className="ml-[1rem] text-red-500 font-bold text-start">
-                      {errors.lastName.message}
-                    </div>
-                  )}
-                  <LabelInput
-                    legendName="Last Name"
-                    useType={FormType.AUTH}
-                    placeHolder="Last Name"
-                    {...register("lastName", { required: true })}
-                  />
-                </div>
+              {/* Following div consist of fullName */}
+              <div className="lg:w-[23rem] lg:h-[3rem] xl:w-[28rem] 2xl:w-[30.1875rem] 2xl:h-max">
+                {errors.fullName && (
+                  <div className="ml-[1rem] text-red-500 font-bold text-start">
+                    {errors.fullName.message}
+                  </div>
+                )}
+                <LabelInput
+                  legendName="Full Name"
+                  useType={FormType.AUTH}
+                  placeHolder="Full Name"
+                  {...register("fullName", { required: true })}
+                  readonly={true}
+                />
               </div>
 
               {/* Following div consist of input field for nursery name */}
@@ -234,7 +215,7 @@ export const SellerRegister = () => {
               </div>
 
               {/* Following is the Email Input Field */}
-              <div className="lg:w-[23rem] lg:h-[3rem] xl:w-[28rem] 2xl:w-[30.1875rem] 2xl:h-max ">
+              <div className="lg:w-[23rem] lg:h-[3rem] xl:w-[28rem] 2xl:w-[30.1875rem] 2xl:h-max">
                 {errors.email && (
                   <div className="ml-[1rem] text-red-500 font-bold text-start">
                     {errors.email.message}

@@ -136,7 +136,7 @@ export const NEXT_AUTH = {
   // following code is imp because it prevent conflict between the user and seller local signin
   cookies: {
     sessionToken: {
-      name: "sellerapp-nextauth.session-token",
+      name: "sellerapp-next-auth.session-token",
       options: {
         httpOnly: true,
         sameSite: "lax",

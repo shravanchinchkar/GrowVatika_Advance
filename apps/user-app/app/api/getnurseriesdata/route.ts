@@ -29,6 +29,8 @@ export async function GET(
     const sellersWithProducts = await client.seller.findMany({
       where: {
         isVerified: true,
+        isAdminVerified: true,
+        isSuspended: false,
       },
       select: {
         id: true,

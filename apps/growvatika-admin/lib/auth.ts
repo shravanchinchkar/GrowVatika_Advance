@@ -1,7 +1,39 @@
 import bcrypt from "bcrypt";
+import { JWT } from "next-auth/jwt";
 import client from "@repo/db/client";
+import { Session, User } from "next-auth";
 import { adminSigninSchema } from "@repo/common-types/types";
+import { TAdminSigninSchema } from "@repo/common-types/types";
 import CredentialsProvider from "next-auth/providers/credentials";
+
+// type decleration
+declare module "next-auth" {
+  interface Session {
+    user: {
+      id: string;
+      name: string;
+      email: string;
+      image: string;
+    };
+  }
+
+  interface User {
+    id: string;
+    name: string;
+    email: string;
+    customResponse?: {
+      success: boolean;
+      message: string;
+      status: string;
+    };
+  }
+}
+
+declare module "next-auth/jwt" {
+  interface JWT {
+    id?: string;
+  }
+}
 
 export const NEXT_AUTH = {
   providers: [
@@ -15,7 +47,7 @@ export const NEXT_AUTH = {
         },
         password: { label: "password", type: "password" },
       },
-      async authorize(credentials, req) {
+      async authorize(credentials: TAdminSigninSchema | undefined) {
         const validateInput = adminSigninSchema.safeParse(credentials);
         if (!validateInput.success) {
           console.error(
@@ -76,9 +108,10 @@ export const NEXT_AUTH = {
     }),
   ],
   secret: process.env.NEXTAUTH_SECRET,
+  // following code is imp because it prevent conflict between the user and seller local signin
   cookies: {
     sessionToken: {
-      name: "growvatika_admin.session-token",
+      name: "growvatika-admin-next-auth.session-token",
       options: {
         httpOnly: true,
         sameSite: "lax",
@@ -88,7 +121,7 @@ export const NEXT_AUTH = {
     },
   },
   callbacks: {
-    async jwt({ token, user }: any) {
+    async jwt({ token, user }: { token: JWT; user?: User }) {
       // When the user signs in, `user` contains the object returned by `authorize`
       if (user) {
         token.id = user.id;
@@ -96,7 +129,7 @@ export const NEXT_AUTH = {
       return token; //Always return the token to maintain session
     },
     // The session callback helps in displaying the  userId in client component
-    session: ({ session, token }: any) => {
+    session: ({ session, token }: { session: Session; token: JWT }) => {
       if (session.user) {
         session.user.id = token.id as string;
       }

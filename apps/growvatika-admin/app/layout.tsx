@@ -8,6 +8,7 @@ import {
   Ubuntu,
   Unbounded,
 } from "next/font/google";
+import { Providers } from "./providers";
 
 const nunitoSans = Nunito_Sans({
   subsets: ["latin"],
@@ -59,7 +60,7 @@ export default function RootLayout({
       <body
         className={`${nunitoSans.variable} ${outfit.variable} ${poppins.variable} ${roboto.variable} ${ubuntu.variable} ${unbounded.variable}`}
       >
-        {children}
+        <Providers>{children}</Providers>
       </body>
     </html>
   );

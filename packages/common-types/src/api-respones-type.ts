@@ -1,4 +1,5 @@
 import { TProductData } from "./product-data-type.js";
+import { TAdminDashboardNurseriesData } from "./admin.js";
 import { TSingleProductData } from "./single-product-data-type.js";
 
 type SellerData = {
@@ -19,13 +20,15 @@ export interface ApiResponseType {
 }
 
 export type TApiResponse = {
+  error?: string;
   success: boolean;
   message?: string;
-  error?: string;
   totalPages?: number;
   totalProductsCount?: number;
+  totalNurseryCount?: number;
   productsData?: TProductData[];
+  totalFilterProductsCount?: number;
   filterProductsData?: TProductData[];
   singleProductData?: TSingleProductData;
-  totalFilterProductsCount?: number;
+  adminNurseriesData?: TAdminDashboardNurseriesData[];
 };

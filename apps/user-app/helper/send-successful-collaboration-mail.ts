@@ -8,8 +8,6 @@ export async function successfulCollaboration(
   ownerName: string,
   registrationDate: string,
   email: string,
-  verifyCode: string,
-  verificationURL: string
 ): Promise<ApiResponseType> {
   try {
     const { data, error } = await resend.emails.send({
@@ -20,9 +18,6 @@ export async function successfulCollaboration(
         nurseryName,
         ownerName,
         registrationDate,
-        email,
-        verifyCode,
-        verificationURL,
       }),
       text: `Hello ${ownerName},Congratulations! Your nursery "${nurseryName}" has successfully collaborated with GrowVatika.
       Collaboration Details:
@@ -31,8 +26,6 @@ export async function successfulCollaboration(
       - Registration Date: ${registrationDate}
       - Email: ${email}
       Verification Details:
-      - Verification Code: ${verifyCode}
-      - Verification URL: ${verificationURL}
       Please verify your collaboration by clicking the link above or using the verification code.
       Best regards,
       GrowVatika Team

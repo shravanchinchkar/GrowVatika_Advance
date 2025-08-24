@@ -8,10 +8,7 @@ import { generateVerifyCode } from "@repo/shared/utilfunctions";
 import CredentialsProvider from "next-auth/providers/credentials";
 import { sendVerificationEmail } from "../helper/send-verification-mail";
 import { sendSignInSuccessfulMail } from "@/helper/send-signin-successful-mail";
-import {
-  getCurrentDateTime,
-  getExpiryDate,
-} from "@repo/shared/utilfunctions";
+import { getCurrentDateTime, getExpiryDate } from "@repo/shared/utilfunctions";
 
 export const NEXT_AUTH = {
   providers: [
@@ -232,7 +229,7 @@ export const NEXT_AUTH = {
   // following code is imp because it prevent conflict between the user and seller local signin
   cookies: {
     sessionToken: {
-      name: "userapp-nextauth.session-token",
+      name: "userapp-next-auth.session-token",
       options: {
         httpOnly: true,
         sameSite: "lax",

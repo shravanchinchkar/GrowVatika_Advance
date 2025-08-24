@@ -11,7 +11,10 @@ import { toastStyle } from "@repo/shared/utilfunctions";
 import { useForm, SubmitHandler } from "react-hook-form";
 import { FormType, LabelInput } from "@repo/ui/label-input";
 import { useChangeMobileConnectFormVisibility } from "@repo/shared-store";
-import { GetStartedFromInput, GetStartedFromSchema } from "@repo/common-types";
+import {
+  TGetStartedFormSchema,
+  GetStartedFormSchema,
+} from "@repo/common-types";
 
 export const MobileGetStartedForm = () => {
   const [loading, setLoading] = useState(false);
@@ -25,8 +28,8 @@ export const MobileGetStartedForm = () => {
     setError,
     handleSubmit,
     formState: { errors },
-  } = useForm<GetStartedFromInput>({
-    resolver: zodResolver(GetStartedFromSchema),
+  } = useForm<TGetStartedFormSchema>({
+    resolver: zodResolver(GetStartedFormSchema),
     defaultValues: {
       fullName: "",
       phoneNumber: "",
@@ -38,8 +41,8 @@ export const MobileGetStartedForm = () => {
   });
 
   // Submit form data to backend
-  const handleGetStartedForm: SubmitHandler<GetStartedFromInput> = async (
-    data: GetStartedFromInput
+  const handleGetStartedForm: SubmitHandler<TGetStartedFormSchema> = async (
+    data: TGetStartedFormSchema
   ) => {
     setLoading(true);
     const res = await storeDataInExcel(data);

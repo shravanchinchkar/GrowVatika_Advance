@@ -10,7 +10,10 @@ import { useForm, SubmitHandler } from "react-hook-form";
 import { ButtonLoadingSign } from "@repo/ui/loading-sign";
 import { LabelInput, FormType } from "@repo/ui/label-input";
 import { useChangeMobileConnectFormVisibility } from "@repo/shared-store";
-import { GetStartedFromInput, GetStartedFromSchema } from "@repo/common-types";
+import {
+  TGetStartedFormSchema,
+  GetStartedFormSchema,
+} from "@repo/common-types";
 
 export const ContactForm = memo(() => {
   const [loading, setLoading] = useState(false);
@@ -26,8 +29,8 @@ export const ContactForm = memo(() => {
     setError,
     handleSubmit,
     formState: { errors },
-  } = useForm<GetStartedFromInput>({
-    resolver: zodResolver(GetStartedFromSchema),
+  } = useForm<TGetStartedFormSchema>({
+    resolver: zodResolver(GetStartedFormSchema),
     defaultValues: {
       fullName: "",
       phoneNumber: "",
@@ -38,8 +41,8 @@ export const ContactForm = memo(() => {
     },
   });
 
-  const handleGetStartedForm: SubmitHandler<GetStartedFromInput> = async (
-    data: GetStartedFromInput
+  const handleGetStartedForm: SubmitHandler<TGetStartedFormSchema> = async (
+    data: TGetStartedFormSchema
   ) => {
     setLoading(true);
     const res = await storeDataInExcel(data);

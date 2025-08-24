@@ -10,6 +10,7 @@
   },
   "dependencies": {
     "@repo/common-types": "*",
+    "@repo/shared-store": "*",
     "@repo/db": "*",
     "@repo/ui": "*",
     "@repo/shared": "*",

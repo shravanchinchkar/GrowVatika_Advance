@@ -20,3 +20,16 @@ export const adminSigninSchema = z.object({
 
 export type TAdminSignupSchema = z.infer<typeof adminSignupSchema>;
 export type TAdminSigninSchema = z.infer<typeof adminSigninSchema>;
+
+export type TAdminDashboardNurseriesData = {
+  id: string;
+  email: string;
+  address: string;
+  fullName: string;
+  adminName: string;
+  phoneNumber: string;
+  nurseryName: string;
+  isSuspended: boolean;
+  isAdminVerified: boolean;
+  profilePictureURL: string | null;
+};

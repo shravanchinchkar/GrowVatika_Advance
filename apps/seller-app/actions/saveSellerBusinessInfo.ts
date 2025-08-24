@@ -2,12 +2,12 @@
 
 "use server";
 import client from "@repo/db/client";
-import { ApiResponseType } from "@repo/common-types/types";
-import { SellerData, SellerDataSchema } from "@repo/common-types/types";
-import { formDataToObject } from "../helper/formDataToObject";
-import { getServerSession } from "next-auth";
 import { NEXT_AUTH } from "../lib/auth";
+import { getServerSession } from "next-auth";
 import { v2 as cloudinary } from "cloudinary";
+import { ApiResponseType } from "@repo/common-types/types";
+import { SellerDataSchema } from "@repo/common-types/types";
+import { formDataToObject } from "../helper/formDataToObject";
 
 // Configure Cloudinary
 cloudinary.config({

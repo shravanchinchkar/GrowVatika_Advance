@@ -1,6 +1,7 @@
 {
   "name": "growvatika-admin",
   "version": "0.1.0",
+  "type": "module",
   "private": true,
   "scripts": {
     "dev": "next dev --turbopack --port 3002",
@@ -22,13 +23,15 @@
     "react-hot-toast": "^2.6.0"
   },
   "devDependencies": {
+    "@prisma/nextjs-monorepo-workaround-plugin": "^6.11.0",
+    "@repo/eslint-config": "*",
+    "@repo/typescript-config": "*",
     "@eslint/eslintrc": "^3",
     "@tailwindcss/postcss": "^4",
     "@types/node": "^20",
     "@types/react": "^19",
     "@types/react-dom": "^19",
     "eslint": "^9",
-    "eslint-config-next": "15.5.0",
     "tailwindcss": "^4",
     "typescript": "^5"
   }

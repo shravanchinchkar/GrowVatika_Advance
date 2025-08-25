@@ -9,16 +9,13 @@ export async function PATCH(
 ): Promise<NextResponse<TApiResponse>> {
   try {
     const adminSession = await getServerSession(NEXT_AUTH);
-
-    console.log("admin session:", adminSession);
-
-    if (!adminSession?.user) {
+    if (!adminSession) {
       return NextResponse.json(
         {
           success: false,
           error: "Unauthorized request",
         },
-        { status: 400 }
+        { status: 401 }
       );
     } else {
       const { searchParams } = new URL(req.url);
@@ -32,7 +29,25 @@ export async function PATCH(
           { status: 400 }
         );
       }
-      const approvedNursery = await client.seller.update({
+
+      // First, check if the nursery exists
+      const existingNursery = await client.seller.findUnique({
+        where: {
+          id: nurseryId,
+        },
+      });
+
+      if (!existingNursery) {
+        return NextResponse.json(
+          {
+            success: false,
+            error: `Nursery with ID ${nurseryId} not found`,
+          },
+          { status: 404 }
+        );
+      }
+
+      await client.seller.update({
         where: {
           id: nurseryId,
         },
@@ -42,15 +57,7 @@ export async function PATCH(
           adminName: adminSession.user.name,
         },
       });
-      if (!approvedNursery) {
-        return NextResponse.json(
-          {
-            success: false,
-            error: "Error while approving nursery",
-          },
-          { status: 400 }
-        );
-      }
+      
       return NextResponse.json(
         {
           success: true,

@@ -5,7 +5,11 @@ import { SessionProvider } from "next-auth/react";
 
 export function Providers({ children }: { children: React.ReactNode }) {
   return (
-    <SessionProvider>
+    <SessionProvider
+      // Add these props to prevent SSR issues
+      refetchOnWindowFocus={false}
+      refetchWhenOffline={false}
+    >
       <Toaster />
       {children}
     </SessionProvider>

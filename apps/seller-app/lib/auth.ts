@@ -108,7 +108,7 @@ export const NEXT_AUTH = {
 
               return {
                 id: sellerExists.id.toString(),
-                name: sellerExists.firstName,
+                name: sellerExists.fullName,
                 email: sellerExists.email,
                 isVerified: sellerExists.isVerified,
                 customResponse: {

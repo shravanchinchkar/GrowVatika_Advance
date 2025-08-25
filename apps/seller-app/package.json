@@ -21,7 +21,7 @@
     "@repo/shared-store": "*",
     "@repo/ui": "*",
     "axios": "^1.8.4",
-    "bcrypt": "^5.1.1",
+    "bcrypt": "^6.0.0",
     "cloudinary": "^2.6.1",
     "immer": "^10.1.1",
     "multer": "^2.0.1",

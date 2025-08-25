@@ -27,12 +27,12 @@
     "@prisma/nextjs-monorepo-workaround-plugin": "^6.11.0",
     "@repo/eslint-config": "*",
     "@repo/typescript-config": "*",
-    "@tailwindcss/postcss": "^4.0.0",
     "@types/node": "^20",
     "@types/react": "19.0.10",
     "@types/react-dom": "19.0.4",
     "eslint": "^9",
-    "tailwindcss": "^4.0.0",
+    "@tailwindcss/postcss": "4.0.0-alpha.30",
+    "tailwindcss": "4.0.0-alpha.30",
     "typescript": "5.8.2"
   }
 }

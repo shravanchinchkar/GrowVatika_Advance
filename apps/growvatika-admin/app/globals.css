@@ -1,31 +1,3 @@
-@import "tailwindcss";
-@source "../../../packages/ui/**/*.{js,ts,jsx,tsx}";
-
-@theme {
-  --font-nunito: var(--font-nunito);
-  --font-outfit: var(--font-outfit);
-  --font-poppins: var(--font-poppins);
-  --font-roboto: var(--font-roboto);
-  --font-ubuntu: var(--font-ubuntu);
-  --font-unbounded: var(--font-unbounded);
-
-  /* custom break-points */
-  --breakpoint-new-sm: 320px;
-  --breakpoint-new-sm-1: 360px;
-  --breakpoint-new-sm-2: 430px;
-  --breakpoint-new-sm-3: 535px;
-  --breakpoint-new-md: 888px;
-  --breakpoint-new-xl: 1330px;
-  --breakpoint-new-xl-2: 1440px;
-
-  /* Custom box shadow */
-  --shadow-custom-boxshadow: 0 3.21px 32.099px -0.802px rgba(0, 0, 0, 0.25);
-  --shadow-productcard-custom-boxShadow: 0 0 25px -11px rgba(0, 0, 0, 0.25);
-  --shadow-status-button-boxshadow: 0 0 7px 0 rgba(0, 0, 0, 0.25);
-    /* Custom background Color */
-    --color-button-custom-gradient: linear-gradient(
-      297deg,
-      rgba(100, 145, 115, 0.53) 14.21%,
-      rgba(219, 213, 164, 0.53) 86.53%
-    );
-}
+@tailwind base;
+@tailwind components;
+@tailwind utilities;

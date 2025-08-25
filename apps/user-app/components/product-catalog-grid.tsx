@@ -256,7 +256,7 @@ export const ProductCatalogGrid = memo(
             },
           });
         } catch (error) {
-          console.error("Error while fetching product data:", error);
+          console.log("Error while fetching product data:", error);
           dispatch({
             type: "FETCH_ERROR",
             payload: "Failed to fetch products",

@@ -1,4 +1,4 @@
-"use client"
+"use client";
 import { useState } from "react";
 import { toast } from "react-hot-toast";
 import { signIn } from "next-auth/react";
@@ -23,6 +23,7 @@ export const AdminSignin = () => {
     resolver: zodResolver(adminSigninSchema),
     defaultValues: { email: "", password: "" },
   });
+
 
   const handleAdminSignin = async (data: TAdminSigninSchema) => {
     setLoading(true);
@@ -49,10 +50,7 @@ export const AdminSignin = () => {
         console.error("Signin error:", res.error, parseError);
         errorMessage = "Internal Server Error!";
       }
-      toast.error(errorMessage, {
-        ...toastStyle,
-        position: "bottom-left",
-      });
+      toast.error(errorMessage, toastStyle);
     } else if (res?.ok) {
       // Check session to determine verification status
       setValue("email", "");
@@ -61,7 +59,7 @@ export const AdminSignin = () => {
       const session = await sessionResponse.json();
       if (session?.user) {
         toast.success("Signin successful!", toastStyle);
-        router.push("/adminpanel");
+        router.push(`/adminpanel`);
       }
     }
   };

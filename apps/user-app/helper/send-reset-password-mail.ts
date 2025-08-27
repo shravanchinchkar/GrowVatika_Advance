@@ -1,7 +1,8 @@
 import { v4 as uuidv4 } from "uuid";
 import { resend } from "../lib/resend";
 import { ApiResponseType } from "@repo/common-types/types";
-import ResetPasswordMailTemplate from "@/emails/reset-password-mail-template";
+// import ResetPasswordMailTemplate from "@/emails/reset-password-mail-template";
+import ResetPasswordMailTemplate from "@repo/email-template/reset-password-mail-template";
 
 export async function sendResendPasswordMail(
   email: string

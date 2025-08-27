@@ -13,10 +13,10 @@
     "clean": "rimraf .next .turbo"
   },
   "dependencies": {
+    "@repo/email-template": "*",
     "@hookform/resolvers": "^5.0.1",
     "@radix-ui/react-label": "^2.1.2",
     "@radix-ui/react-slot": "^1.1.2",
-    "@react-email/components": "0.0.34",
     "@remixicon/react": "^4.6.0",
     "@repo/common-types": "*",
     "@repo/db": "*",
@@ -54,7 +54,6 @@
     "autoprefixer": "^10.0.0",
     "eslint": "^9.22.0",
     "postcss": "^8.0.0",
-    "react-email": "4.0.1",
     "tailwindcss": "^3.0.0",
     "typescript": "5.8.2"
   }

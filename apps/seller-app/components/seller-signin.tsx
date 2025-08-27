@@ -183,7 +183,7 @@ export const SellerSignin = () => {
             {/* Signup message */}
             <div className=" mt-[1.3rem] text-[#123524] lg:text-[1rem] xl:text-[1.25rem] font-normal flex gap-[0.5rem]">
               <p>Don't have a seller account?</p>
-              <Link href={"/register"} className="font-bold">
+              <Link href={"https://growvatika.live"} target="_blank" className="font-bold">
                 Register here
               </Link>
             </div>

@@ -19,10 +19,7 @@ import {
   useState,
 } from "react";
 import { LikeProductIcon } from "./like-product-icon";
-import {
-  TApiResponse,
-  TProductData,
-} from "@repo/common-types";
+import { TApiResponse, TProductData } from "@repo/common-types";
 
 interface ProductCatalogGridProp {
   displayFilter: boolean;
@@ -235,7 +232,9 @@ export const ProductCatalogGrid = memo(
           }
 
           const productsdata =
-            filter.length > 0 ? response.filterProductsData : response.productsData;
+            filter.length > 0
+              ? response.filterProductsData
+              : response.productsData;
           const totalProductsCount =
             filter.length > 0
               ? response.totalFilterProductsCount

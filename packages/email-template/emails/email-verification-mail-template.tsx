@@ -16,18 +16,18 @@ interface GrowVatikaVerifyEmailProp {
   verifyCode: string;
 }
 
-const ResetPasswordEmail = ({ name, verifyCode }: GrowVatikaVerifyEmailProp) => {
+const VerificationEmail = ({ name, verifyCode }: GrowVatikaVerifyEmailProp) => {
   const mainColor = "#2e7d32"; // Forest green color
   const backgroundColor = "#f5f5f5";
   const textColor = "#333333";
-  
+
   const brandTitle = {
     fontSize: "30px",
     fontFamily: "'Impact', 'Poppins', sans-serif",
     color: "#123524",
     lineHeight: "1.2",
   };
-  
+
   const brandTagLine = {
     fontSize: "12px",
     color: "#123524",
@@ -50,7 +50,6 @@ const ResetPasswordEmail = ({ name, verifyCode }: GrowVatikaVerifyEmailProp) => 
             margin: "40px auto",
             maxWidth: "600px",
             backgroundColor: "#ffffff",
-            borderRadius: "8px",
             overflow: "hidden",
           }}
         >
@@ -75,13 +74,13 @@ const ResetPasswordEmail = ({ name, verifyCode }: GrowVatikaVerifyEmailProp) => 
                 marginBottom: "20px",
               }}
             >
-              Welcome to GrowVatika Seller Platform, {name}!
+              Welcome to GrowVatika, {name}!
             </Heading>
 
             <Text
               style={{ fontSize: "16px", lineHeight: "1.5", color: textColor }}
             >
-              Thank you for collaborating with GrowVatika. To complete your
+              Thank you for registering with GrowVatika. To complete your
               account setup, please verify your email address using the
               following One-Time Password (OTP):
             </Text>
@@ -108,8 +107,8 @@ const ResetPasswordEmail = ({ name, verifyCode }: GrowVatikaVerifyEmailProp) => 
               style={{ fontSize: "16px", lineHeight: "1.5", color: textColor }}
             >
               This code will expire in 2 minutes. If you did not request this
-              verification, please ignore this email or contact our support
-              team.
+              verification, please ignore this email or contact our support team
+              at growvatika@gmail.com
             </Text>
 
             <Hr style={{ borderColor: "#e0e0e0", margin: "30px 0" }} />
@@ -120,7 +119,7 @@ const ResetPasswordEmail = ({ name, verifyCode }: GrowVatikaVerifyEmailProp) => 
             <Text
               style={{ fontSize: "16px", fontWeight: "bold", color: mainColor }}
             >
-              The Growvatika Team
+              The GrowVatika Team
             </Text>
           </Section>
 
@@ -149,4 +148,4 @@ const ResetPasswordEmail = ({ name, verifyCode }: GrowVatikaVerifyEmailProp) => 
     </Html>
   );
 };
-export default ResetPasswordEmail;
+export default VerificationEmail;

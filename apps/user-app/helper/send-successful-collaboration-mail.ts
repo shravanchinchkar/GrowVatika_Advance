@@ -1,7 +1,8 @@
 import { resend } from "../lib/resend";
 import { v4 as uuidv4 } from "uuid";
 import { ApiResponseType } from "@repo/common-types/types";
-import NurseryCollaborationEmail from "../emails/successful-collaboration-mail-template";
+// import NurseryCollaborationEmail from "../emails/successful-collaboration-mail-template";
+import NurseryCollaborationEmail from "@repo/email-template/successful-collaboration-mail-template"
 
 export async function successfulCollaboration(
   nurseryName: string,

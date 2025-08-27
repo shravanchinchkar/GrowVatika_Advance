@@ -57,7 +57,7 @@ export async function PATCH(
           adminName: adminSession.user.name,
         },
       });
-      
+
       return NextResponse.json(
         {
           success: true,

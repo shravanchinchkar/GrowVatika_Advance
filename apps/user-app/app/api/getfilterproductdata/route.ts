@@ -142,7 +142,7 @@ export async function GET(
     return NextResponse.json(
       {
         success: true,
-        filterProducts,
+        filterProductsData:filterProducts,
         totalFilterProductsCount,
         totalPages,
       },

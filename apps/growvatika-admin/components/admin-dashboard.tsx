@@ -1,19 +1,22 @@
 "use client";
 import axios from "axios";
 import { Header } from "./header";
-import { memo, useState } from "react";
 import { useSession } from "next-auth/react";
 import { NurseriesList } from "./nurseries-list";
+import { memo, useEffect, useState } from "react";
 import { TApiResponse } from "@repo/common-types";
 import { useAdminNurseryDataStore } from "@repo/shared-store";
 
 export const AdminDashboard = memo(() => {
   const session = useSession();
   const adminName: string = session?.data?.user.name || "";
+
+  // Following are all the useState
+  const [activeNurseryType, setActiveNurseryType] =
+    useState("Approved Nurseries");
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(true);
-  const [isActive, setIsActive] = useState("Approved Nurseries");
-  
+
   // Following is the zustand state
   const { nurseriesData, setNurseriesData } = useAdminNurseryDataStore();
 
@@ -22,6 +25,62 @@ export const AdminDashboard = memo(() => {
     "Approved Nurseries",
     "Suspended Nurseries",
   ];
+
+  //  call to the backend
+  useEffect(() => {
+    const getNurseriesData = async () => {
+      console.log("getNurseriesData");
+      try {
+        let res;
+        setLoading(true);
+        if (activeNurseryType === "New Nurseries") {
+          res = await axios.get(
+            `/api/admin/getnurseriesdata?isAdminVerified=${false}&isSuspended=${false}`
+          );
+        } else if (activeNurseryType === "Approved Nurseries") {
+          res = await axios.get(
+            `/api/admin/getnurseriesdata?isAdminVerified=${true}&isSuspended=${false}`
+          );
+        } else {
+          res = await axios.get(
+            `/api/admin/getnurseriesdata?isAdminVerified=${true}&isSuspended=${true}`
+          );
+        }
+
+        const temp: TApiResponse = res.data;
+
+        if (temp.success && temp.adminNurseriesData) {
+          setNurseriesData(temp.adminNurseriesData);
+          setError("");
+        } else if (!temp.success && temp.error) {
+          setError(temp.error);
+        } else {
+          // Handle case where success is true but no data
+          setNurseriesData([]);
+          setError("");
+        }
+        setLoading(false);
+      } catch (error) {
+        console.log("Error fetching nurseries data:", error);
+        // Handle axios errors
+        if (axios.isAxiosError(error)) {
+          if (error.response?.data?.error) {
+            console.log(
+              "error.response.data.error:",
+              error.response.data.error
+            );
+            setError(error.response.data.error);
+          } else {
+            setError(`Request failed: ${error.message}`);
+          }
+        } else {
+          setError("An unexpected error occurred");
+        }
+        setLoading(false);
+      }
+    };
+    getNurseriesData();
+  }, [setError, setLoading, setNurseriesData, activeNurseryType]);
 
   const filterButtonStyle =
     "flex justify-around items-center bg-[#FFFFFF] w-[20%] text-[1.22669rem] text-[#171717] font-medium rounded-[0.3125rem] cursor-pointer capitalize outline-none";
@@ -35,51 +94,9 @@ export const AdminDashboard = memo(() => {
           return (
             <button
               key={index}
-              className={`${filterButtonStyle} ${isActive === item && "shadow-status-button-boxshadow"}`}
-              onClick={async () => {
-                // Check for new nurseries
-                try {
-                  setIsActive(item);
-                  setLoading(true);
-                  let res;
-                  if (item === "New Nurseries") {
-                    res = await axios.get(
-                      `/api/admin/getnurseriesdata?isAdminVerified=${false}&isSuspended=${false}`
-                    );
-                  } else if (item === "Approved Nurseries") {
-                    res = await axios.get(
-                      `/api/admin/getnurseriesdata?isAdminVerified=${true}&isSuspended=${false}`
-                    );
-                  } else {
-                    res = await axios.get(
-                      `/api/admin/getnurseriesdata?isAdminVerified=${true}&isSuspended=${true}`
-                    );
-                  }
-                  const temp: TApiResponse = res.data;
-                  if (temp.success && temp.adminNurseriesData) {
-                    setNurseriesData(temp.adminNurseriesData);
-                    setError("");
-                  } else if (!temp.success && temp.error) {
-                    setError(temp.error);
-                  } else {
-                    // Handle case where success is true but no data
-                    setNurseriesData([]);
-                    setError("");
-                  }
-                } catch (error) {
-                  console.error("Error fetching nurseries data:", error);
-                  // Handle axios errors
-                  if (axios.isAxiosError(error)) {
-                    if (error.response?.data?.error) {
-                      setError(error.response.data.error);
-                    } else {
-                      setError(`Request failed: ${error.message}`);
-                    }
-                  } else {
-                    setError("An unexpected error occurred");
-                  }
-                }
-                setLoading(false);
+              className={`${filterButtonStyle} ${activeNurseryType === item && "shadow-productcard-custom-boxShadow border-[1.6px] border-[#56A430]"}`}
+              onClick={() => {
+                setActiveNurseryType(item);
               }}
             >
               {item}
@@ -103,4 +120,4 @@ export const AdminDashboard = memo(() => {
   );
 });
 
-AdminDashboard.displayName = 'AdminDashboard';
+AdminDashboard.displayName = "AdminDashboard";

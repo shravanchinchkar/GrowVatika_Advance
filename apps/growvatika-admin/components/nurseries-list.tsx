@@ -1,9 +1,9 @@
 import axios from "axios";
 import Image from "next/image";
 import toast from "react-hot-toast";
+import { memo, useState } from "react";
 import Skeleton from "@repo/ui/loading";
 import { TApiResponse } from "@repo/common-types";
-import { memo, useEffect, useState } from "react";
 import { toastStyle } from "@repo/shared/utilfunctions";
 import { ButtonLoadingSign } from "@repo/ui/loading-sign";
 import { useAdminNurseryDataStore } from "@repo/shared-store";
@@ -28,48 +28,6 @@ export const NurseriesList = memo(
       suspendingNurseryId: "",
     });
 
-    //  call to the backend
-    useEffect(() => {
-      const getNurseriesData = async () => {
-        try {
-          const res = await axios.get(
-            `/api/admin/getnurseriesdata?isAdminVerified=${true}&isSuspended=${false}`
-          );
-          const temp: TApiResponse = res.data;
-
-          if (temp.success && temp.adminNurseriesData) {
-            setNurseriesData(temp.adminNurseriesData);
-            setError("");
-          } else if (!temp.success && temp.error) {
-            setError(temp.error);
-          } else {
-            // Handle case where success is true but no data
-            setNurseriesData([]);
-            setError("");
-          }
-          setLoading(false);
-        } catch (error) {
-          console.error("Error fetching nurseries data:", error);
-          // Handle axios errors
-          if (axios.isAxiosError(error)) {
-            if (error.response?.data?.error) {
-              console.log(
-                "error.response.data.error:",
-                error.response.data.error
-              );
-              setError(error.response.data.error);
-            } else {
-              setError(`Request failed: ${error.message}`);
-            }
-          } else {
-            setError("An unexpected error occurred");
-          }
-          setLoading(false);
-        }
-      };
-      getNurseriesData();
-    }, [setError, setLoading, setNurseriesData]);
-
     // Approve Nursery
     const handleApproveNursery = async (
       e: React.MouseEvent<HTMLButtonElement>,
@@ -85,7 +43,12 @@ export const NurseriesList = memo(
           `/api/admin/approvenurseries?nurseryId=${nurseryId}`
         );
         const tempData: TApiResponse = res.data;
+
         if (tempData.success) {
+          const updatedNurseryData = nurseriesData.filter((nursery) => {
+            return nursery.id !== nurseryId;
+          });
+          setNurseriesData(updatedNurseryData);
           toast.success("Nursery approved by admin!", toastStyle);
         }
       } catch (error) {
@@ -114,6 +77,10 @@ export const NurseriesList = memo(
         );
         const tempData: TApiResponse = res.data;
         if (tempData.success) {
+          const updatedNurseryData = nurseriesData.filter((nursery) => {
+            return nursery.id !== nurseryId;
+          });
+          setNurseriesData(updatedNurseryData);
           toast.success("Nursery Suspended by admin!", toastStyle);
         }
       } catch (error) {

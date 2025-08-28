@@ -30,7 +30,7 @@ export default {
           "linear-gradient(297deg, rgba(100, 145, 115, 0.53) 14.21%, rgba(219, 213, 164, 0.53) 86.53%)",
       },
       boxShadow: {
-        "productcard-custom-boxShadow": "0 0 25px -11px rgba(0, 0, 0, 0.25)",
+        "admindashboard-button-boxShadow": "0 0 7px 0 rgba(0, 0, 0, 0.25)",
       },
     },
   },

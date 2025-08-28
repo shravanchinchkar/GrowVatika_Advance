@@ -29,7 +29,6 @@ export async function PATCH(
           { status: 400 }
         );
       }
-
       // First, check if the nursery exists
       const existingNursery = await client.seller.findUnique({
         where: {

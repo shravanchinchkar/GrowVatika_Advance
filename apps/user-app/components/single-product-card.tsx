@@ -7,7 +7,7 @@ import {
 } from "@repo/shared-store";
 import Image from "next/image";
 import Skeleton from "@repo/ui/loading";
-import { useParams, useSearchParams } from "next/navigation";
+import { useParams } from "next/navigation";
 import { ButtonLoadingSign } from "@repo/ui/loading-sign";
 import { handleAddToCart } from "@/helper/handleAddToCart";
 import { RiHeart3Fill, RiHeart3Line } from "@remixicon/react";

@@ -45,7 +45,7 @@ export async function GET(
           { status: 400 }
         );
       }
-      
+
       const nurseriesData = await client.seller.findMany({
         where: {
           isAdminVerified: isAdminVerified,

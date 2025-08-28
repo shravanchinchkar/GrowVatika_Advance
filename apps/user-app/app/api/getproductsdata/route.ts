@@ -31,6 +31,10 @@ export async function GET(
       const productsData = await client.product.findMany({
         where: {
           productStatus: "Active",
+          seller: {
+            isAdminVerified: true,
+            isSuspended: false,
+          },
         },
         select: {
           id: true,

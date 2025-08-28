@@ -16,9 +16,10 @@ export const AdminDashboard = memo(() => {
     useState("Approved Nurseries");
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(true);
+  const [totalNurseryCount, setTotalNurseryCount] = useState(0);
 
   // Following is the zustand state
-  const { nurseriesData, setNurseriesData } = useAdminNurseryDataStore();
+  const { setNurseriesData } = useAdminNurseryDataStore();
 
   const FilterButtonName = [
     "New Nurseries",
@@ -29,7 +30,6 @@ export const AdminDashboard = memo(() => {
   //  call to the backend
   useEffect(() => {
     const getNurseriesData = async () => {
-      console.log("getNurseriesData");
       try {
         let res;
         setLoading(true);
@@ -48,9 +48,9 @@ export const AdminDashboard = memo(() => {
         }
 
         const temp: TApiResponse = res.data;
-
-        if (temp.success && temp.adminNurseriesData) {
+        if (temp.success && temp.adminNurseriesData && temp.totalNurseryCount) {
           setNurseriesData(temp.adminNurseriesData);
+          setTotalNurseryCount(temp.totalNurseryCount);
           setError("");
         } else if (!temp.success && temp.error) {
           setError(temp.error);
@@ -94,7 +94,7 @@ export const AdminDashboard = memo(() => {
           return (
             <button
               key={index}
-              className={`${filterButtonStyle} ${activeNurseryType === item && "shadow-productcard-custom-boxShadow border-[1.6px] border-[#56A430]"}`}
+              className={`${filterButtonStyle} ${activeNurseryType === item && "shadow-admindashboard-button-boxShadow"}`}
               onClick={() => {
                 setActiveNurseryType(item);
               }}
@@ -107,15 +107,10 @@ export const AdminDashboard = memo(() => {
           );
         })}
         <div className="flex justify-around items-center bg-[#FFFFFF] w-[20%] text-[1.22669rem] text-[#171717] font-medium rounded-[0.3125rem]capitalize outline-none">
-          {`Total ${nurseriesData.length} Collaborations`}
+          {`Total ${totalNurseryCount} Collaborations`}
         </div>
       </div>
-      <NurseriesList
-        loading={loading}
-        error={error}
-        setLoading={setLoading}
-        setError={setError}
-      />
+      <NurseriesList loading={loading} error={error} />
     </div>
   );
 });

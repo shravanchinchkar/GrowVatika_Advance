@@ -3,7 +3,7 @@ import { NEXT_AUTH } from "@/lib/auth";
 import { getServerSession } from "next-auth";
 import { NextRequest, NextResponse } from "next/server";
 
-export async function GET(req: NextRequest) {
+export async function GET(req: NextRequest): Promise<NextResponse> {
   try {
     const adminSession = await getServerSession(NEXT_AUTH);
     if (!adminSession) {
@@ -28,12 +28,14 @@ export async function GET(req: NextRequest) {
         { status: 400 }
       );
     }
+
     // First, check if the nursery exists
     const existingNursery = await client.seller.findUnique({
       where: {
         id: nurseryId,
       },
     });
+
     if (!existingNursery) {
       return NextResponse.json(
         {
@@ -44,79 +46,48 @@ export async function GET(req: NextRequest) {
       );
     }
 
-    // Execute the following block if productCategory is All
-    if (productCategory === "All") {
-      const productData = await client.product.findMany({
-        where: {
-          sellerId: existingNursery.id,
-        },
-        select: {
-          imageURL: true,
-          name: true,
-          price: true,
-          compareAt: true,
-          productQuantity: true,
-        },
-      });
-      if (productData.length === 0) {
-        return NextResponse.json(
-          {
-            success: false,
-            error: `${existingNursery.nurseryName} have not published any products yet!`,
-            nurseryName: existingNursery.nurseryName,
-          },
-          { status: 404 }
-        );
-      }
+    // Determine the where clause based on category
+    const whereClause =
+      productCategory === "All"
+        ? { sellerId: existingNursery.id }
+        : { sellerId: existingNursery.id, category: productCategory };
+
+    const productData = await client.product.findMany({
+      where: whereClause,
+      select: {
+        imageURL: true,
+        name: true,
+        price: true,
+        compareAt: true,
+        productQuantity: true,
+      },
+    });
+
+    if (productData.length === 0) {
+      const errorMessage =
+        productCategory === "All"
+          ? `${existingNursery.nurseryName} have not published any products yet!`
+          : `${existingNursery.nurseryName} have not published any products of category ${productCategory}!`;
+
       return NextResponse.json(
         {
-          success: true,
-          message: "Product data found!",
-          productData,
+          success: false,
+          error: errorMessage,
           nurseryName: existingNursery.nurseryName,
         },
-        {
-          status: 200,
-        }
+        { status: 404 }
       );
     }
-    // Execute the following block if productCategory is other than all
-    if (productCategory !== "All") {
-      const productData = await client.product.findMany({
-        where: {
-          sellerId: existingNursery.id,
-          category: productCategory,
-        },
-        select: {
-          imageURL: true,
-          name: true,
-          price: true,
-          compareAt: true,
-          productQuantity: true,
-        },
-      });
-      if (productData.length === 0) {
-        return NextResponse.json(
-          {
-            success: false,
-            error: `${existingNursery.nurseryName} have not published any products of category ${productCategory}!`,
-            nurseryName: existingNursery.nurseryName,
-          },
-          { status: 404 }
-        );
-      }
-      return NextResponse.json(
-        {
-          success: true,
-          message: "Product data found!",
-          productData,
-          nurseryName: existingNursery.nurseryName,
-        },
-        {
-          status: 200,
-        }
-      );
-    }
+
+    return NextResponse.json(
+      {
+        success: true,
+        message: "Product data found!",
+        productData,
+        nurseryName: existingNursery.nurseryName,
+      },
+      { status: 200 }
+    );
   } catch (error) {
     console.error("Error while getting product data", error);
     return NextResponse.json(
@@ -124,9 +95,7 @@ export async function GET(req: NextRequest) {
         success: false,
         error: "Internal Server Error",
       },
-      {
-        status: 500,
-      }
+      { status: 500 }
     );
   }
 }

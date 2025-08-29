@@ -9,9 +9,13 @@ import { useEffect, useReducer } from "react";
 type NurseryDataType = {
   imageURL: string;
   name: string;
-  price: string;
-  compareAt: string;
-  productQuantity: string;
+  productSizeVariant: [
+    {
+      price: string;
+      compareAt: string;
+      quantity: string;
+    },
+  ];
 };
 
 type SingleNurseryDetailsTyes = {
@@ -174,17 +178,17 @@ export const SingleNurseryDetails = () => {
 
                     <div className="flex gap-[0.5rem]">
                       <label>Product Actual Price:</label>
-                      <h2 className="font-medium">{`₹ ${item.price}`}</h2>
+                      <h2 className="font-medium">{`₹ ${item.productSizeVariant[0].compareAt}`}</h2>
                     </div>
 
                     <div className="flex gap-[0.5rem]">
                       <label>Product Discount Price:</label>
-                      <h2 className="font-medium">{`₹ ${item.compareAt}`}</h2>
+                      <h2 className="font-medium">{`₹ ${item.productSizeVariant[0].price}`}</h2>
                     </div>
 
                     <div className="flex gap-[0.5rem]">
                       <label>Product In Stock:</label>
-                      <h2 className="font-medium">{`${item.productQuantity} available`}</h2>
+                      <h2 className="font-medium">{`${item.productSizeVariant[0].quantity} available`}</h2>
                     </div>
                   </div>
                 </div>

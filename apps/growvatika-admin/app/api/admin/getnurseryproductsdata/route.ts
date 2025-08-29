@@ -57,9 +57,13 @@ export async function GET(req: NextRequest): Promise<NextResponse> {
       select: {
         imageURL: true,
         name: true,
-        price: true,
-        compareAt: true,
-        productQuantity: true,
+        productSizeVariant: {
+          select: {
+            price: true,
+            compareAt: true,
+            quantity: true,
+          },
+        },
       },
     });
 

@@ -1,29 +1,28 @@
 import toast from "react-hot-toast";
-import { TProductData } from "@repo/common-types";
 import { toastStyle } from "@repo/shared/utilfunctions";
-import { isLikeProductPresent, useWishListStore } from "@repo/shared-store";
+import { TAddtoCartandWishList } from "@repo/common-types";
 
 type handleLikeProductProps = {
   e: any;
-  productData: TProductData | any;
-  likeProductData: TProductData[];
-  toggleLikeProductData: (data: TProductData) => void;
+  transformProductData: TAddtoCartandWishList | any;
+  likeProductData: TAddtoCartandWishList[];
+  toggleLikeProductData: (data: TAddtoCartandWishList) => void;
   isLikeProductPresent: (
-    likeProductData: TProductData[],
-    data: TProductData
+    likeProductData: TAddtoCartandWishList[],
+    data: TAddtoCartandWishList
   ) => boolean;
 };
 
 export const handleLikeProduct = ({
   e,
-  productData,
+  transformProductData,
   likeProductData,
   toggleLikeProductData,
   isLikeProductPresent,
 }: handleLikeProductProps) => {
   e.preventDefault();
-  toggleLikeProductData(productData);
-  const result = isLikeProductPresent(likeProductData, productData);
+  toggleLikeProductData(transformProductData);
+  const result = isLikeProductPresent(likeProductData, transformProductData);
   if (result) {
     setTimeout(() => {
       toast("Product UnLiked!", {

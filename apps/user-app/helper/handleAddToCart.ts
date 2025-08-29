@@ -1,23 +1,23 @@
 import toast from "react-hot-toast";
-import { TProductData } from "@repo/common-types";
+import { TAddtoCartandWishList } from "@repo/common-types";
 import { toastStyle } from "@repo/shared/utilfunctions";
 
 type HandleAddToCartProps = {
   e: any;
-  productData: TProductData;
+  transformProductData: TAddtoCartandWishList;
   setLoading: (newValue: boolean) => void;
-  addNewProduct: (data: TProductData) => void;
+  addNewProduct: (data: TAddtoCartandWishList) => void;
 };
 
 export const handleAddToCart = ({
   e,
-  productData,
+  transformProductData,
   addNewProduct,
   setLoading,
 }: HandleAddToCartProps) => {
   e.preventDefault();
   setLoading(true);
-  addNewProduct(productData);
+  addNewProduct(transformProductData);
   setTimeout(() => {
     setLoading(false);
     toast("Product added to cart!", {

@@ -14,3 +14,13 @@ export type TProductData = {
   collection: string;
   productSizeVariant: ProductSizeVariant[];
 };
+
+export type TAddtoCartandWishList = {
+  id: string;
+  imageURL:string,
+  name: string;
+  collection: string;
+  productSize: string;
+  price: string;
+  productQuantity:number
+};

@@ -49,7 +49,7 @@ export const Cart = memo(() => {
   const { setVisibilityOfPaymentGateway } = usePaymentMessageStore();
   const { productData, removeProduct, quantities, setQuantities } =
     useAddToCardStore();
-
+    
   let totalAmountToBePaid: number = 0;
   productData.forEach((item) => {
     if (item.price) {

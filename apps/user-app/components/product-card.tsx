@@ -49,15 +49,24 @@ export const ProductCard = memo(({ productData }: ProductCardProps) => {
         <div className="w-[50%] flex justify-end">
           <button
             className="new-sm:w-[1.7rem] new-sm:h-[1.7rem] md:w-[1.875rem] md:h-[1.875rem] flex justify-center items-center rounded-full  new-sm:mt-[0.5rem] new-sm:mr-[0.5rem] md:mt-[1rem] md:mr-[1rem] bg-[#fff] outline-none"
-            onClick={(e) =>
+            onClick={(e) => {
+              const transformProductData = {
+                id: productData.id,
+                name: productData.name,
+                imageURL: productData.imageURL,
+                collection: productData.collection,
+                price: productData.productSizeVariant[0]?.price,
+                productSize: productData.productSizeVariant[0]?.size,
+                productQuantity: productData.productSizeVariant[0]?.quantity,
+              };
               handleLikeProduct({
                 e,
-                productData,
+                transformProductData,
                 likeProductData,
                 toggleLikeProductData,
                 isLikeProductPresent,
-              })
-            }
+              });
+            }}
           >
             {likeProductData.some((item) => item.id === productData.id) ? (
               <RiHeart3Fill className="new-sm:w-[1.13475rem] new-sm:h-[1.13475rem] md:w-[1.3rem] md:h-[1.3rem] text-[#EA4335]" />
@@ -116,9 +125,24 @@ export const ProductCard = memo(({ productData }: ProductCardProps) => {
         {/* Add to Cart Button */}
         <button
           className={`new-sm:w-[100%] new-sm:h-[2.3rem] new-sm-1:h-[2.3rem] new-sm-3:h-[2.8rem] new-md:h-[30%] bg-[#56A430] rounded-[0.625rem] flex items-center justify-center gap-2 text-white new-sm:text-[0.74238rem] new-sm-1:text-[0.9rem] new-sm-3:text-[1.1rem] new-md:text-[1.22669rem] font-medium text-center outline-none ${loading ? "bg-[#213E12]" : "md:hover:bg-[#213E12]"}`}
-          onClick={(e) =>
-            handleAddToCart({ e, productData, setLoading, addNewProduct })
-          }
+          onClick={(e) => {
+            const transformProductData = {
+              id: productData.id,
+              name: productData.name,
+              imageURL: productData.imageURL,
+              collection: productData.collection,
+              price: productData.productSizeVariant[0]?.price || "",
+              productSize: productData.productSizeVariant[0]?.size || "",
+              productQuantity: productData.productSizeVariant[0]?.quantity || 0,
+            };
+
+            handleAddToCart({
+              e,
+              transformProductData,
+              setLoading,
+              addNewProduct,
+            });
+          }}
         >
           {loading ? (
             <ButtonLoadingSign />

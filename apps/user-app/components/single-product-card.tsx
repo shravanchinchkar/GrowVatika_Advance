@@ -271,7 +271,8 @@ export const SingleProductCard = memo(() => {
   // Following are the zustand state
   const { addNewProduct } = useAddToCardStore();
   const { setCategory } = usefilterProductByCategoryStore();
-  const { likeProductData, toggleLikeProductData } = useWishListStore();
+  const { likeProductData, toggleLikeProductData, addLikeProductData } =
+    useWishListStore();
 
   // call to backend to fetch single product data
   useEffect(() => {
@@ -280,10 +281,7 @@ export const SingleProductCard = memo(() => {
       const { data } = await axios.get(
         `/api/getsingleproductdata/${productId}`
       ); //api call
-
       const response: TApiResponse = data;
-      console.log("response:", response);
-
       if (!response.success || !response.singleProductData) {
         dispatch({ type: "ERROR" });
         return;
@@ -298,7 +296,7 @@ export const SingleProductCard = memo(() => {
 
         const beProductData = response.singleProductData;
         setCategory(beProductData.category);
-        
+
         dispatch({
           type: "FETCH_SUCCESS",
           payload: {
@@ -549,6 +547,24 @@ export const SingleProductCard = memo(() => {
                       className={`new-sm:w-[45%] new-sm-1:max-w-[60%] new-sm-3:w-[35%] md:w-[60%] lg:w-[35%] new-sm:h-[4.30581rem] md:h-[5rem] 2xl:h-[5.9375rem] flex flex-col justify-center items-start border-[1.6px] rounded-[0.625rem] px-[0.5rem] ${state.availablePotSizeandPriceIndex === index ? "border-[#56A430] bg-[#DEFFE0]" : "border-[#FFF6F4] bg-[#ffffff]"}`}
                       onClick={(e) => {
                         e.preventDefault();
+                        const transformProductData = {
+                          id: state.productData?.id || "",
+                          name: state.productData?.name || "",
+                          collection: state.productData?.collection || "",
+                          productSize:
+                            state.productData?.productSizeVariant[index]
+                              ?.size || "",
+                          price:
+                            state.productData?.productSizeVariant[index]
+                              ?.price || "",
+                          productQuantity:
+                            state.productData?.productSizeVariant[index]
+                              ?.quantity || 0,
+                          imageURL: state.productData?.imageURL || "",
+                        };
+                        addLikeProductData(transformProductData);
+                        addNewProduct(transformProductData);
+
                         dispatch({
                           type: "SET_AVAILABLEPOTSIZEANDINDEX",
                           payload: index,
@@ -570,7 +586,7 @@ export const SingleProductCard = memo(() => {
               </div>
             </div>
 
-            {/* Quantity,Add to cart and buy-now */}
+            {/* Quantity,Add to cart,Like Product and buy-now */}
             <div className="flex flex-col gap-[1rem]">
               <div className="flex gap-[1rem] items-center">
                 <h1 className="new-sm:text-[0.75rem] new-sm-1:text-[0.9rem] lg:text-[1rem] xl:text-[1.1rem] 2xl:text-[1.25rem] text-[#171717] font-medium">
@@ -650,11 +666,29 @@ export const SingleProductCard = memo(() => {
                 <button
                   className="new-sm:w-[55%] 2xl:w-[60%] new-sm:h-[2.3125rem] md:h-[2.7rem] 2xl:h-[3.1875rem] bg-[#56A430] md:hover:bg-[#213E12] rounded-[0.625rem] flex items-center justify-center gap-[1rem] text-white new-sm:text-[0.75rem] new-sm-1:text-[1rem] lg:text-[1.1rem] 2xl:text-[1.22669rem] font-poppins"
                   onClick={(e) => {
-                    const productData = state.productData;
-                    if (productData) {
+                    // const productData = state.productData;
+                    const transformProductData = {
+                      id: state.productData?.id || "",
+                      name: state.productData?.name || "",
+                      collection: state.productData?.collection || "",
+                      productSize:
+                        state.productData?.productSizeVariant[
+                          state.availablePotSizeandPriceIndex
+                        ]?.size || "",
+                      price:
+                        state.productData?.productSizeVariant[
+                          state.availablePotSizeandPriceIndex
+                        ]?.price || "",
+                      productQuantity:
+                        state.productData?.productSizeVariant[
+                          state.availablePotSizeandPriceIndex
+                        ]?.quantity || 0,
+                      imageURL: state.productData?.imageURL || "",
+                    };
+                    if (transformProductData) {
                       handleAddToCart({
                         e,
-                        productData,
+                        transformProductData,
                         addNewProduct,
                         setLoading,
                       });
@@ -681,10 +715,28 @@ export const SingleProductCard = memo(() => {
                 <button
                   className={LikeShareStyle.buttonStyle}
                   onClick={(e) => {
-                    const productData = state.productData;
+                    const transformProductData = {
+                      id: state.productData?.id || "",
+                      name: state.productData?.name || "",
+                      collection: state.productData?.collection || "",
+                      productSize:
+                        state.productData?.productSizeVariant[
+                          state.availablePotSizeandPriceIndex
+                        ]?.size || "",
+                      price:
+                        state.productData?.productSizeVariant[
+                          state.availablePotSizeandPriceIndex
+                        ]?.price || "",
+                      productQuantity:
+                        state.productData?.productSizeVariant[
+                          state.availablePotSizeandPriceIndex
+                        ]?.quantity || 0,
+                      imageURL: state.productData?.imageURL || "",
+                    };
+
                     handleLikeProduct({
                       e,
-                      productData,
+                      transformProductData,
                       likeProductData,
                       toggleLikeProductData,
                       isLikeProductPresent,

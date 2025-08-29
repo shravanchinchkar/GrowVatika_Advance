@@ -252,9 +252,9 @@ export const SellerDashboardAddProductSection = memo(() => {
           {/* Add Product Form */}
           <div className="pb-[1rem] lg:flex lg:flex-col lg:items-center xl:block">
             {/* Following div consist of inputs for product name, price, compareAt, description, product Size, product Quantity */}
-            <div className="lg:w-[40rem] new-lg:w-[46rem] xl:w-[34rem] 2xl:w-[41rem] flex flex-col gap-[1rem] h-max p-[2rem] bg-white rounded-xl shadow-md">
+            <div className="lg:w-[40rem] new-lg:w-[46rem] xl:w-[34rem] 2xl:w-[41rem] flex flex-col items-center gap-[1rem] h-max p-[2rem] bg-white rounded-xl shadow-md">
               {/* Heading */}
-              <div>
+              <div className="w-[100%]">
                 <h1 className="text-[#171717] font-poppins lg:text-[1.5rem] 2xl:text-[1.7rem] font-semibold leading-[2.6rem]">
                   Product Information
                 </h1>
@@ -273,77 +273,86 @@ export const SellerDashboardAddProductSection = memo(() => {
                 {...register("name", { required: true })}
               />
 
-              {/* Price & Compare-at Price */}
-              <div className="flex justify-between gap-[1rem]">
-                {/* Price */}
+              <div className="w-[100%]">
+                {/* Description */}
                 <AddProductLabelInput
-                  error={errors.price?.message}
-                  lableName="Price"
-                  inputType="number"
-                  placeHolder="0.00 Rs."
-                  inputWidthHeight="lg:w-[16.5rem] new-lg:w-[20.5rem] xl:w-[14.5rem] 2xl:w-[17.3125rem] h-[3.1875rem]"
-                  onWheel={handleWheel}
-                  {...register("price", {
+                  tagName="textarea"
+                  error={errors.description?.message}
+                  lableName="Description"
+                  placeHolder="Describe your product in detail..."
+                  {...register("description", {
                     required: true,
-                    valueAsNumber: true,
-                  })}
-                />
-
-                {/* Compare-at Price */}
-                <AddProductLabelInput
-                  error={errors.compareAt?.message}
-                  lableName="Compare-at Price"
-                  inputType="number"
-                  placeHolder="0.00 Rs."
-                  inputWidthHeight="lg:w-[17.5rem] new-lg:w-[20.5rem] xl:w-[14.5rem] 2xl:w-[18.3rem] h-[3.1875rem]"
-                  onWheel={handleWheel}
-                  {...register("compareAt", {
-                    required: true,
-                    valueAsNumber: true,
                   })}
                 />
               </div>
 
-              {/* Description */}
-              <AddProductLabelInput
-                tagName="textarea"
-                error={errors.description?.message}
-                lableName="Description"
-                placeHolder="Describe your product in detail..."
-                {...register("description", {
-                  required: true,
-                })}
-              />
+              {/* Consist of Product Size,Quantity,Price and Compare-at Price */}
+              <div className="flex flex-col gap-[1rem]">
+                {/* Consist of Product Size and Quantity */}
+                <div className="flex justify-between gap-[1rem]">
+                  {/* Product Size */}
+                  <AddProductLabelInput
+                    error={errors.productSize?.message}
+                    lableName="Product Size"
+                    inputType="number"
+                    placeHolder="10 inch"
+                    onWheel={handleWheel}
+                    {...register("productSize", {
+                      required: true,
+                      valueAsNumber: true,
+                    })}
+                  />
 
-              {/* Consist of Product Size and Quantity */}
-              <div className="flex justify-between gap-[1rem]">
-                {/* Product Size */}
-                <AddProductLabelInput
-                  error={errors.productSize?.message}
-                  lableName="Product Size"
-                  inputType="number"
-                  placeHolder="10 inch"
-                  onWheel={handleWheel}
-                  {...register("productSize", {
-                    required: true,
-                    valueAsNumber: true,
-                  })}
-                />
+                  {/* Product Quantity */}
+                  <AddProductLabelInput
+                    error={errors.productQuantity?.message}
+                    lableName="Product Quantity"
+                    inputType="number"
+                    placeHolder="25 in stock"
+                    inputWidthHeight="lg:w-[17rem] new-lg:w-[20rem] xl:w-[13.5rem] 2xl:w-[18.3rem] h-[3.1875rem]"
+                    onWheel={handleWheel}
+                    {...register("productQuantity", {
+                      required: true,
+                      valueAsNumber: true,
+                    })}
+                  />
+                </div>
 
-                {/* Product Quantity */}
-                <AddProductLabelInput
-                  error={errors.productQuantity?.message}
-                  lableName="Product Quantity"
-                  inputType="number"
-                  placeHolder="25 in stock"
-                  inputWidthHeight="lg:w-[17rem] new-lg:w-[20rem] xl:w-[13.5rem] 2xl:w-[18.3rem] h-[3.1875rem]"
-                  onWheel={handleWheel}
-                  {...register("productQuantity", {
-                    required: true,
-                    valueAsNumber: true,
-                  })}
-                />
+                {/* Price & Compare-at Price */}
+                <div className="flex justify-between gap-[1rem]">
+                  {/* Price */}
+                  <AddProductLabelInput
+                    error={errors.price?.message}
+                    lableName="Price"
+                    inputType="number"
+                    placeHolder="0.00 Rs."
+                    inputWidthHeight="lg:w-[16.5rem] new-lg:w-[20.5rem] xl:w-[14.5rem] 2xl:w-[17.3125rem] h-[3.1875rem]"
+                    onWheel={handleWheel}
+                    {...register("price", {
+                      required: true,
+                      valueAsNumber: true,
+                    })}
+                  />
+
+                  {/* Compare-at Price */}
+                  <AddProductLabelInput
+                    error={errors.compareAt?.message}
+                    lableName="Compare-at Price"
+                    inputType="number"
+                    placeHolder="0.00 Rs."
+                    inputWidthHeight="lg:w-[17.5rem] new-lg:w-[20.5rem] xl:w-[14.5rem] 2xl:w-[18.3rem] h-[3.1875rem]"
+                    onWheel={handleWheel}
+                    {...register("compareAt", {
+                      required: true,
+                      valueAsNumber: true,
+                    })}
+                  />
+                </div>
               </div>
+
+              <button className="lg:w-[13rem] lg:h-[3rem] new-lg:w-[14.5rem] new-lg:h-[3.1875rem] rounded-[0.625rem] bg-[#56A430] flex justify-center items-center font-poppins lg:text-[1.1rem] xl:text-[1.2rem] font-medium capitalize text-[#fff]">
+                Add Size
+              </button>
             </div>
 
             {/* Following div consist of drop-zone to upload Images */}

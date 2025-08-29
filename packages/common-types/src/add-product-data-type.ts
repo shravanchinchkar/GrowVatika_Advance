@@ -6,7 +6,12 @@ export const addProductSchema = z
     name: z
       .string()
       .min(2, { message: "Product name must be at least 2 characters" })
-      .max(100, { message: "Product name must not exceed 100 characters" }),
+      .max(50, { message: "Product name must not exceed 50 characters" }),
+    scientificName: z
+      .string()
+      .min(2, { message: "ScientificName name must be at least 2 characters" })
+      .max(50, { message: "ScientificName name must not exceed 50 characters" })
+      .optional(),
 
     price: z
       .number({

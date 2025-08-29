@@ -117,7 +117,7 @@ export const ProductImageDropZone = memo(
                 </div>
 
                 <button
-                  className="lg:w-[13rem] lg:h-[3rem]  new-lg:w-[14.5rem] new-lg:h-[3.1875rem] rounded-[0.625rem] bg-[#56A430] flex justify-center items-center gap-[1rem] text-[#fff] lg:text-[1.1rem] xl:text-[1.22669rem] capitalize font-normal"
+                  className="lg:w-[13rem] lg:h-[3rem] new-lg:w-[14.5rem] new-lg:h-[3.1875rem] rounded-[0.625rem] bg-[#56A430] flex justify-center items-center gap-[1rem] text-[#fff] lg:text-[1.1rem] xl:text-[1.22669rem] capitalize font-normal"
                   type="button"
                 >
                   <div className="lg:w-[1.2rem] lg:h-[1.2rem] new-lg:w-[1.5rem] max-new-lg:h-[1.5rem] relative">

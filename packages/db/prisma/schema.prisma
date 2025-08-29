@@ -45,6 +45,7 @@ model Product {
   seller          Seller  @relation(fields: [sellerId], references: [id])
   sellerId        String
   name            String
+  scientificName  String  @default("")
   price           String
   compareAt       String
   description     String

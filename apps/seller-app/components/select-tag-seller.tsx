@@ -8,7 +8,7 @@ interface ReusableDropdownProps {
   placeholder: string;
   options: string[];
   value: string;
-  onChange: (value: string) => void;
+  onChange: (action: { type: string; payload?: any }) => void;
   required?: boolean;
   className?: string;
   disabled?: boolean;
@@ -41,7 +41,7 @@ export const SelectTagSeller = memo(
     };
 
     const handleSelect = (selectedValue: string) => {
-      onChange(selectedValue);
+      onChange({ type: "SET_VALUE", payload: selectedValue });
       setOpenDropdown(null); // Close dropdown after selection
     };
 

@@ -41,23 +41,30 @@ model Seller {
 }
 
 model Product {
-  id              String  @id @default(uuid())
-  seller          Seller  @relation(fields: [sellerId], references: [id])
-  sellerId        String
-  name            String
-  scientificName  String  @default("")
-  price           String
-  compareAt       String
-  description     String
-  productSize     String
-  productQuantity String
-  imageURL        String
-  collection      String
-  category        String
-  tags            String
-  productStatus   String
-  visibility      String
-  isAdminVerified Boolean @default(false)
+  id                 String               @id @default(uuid())
+  seller             Seller               @relation(fields: [sellerId], references: [id])
+  sellerId           String
+  name               String
+  scientificName     String               @default("")
+  description        String
+  imageURL           String
+  collection         String
+  category           String
+  tags               String
+  productStatus      String
+  visibility         String
+  isAdminVerified    Boolean              @default(false)
+  productSizeVariant ProductSizeVariant[]
+}
+
+model ProductSizeVariant {
+  id        String  @id @default(uuid())
+  product   Product @relation(fields: [productId], references: [id])
+  productId String
+  size      String
+  price     String
+  compareAt String
+  quantity  Int
 }
 
 model GrowVatika_Admin {

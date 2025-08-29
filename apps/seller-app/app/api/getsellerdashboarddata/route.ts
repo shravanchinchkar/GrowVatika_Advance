@@ -59,12 +59,16 @@ export async function GET(req: NextRequest) {
       select: {
         id: true,
         name: true,
-        price: true,
-        compareAt: true,
         collection: true,
         productStatus: true,
-        productSize: true,
-        productQuantity: true,
+        productSizeVariant: {
+          select: {
+            size: true,
+            price: true,
+            compareAt: true,
+            quantity: true,
+          },
+        },
       },
     });
 

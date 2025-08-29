@@ -3,17 +3,18 @@
 import Image from "next/image";
 import { useState } from "react";
 import { useSellerDataStore } from "@repo/shared-store";
-import { useActiveSellerDashboardSideBar } from "@repo/shared-store";
 import { SellerProductData } from "@repo/common-types/types";
-import { useDisplayAddProductSectionStore } from "@repo/shared-store";
 import { useSellerProductDataStore } from "@repo/shared-store";
+import { useActiveSellerDashboardSideBar } from "@repo/shared-store";
+import { useDisplayAddProductSectionStore } from "@repo/shared-store";
+
 export const SellerDashboardProductManagementSection = () => {
   // Following is the Zustand state management code for displaying component depending upon active sidebar
   const { activeSideBar } = useActiveSellerDashboardSideBar();
-  
 
   // Following is the Zustand state management code for displaying add product section
-  const{displayAddProductSection,setVisibilityOfAddProductSection}=useDisplayAddProductSectionStore()
+  const { displayAddProductSection, setVisibilityOfAddProductSection } =
+    useDisplayAddProductSectionStore();
 
   // Following is the Zustand state management code for sellerProductData
   const sellerProductData = useSellerProductDataStore(
@@ -99,7 +100,6 @@ export const SellerDashboardProductManagementSection = () => {
 
           {/* following div consist of search bar, filter section, Newest Section */}
           <div className="text-[#CBD0D3] flex justify-between lg:gap-[1rem] xl:gap-0">
-
             {/* Search Input */}
             <div className="lg:w-[25rem] lg:h-[3rem] xl:w-[30rem] xl:h-[3rem] new-xl:w-[33rem] 2xl:w-[35.375rem] 2xl:h-[3.1875rem] bg-white border-[1.5px] border-[#CBD0D3] rounded-[0.625rem] flex items-center px-[1rem]">
               <div className="relative lg:w-[1.2rem] lg:h-[1.2rem] xl:w-[1.5rem] xl:h-[1.5rem]">
@@ -139,7 +139,6 @@ export const SellerDashboardProductManagementSection = () => {
                 />
               </div>
             </div>
-
           </div>
         </div>
 
@@ -218,10 +217,16 @@ export const SellerDashboardProductManagementSection = () => {
                 {/* Table row 2 Header Section */}
                 <div className="grid lg:grid-cols-[3rem_9rem_9rem_9rem_9em] new-lg:grid-cols-[3rem_10rem_10rem_10rem_10em] xl:grid-cols-[3rem_13rem_13rem_13rem_13em] new-xl:grid-cols-[3rem_14rem_14rem_14rem_14em] 2xl:grid-cols-[3rem_15rem_15rem_15rem_15rem] text-[#697F75] lg:text-[1rem] 2xl:text-[1.1rem]">
                   <div className="self-center"></div>
-                  <div className="flex justify-start items-center pl-[1rem]">Products</div>
-                  <div className="flex justify-center items-center">Collections</div>
+                  <div className="flex justify-start items-center pl-[1rem]">
+                    Products
+                  </div>
+                  <div className="flex justify-center items-center">
+                    Collections
+                  </div>
                   <div className="flex justify-center items-center">Price</div>
-                  <div className="flex justify-center items-center">Inventory</div>
+                  <div className="flex justify-center items-center">
+                    Inventory
+                  </div>
                 </div>
 
                 {/* Product data start from here */}
@@ -243,20 +248,20 @@ export const SellerDashboardProductManagementSection = () => {
                         <p className="self-start text-start">{product.name}</p>
                         {/* Product size if available */}
                         <p className="text-[0.9375rem] self-start text-[#697F75]">
-                          {`${product.productSize}" Pot`}
+                          {`${product.productSizeVariant[0]?.size}" Pot`}
                         </p>
                       </div>
 
                       <div className="self-center">{product.collection}</div>
                       <div className="self-center">
-                        <p>{`₹ ${product.price}`}</p>
+                        <p>{`₹ ${product.productSizeVariant[0]?.price}`}</p>
                         <p className="text-[0.9375rem] line-through text-[#697F75]">
-                          {`₹${product.compareAt}`}
+                          {`₹${product.productSizeVariant[0]?.compareAt}`}
                         </p>
                       </div>
                       <div
-                        className={`self-center ${Number(product.productQuantity) < 10 && "text-[#FF4B4B]"}`}
-                      >{`${product.productQuantity} in stock`}</div>
+                        className={`self-center ${Number(product.productSizeVariant[0]?.quantity) < 10 && "text-[#FF4B4B]"}`}
+                      >{`${product.productSizeVariant[0]?.quantity} in stock`}</div>
                     </div>
                   );
                 })}

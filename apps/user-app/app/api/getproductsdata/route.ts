@@ -41,12 +41,16 @@ export async function GET(
           category: true,
           collection: true,
           name: true,
-          productSize: true,
-          price: true,
-          compareAt: true,
           tags: true,
           imageURL: true,
-          productQuantity: true,
+          productSizeVariant: {
+            select: {
+              price: true,
+              compareAt: true,
+              size: true,
+              quantity: true,
+            },
+          },
         },
         skip: skip, // Skip records based on current page
         take: limit, // Limit the number of records returned
@@ -127,12 +131,16 @@ export async function GET(
           category: true,
           collection: true,
           name: true,
-          productSize: true,
-          price: true,
-          compareAt: true,
           tags: true,
           imageURL: true,
-          productQuantity: true,
+          productSizeVariant: {
+            select: {
+              size: true,
+              price: true,
+              compareAt: true,
+              quantity: true,
+            },
+          },
         },
         skip: skip, // Skip records based on current page
         take: limit, // Limit the number of records returned

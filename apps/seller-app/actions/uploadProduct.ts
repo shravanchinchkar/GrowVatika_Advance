@@ -56,6 +56,14 @@ export async function uploadProduct(
     // Convert FormData to object to validate the input with the schema
     const productData = formDataToObject(formData);
 
+    // Parse productSizeVariant array string to array
+    const variants = productData.productSizeVariant
+      ? JSON.parse(productData.productSizeVariant as string)
+      : [];
+
+    // Inject variants into productData for validation if your validation schema expects it
+    productData.productSizeVariant = variants;
+
     // Validate using existing ProductSchema
     const parsedProduct = validateServerProduct(productData);
 
@@ -115,12 +123,19 @@ export async function uploadProduct(
         category: parsedProduct.data?.category || "",
         visibility: parsedProduct.data?.visibility || "",
         collection: parsedProduct.data?.collection || "",
-        price: parsedProduct.data?.price.toString() || "",
         description: parsedProduct.data?.description || "",
         productStatus: parsedProduct.data?.productStatus || "",
-        compareAt: parsedProduct.data?.compareAt.toString() || "",
-        productSize: parsedProduct.data?.productSize.toString() || "",
-        productQuantity: parsedProduct.data?.productQuantity.toString() || "",
+        productSizeVariant: {
+          create: variants.map((variant: any) => ({
+            size: variant.size.toString(),
+            price: variant.price.toString(),
+            compareAt: variant.compareAt.toString(),
+            quantity: variant.quantity,
+          })),
+        },
+      },
+      include: {
+        productSizeVariant: true,
       },
     });
     if (!uploadProduct) {

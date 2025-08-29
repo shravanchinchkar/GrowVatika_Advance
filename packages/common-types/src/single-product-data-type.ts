@@ -1,14 +1,14 @@
+import { ProductSizeVariant } from "./product-data-type";
+
 export type TSingleProductData = {
-  price: string;
-  compareAt: string;
-  productSize: string;
-  productQuantity: string;
+  id: string;
   name: string;
   description: string;
   imageURL: string;
   category: string;
   collection: string;
   tags: string;
+  productSizeVariant: ProductSizeVariant[];
   seller: {
     nurseryName: string;
     address: string | null;

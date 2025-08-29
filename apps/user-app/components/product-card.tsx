@@ -100,16 +100,16 @@ export const ProductCard = memo(({ productData }: ProductCardProps) => {
 
         {/* Product Size */}
         <p className="text-start text-[#697F75] new-sm:text-[0.56738rem] new-sm-1:text-[0.76738rem] new-sm-3:text-[0.8rem] new-md:text-[0.9375rem] leading-[1.5rem] font-medium">
-          {`Product Size - ${productData.productSize}" Pot`}
+          {`Product Size - ${productData.productSizeVariant[0]?.size}" Pot`}
         </p>
 
         {/* Price Section */}
         <div className="flex items-center gap-2">
           <p className="text-[#56A430] new-sm:text-[0.90781rem] new-sm-1:text-[0.95rem] new-sm-3:text-[1.2rem] new-md:text-[1.4rem] font-semibold leading-[130%]">
-            ₹ {productData.price}
+            ₹ {productData.productSizeVariant[0]?.price}
           </p>
           <p className="text-[#CBD0D3] new-sm:text-[0.7565rem] new-sm-3:text-[1rem] new-md:text-[1.25rem] font-semibold leading-[130%] line-through">
-            ₹ {productData.compareAt}
+            ₹ {productData.productSizeVariant[0]?.compareAt}
           </p>
         </div>
 

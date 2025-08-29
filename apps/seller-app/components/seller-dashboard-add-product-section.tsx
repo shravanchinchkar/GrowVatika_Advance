@@ -2,7 +2,7 @@
 
 import Image from "next/image";
 import toast from "react-hot-toast";
-import { useEffect, useState, memo } from "react";
+import { useEffect, memo, useReducer } from "react";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { SelectTagSeller } from "./select-tag-seller";
 import { toastStyle } from "@repo/shared/utilfunctions";
@@ -11,31 +11,91 @@ import { ButtonLoadingSign } from "@repo/ui/loading-sign";
 import { ApiResponseType } from "@repo/common-types/types";
 import { AddProductLabelInput } from "./add-product-label-input";
 import { ProductImageDropZone } from "./product-image-drop-zone";
-import { useForm, SubmitHandler, Controller } from "react-hook-form";
 import { useDisplayAddProductSectionStore } from "@repo/shared-store";
 import { addProductSchema, TAddProductSchema } from "@repo/common-types/types";
+import {
+  useForm,
+  SubmitHandler,
+  Controller,
+  useFieldArray,
+} from "react-hook-form";
+
+// First, update your reducer to handle size variants
+type SizeVariant = {
+  id: string;
+  productSize: number;
+  productQuantity: number;
+  price: number;
+  compareAt: number;
+};
+
+type AddProductSectionType = {
+  collection: string;
+  category: string;
+  tags: string;
+  productStatus: string;
+  visibilityStatus: string;
+  loading: boolean;
+  sizeVariants: SizeVariant[];
+};
+
+const reducer = (
+  state: AddProductSectionType,
+  action: any
+): AddProductSectionType => {
+  switch (action.type) {
+    case "LOADING_TRUE":
+      return { ...state, loading: true };
+    case "LOADING_FALSE":
+      return { ...state, loading: false };
+    case "INITIAL_STATE":
+      return {
+        ...state,
+        collection: "",
+        category: "",
+        tags: "",
+        productStatus: "Active",
+        visibilityStatus: "Public",
+      };
+    case "EMPTY_COLLECTION":
+      return { ...state, collection: "" };
+    case "SET_CATEGORY":
+      return { ...state, category: action.payload };
+    case "SET_COLLECTION":
+      return { ...state, collection: action.payload };
+    case "SET_TAGS":
+      return { ...state, tags: action.payload };
+    case "SET_PRODUCTSTATUS":
+      return { ...state, productStatus: action.payload };
+    case "SET_VISIBILITY":
+      return { ...state, visibilityStatus: action.payload };
+  }
+  return state;
+};
 
 export const SellerDashboardAddProductSection = memo(() => {
   // Zustand Code
   const { displayAddProductSection, setVisibilityOfAddProductSection } =
     useDisplayAddProductSectionStore();
 
-  // Following state are for Collection dropdown
-  const [collection, setCollection] = useState("");
-
-  // Following state are for Category dropdown
-  const [category, setCategory] = useState("");
-
-  // Following state are for Tags dropdown
-  const [tags, setTags] = useState("");
-
-  // Following State are for Product Status dropdpwn
-  const [productStatus, setProductStatus] = useState("Active");
-
-  // Following State for Visibility dropdpwn
-  const [visibilityStatus, setVisibilityStatus] = useState("Public");
-
-  const [loading, setLoading] = useState(false);
+  // React useReducer hook
+  const [state, dispatch] = useReducer<AddProductSectionType, any>(reducer, {
+    collection: "",
+    category: "",
+    tags: "",
+    productStatus: "Active",
+    visibilityStatus: "Public",
+    loading: false,
+    sizeVariants: [
+      {
+        id: "default",
+        productSize: 0,
+        productQuantity: 0,
+        price: 0,
+        compareAt: 0,
+      },
+    ],
+  });
 
   const {
     control,
@@ -50,34 +110,49 @@ export const SellerDashboardAddProductSection = memo(() => {
       productStatus: "Active",
       visibility: "Public",
       featured: false,
+      productSizeVariant: [
+        {
+          size: 0,
+          quantity: 0,
+          price: 0,
+          compareAt: 0,
+        },
+      ],
     },
   });
 
-  useEffect(() => {
-    setValue("collection", collection);
-  }, [collection, setValue]);
+  // Initialize field array - points to `variants` in your schema
+  const { fields, append, remove } = useFieldArray({
+    control,
+    name: "productSizeVariant",
+  });
 
   useEffect(() => {
-    setValue("category", category);
-    setCollection("");
-  }, [category, setValue]);
+    setValue("collection", state.collection);
+  }, [state.collection, setValue]);
 
   useEffect(() => {
-    setValue("tags", tags);
-  }, [tags, setValue]);
+    setValue("category", state.category);
+    dispatch({ type: "EMPTY_COLLECTION" });
+  }, [state.category, setValue]);
 
   useEffect(() => {
-    setValue("productStatus", productStatus);
-  }, [productStatus, setValue]);
+    setValue("tags", state.tags);
+  }, [state.tags, setValue]);
 
   useEffect(() => {
-    setValue("visibility", visibilityStatus);
-  }, [visibilityStatus, setValue]);
+    setValue("productStatus", state.productStatus);
+  }, [state.productStatus, setValue]);
+
+  useEffect(() => {
+    setValue("visibility", state.visibilityStatus);
+  }, [state.visibilityStatus, setValue]);
 
   const handlePublishProduct: SubmitHandler<TAddProductSchema> = async (
     data
   ) => {
-    setLoading(true);
+    dispatch({ type: "LOADING_TRUE" });
+
     // Create FormData object
     const formData = new FormData();
     // Append all form fields to FormData
@@ -87,40 +162,22 @@ export const SellerDashboardAddProductSection = memo(() => {
     formData.append("category", data.category);
     formData.append("collection", data.collection);
     formData.append("visibility", data.visibility);
-    formData.append("price", data.price.toString()); //number to string
     formData.append("description", data.description);
     formData.append("productStatus", data.productStatus);
-    formData.append("compareAt", data.compareAt.toString()); //number to string
-    formData.append("productSize", data.productSize.toString()); //number to string
     formData.append("featured", (data.featured || false).toString());
-    formData.append("productQuantity", data.productQuantity.toString()); //number to string
+    formData.append(
+      "productSizeVariant",
+      JSON.stringify(data.productSizeVariant)
+    );
+
     try {
       // Hit the backend for product upload
       const res: ApiResponseType = await uploadProduct(formData);
       if (res.success) {
-        // Reset React Hook Form
-        reset({
-          name: "",
-          price: 0,
-          compareAt: 0,
-          description: "",
-          productSize: 0,
-          collection: "",
-          category: "",
-          tags: "",
-          productStatus: "Active",
-          visibility: "Public",
-          productQuantity: 0,
-          featured: false,
-          image: undefined,
-        });
-
+        reset();
+        
         // Reset local state variables
-        setCollection("");
-        setCategory("");
-        setTags("");
-        setProductStatus("Active");
-        setVisibilityStatus("Public");
+        dispatch({ type: "INITIAL_STATE" });
         toast.success("Product Upload Successfully!", toastStyle);
       } else if (!res.success) {
         toast.error("Error while uploading product!", toastStyle);
@@ -129,13 +186,14 @@ export const SellerDashboardAddProductSection = memo(() => {
       console.error("Error uploading product:", error);
       toast.error("Error while uploading product!", toastStyle);
     } finally {
-      setLoading(false);
+      dispatch({ type: "LOADING_FALSE" });
     }
   };
 
   const hideAddProductSection = () => {
     setVisibilityOfAddProductSection(false);
   };
+
   const handleWheel = (e: React.WheelEvent<HTMLInputElement>) => {
     e.currentTarget.blur();
   };
@@ -164,9 +222,6 @@ export const SellerDashboardAddProductSection = memo(() => {
   ];
   const ProductStatus = ["Active", "Draft", "Hidden"];
   const Visibility = ["Public", "Private"];
-
-  console.log("category value is:", category);
-  console.log("collection value is:", collection);
 
   if (displayAddProductSection === true) {
     return (
@@ -221,11 +276,11 @@ export const SellerDashboardAddProductSection = memo(() => {
 
             {/* Publish Product Button */}
             <button
-              className={`lg:w-[11rem] lg:h-[3rem] xl:w-[14.5rem] xl:h-[3.1875rem] rounded-[0.625rem] bg-[#56A430] flex justify-center items-center lg:gap-[0.5rem] xl:gap-4 animate-bg-bounce-in-2 ${!loading ? "cursor-pointer" : "cursor-not-allowed"}`}
+              className={`lg:w-[11rem] lg:h-[3rem] xl:w-[14.5rem] xl:h-[3.1875rem] rounded-[0.625rem] bg-[#56A430] flex justify-center items-center lg:gap-[0.5rem] xl:gap-4 animate-bg-bounce-in-2 ${!state.loading ? "cursor-pointer" : "cursor-not-allowed"}`}
               type="submit"
-              disabled={loading}
+              disabled={state.loading}
             >
-              {!loading ? (
+              {!state.loading ? (
                 <>
                   <div className="relative lg:w-[1.2rem] lg:h-[1.2rem]  xl:w-[1.5rem] xl:h-[1.5rem]">
                     <Image
@@ -273,8 +328,8 @@ export const SellerDashboardAddProductSection = memo(() => {
                 {...register("name", { required: true })}
               />
 
+              {/* Description */}
               <div className="w-[100%]">
-                {/* Description */}
                 <AddProductLabelInput
                   tagName="textarea"
                   error={errors.description?.message}
@@ -287,70 +342,103 @@ export const SellerDashboardAddProductSection = memo(() => {
               </div>
 
               {/* Consist of Product Size,Quantity,Price and Compare-at Price */}
-              <div className="flex flex-col gap-[1rem]">
-                {/* Consist of Product Size and Quantity */}
-                <div className="flex justify-between gap-[1rem]">
-                  {/* Product Size */}
-                  <AddProductLabelInput
-                    error={errors.productSize?.message}
-                    lableName="Product Size"
-                    inputType="number"
-                    placeHolder="10 inch"
-                    onWheel={handleWheel}
-                    {...register("productSize", {
-                      required: true,
-                      valueAsNumber: true,
-                    })}
-                  />
+              {/* Dynamic Size Variants */}
+              <div className="flex flex-col gap-[1rem] w-full">
+                {fields.map((variant, index) => (
+                  <div
+                    key={variant.id}
+                    className="flex flex-col gap-[1rem] p-4 border-[1.5px] border-[#CBD0D3] rounded-lg"
+                  >
+                    <div className="flex justify-between items-center">
+                      <h3 className="text-lg font-medium">
+                        Size Variant {index + 1}
+                      </h3>
+                      {fields.length > 1 && (
+                        <button
+                          type="button"
+                          onClick={() => remove(index)}
+                          className="text-red-500 hover:text-red-700 font-medium"
+                        >
+                          Remove
+                        </button>
+                      )}
+                    </div>
 
-                  {/* Product Quantity */}
-                  <AddProductLabelInput
-                    error={errors.productQuantity?.message}
-                    lableName="Product Quantity"
-                    inputType="number"
-                    placeHolder="25 in stock"
-                    inputWidthHeight="lg:w-[17rem] new-lg:w-[20rem] xl:w-[13.5rem] 2xl:w-[18.3rem] h-[3.1875rem]"
-                    onWheel={handleWheel}
-                    {...register("productQuantity", {
-                      required: true,
-                      valueAsNumber: true,
-                    })}
-                  />
-                </div>
+                    <div className="flex justify-between gap-[1rem]">
+                      {/* Product Size */}
+                      <AddProductLabelInput
+                        lableName="Product Size"
+                        inputType="number"
+                        placeHolder="10 inch"
+                        error={
+                          errors.productSizeVariant?.[index]?.size?.message
+                        }
+                        {...register(`productSizeVariant.${index}.size`, {
+                          required: true,
+                          valueAsNumber: true,
+                        })}
+                        onWheel={handleWheel}
+                      />
+                      {/* Product Quantity */}
+                      <AddProductLabelInput
+                        lableName="Product Quantity"
+                        inputType="number"
+                        placeHolder="25 in stock"
+                        inputWidthHeight="lg:w-[17rem] new-lg:w-[20rem] xl:w-[13.5rem] 2xl:w-[17rem] h-[3.1875rem]"
+                        error={
+                          errors.productSizeVariant?.[index]?.quantity?.message
+                        }
+                        {...register(`productSizeVariant.${index}.quantity`, {
+                          required: true,
+                          valueAsNumber: true,
+                        })}
+                        onWheel={handleWheel}
+                      />
+                    </div>
 
-                {/* Price & Compare-at Price */}
-                <div className="flex justify-between gap-[1rem]">
-                  {/* Price */}
-                  <AddProductLabelInput
-                    error={errors.price?.message}
-                    lableName="Price"
-                    inputType="number"
-                    placeHolder="0.00 Rs."
-                    inputWidthHeight="lg:w-[16.5rem] new-lg:w-[20.5rem] xl:w-[14.5rem] 2xl:w-[17.3125rem] h-[3.1875rem]"
-                    onWheel={handleWheel}
-                    {...register("price", {
-                      required: true,
-                      valueAsNumber: true,
-                    })}
-                  />
-
-                  {/* Compare-at Price */}
-                  <AddProductLabelInput
-                    error={errors.compareAt?.message}
-                    lableName="Compare-at Price"
-                    inputType="number"
-                    placeHolder="0.00 Rs."
-                    inputWidthHeight="lg:w-[17.5rem] new-lg:w-[20.5rem] xl:w-[14.5rem] 2xl:w-[18.3rem] h-[3.1875rem]"
-                    onWheel={handleWheel}
-                    {...register("compareAt", {
-                      required: true,
-                      valueAsNumber: true,
-                    })}
-                  />
-                </div>
+                    <div className="flex justify-between gap-[1rem]">
+                      {/* Product Price */}
+                      <AddProductLabelInput
+                        lableName="Price"
+                        inputType="number"
+                        placeHolder="0.00 Rs."
+                        inputWidthHeight="lg:w-[16.5rem] new-lg:w-[20.5rem] xl:w-[14.5rem] 2xl:w-[17.3125rem] h-[3.1875rem]"
+                        error={
+                          errors.productSizeVariant?.[index]?.price?.message
+                        }
+                        {...register(`productSizeVariant.${index}.price`, {
+                          required: true,
+                          valueAsNumber: true,
+                        })}
+                        onWheel={handleWheel}
+                      />
+                      {/* Product Compare-At Price */}
+                      <AddProductLabelInput
+                        lableName="Compare-at Price"
+                        inputType="number"
+                        placeHolder="0.00 Rs."
+                        inputWidthHeight="lg:w-[17.5rem] new-lg:w-[20.5rem] xl:w-[14.5rem] 2xl:w-[17rem] h-[3.1875rem]"
+                        error={
+                          errors.productSizeVariant?.[index]?.compareAt?.message
+                        }
+                        {...register(`productSizeVariant.${index}.compareAt`, {
+                          required: true,
+                          valueAsNumber: true,
+                        })}
+                        onWheel={handleWheel}
+                      />
+                    </div>
+                  </div>
+                ))}
               </div>
 
-              <button className="lg:w-[13rem] lg:h-[3rem] new-lg:w-[14.5rem] new-lg:h-[3.1875rem] rounded-[0.625rem] bg-[#56A430] flex justify-center items-center font-poppins lg:text-[1.1rem] xl:text-[1.2rem] font-medium capitalize text-[#fff]">
+              <button
+                type="button"
+                className="new-lg:w-[18rem] xl:w-[12rem] 2xl:w-[14rem] h-[3.1875rem] rounded-[0.625rem] bg-[#56A430] flex justify-center items-center font-poppins lg:text-[1.1rem] xl:text-[1.2rem] font-medium capitalize text-[#fff]"
+                onClick={() =>
+                  append({ size: 0, price: 0, compareAt: 0, quantity: 0 })
+                }
+              >
                 Add Size
               </button>
             </div>
@@ -410,8 +498,15 @@ export const SellerDashboardAddProductSection = memo(() => {
                     label="Category"
                     placeholder="Select Category"
                     options={Category}
-                    value={category}
-                    onChange={setCategory}
+                    value={state.category}
+                    onChange={(action) => {
+                      if (action.type === "SET_VALUE") {
+                        dispatch({
+                          type: "SET_CATEGORY",
+                          payload: action.payload,
+                        });
+                      }
+                    }}
                     customKey={"Category"}
                   />
 
@@ -421,22 +516,28 @@ export const SellerDashboardAddProductSection = memo(() => {
                       {errors.collection.message}
                     </div>
                   )}
-                  {/* "Plants", "Pots", "Soil", "Fertilizers" */}
                   <SelectTagSeller
                     label="Collection"
                     placeholder="Select Collection"
                     options={
-                      category === "Plants"
+                      state.category === "Plants"
                         ? PlantCollection
-                        : category === "Pots"
+                        : state.category === "Pots"
                           ? PotCollection
-                          : category === "Soil"
+                          : state.category === "Soil"
                             ? SoilCollection
                             : FertilizersCollection
                     }
-                    value={collection}
-                    onChange={setCollection}
-                    disabled={!category}
+                    value={state.collection}
+                    onChange={(action) => {
+                      if (action.type === "SET_VALUE") {
+                        dispatch({
+                          type: "SET_COLLECTION",
+                          payload: action.payload,
+                        });
+                      }
+                    }}
+                    disabled={!state.category}
                     customKey={"Collection"}
                   />
 
@@ -450,8 +551,15 @@ export const SellerDashboardAddProductSection = memo(() => {
                     label="Tags"
                     placeholder="Add Tags"
                     options={Tags}
-                    value={tags}
-                    onChange={setTags}
+                    value={state.tags}
+                    onChange={(action) => {
+                      if (action.type === "SET_VALUE") {
+                        dispatch({
+                          type: "SET_TAGS",
+                          payload: action.payload,
+                        });
+                      }
+                    }}
                     customKey={"Tags"}
                   />
                 </div>
@@ -474,8 +582,15 @@ export const SellerDashboardAddProductSection = memo(() => {
                 label="Product Status"
                 placeholder="Select Status"
                 options={ProductStatus}
-                value={productStatus}
-                onChange={setProductStatus}
+                value={state.productStatus}
+                onChange={(action) => {
+                  if (action.type === "SET_VALUE") {
+                    dispatch({
+                      type: "SET_PRODUCTSTATUS",
+                      payload: action.payload,
+                    });
+                  }
+                }}
                 customKey={"Product Status"}
               />
 
@@ -489,8 +604,15 @@ export const SellerDashboardAddProductSection = memo(() => {
                 label="Visibility"
                 placeholder="Select Visibility"
                 options={Visibility}
-                value={visibilityStatus}
-                onChange={setVisibilityStatus}
+                value={state.visibilityStatus}
+                onChange={(action) => {
+                  if (action.type === "SET_VALUE") {
+                    dispatch({
+                      type: "SET_VISIBILITY",
+                      payload: action.payload,
+                    });
+                  }
+                }}
                 customKey={"Visibility"}
               />
 

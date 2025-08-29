@@ -1,12 +1,16 @@
+export type ProductSizeVariant = {
+  size: string;
+  price: string;
+  compareAt: string;
+  quantity: number;
+};
+
 export type TProductData = {
   id: string;
   name: string;
   tags: string;
-  price: string;
   imageURL: string;
   category: string;
-  compareAt: string;
   collection: string;
-  productSize: string;
-  productQuantity: string;
+  productSizeVariant: ProductSizeVariant[];
 };

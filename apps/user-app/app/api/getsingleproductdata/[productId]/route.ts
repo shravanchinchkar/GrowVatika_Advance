@@ -26,6 +26,14 @@ export async function GET(
         id: productId || "",
       },
       include: {
+        productSizeVariant: {
+          select: {
+            size: true,
+            price: true,
+            compareAt: true,
+            quantity: true,
+          },
+        },
         seller: {
           select: {
             nurseryName: true,

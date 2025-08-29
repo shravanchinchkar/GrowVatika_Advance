@@ -26,6 +26,7 @@ type SingleProductDataState = {
   productQuantity: number;
   disablePlusButton: boolean;
   singleProductData: TSingleProductData | null;
+  availablePotSizeandPriceIndex: number;
 };
 
 enum DirectionType {
@@ -40,7 +41,6 @@ type LeftRigthArrowProps = {
 type TAvailablePotSizeandPrice = {
   sizeandPrice: string;
   approxSize: string;
-  tag?: string;
 };
 
 type PlusMinusButtonProp = {
@@ -239,6 +239,13 @@ const reducer = (
       return { ...state, disablePlusButton: true };
     case "SET_PRODUCT_DATA":
       return { ...state, productData: action.payload.addToCartData };
+    case "SET_AVAILABLEPOTSIZEANDINDEX":
+      return {
+        ...state,
+        productQuantity: 1,
+        disablePlusButton: false,
+        availablePotSizeandPriceIndex: action.payload,
+      };
     default:
       return state;
   }
@@ -256,6 +263,7 @@ export const SingleProductCard = memo(() => {
     productQuantity: 1,
     singleProductData: null,
     disablePlusButton: false,
+    availablePotSizeandPriceIndex: 0,
   });
 
   const [loading, setLoading] = useState(false);
@@ -290,23 +298,11 @@ export const SingleProductCard = memo(() => {
 
         const beProductData = response.singleProductData;
         setCategory(beProductData.category);
-        const transformData = {
-          ...beProductData,
-          price: beProductData.price ? Number(beProductData.price) : 0,
-          compareAt: beProductData.compareAt
-            ? Number(beProductData.compareAt)
-            : 0,
-          productSize: beProductData.productSize
-            ? Number(beProductData.productSize)
-            : 0,
-          productQuantity: beProductData.productQuantity
-            ? Number(beProductData.productQuantity)
-            : 0,
-        };
+        
         dispatch({
           type: "FETCH_SUCCESS",
           payload: {
-            productData: transformData,
+            productData: beProductData,
           },
         });
       }
@@ -338,11 +334,16 @@ export const SingleProductCard = memo(() => {
 
   //Following are the function call
   const disCount = percentageoff(
-    Number(state.singleProductData?.compareAt),
-    Number(state.singleProductData?.price)
-  );
-  const sizeInFeet = inchesToFeetRange(
-    Number(state.singleProductData?.productSize)
+    Number(
+      state.singleProductData?.productSizeVariant[
+        state.availablePotSizeandPriceIndex
+      ]?.compareAt
+    ),
+    Number(
+      state.singleProductData?.productSizeVariant[
+        state.availablePotSizeandPriceIndex
+      ]?.price
+    )
   );
 
   // Following are objects of type array
@@ -359,13 +360,11 @@ export const SingleProductCard = memo(() => {
     "/assets/images/ExploreBySellerImages/ImagePlaceholder.jpg",
   ];
 
-  const AvailablePotSizeandPrice: TAvailablePotSizeandPrice[] = [
-    {
-      sizeandPrice: `${state.singleProductData?.productSize}" Pot - ₹ ${state.singleProductData?.price}`,
-      approxSize: sizeInFeet,
-      tag: "Best Value",
-    },
-  ];
+  const AvailablePotSizeandPrice: TAvailablePotSizeandPrice[] =
+    state.singleProductData?.productSizeVariant.map((variant) => ({
+      sizeandPrice: `${variant.size}" Pot - ₹ ${variant.price}`,
+      approxSize: inchesToFeetRange(Number(variant.size)),
+    })) || [];
 
   if (!productId || state.error) {
     return (
@@ -486,7 +485,7 @@ export const SingleProductCard = memo(() => {
 
               {/* Pot Size available */}
               <p className="new-sm:text-[0.75rem] new-sm-1:text-[0.9rem] xl:text-[1.2rem] 2xl:text-[1.5rem] text-[#697F75] font-medium">
-                {`Pot - ${state.singleProductData?.productSize || 'Strelitzia Nicolai - 10" Premium Pot'}" Premium Pot`}
+                {`Pot - ${state.singleProductData?.productSizeVariant[state.availablePotSizeandPriceIndex]?.size || 'Strelitzia Nicolai - 10" Premium Pot'}" Premium Pot`}
               </p>
 
               {/* Product Stars and Product review */}
@@ -517,10 +516,10 @@ export const SingleProductCard = memo(() => {
             <div className="flex flex-col gap-[0.5rem]">
               <div className="flex items-center gap-[1rem]">
                 <h1 className="new-sm:text-[1rem] new-sm-1:text-[1.3rem] lg:text-[1.5rem] xl:text-[1.8rem] 2xl:text-[2rem] text-[#56A430] font-semibold">
-                  {`₹ ${state.singleProductData?.price}`}
+                  {`₹ ${state.singleProductData?.productSizeVariant[state.availablePotSizeandPriceIndex]?.price}`}
                 </h1>
                 <h3 className="new-sm:text-[0.625rem] new-sm-1:text-[0.9rem] lg:text-[1rem] xl:text-[1.1rem] 2xl:text-[1.25rem] text-[#697F75] font-normal line-through">
-                  {`₹ ${state.singleProductData?.compareAt}`}
+                  {`₹ ${state.singleProductData?.productSizeVariant[state.availablePotSizeandPriceIndex]?.compareAt}`}
                 </h3>
                 <div className="new-sm:w-[4.26025rem] new-sm:h-[1.44481rem] new-sm-1:w-[6rem] new-sm-1:h-[2rem] 2xl:w-[7.1875rem] 2xl:h-[2.4375rem] bg-[#DBD5A4] new-sm:text-[0.625rem] new-sm-1:text-[0.8rem] xl:text-[0.9rem]  2xl:text-[1rem] text-[#56A430] font-semibold rounded-[5.25rem] flex items-center justify-center">
                   {`Save ${disCount ? disCount : "25%"}%`}
@@ -547,15 +546,22 @@ export const SingleProductCard = memo(() => {
                   return (
                     <button
                       key={index}
-                      className="new-sm:w-[45%] new-sm-1:max-w-[60%] new-sm-3:w-[35%] md:w-[60%] lg:w-[35%] new-sm:h-[4.30581rem] md:h-[5rem] 2xl:h-[5.9375rem] flex flex-col justify-center items-start border-[1.6px] rounded-[0.625rem] border-[#56A430] bg-[#DEFFE0] px-[0.5rem]"
+                      className={`new-sm:w-[45%] new-sm-1:max-w-[60%] new-sm-3:w-[35%] md:w-[60%] lg:w-[35%] new-sm:h-[4.30581rem] md:h-[5rem] 2xl:h-[5.9375rem] flex flex-col justify-center items-start border-[1.6px] rounded-[0.625rem] px-[0.5rem] ${state.availablePotSizeandPriceIndex === index ? "border-[#56A430] bg-[#DEFFE0]" : "border-[#FFF6F4] bg-[#ffffff]"}`}
+                      onClick={(e) => {
+                        e.preventDefault();
+                        dispatch({
+                          type: "SET_AVAILABLEPOTSIZEANDINDEX",
+                          payload: index,
+                        });
+                      }}
                     >
                       <p>{item.sizeandPrice}</p>
                       <p className="md:text-[0.7rem] 2xl:text-[0.9375rem] text-[#697F75] font-normal">
                         {item.approxSize}
                       </p>
-                      {item.tag && (
+                      {index === 0 && (
                         <p className="new-sm:w-[5.167rem]  new-sm:h-[1.17844rem] md:w-[6rem] 2xl:w-[7.125rem] h-[1.625rem] rounded-[5.25rem] bg-[#7FB819] flex justify-center items-center new-sm:text-[0.625rem] md:text-[0.7rem] 2xl:text-[0.875rem] text-[#FFFFFF] font-semibold">
-                          {item.tag}
+                          Best Value
                         </p>
                       )}
                     </button>
@@ -571,7 +577,7 @@ export const SingleProductCard = memo(() => {
                   Quantity:
                 </h1>
 
-                {/* Plus Minus */}
+                {/* Plus and Minus */}
                 <div className="flex w-max bg-[#FFF6F4] rounded-[0.3125rem]">
                   {/* Minus Button */}
                   <PlusMinusButton
@@ -582,14 +588,16 @@ export const SingleProductCard = memo(() => {
                     }
                     disabled={state.productQuantity === 1 && true}
                     onClick={() => {
-                      if (state.singleProductData?.productQuantity) {
+                      if (
+                        state.singleProductData?.productSizeVariant[
+                          state.availablePotSizeandPriceIndex
+                        ]?.quantity
+                      ) {
                         if (state.disablePlusButton) {
                           dispatch({ type: "DISABLED_PLUS_BUTTON" });
-                          // setDisablePlusButton(false);
                         }
                       }
                       dispatch({ type: "DECREASE_PRODUCT_QUANTITY" });
-                      // setProductCount(productCount - 1);
                     }}
                   />
 
@@ -609,10 +617,18 @@ export const SingleProductCard = memo(() => {
                     }
                     disabled={state.disablePlusButton}
                     onClick={() => {
-                      if (state.singleProductData?.productQuantity) {
+                      if (
+                        state.singleProductData?.productSizeVariant[
+                          state.availablePotSizeandPriceIndex
+                        ]?.quantity
+                      ) {
                         if (
                           Number(state.productQuantity) ===
-                          Number(state.singleProductData.productQuantity)
+                          Number(
+                            state.singleProductData.productSizeVariant[
+                              state.availablePotSizeandPriceIndex
+                            ]?.quantity
+                          )
                         ) {
                           dispatch({ type: "ENABLE_PLUS_BUTTON" });
                         } else {
@@ -624,7 +640,7 @@ export const SingleProductCard = memo(() => {
                 </div>
 
                 <div className="new-sm:text-[0.625rem] new-sm-1:text-[0.9rem] lg:text-[1rem] 2xl:text-[1.22669rem] text-[#CBD0D3] font-medium">
-                  {`(${state.singleProductData?.productQuantity} available)`}
+                  {`(${state.singleProductData?.productSizeVariant[state.availablePotSizeandPriceIndex]?.quantity} available)`}
                 </div>
               </div>
 

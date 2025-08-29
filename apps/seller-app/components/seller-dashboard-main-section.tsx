@@ -4,7 +4,6 @@ import axios from "axios";
 import Link from "next/link";
 import toast from "react-hot-toast";
 import Skeleton from "@repo/ui/loading";
-import { SellerData } from "@repo/common-types";
 import { useSearchParams } from "next/navigation";
 import { memo, useEffect, useState } from "react";
 import { toastStyle } from "@repo/shared/utilfunctions";
@@ -19,23 +18,7 @@ export const SellerDashboardMainSection = memo(() => {
   const sellerId = searchParams?.get("id") || "";
   const [loading, setLoading] = useState(true);
 
-  //following data is the dumy data used for testing
-
-  // const dumySellerData:SellerData = {
-  //   nurseryName: "Shravan Chinchkar",
-  //   nurseryBio: "It's a plant nursery",
-  //   phoneNumber: "9527484498",
-  //   address: "Satara,Maharashtra",
-  //   email: "shravanchinchkar@gmail.com",
-  //   businesshours: "Mon-Sat:9Am-6PM,Sun:9Am-4Pm",
-  //   location: "Not Available",
-  //   specialities: ["Food"],
-  //   profilePicture: "https://res.cloudinary.com/drgbt4h1t/image/upload/v1753698065/seller-profile-images/r67zqg9e2etazxdijhq4.jpg",
-  //   profilePictureURL: "https://res.cloudinary.com/drgbt4h1t/image/upload/v1753698065/seller-profile-images/r67zqg9e2etazxdijhq4.jpg",
-  // };
-
   // Following is the Zustand state management code for sellerData
-  const sellerData = useSellerDataStore((state) => state.sellerData);
   const updateSellerData = useSellerDataStore(
     (state) => state.updateSellerData
   );
@@ -55,6 +38,8 @@ export const SellerDashboardMainSection = memo(() => {
           const res = await axios.get(
             `/api/getsellerdashboarddata?id=${encodeURIComponent(sellerId)}`
           );
+          console.log("res sellerProductData:",res.data.sellerProductData);
+          
           updateSellerData({
             email: res.data.sellerData.email,
             address: res.data.sellerData.address,

@@ -34,12 +34,18 @@ export async function GET(
       const { searchParams } = new URL(req.url);
       const tempData = searchParams?.get("isAdminVerified") || "";
       const tempData2 = searchParams?.get("isSuspended") || "";
+      const tempData3 = searchParams?.get("isRemoved") || "";
 
       // Validate boolean parameters
       const isAdminVerified = safeParseBool(tempData);
       const isSuspended = safeParseBool(tempData2);
+      const isRemoved = safeParseBool(tempData3);
 
-      if (isAdminVerified === null || isSuspended === null) {
+      if (
+        isAdminVerified === null ||
+        isSuspended === null ||
+        isRemoved === null
+      ) {
         return NextResponse.json(
           { success: false, error: "Invalid inputs" },
           { status: 400 }
@@ -50,6 +56,7 @@ export async function GET(
         where: {
           isAdminVerified: isAdminVerified,
           isSuspended: isSuspended,
+          isRemoved: isRemoved,
         },
         select: {
           id: true,
@@ -58,13 +65,47 @@ export async function GET(
           fullName: true,
           adminName: true,
           isSuspended: true,
+          isRemoved: true,
           phoneNumber: true,
           nurseryName: true,
           isAdminVerified: true,
           profilePictureURL: true,
         },
       });
-      const nurseryCount = await client.seller.count({});
+      const newNurseries = await client.seller.count({
+        where: {
+          isAdminVerified: false,
+          isSuspended: false,
+          isRemoved:false
+        },
+      });
+      const approvedNurseries = await client.seller.count({
+        where: {
+          isAdminVerified: true,
+          isSuspended: false,
+          isRemoved: false,
+        },
+      });
+      const suspendedNurseries = await client.seller.count({
+        where: {
+          isAdminVerified: true,
+          isSuspended: true,
+          isRemoved: false,
+        },
+      });
+      const removedNurseries = await client.seller.count({
+        where: {
+          isAdminVerified: true,
+          isSuspended: true,
+          isRemoved: true,
+        },
+      });
+      const countOfNurseries = {
+        newNurseries,
+        approvedNurseries,
+        suspendedNurseries,
+        removedNurseries,
+      };
       if (nurseriesData.length === 0) {
         return NextResponse.json(
           {
@@ -79,7 +120,7 @@ export async function GET(
             success: true,
             message: "Data fetch successful!",
             adminNurseriesData: nurseriesData,
-            totalNurseryCount: nurseryCount,
+            countOfNurseries,
           },
           { status: 200 }
         );

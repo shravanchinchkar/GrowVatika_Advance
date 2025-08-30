@@ -31,5 +31,6 @@ export type TAdminDashboardNurseriesData = {
   nurseryName: string;
   isSuspended: boolean;
   isAdminVerified: boolean;
+  isRemoved: boolean;
   profilePictureURL: string | null;
 };

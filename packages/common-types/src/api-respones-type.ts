@@ -25,10 +25,15 @@ export type TApiResponse = {
   message?: string;
   totalPages?: number;
   totalProductsCount?: number;
-  totalNurseryCount?: number;
   productsData?: TProductData[];
   totalFilterProductsCount?: number;
   filterProductsData?: TProductData[];
   singleProductData?: TSingleProductData;
   adminNurseriesData?: TAdminDashboardNurseriesData[];
+  countOfNurseries?: {
+    newNurseries: number;
+    approvedNurseries: number;
+    suspendedNurseries: number;
+    removedNurseries: number;
+  };
 };

@@ -34,6 +34,7 @@ export async function GET(
           seller: {
             isAdminVerified: true,
             isSuspended: false,
+            isRemoved: false,
           },
         },
         select: {
@@ -125,6 +126,11 @@ export async function GET(
         where: {
           productStatus: "Active",
           category: categoryParams,
+          seller: {
+            isAdminVerified: true,
+            isSuspended: false,
+            isRemoved: false,
+          },
         },
         select: {
           id: true,

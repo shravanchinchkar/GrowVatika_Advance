@@ -36,6 +36,7 @@ model Seller {
   adminName         String    @default("")
   isVerified        Boolean   @default(false)
   isSuspended       Boolean   @default(false)
+  isRemoved         Boolean   @default(false)
   profilePictureURL String?
   products          Product[]
 }

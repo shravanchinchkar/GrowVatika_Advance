@@ -20,7 +20,8 @@ export async function PATCH(
     } else {
       const { searchParams } = new URL(req.url);
       const nurseryId = searchParams?.get("nurseryId") || "";
-      if (nurseryId === "") {
+      const tag = searchParams.get("tag");
+      if (nurseryId === "" || tag === "") {
         return NextResponse.json(
           {
             success: false,
@@ -43,21 +44,52 @@ export async function PATCH(
           { status: 404 }
         );
       }
-
-      await client.seller.update({
-        where: {
-          id: nurseryId,
-        },
-        data: {
-          isSuspended: true,
-          adminName: adminSession.user.name,
-        },
-      });
-      
+      if (tag === "launch") {
+        await client.seller.update({
+          where: {
+            id: nurseryId,
+          },
+          data: {
+            isAdminVerified: true,
+            isSuspended: false,
+            isRemoved: false,
+            adminName: adminSession.user.name,
+          },
+        });
+      } else if (tag === "suspend") {
+        await client.seller.update({
+          where: {
+            id: nurseryId,
+          },
+          data: {
+            isAdminVerified: true,
+            isSuspended: true,
+            isRemoved: false,
+            adminName: adminSession.user.name,
+          },
+        });
+      } else if (tag === "remove") {
+        await client.seller.update({
+          where: {
+            id: nurseryId,
+          },
+          data: {
+            isAdminVerified: true,
+            isSuspended: true,
+            isRemoved: true,
+            adminName: adminSession.user.name,
+          },
+        });
+      } else {
+        return NextResponse.json(
+          { success: false, error: "Invalid tag" },
+          { status: 400 }
+        );
+      }
       return NextResponse.json(
         {
           success: true,
-          message: `Nursery of id:${nurseryId} suspended by the growvatik admin ${adminSession.user.name}`,
+          message: `Nursery of id:${nurseryId} removed by the growvatik admin ${adminSession.user.name}`,
         },
         { status: 200 }
       );

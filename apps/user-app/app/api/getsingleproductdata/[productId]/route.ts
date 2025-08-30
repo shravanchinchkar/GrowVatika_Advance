@@ -24,6 +24,11 @@ export async function GET(
     const productData = await client.product.findUnique({
       where: {
         id: productId || "",
+        seller: {
+          isAdminVerified: true,
+          isSuspended: false,
+          isRemoved: false,
+        },
       },
       include: {
         productSizeVariant: {

@@ -3,20 +3,62 @@ import axios from "axios";
 import { Header } from "./header";
 import { useSession } from "next-auth/react";
 import { NurseriesList } from "./nurseries-list";
-import { memo, useEffect, useState } from "react";
 import { TApiResponse } from "@repo/common-types";
+import { memo, useEffect, useReducer, useState } from "react";
 import { useAdminNurseryDataStore } from "@repo/shared-store";
+
+type AdminDashboardType = {
+  activeNurseryType: string;
+  error: string;
+  loading: boolean;
+  countOfNurseries: {
+    newNurseries: number;
+    approvedNurseries: number;
+    suspendedNurseries: number;
+    removedNurseries: number;
+  };
+};
+
+const reducer = (
+  state: AdminDashboardType,
+  action: any
+): AdminDashboardType => {
+  switch (action.type) {
+    case "SET_LOADING_TRUE":
+      return { ...state, loading: true };
+    case "FETCH_SUCCESS":
+      return {
+        ...state,
+        countOfNurseries: action.payload.countOfNurseries,
+        error: action.payload.error,
+      };
+    case "ERROR":
+      return { ...state, error: action.payload.error };
+    case "SET_LOADING_FALSE":
+      return { ...state, loading: false };
+    case "SET_ACTIVE_NURSERY_TYPE":
+      return { ...state, activeNurseryType: action.payload.activeNurseryType };
+    default:
+      return state;
+  }
+};
 
 export const AdminDashboard = memo(() => {
   const session = useSession();
   const adminName: string = session?.data?.user.name || "";
 
-  // Following are all the useState
-  const [activeNurseryType, setActiveNurseryType] =
-    useState("Approved Nurseries");
-  const [error, setError] = useState("");
-  const [loading, setLoading] = useState(true);
-  const [totalNurseryCount, setTotalNurseryCount] = useState(0);
+  // Following is the useReducer hook
+  const [state, dispatch] = useReducer<AdminDashboardType, any>(reducer, {
+    activeNurseryType: "Approved Nurseries",
+    error: "",
+    loading: true,
+    countOfNurseries: {
+      newNurseries: 0,
+      approvedNurseries: 0,
+      suspendedNurseries: 0,
+      removedNurseries: 0,
+    },
+  });
 
   // Following is the zustand state
   const { setNurseriesData } = useAdminNurseryDataStore();
@@ -25,6 +67,7 @@ export const AdminDashboard = memo(() => {
     "New Nurseries",
     "Approved Nurseries",
     "Suspended Nurseries",
+    "Removed Nurseries",
   ];
 
   //  call to the backend
@@ -32,34 +75,47 @@ export const AdminDashboard = memo(() => {
     const getNurseriesData = async () => {
       try {
         let res;
-        setLoading(true);
-        if (activeNurseryType === "New Nurseries") {
+        dispatch({ type: "SET_LOADING_TRUE" });
+        if (state.activeNurseryType === "New Nurseries") {
           res = await axios.get(
-            `/api/admin/getnurseriesdata?isAdminVerified=${false}&isSuspended=${false}`
+            `/api/admin/getnurseriesdata?isAdminVerified=${false}&isSuspended=${false}&isRemoved=${false}`
           );
-        } else if (activeNurseryType === "Approved Nurseries") {
+        } else if (state.activeNurseryType === "Approved Nurseries") {
           res = await axios.get(
-            `/api/admin/getnurseriesdata?isAdminVerified=${true}&isSuspended=${false}`
+            `/api/admin/getnurseriesdata?isAdminVerified=${true}&isSuspended=${false}&isRemoved=${false}`
+          );
+        } else if (state.activeNurseryType === "Removed Nurseries") {
+          res = await axios.get(
+            `/api/admin/getnurseriesdata?isAdminVerified=${true}&isSuspended=${true}&isRemoved=${true}`
           );
         } else {
           res = await axios.get(
-            `/api/admin/getnurseriesdata?isAdminVerified=${true}&isSuspended=${true}`
+            `/api/admin/getnurseriesdata?isAdminVerified=${true}&isSuspended=${true}&isRemoved=${false}`
           );
         }
 
         const temp: TApiResponse = res.data;
-        if (temp.success && temp.adminNurseriesData && temp.totalNurseryCount) {
+        if (temp.success && temp.adminNurseriesData && temp.countOfNurseries) {
           setNurseriesData(temp.adminNurseriesData);
-          setTotalNurseryCount(temp.totalNurseryCount);
-          setError("");
+          dispatch({
+            type: "FETCH_SUCCESS",
+            payload: {
+              countOfNurseries: temp.countOfNurseries,
+              error: "",
+            },
+          });
         } else if (!temp.success && temp.error) {
-          setError(temp.error);
+          dispatch({
+            type: "ERROR",
+            payload: {
+              error: temp.error,
+            },
+          });
         } else {
-          // Handle case where success is true but no data
           setNurseriesData([]);
-          setError("");
+          dispatch({ type: "ERROR", payload: { error: "" } });
         }
-        setLoading(false);
+        dispatch({ type: "SET_LOADING_FALSE" });
       } catch (error) {
         console.log("Error fetching nurseries data:", error);
         // Handle axios errors
@@ -69,21 +125,30 @@ export const AdminDashboard = memo(() => {
               "error.response.data.error:",
               error.response.data.error
             );
-            setError(error.response.data.error);
+            dispatch({
+              type: "ERROR",
+              payload: { error: error.response.data.error },
+            });
           } else {
-            setError(`Request failed: ${error.message}`);
+            dispatch({
+              type: "ERROR",
+              payload: { error: error.message },
+            });
           }
         } else {
-          setError("An unexpected error occurred");
+          dispatch({
+            type: "ERROR",
+            payload: { error: "An unexpected error occurred" },
+          });
         }
-        setLoading(false);
+        dispatch({ type: "SET_LOADING_FALSE" });
       }
     };
     getNurseriesData();
-  }, [setError, setLoading, setNurseriesData, activeNurseryType]);
+  }, [setNurseriesData, state.activeNurseryType]);
 
   const filterButtonStyle =
-    "flex justify-around items-center bg-[#FFFFFF] w-[20%] text-[1.22669rem] text-[#171717] font-medium rounded-[0.3125rem] cursor-pointer capitalize outline-none";
+    "flex justify-around items-center bg-[#FFFFFF] w-[20%] text-[1.22669rem] text-[#171717] font-medium rounded-[0.3125rem] capitalize outline-none";
 
   return (
     <div className="w-[100%] h-[100%] flex flex-col gap-[1rem] items-center pt-[1rem]">
@@ -94,23 +159,39 @@ export const AdminDashboard = memo(() => {
           return (
             <button
               key={index}
-              className={`${filterButtonStyle} ${activeNurseryType === item && "shadow-admindashboard-button-boxShadow"}`}
+              className={`${filterButtonStyle} ${state.activeNurseryType === item && "shadow-admindashboard-button-boxShadow"} ${state.loading?"cursor-not-allowed":"cursor-pointer"}`}
               onClick={() => {
-                setActiveNurseryType(item);
+                dispatch({
+                  type: "SET_ACTIVE_NURSERY_TYPE",
+                  payload: {
+                    activeNurseryType: item,
+                  },
+                });
               }}
+              disabled={state.loading}
             >
               {item}
               <div
-                className={`w-[1rem] h-[1rem] rounded-full ${index === 0 ? "bg-yellow-500" : index === 1 ? "bg-[#56A430]" : "bg-[#FF4B4B]"}`}
-              ></div>
+                className={`w-[1.8rem] h-[1.8rem] rounded-full flex justify-center items-center ${index === 0 ? "bg-orange-500" : index === 1 ? "bg-[#56A430]" : "bg-[#FF4B4B]"} text-[1rem] text-[#FFFFFF] font-medium`}
+              >
+                {index === 0
+                  ? state.countOfNurseries.newNurseries
+                  : index === 1
+                    ? state.countOfNurseries.approvedNurseries
+                    : index === 2
+                      ? state.countOfNurseries.suspendedNurseries
+                      : state.countOfNurseries.removedNurseries}
+              </div>
             </button>
           );
         })}
-        <div className="flex justify-around items-center bg-[#FFFFFF] w-[20%] text-[1.22669rem] text-[#171717] font-medium rounded-[0.3125rem]capitalize outline-none">
-          {`Total ${totalNurseryCount} Collaborations`}
-        </div>
       </div>
-      <NurseriesList loading={loading} error={error} />
+      <NurseriesList
+        loading={state.loading}
+        error={state.error}
+        removedNurseries={state.countOfNurseries.removedNurseries}
+        activeNurseryType={state.activeNurseryType}
+      />
     </div>
   );
 });

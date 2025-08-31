@@ -4,6 +4,7 @@ import { Header } from "./header";
 import { useSession } from "next-auth/react";
 import { NurseriesList } from "./nurseries-list";
 import { TApiResponse } from "@repo/common-types";
+import { useCountOfNurseries } from "@repo/shared-store";
 import { memo, useEffect, useReducer, useState } from "react";
 import { useAdminNurseryDataStore } from "@repo/shared-store";
 
@@ -11,12 +12,6 @@ type AdminDashboardType = {
   activeNurseryType: string;
   error: string;
   loading: boolean;
-  countOfNurseries: {
-    newNurseries: number;
-    approvedNurseries: number;
-    suspendedNurseries: number;
-    removedNurseries: number;
-  };
 };
 
 const reducer = (
@@ -29,7 +24,6 @@ const reducer = (
     case "FETCH_SUCCESS":
       return {
         ...state,
-        countOfNurseries: action.payload.countOfNurseries,
         error: action.payload.error,
       };
     case "ERROR":
@@ -52,16 +46,11 @@ export const AdminDashboard = memo(() => {
     activeNurseryType: "Approved Nurseries",
     error: "",
     loading: true,
-    countOfNurseries: {
-      newNurseries: 0,
-      approvedNurseries: 0,
-      suspendedNurseries: 0,
-      removedNurseries: 0,
-    },
   });
 
   // Following is the zustand state
   const { setNurseriesData } = useAdminNurseryDataStore();
+  const { countOfNurseries, setCountOfNurseries } = useCountOfNurseries();
 
   const FilterButtonName = [
     "New Nurseries",
@@ -97,10 +86,10 @@ export const AdminDashboard = memo(() => {
         const temp: TApiResponse = res.data;
         if (temp.success && temp.adminNurseriesData && temp.countOfNurseries) {
           setNurseriesData(temp.adminNurseriesData);
+          setCountOfNurseries(temp.countOfNurseries);
           dispatch({
             type: "FETCH_SUCCESS",
             payload: {
-              countOfNurseries: temp.countOfNurseries,
               error: "",
             },
           });
@@ -159,7 +148,7 @@ export const AdminDashboard = memo(() => {
           return (
             <button
               key={index}
-              className={`${filterButtonStyle} ${state.activeNurseryType === item && "shadow-admindashboard-button-boxShadow"} ${state.loading?"cursor-not-allowed":"cursor-pointer"}`}
+              className={`${filterButtonStyle} ${state.activeNurseryType === item && "shadow-admindashboard-button-boxShadow"} ${state.loading ? "cursor-not-allowed" : "cursor-pointer"}`}
               onClick={() => {
                 dispatch({
                   type: "SET_ACTIVE_NURSERY_TYPE",
@@ -172,15 +161,15 @@ export const AdminDashboard = memo(() => {
             >
               {item}
               <div
-                className={`w-[1.8rem] h-[1.8rem] rounded-full flex justify-center items-center ${index === 0 ? "bg-orange-500" : index === 1 ? "bg-[#56A430]" : "bg-[#FF4B4B]"} text-[1rem] text-[#FFFFFF] font-medium`}
+                className={`w-[1.8rem] h-[1.8rem] rounded-full flex justify-center items-center ${index === 0 ? "bg-orange-500" : index === 1 ? "bg-[#56A430]" : index === 2 ? "bg-yellow-500" : "bg-[#FF4B4B]"} text-[1rem] text-[#FFFFFF] font-medium`}
               >
                 {index === 0
-                  ? state.countOfNurseries.newNurseries
+                  ? countOfNurseries.newNurseries
                   : index === 1
-                    ? state.countOfNurseries.approvedNurseries
+                    ? countOfNurseries.approvedNurseries
                     : index === 2
-                      ? state.countOfNurseries.suspendedNurseries
-                      : state.countOfNurseries.removedNurseries}
+                      ? countOfNurseries.suspendedNurseries
+                      : countOfNurseries.removedNurseries}
               </div>
             </button>
           );
@@ -189,7 +178,7 @@ export const AdminDashboard = memo(() => {
       <NurseriesList
         loading={state.loading}
         error={state.error}
-        removedNurseries={state.countOfNurseries.removedNurseries}
+        removedNurseries={countOfNurseries.removedNurseries}
         activeNurseryType={state.activeNurseryType}
       />
     </div>

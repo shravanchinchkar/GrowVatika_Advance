@@ -86,10 +86,45 @@ export async function PATCH(
           { status: 400 }
         );
       }
+      const newNurseries = await client.seller.count({
+        where: {
+          isAdminVerified: false,
+          isSuspended: false,
+          isRemoved: false,
+        },
+      });
+      const approvedNurseries = await client.seller.count({
+        where: {
+          isAdminVerified: true,
+          isSuspended: false,
+          isRemoved: false,
+        },
+      });
+      const suspendedNurseries = await client.seller.count({
+        where: {
+          isAdminVerified: true,
+          isSuspended: true,
+          isRemoved: false,
+        },
+      });
+      const removedNurseries = await client.seller.count({
+        where: {
+          isAdminVerified: true,
+          isSuspended: true,
+          isRemoved: true,
+        },
+      });
+      const countOfNurseries = {
+        newNurseries,
+        approvedNurseries,
+        suspendedNurseries,
+        removedNurseries,
+      };
       return NextResponse.json(
         {
           success: true,
           message: `Nursery of id:${nurseryId} removed by the growvatik admin ${adminSession.user.name}`,
+          countOfNurseries,
         },
         { status: 200 }
       );

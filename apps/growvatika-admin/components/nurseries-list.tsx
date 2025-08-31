@@ -7,7 +7,11 @@ import Skeleton from "@repo/ui/loading";
 import { TApiResponse } from "@repo/common-types";
 import { toastStyle } from "@repo/shared/utilfunctions";
 import { ButtonLoadingSign } from "@repo/ui/loading-sign";
-import { useAdminNurseryDataStore } from "@repo/shared-store";
+import {
+  useAdminNurseryDataStore,
+  useCountOfNurseries,
+} from "@repo/shared-store";
+import { useRemoveNurseryMessageStore } from "@repo/shared-store";
 
 type TNurseriesList = {
   loading: boolean;
@@ -24,12 +28,16 @@ type TNurseryId = {
 
 export const NurseriesList = memo(
   ({ loading, error, removedNurseries, activeNurseryType }: TNurseriesList) => {
-    const { nurseriesData, setNurseriesData } = useAdminNurseryDataStore();
     const [selectedNurseryId, setSelectedNurseryId] = useState<TNurseryId>({
       launchingNurseryId: "",
       suspendingNurseryId: "",
       removingNurseryId: "",
     });
+
+    // zustand states
+    const { setCountOfNurseries } = useCountOfNurseries();
+    const { setMessage } = useRemoveNurseryMessageStore();
+    const { nurseriesData, setNurseriesData } = useAdminNurseryDataStore();
 
     // Approve Nursery
     const handleApproveNursery = async (
@@ -49,11 +57,14 @@ export const NurseriesList = memo(
         );
         const tempData: TApiResponse = res.data;
 
-        if (tempData.success) {
+        if (tempData.success && tempData.countOfNurseries) {
           const updatedNurseryData = nurseriesData.filter((nursery) => {
             return nursery.id !== nurseryId;
           });
           setNurseriesData(updatedNurseryData);
+          setCountOfNurseries(tempData.countOfNurseries);
+
+          console.log(tempData.countOfNurseries);
           toast.success("Nursery approved by admin!", toastStyle);
         }
       } catch (error) {
@@ -82,11 +93,12 @@ export const NurseriesList = memo(
           `/api/admin/actiononnursery?nurseryId=${nurseryId}&tag=${tag}`
         );
         const tempData: TApiResponse = res.data;
-        if (tempData.success) {
+        if (tempData.success && tempData.countOfNurseries) {
           const updatedNurseryData = nurseriesData.filter((nursery) => {
             return nursery.id !== nurseryId;
           });
           setNurseriesData(updatedNurseryData);
+          setCountOfNurseries(tempData.countOfNurseries);
           toast.success("Nursery Suspended by admin!", toastStyle);
         }
       } catch (error) {
@@ -96,38 +108,6 @@ export const NurseriesList = memo(
       setSelectedNurseryId({
         ...selectedNurseryId,
         suspendingNurseryId: "",
-      });
-    };
-
-    const handleRemoveNursery = async (
-      e: React.MouseEvent<HTMLButtonElement>,
-      nurseryId: string,
-      tag: string
-    ) => {
-      e.preventDefault();
-      try {
-        setSelectedNurseryId({
-          ...selectedNurseryId,
-          removingNurseryId: nurseryId,
-        });
-        const res = await axios.patch(
-          `/api/admin/actiononnursery?nurseryId=${nurseryId}&tag=${tag}`
-        );
-        const tempData: TApiResponse = res.data;
-        if (tempData.success) {
-          const updatedNurseryData = nurseriesData.filter((nursery) => {
-            return nursery.id !== nurseryId;
-          });
-          setNurseriesData(updatedNurseryData);
-          toast.success("Nursery Removed by admin!", toastStyle);
-        }
-      } catch (error) {
-        console.error("Error while removing nursery", error);
-        toast.error("Error while removing nursery", toastStyle);
-      }
-      setSelectedNurseryId({
-        ...selectedNurseryId,
-        removingNurseryId: "",
       });
     };
 
@@ -178,7 +158,9 @@ export const NurseriesList = memo(
               className="w-[100%] flex border-b-[1px] border-[#0000001A]"
             >
               {/* Nursery Image and content */}
-              <div className={`w-[70%] min-h-[35%] max-h-max flex items-center justify-between pl-[1.5rem] py-[0.5rem]  cursor-pointer ${activeNurseryType !== "Removed Nurseries" && removedNurseries > 0 ?"border-r-[1px] border-[#0000001A]":""}`}>
+              <div
+                className={`w-[70%] min-h-[35%] max-h-max flex items-center justify-between pl-[1.5rem] py-[0.5rem]  cursor-pointer ${activeNurseryType !== "Removed Nurseries" && removedNurseries > 0 ? "border-r-[1px] border-[#0000001A]" : ""}`}
+              >
                 {/* Nursery Image */}
                 <div className="relative w-[15%] h-[80%] rounded-[100%] overflow-hidden">
                   <Image
@@ -293,7 +275,14 @@ export const NurseriesList = memo(
                                 : "cursor-not-allowed"
                         }`}
                         onClick={(e) => {
-                          handleRemoveNursery(e, nursery.id, "remove");
+                          e.preventDefault();
+                          const newMessage = {
+                            display: true,
+                            nurseryId: nursery.id,
+                            nurseryName: nursery.nurseryName,
+                            tag: "remove",
+                          };
+                          setMessage(newMessage);
                         }}
                         disabled={
                           (nursery.isAdminVerified &&

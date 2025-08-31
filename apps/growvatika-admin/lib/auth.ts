@@ -69,11 +69,11 @@ export const NEXT_AUTH = {
             },
           });
           if (!adminExists) {
-            console.error("User doesn't exists");
+            console.error("Admin doesn't exists");
             throw new Error(
               JSON.stringify({
                 success: false,
-                error: "User doesn't exist",
+                error: "Admin doesn't exist",
                 status: "404",
               })
             );

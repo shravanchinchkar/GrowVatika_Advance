@@ -123,7 +123,7 @@ export async function PATCH(
       return NextResponse.json(
         {
           success: true,
-          message: `Nursery of id:${nurseryId} removed by the growvatik admin ${adminSession.user.name}`,
+          message: `Nursery of id:${nurseryId} ${tag} by the growvatik admin ${adminSession.user.name}`,
           countOfNurseries,
         },
         { status: 200 }

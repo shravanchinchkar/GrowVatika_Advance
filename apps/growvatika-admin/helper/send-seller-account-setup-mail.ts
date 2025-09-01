@@ -1,21 +1,24 @@
 import { v4 as uuidv4 } from "uuid";
 import { resend } from "../lib/resend";
 import { ApiResponseType } from "@repo/common-types/types";
-import  VerificationEmail from "@repo/email-template/email-verification-mail-template"
+import SellerAccountSetupMail from "@repo/email-template/seller-account-setup-mail-template";
 
-export async function sendVerificationEmail(
+export async function sellerAccountSetupEmail(
   name: string,
-  email: string,
-  verifyCode: string
+  email: string
 ): Promise<ApiResponseType> {
   try {
     const { data, error } = await resend.emails.send({
       from: "GrowVatika Support <support@growvatika.live>",
       to: email,
       subject: "Your GrowVatika Verification Code",
-      react: VerificationEmail({ name, verifyCode }),
-      text: `Hello ${name},Thank you for registering with GrowVatika. To complete your account setup, please verify your email address using this verification code: ${verifyCode}
-      This code is valid for 2 minutes.
+      react: SellerAccountSetupMail({ name, email }),
+      text: `Hello ${name}, Thankyou for collaborating with GrowVatika.The GrowVatika team has verified you details successfully. To complete your seller account setup, please follow the below mentioned steps:
+      Step 1: Copy and past the below link in tablet,laptop or desktop only.
+      Step 2: Setup your password and click on Create Account button.Wait until the email verification page opens.
+      Step 3: Verify your email by entering the OTP sent to your register email Id.Wait until the signin page opens.
+      Step 4: Signin using the email and password.Wait until the seller dashboard opens.
+      Step 5: Fill all the required details in the seller dashboard to start publishing your products.
       Best Regards,
       GrowVatika Team
       https://growvatika.live`,
@@ -29,7 +32,6 @@ export async function sendVerificationEmail(
         },
       ],
     });
-
     if (error) {
       console.error("Resend API Error:", {
         errorMessage: error.message,
@@ -45,9 +47,9 @@ export async function sendVerificationEmail(
       recipient: email,
       timestamp: new Date().toISOString(),
     });
-    return { success: true, message: "Verification mail Send Successfully" };
-  } catch (emailError) {
-    console.error("Error Sending Verification Email!", emailError);
+    return { success: true, message: "Account setup mail Send Successfully" };
+  } catch (error) {
+    console.error("Error Sending account setup Email!", error);
     return { success: false, message: "Failed to send verification email" };
   }
 }

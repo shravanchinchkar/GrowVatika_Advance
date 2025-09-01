@@ -1,7 +1,6 @@
 import { v4 as uuidv4 } from "uuid";
 import { resend } from "../lib/resend";
 import { ApiResponseType } from "@repo/common-types/types";
-// import SignInEmailTemplate from "@/emails/signin-successful-mail-template";
 import SignInEmailTemplate from "@repo/email-template/signin-successful-mail-template";
 
 interface SignInSuccessfulProps {

@@ -12,11 +12,11 @@ import {
 } from "@react-email/components";
 
 interface GrowVatikaSellerAccountSetUp {
-  name: string;
+  nurseryName: string;
   email: string;
 }
 
-const SellerAccountSetupMail = ({ name, email }: GrowVatikaSellerAccountSetUp) => {
+const SellerAccountSetupMail = ({ nurseryName, email }: GrowVatikaSellerAccountSetUp) => {
   const mainColor = "#2e7d32"; // Forest green color
   const backgroundColor = "#f5f5f5";
   const textColor = "#333333";
@@ -74,7 +74,7 @@ const SellerAccountSetupMail = ({ name, email }: GrowVatikaSellerAccountSetUp) =
                 marginBottom: "20px",
               }}
             >
-              Congratulations , {name}!
+              Congratulations , {nurseryName}!
             </Heading>
 
             <Text

@@ -4,16 +4,16 @@ import { ApiResponseType } from "@repo/common-types/types";
 import SellerAccountSetupMail from "@repo/email-template/seller-account-setup-mail-template";
 
 export async function sellerAccountSetupEmail(
-  name: string,
+  nurseryName: string,
   email: string
 ): Promise<ApiResponseType> {
   try {
     const { data, error } = await resend.emails.send({
       from: "GrowVatika Support <support@growvatika.live>",
       to: email,
-      subject: "Your GrowVatika Verification Code",
-      react: SellerAccountSetupMail({ name, email }),
-      text: `Hello ${name}, Thankyou for collaborating with GrowVatika.The GrowVatika team has verified you details successfully. To complete your seller account setup, please follow the below mentioned steps:
+      subject: "Your GrowVatika Seller Account Setup",
+      react: SellerAccountSetupMail({ nurseryName, email }),
+      text: `Hello ${nurseryName}, Thankyou for collaborating with GrowVatika.The GrowVatika team has verified you details successfully. To complete your seller account setup, please follow the below mentioned steps:
       Step 1: Copy and past the below link in tablet,laptop or desktop only.
       Step 2: Setup your password and click on Create Account button.Wait until the email verification page opens.
       Step 3: Verify your email by entering the OTP sent to your register email Id.Wait until the signin page opens.

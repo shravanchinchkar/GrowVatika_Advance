@@ -3,6 +3,7 @@ import { NEXT_AUTH } from "@/lib/auth";
 import { getServerSession } from "next-auth";
 import { TApiResponse } from "@repo/common-types";
 import { NextRequest, NextResponse } from "next/server";
+import { sellerAccountSetupEmail } from "@/helper/send-seller-account-setup-mail";
 
 export async function PATCH(
   req: NextRequest
@@ -35,6 +36,7 @@ export async function PATCH(
           id: nurseryId,
         },
       });
+      // throw error if there is not existing nursery with the requested id
       if (!existingNursery) {
         return NextResponse.json(
           {
@@ -44,25 +46,56 @@ export async function PATCH(
           { status: 404 }
         );
       }
+
       if (tag === "launch") {
-        await client.seller.update({
-          where: {
-            id: nurseryId,
-          },
-          data: {
-            isAdminVerified: true,
-            isSuspended: false,
-            isRemoved: false,
-            adminName: adminSession.user.name,
-          },
-        });
+        // execute the following block only if the nursery is new.
+        if (!existingNursery.isAdminVerified) {
+          await client.seller.update({
+            where: {
+              id: existingNursery.id,
+            },
+            data: {
+              isAdminVerified: true,
+              adminName: adminSession.user.name,
+            },
+          });
+
+          const emailResponse = await sellerAccountSetupEmail(
+            existingNursery.nurseryName,
+            existingNursery.email
+          );
+
+          // If error while sending email
+          if (!emailResponse.success) {
+            console.error(
+              "Error while sending email to the new nursery:",
+              emailResponse.message
+            );
+            return NextResponse.json({
+              success: false,
+              error: `New nursery is verified by the admin ${adminSession.user.name},but error while sending email`,
+            });
+          }
+        }
+        // execute the following bock if the nursery is not new
+        else {
+          await client.seller.update({
+            where: {
+              id: existingNursery.id,
+            },
+            data: {
+              isSuspended: false,
+              isRemoved: false,
+              adminName: adminSession.user.name,
+            },
+          });
+        }
       } else if (tag === "suspend") {
         await client.seller.update({
           where: {
-            id: nurseryId,
+            id: existingNursery.id,
           },
           data: {
-            isAdminVerified: true,
             isSuspended: true,
             isRemoved: false,
             adminName: adminSession.user.name,
@@ -71,10 +104,9 @@ export async function PATCH(
       } else if (tag === "remove") {
         await client.seller.update({
           where: {
-            id: nurseryId,
+            id: existingNursery.id,
           },
           data: {
-            isAdminVerified: true,
             isSuspended: true,
             isRemoved: true,
             adminName: adminSession.user.name,

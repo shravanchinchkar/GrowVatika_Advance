@@ -1,4 +1,5 @@
 "use client";
+import axios from "axios";
 import { useState } from "react";
 import { toast } from "react-hot-toast";
 import { signIn } from "next-auth/react";
@@ -9,14 +10,21 @@ import { AuthButton } from "@repo/ui/auth-button";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { toastStyle } from "@repo/shared/utilfunctions";
 import { LabelInput, FormType } from "@repo/ui/label-input";
-import { adminSigninSchema, TAdminSigninSchema } from "@repo/common-types";
+import { sendResetPassword } from "@/helper/send-reset-password-mail";
+import {
+  adminSigninSchema,
+  TAdminSigninSchema,
+  TApiResponse,
+} from "@repo/common-types";
 
 export const AdminSignin = () => {
   const router = useRouter();
   const [loading, setLoading] = useState(false);
+  const [loadingResetPassword, setLoadingResetPassword] = useState(false);
   const {
     register,
     setValue,
+    getValues,
     handleSubmit,
     formState: { errors },
   } = useForm<TAdminSigninSchema>({
@@ -24,7 +32,7 @@ export const AdminSignin = () => {
     defaultValues: { email: "", password: "" },
   });
 
-
+  // handle admin signin
   const handleAdminSignin = async (data: TAdminSigninSchema) => {
     setLoading(true);
     const res = await signIn("credentials", {
@@ -63,6 +71,44 @@ export const AdminSignin = () => {
       }
     }
   };
+
+  // handle admin resetpassword
+  const handleAdminResetPassword = async () => {
+    try {
+      setLoadingResetPassword(true);
+      const email = getValues("email");
+      if (email === "") {
+        toast.error("Invalid email", toastStyle);
+      } else {
+        const res = await axios.post("/api/admin/sendresetpasswordemail", {
+          email,
+        });
+        const responseData: TApiResponse = res.data;
+        if (responseData.success) {
+          toast.success("Reset Password Email send", toastStyle);
+        } else {
+          toast.error("Error sending Reset Password Email", toastStyle);
+          console.error("Error:", responseData.error);
+        }
+      }
+      setLoadingResetPassword(false);
+    } catch (error) {
+      console.error("Error while sending resetpassword email:", error);
+      // Handle axios errors
+      if (axios.isAxiosError(error)) {
+        if (error.response?.data?.error) {
+          console.error("error:", error.response.data.error);
+          toast.error(error.response.data.error, toastStyle);
+        } else {
+          toast.error(error.message, toastStyle);
+        }
+      } else {
+        toast.error("An unexpected error occurred", toastStyle);
+      }
+      setLoadingResetPassword(false);
+    }
+  };
+
   return (
     <div className="w-[100%] h-[100%] flex flex-col gap-[1rem] justify-center items-center">
       <div className="w-[35%] h-[60%] rounded-[1.6rem] border-[1px] border-[#56A430] bg-[#ffffff] flex flex-col items-start p-[1rem]">
@@ -79,7 +125,8 @@ export const AdminSignin = () => {
           onSubmit={handleSubmit(handleAdminSignin)}
           className="w-[100%] h-[70%] flex flex-col gap-[1rem] justify-center items-center px-[1rem]"
         >
-          <div className="w-[100%]">
+          {/* Email*/}
+          <div className="w-[100%] min-h-[3rem] max-h-max">
             {errors.email && (
               <div className="w-[90%] new-sm:text-[0.875rem] md:text-[1rem] px-[1rem] text-red-500 font-bold">
                 {errors.email.message}
@@ -92,7 +139,8 @@ export const AdminSignin = () => {
               {...register("email")}
             />
           </div>
-          <div className="w-[100%]">
+          {/* Password */}
+          <div className="w-[100%] min-h-[3rem] max-h-max">
             {errors.password && (
               <div className="w-[90%] new-sm:text-[0.875rem] md:text-[1rem] px-[1rem] text-red-500 font-bold">
                 {errors.password.message}
@@ -104,6 +152,15 @@ export const AdminSignin = () => {
               placeHolder="Enter your password here"
               {...register("password")}
             />
+          </div>
+          <div className="w-[100%] flex justify-end items-center">
+            <button
+              className="text-[1.25rem] text-[#123524] font-semibold"
+              type="button"
+              onClick={handleAdminResetPassword}
+            >
+              {`${loadingResetPassword ? "Loading..." : "Forgot password?"}`}
+            </button>
           </div>
           <div className="w-[100%] h-[25%]">
             <AuthButton buttonName="Sign in" type="submit" loading={loading} />

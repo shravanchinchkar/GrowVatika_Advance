@@ -1,4 +1,3 @@
-import React from "react";
 import {
   Body,
   Container,
@@ -11,7 +10,22 @@ import {
   Hr,
 } from "@react-email/components";
 
-const ResetPasswordMailTemplate = ({ email }: { email: string }) => {
+export enum AccountType {
+  "USER",
+  "SELLER",
+  "ADMIN",
+}
+type TResetPasswordMailTemplate = {
+  email: string;
+  accountType: AccountType;
+  id: string;
+};
+
+const ResetPasswordMailTemplate = ({
+  email,
+  accountType,
+  id,
+}: TResetPasswordMailTemplate) => {
   // Access environment variable to determine environment
   const isProduction = process.env.NODE_ENV === "production";
 
@@ -20,7 +34,8 @@ const ResetPasswordMailTemplate = ({ email }: { email: string }) => {
       ? process.env.RESET_PASSWORD_DEVELOPMENT_URL
       : process.env.RESET_PASSWORD_PRODUCTION_URL;
 
-  const resetUrl = `${baseUrl}/resetpassword?email=${encodeURIComponent(email)}`;
+  // const resetUrl = `${baseUrl}/resetpassword?email=${encodeURIComponent(email)}`;
+  const resetUrl = `${baseUrl}/resetpassword?id=${id}`;
 
   const brandTitle = {
     fontSize: "30px",
@@ -112,7 +127,12 @@ const ResetPasswordMailTemplate = ({ email }: { email: string }) => {
                 marginBottom: "25px",
               }}
             >
-              We received a request to reset the password for your Growvatika
+              We received a request to reset the password for your Growvatika{" "}
+              {accountType === AccountType.SELLER
+                ? "Seller"
+                : accountType === AccountType.ADMIN
+                  ? "Admin"
+                  : "User"}{" "}
               account associated with <strong>{email}</strong>. If you didn't
               make this request, you can safely ignore this email.
             </p>

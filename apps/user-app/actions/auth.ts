@@ -8,7 +8,7 @@ import { getExpiryDate } from "@repo/shared/utilfunctions";
 import { generateVerifyCode } from "@repo/shared/utilfunctions";
 import { authRateLimit, getStartedFromLimit } from "../lib/rate-limit";
 import { sendVerificationEmail } from "../helper/send-verification-mail";
-import { sendResendPasswordMail } from "../helper/send-reset-password-mail";
+import { sendResetPassword } from "../helper/send-reset-password-mail";
 import { getCurrentFormattedDateTimeString } from "@repo/shared/utilfunctions";
 import { successfulCollaboration } from "../helper/send-successful-collaboration-mail";
 import {
@@ -170,9 +170,7 @@ export async function resetPasswordEmail(
     return { success: false, error: "Invalid Email" };
   } else {
     try {
-      const emailResponse = await sendResendPasswordMail(
-        validateInput.data || ""
-      );
+      const emailResponse = await sendResetPassword(validateInput.data || "");
       // If error while sending email
       if (!emailResponse.success) {
         return { success: false, error: emailResponse.message };

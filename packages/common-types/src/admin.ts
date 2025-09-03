@@ -24,8 +24,21 @@ export const adminSigninSchema = z.object({
     .min(6, { message: "Password must be atleast of 6 characters" }),
 });
 
+export const adminResetPasswordSchema = z.object({
+  email: z.string().email(),
+  newPassword: z
+    .string()
+    .min(6, { message: "Password must be atleast of 6 characters" }),
+  confirmNewPassword: z
+    .string()
+    .min(6, { message: "Password must be atleast of 6 characters" }),
+});
+
 export type TAdminSignupSchema = z.infer<typeof adminSignupSchema>;
 export type TAdminSigninSchema = z.infer<typeof adminSigninSchema>;
+export type TAdminResetPasswordSchema = z.infer<
+  typeof adminResetPasswordSchema
+>;
 
 export type TAdminDashboardNurseriesData = {
   id: string;

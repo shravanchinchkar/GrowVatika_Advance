@@ -6,7 +6,8 @@ import ResetPasswordMailTemplate, {
 } from "@repo/email-template/reset-password-mail-template";
 
 export async function sendResetPassword(
-  email: string
+  email: string,
+  id: string
 ): Promise<ApiResponseType> {
   try {
     const { data, error } = await resend.emails.send({
@@ -15,7 +16,8 @@ export async function sendResetPassword(
       subject: "Reset Password link for your growvatika account",
       react: ResetPasswordMailTemplate({
         email,
-        accountType: AccountType.SELLER,
+        accountType: AccountType.ADMIN,
+        id,
       }),
       headers: {
         "X-Entity-Ref-ID": uuidv4(),

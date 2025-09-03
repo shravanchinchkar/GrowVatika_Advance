@@ -1,5 +1,7 @@
 import bcrypt from "bcrypt";
 import client from "@repo/db/client";
+import { NEXT_AUTH } from "@/lib/auth";
+import { getServerSession } from "next-auth";
 import { NextRequest, NextResponse } from "next/server";
 import { adminSignupSchema, TApiResponse } from "@repo/common-types/types";
 
@@ -7,8 +9,20 @@ export async function POST(
   req: NextRequest
 ): Promise<NextResponse<TApiResponse>> {
   try {
+    const adminSession = await getServerSession(NEXT_AUTH);
+    if (!adminSession) {
+      return NextResponse.json(
+        {
+          success: false,
+          error: "Unauthorized request",
+        },
+        { status: 401 }
+      );
+    }
+
     const adminCredentials = await req.json();
     const validateInput = adminSignupSchema.safeParse(adminCredentials);
+
     if (!validateInput.success) {
       return NextResponse.json(
         {
@@ -18,10 +32,26 @@ export async function POST(
         { status: 400 }
       );
     } else {
-      const isAdminExists = await client.growVatika_Admin.findUnique({
+      // check whether the assigned admin is an admin or not.
+      const existingAdmin = await client.growVatika_Admin.findFirst({
+        where: {
+          name: validateInput.data?.assignedBy,
+        },
+      });
+
+      if (!existingAdmin) {
+        return NextResponse.json(
+          {
+            success: false,
+            error: `${validateInput.data?.assignedBy} admin is not valid!`,
+          },
+          { status: 400 }
+        );
+      }
+      const isExistingEmail = await client.growVatika_Admin.findUnique({
         where: { email: validateInput.data.email },
       });
-      if (isAdminExists) {
+      if (isExistingEmail) {
         return NextResponse.json(
           {
             success: false,
@@ -36,6 +66,7 @@ export async function POST(
           name: validateInput.data.name,
           email: validateInput.data.email,
           password: hashPassword,
+          assignedByAdminId: existingAdmin.id,
         },
       });
       if (!newAdmin) {
@@ -52,7 +83,7 @@ export async function POST(
           success: true,
           message: `${validateInput.data.name} is now growvatika admin`,
         },
-        { status: 200 }
+        { status: 201 }
       );
     }
   } catch (error) {

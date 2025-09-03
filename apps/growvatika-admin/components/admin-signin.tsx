@@ -59,7 +59,7 @@ export const AdminSignin = () => {
       const session = await sessionResponse.json();
       if (session?.user) {
         toast.success("Signin successful!", toastStyle);
-        router.push(`/adminpanel`);
+        router.push("/adminpanel");
       }
     }
   };

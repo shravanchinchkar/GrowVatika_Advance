@@ -1,12 +1,18 @@
 import { z } from "zod";
 
 export const adminSignupSchema = z.object({
+  assignedBy: z
+    .string()
+    .min(2, { message: "Name must have atleast 2 characters" }),
   name: z
     .string()
     .min(2, { message: "Name must have atleast 2 characters" })
     .max(50, { message: "Name must have atmost 50 characters" }),
   email: z.string().email(),
   password: z
+    .string()
+    .min(6, { message: "Password must be atleast of 6 characters" }),
+  confirmPassword: z
     .string()
     .min(6, { message: "Password must be atleast of 6 characters" }),
 });

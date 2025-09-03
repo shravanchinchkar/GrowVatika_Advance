@@ -170,7 +170,21 @@ export async function resetPasswordEmail(
     return { success: false, error: "Invalid Email" };
   } else {
     try {
-      const emailResponse = await sendResetPassword(validateInput.data || "");
+      const existingUser = await client.user.findUnique({
+        where: {
+          email: validateInput.data,
+        },
+      });
+      if (!existingUser) {
+        return {
+          success: false,
+          error: `user with email ${validateInput.data} not found!`,
+        };
+      }
+      const emailResponse = await sendResetPassword(
+        validateInput.data || "",
+        existingUser.id
+      );
       // If error while sending email
       if (!emailResponse.success) {
         return { success: false, error: emailResponse.message };

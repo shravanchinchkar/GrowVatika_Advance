@@ -19,6 +19,7 @@ export const ResetPasswordComponent = () => {
   const [loading, setLoading] = useState(false);
   const [fetchingData, setFetchingData] = useState(true);
   const userId = searchParams?.get("id") || "";
+  const [userEmail, setUserEmail] = useState("");
   const router = useRouter();
 
   useEffect(() => {
@@ -27,6 +28,7 @@ export const ResetPasswordComponent = () => {
         const res = await getUserEmail(userId);
         if (res.success && res.userEmail) {
           setValue("email", res.userEmail);
+          setUserEmail(res.userEmail);
         } else {
           console.error("Error while getting user email address:", res.error);
           toast.error("Error while getting user email", toastStyle);
@@ -92,9 +94,7 @@ export const ResetPasswordComponent = () => {
               Reset the password for your account
             </h1>
             <div className="flex flex-col items-center">
-              <p className="font-semibold underline">
-                shravanchinchkar@gmail.com
-              </p>
+              <p className="font-semibold underline">{userEmail}</p>
             </div>
           </div>
         </div>

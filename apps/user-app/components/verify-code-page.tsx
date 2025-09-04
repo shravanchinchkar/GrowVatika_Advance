@@ -22,7 +22,6 @@ export const VerifyCodePage = () => {
   let toastId: string;
 
   useEffect(() => {
-    console.log("Verifiy code page useEffect");
     toastId = toast.loading("Verify Your Email", toastStyle);
     return () => {
       toast.dismiss(toastId);
@@ -35,7 +34,6 @@ export const VerifyCodePage = () => {
       email,
       userVerifyCode,
     });
-    console.log("verify code response to FE", res);
     setLoading(false);
     if (res.errors) {
       if (res.errors === "User not found!") {

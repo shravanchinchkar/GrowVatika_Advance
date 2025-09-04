@@ -45,7 +45,6 @@ export const NurseriesList = memo(
       nurseryId: string,
       tag: string
     ) => {
-      console.log("tag:", tag);
       try {
         e.preventDefault();
         setSelectedNurseryId({
@@ -63,8 +62,6 @@ export const NurseriesList = memo(
           });
           setNurseriesData(updatedNurseryData);
           setCountOfNurseries(tempData.countOfNurseries);
-
-          console.log(tempData.countOfNurseries);
           toast.success("Nursery approved by admin!", toastStyle);
         }
       } catch (error) {

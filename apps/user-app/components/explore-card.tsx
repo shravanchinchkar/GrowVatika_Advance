@@ -32,7 +32,6 @@ export const ExploreCard: React.FC<ExploreCardProps> = memo(({ cardData }) => {
   };
 
   const handleSelectedProduct = (filterProduct: string) => {
-    console.log("filter data:", filterProduct);
     addFilter(filterProduct);
     router.push("/explore");
   };

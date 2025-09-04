@@ -50,10 +50,6 @@ export const SellerProfilePhotoUpload = memo(
         });
       }
     }, [fileRejections]);
-
-    if (file) {
-      console.log("file value in dropzone:", file, URL.createObjectURL(file));
-    }
     return (
       <div
         className={`lg:w-[20%] xl:w-[15%] h-[6.5rem] flex flex-col items-center cursor-not-allowed outline-none

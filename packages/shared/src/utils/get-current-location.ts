@@ -9,15 +9,6 @@ export async function getLocationFromIP(ipAddress: string) {
     if (data.error) {
       throw new Error(data.reason);
     }
-
-    console.log(
-      "Currrent Location Data:",
-      ipAddress,
-      data.city || "Unknown",
-      data.region || "Unknown",
-      data.country_name || "Unknown"
-    );
-
     const formatted = `${data.city || "Unknown"}, ${data.region || "Unknown"}, ${data.country_name || "Unknown"}`;
     return formatted.toString();
   } catch (error) {

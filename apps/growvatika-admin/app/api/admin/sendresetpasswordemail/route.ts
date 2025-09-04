@@ -1,6 +1,8 @@
 import client from "@repo/db/client";
+import { getIp } from "@/helper/get-ip-address";
 import { TApiResponse } from "@repo/common-types";
 import { EmailOnlySchema } from "@repo/common-types";
+import { resetPasswordLimit } from "@/lib/rate-limit";
 import { NextRequest, NextResponse } from "next/server";
 import { sendResetPassword } from "@/helper/send-reset-password-mail";
 
@@ -16,35 +18,50 @@ export async function POST(
         { status: 400 }
       );
     }
-    const existingAdmin = await client.growVatika_Admin.findUnique({
-      where: {
-        email: validateInput.data,
-      },
-    });
-    if (!existingAdmin) {
+
+    //If the resetPassword request count goes beyond 2 within 5 minutes,then block the user for 5 minutes
+    const IpAddress = await getIp(); //get the Ip address of the user
+    const { success } = await resetPasswordLimit.limit(IpAddress);
+    if (!success) {
+      console.error("ResetPassword Limit Exhausted,try again after 5 Minutes");
       return NextResponse.json(
         {
           success: false,
-          error: `No admin exists with email Id ${validateInput.data}`,
+          error: "ResetPassword Limit Exhausted,try again after 5 Minutes!",
         },
-        { status: 400 }
+        { status: 429 }
       );
-    }
-    const emailResponse = await sendResetPassword(
-      validateInput.data,
-      existingAdmin.id
-    );
-    if (!emailResponse.success) {
+    } else {
+      const existingAdmin = await client.growVatika_Admin.findUnique({
+        where: {
+          email: validateInput.data,
+        },
+      });
+      if (!existingAdmin) {
+        return NextResponse.json(
+          {
+            success: false,
+            error: `No admin exists with email Id ${validateInput.data}`,
+          },
+          { status: 400 }
+        );
+      }
+      const emailResponse = await sendResetPassword(
+        validateInput.data,
+        existingAdmin.id
+      );
+      if (!emailResponse.success) {
+        return NextResponse.json({
+          success: false,
+          error: emailResponse.message,
+        });
+      }
+      // If success in sending email
       return NextResponse.json({
-        success: false,
-        error: emailResponse.message,
+        success: true,
+        message: "Reset Password email send successfully!",
       });
     }
-    // If success in sending email
-    return NextResponse.json({
-      success: true,
-      message: "Reset Password email send successfully!",
-    });
   } catch (error) {
     console.error("Error while sending reset password link", error);
     return NextResponse.json({

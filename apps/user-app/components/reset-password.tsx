@@ -64,7 +64,6 @@ export const ResetPasswordComponent = () => {
       setLoading(false);
     } else {
       const response = await resetPassword(data);
-      console.log("Reset Password Response:", response);
       if (response.error) {
         toast.error(response.error.toString(), toastStyle);
         setValue("password", "");

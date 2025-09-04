@@ -75,7 +75,6 @@ export const ResetPasswordForm = () => {
       try {
         const res = await axios.get(`/api/admin/getadminemail?adminId=${id}`);
         const responseData = res.data;
-        console.log("response data:", responseData);
         if (responseData.success && responseData.adminEmail) {
           setValue("email", responseData.adminEmail);
           dispatch({
@@ -110,7 +109,6 @@ export const ResetPasswordForm = () => {
       dispatch({ type: "SET_FETCHING_FALSE" });
     };
     if (!id) {
-      console.log("id", !id);
       dispatch({ type: "SET_FETCHING_FALSE" });
       return;
     }
@@ -130,8 +128,6 @@ export const ResetPasswordForm = () => {
         confirmNewPassword: data.confirmNewPassword,
       });
       const responseData: TApiResponse = res.data;
-      console.log("response:", responseData);
-
       if (responseData.success && responseData.message) {
         toast.success(responseData.message, toastStyle);
         reset();

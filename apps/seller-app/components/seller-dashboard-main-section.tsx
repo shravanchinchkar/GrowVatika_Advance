@@ -37,9 +37,7 @@ export const SellerDashboardMainSection = memo(() => {
         try {
           const res = await axios.get(
             `/api/getsellerdashboarddata?id=${encodeURIComponent(sellerId)}`
-          );
-          console.log("res sellerProductData:",res.data.sellerProductData);
-          
+          );    
           updateSellerData({
             email: res.data.sellerData.email,
             address: res.data.sellerData.address,

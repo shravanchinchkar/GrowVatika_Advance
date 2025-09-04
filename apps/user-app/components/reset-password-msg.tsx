@@ -10,7 +10,6 @@ export const ResetPasswordMsg = () => {
   const email = searchParams?.get("email") || "";
 
   useEffect(() => {
-    console.log("reset password msg useEffect");
     if (email === "") {
       toast.error("Invalid email", toastStyle);
     }

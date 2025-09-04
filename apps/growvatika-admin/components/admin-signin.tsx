@@ -10,7 +10,6 @@ import { AuthButton } from "@repo/ui/auth-button";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { toastStyle } from "@repo/shared/utilfunctions";
 import { LabelInput, FormType } from "@repo/ui/label-input";
-import { sendResetPassword } from "@/helper/send-reset-password-mail";
 import {
   adminSigninSchema,
   TAdminSigninSchema,
@@ -155,9 +154,10 @@ export const AdminSignin = () => {
           </div>
           <div className="w-[100%] flex justify-end items-center">
             <button
-              className="text-[1.25rem] text-[#123524] font-semibold"
+              className={`${loadingResetPassword ? "cursor-not-allowed" : "cursor-pointer"} text-[1.25rem] text-[#123524] font-semibold`}
               type="button"
               onClick={handleAdminResetPassword}
+              disabled={loadingResetPassword}
             >
               {`${loadingResetPassword ? "Loading..." : "Forgot password?"}`}
             </button>

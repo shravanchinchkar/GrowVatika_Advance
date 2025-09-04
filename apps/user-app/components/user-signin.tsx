@@ -141,7 +141,13 @@ export const Sign_In = () => {
       if (res.error) {
         toast.error(res.error.toString(), {
           ...toastStyle,
-          position: "bottom-left",
+          position: "top-left",
+          style: {
+            width: "250px",
+            height: "65px",
+            color: "#fff",
+            background: "#123524",
+          },
         });
         console.error("Error While sending reset password mail:", res.error);
       } else {

@@ -6,7 +6,11 @@ import client from "@repo/db/client";
 import { getIp } from "../helper/get-ip-address";
 import { getExpiryDate } from "@repo/shared/utilfunctions";
 import { generateVerifyCode } from "@repo/shared/utilfunctions";
-import { authRateLimit, getStartedFromLimit } from "../lib/rate-limit";
+import {
+  authRateLimit,
+  getStartedFromLimit,
+  resetPasswordLimit,
+} from "../lib/rate-limit";
 import { sendVerificationEmail } from "../helper/send-verification-mail";
 import { sendResetPassword } from "../helper/send-reset-password-mail";
 import { getCurrentFormattedDateTimeString } from "@repo/shared/utilfunctions";
@@ -45,11 +49,11 @@ export async function signup(
     };
   }
 
-  //If the signup request count goes beyond 5 within 5 minutes,the block the user for 5 minutes
+  //If the signup request count goes beyond 5 within 5 minutes,then block the user for 5 minutes
   const IpAddress = await getIp(); //get the Ip address of the user
   const { success } = await authRateLimit.limit(IpAddress);
   if (!success) {
-    console.error("Signup Limit Exhausted,try again after");
+    console.error("Signup Limit Exhausted,try again after Miinutes");
     return {
       success: false,
       errors: "Sigup Limit Exhausted,Try again after 5 minutes!",
@@ -168,6 +172,17 @@ export async function resetPasswordEmail(
   const validateInput = EmailOnlySchema.safeParse(email);
   if (!validateInput) {
     return { success: false, error: "Invalid Email" };
+  }
+  //If the resetPassword request count goes beyond 2 within 5 minutes,then block the user for 5 minutes
+  const IpAddress = await getIp(); //get the Ip address of the user
+  const { success } = await resetPasswordLimit.limit(IpAddress);
+  if (!success) {
+    console.error("ResetPassword Limit Exhausted,try again after 5 Minutes");
+    return {
+      success: false,
+      error: "ResetPassword Limit Exhausted,try again after 5 Minutes!",
+      status: "429",
+    };
   } else {
     try {
       const existingUser = await client.user.findUnique({
@@ -201,6 +216,28 @@ export async function resetPasswordEmail(
         error: "Error while sending reset password link",
       };
     }
+  }
+}
+
+// following is the server action that gets the email of the user, who wants to reset there password
+export async function getUserEmail(id: string): Promise<ApiResponseType> {
+  try {
+    if (!id || id === "") {
+      return { success: false, error: "Invalid Id" };
+    } else {
+      const existingUser = await client.user.findUnique({
+        where: {
+          id,
+        },
+      });
+      if (!existingUser) {
+        return { success: false, error: `user with id ${id} dose not exists` };
+      }
+      return { success: true, userEmail: existingUser.email };
+    }
+  } catch (error) {
+    console.error("error while getting the user eamil address:", error);
+    return { success: false };
   }
 }
 

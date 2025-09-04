@@ -1,29 +1,45 @@
 "use client";
 
 import { toast } from "react-hot-toast";
+import Skeleton from "@repo/ui/loading";
 import { useForm } from "react-hook-form";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import { SiteLogo } from "@repo/ui/brand-logo";
 import { AuthButton } from "@repo/ui/auth-button";
 import { useSearchParams } from "next/navigation";
-import { resetPassword } from "@/actions/auth";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { toastStyle } from "@repo/shared/utilfunctions";
 import { LabelInput, FormType } from "@repo/ui/label-input";
+import { getUserEmail, resetPassword } from "@/actions/auth";
 import { SignInInputs, SignInSchema } from "@repo/common-types";
 
 export const ResetPasswordComponent = () => {
   const searchParams = useSearchParams();
   const [loading, setLoading] = useState(false);
-  const searchPearamsEmail = searchParams?.get("email") || "";
+  const [fetchingData, setFetchingData] = useState(true);
+  const userId = searchParams?.get("id") || "";
   const router = useRouter();
 
   useEffect(() => {
-    console.log("reset password useEffect");
-    if (searchPearamsEmail === "") {
-      toast.error("Invalid Email", toastStyle);
+    const getData = async () => {
+      try {
+        const res = await getUserEmail(userId);
+        if (res.success && res.userEmail) {
+          setValue("email", res.userEmail);
+        } else {
+          console.error("Error while getting user email address:", res.error);
+          toast.error("Error while getting user email", toastStyle);
+        }
+      } catch (error) {
+        console.error("Error while getting user email address:", error);
+      }
+      setFetchingData(false);
+    };
+    if (!userId || userId === "") {
+      setFetchingData(false);
     }
+    getData();
   }, []);
 
   const {
@@ -34,12 +50,13 @@ export const ResetPasswordComponent = () => {
   } = useForm<SignInInputs>({
     resolver: zodResolver(SignInSchema),
     defaultValues: {
-      email: searchPearamsEmail,
+      email: userId,
       password: "",
       confirmPassword: "",
     },
   });
 
+  // function that handles reset password
   async function handleResetPassword(data: SignInInputs) {
     setLoading(true);
     if (data.password !== data.confirmPassword) {
@@ -59,6 +76,9 @@ export const ResetPasswordComponent = () => {
     }
   }
 
+  if (fetchingData) {
+    return <Skeleton />;
+  }
   return (
     <div className="bg-[#FFF6F4] w-screen h-screen flex justify-center items-center font-poppins">
       {/* Following is the main card section */}

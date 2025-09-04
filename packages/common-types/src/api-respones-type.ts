@@ -17,6 +17,7 @@ export interface ApiResponseType {
   responseData?: any;
   totalProductsCount?: number;
   totalPages?: number;
+  userEmail?: string;
 }
 
 export type TApiResponse = {

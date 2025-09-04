@@ -12,3 +12,9 @@ export const getStartedFromLimit = new Ratelimit({
   limiter: Ratelimit.fixedWindow(3, "5 m"),
   analytics: true,
 });
+
+export const resetPasswordLimit = new Ratelimit({
+  redis: redis,
+  limiter: Ratelimit.fixedWindow(2, "5 m"),
+  analytics: true,
+});

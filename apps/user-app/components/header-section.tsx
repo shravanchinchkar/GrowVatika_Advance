@@ -50,7 +50,7 @@ export const HeaderSection = memo(
 
     return (
       <div
-        className={`new-sm:w-[100%] md:w-[100%] lg:w-[100%] new-xl:w-[90%] mx-auto z-40 flex flex-col items-center justify-center gap-[1rem] new-sm:h-max md:h-[10rem] md:mt-[1rem] py-[0.5rem] ${isScrollingUp && "sticky top-[1rem] bg-[#FFF6F4] md:border-[#56A430] md:border-[1.6px] md:rounded-[1rem] transition-all md:duration-300"}`}
+        className={`new-sm:w-[100%] md:w-[100%] lg:w-[100%] new-xl:w-[90%] mx-auto z-40 flex flex-col items-center justify-center gap-[1rem] new-sm:h-max md:h-[10rem] py-[0.5rem] md:mt-[1rem] ${isScrollingUp && "sticky top-[1rem] bg-[#FFF6F4] md:border-[#56A430] md:border-[1.6px] md:rounded-[1rem] transition-all md:duration-300"}`}
       >
         <div className="new-sm:w-[100%] md:w-[96.5%] h-max flex justify-between new-sm:items-start md:items-center">
           <HeaderSectionOne isExplore={isExplore} />

@@ -5,23 +5,20 @@ import Image from "next/image";
 export const SiteLogo = memo(() => {
   return (
     <>
-      <Link
+      {/* <Link
         href={"/"}
-        className="new-sm:w-max new-sm:h-max md:w-[14rem] lg:w-[14rem] lg:h-[4rem] xl:w-[16.3rem] xl:h-[3.8125rem] flex items-center new-sm:justify-start md:justify-between cursor-pointer outline-none"
+        className="new-sm:w-max new-sm:h-max md:w-[14rem] lg:h-[4rem] xl:w-[16.3rem] xl:h-[3.8125rem] flex items-center new-sm:justify-start md:justify-between cursor-pointer outline-none"
       >
-        {/* Following div consist of logo */}
         <div className="relative new-sm:w-[3rem] new-sm:h-[3rem] new-sm-3:w-[4rem] new-sm-3:h-[4rem] md:w-[4rem] xl:w-[4.75rem] xl:h-[3.35rem]">
           <Image
-            className="new-sm:object-contain lg:object-contain"
-            src="/assets/images/HeaderImages/site-logo.svg"
+            className="object-contain"
+            src="/assets/images/BrandLogo/brandLogo_Old.svg"
             alt="site-logo"
             fill
           />
         </div>
 
-        {/* Following div consist of site-name and tag-line */}
         <div className="text-[#123524] leading-none">
-          {/* h-[2.9375rem] */}
           <div className="new-sm:w-max lg:w-[8rem] xl:w-[11.25rem] h-max new-sm:text-[20px] new-sm-3:text-[30px] xl:text-[38.4px] font-[impact]">
             GrowVatika
           </div>
@@ -29,28 +26,33 @@ export const SiteLogo = memo(() => {
             Nursery For Everyone
           </div>
         </div>
-      </Link>
+      </Link> */}
 
       {/* Following is the new-brand-logo */}
-      {/* <Link
+      <Link
         href={"/"}
         className="new-sm:w-max new-sm:h-max md:w-[14rem] lg:w-[14rem] lg:h-[4rem] xl:w-[20.25rem] xl:h-[6.125rem] cursor-pointer outline-none"
       >
-        <div
-          className="new-sm:hidden md:block w-[20.25rem] h-[6.125rem] flex-shrink-0 bg-no-repeat bg-center"
-          style={{
-            backgroundImage: "url('/assets/images/BrandLogo/brand-logo.png')",
-          }}
-        ></div>
+        {/* Following div is shown from md and above */}
+        <div className="relative new-sm:hidden md:block w-[19rem] h-[5.8rem]">
+          <Image
+            className="object-contain"
+            src="/assets/images/BrandLogo/brandLogo.svg"
+            alt="brandLogo"
+            fill
+          />
+        </div>
 
-        <div
-          className="new-sm:block md:hidden relative w-[10.5625rem] h-[3.4375rem]"
-          style={{
-            backgroundImage:
-              "url('/assets/images/BrandLogo/mobile-brand-logo.png')",
-          }}
-        ></div>
-      </Link> */}
+        {/* Following div is shown in mobile view */}
+        <div className=" relative new-sm:block md:hidden w-[10.5625rem] h-[3.4375rem]">
+          <Image
+            className="object-contain"
+            src="/assets/images/BrandLogo/brandLogo_mobile.svg"
+            alt="brandLogo"
+            fill
+          />
+        </div>
+      </Link>
     </>
   );
 });

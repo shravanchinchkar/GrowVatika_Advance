@@ -110,7 +110,7 @@ export const AdminSignin = () => {
 
   return (
     <div className="w-[100%] h-[100%] flex flex-col gap-[1rem] justify-center items-center">
-      <div className="w-[35%] h-[60%] rounded-[1.6rem] border-[1px] border-[#56A430] bg-[#ffffff] flex flex-col items-start p-[1rem]">
+      <div className="w-[35%] h-[65%] rounded-[1.6rem] border-[1px] border-[#56A430] bg-[#ffffff] flex flex-col items-start p-[1rem]">
         {/* Header Section */}
         <div className="w-[100%] h-[30%] flex flex-col items-center justify-between">
           <div className="w-[100%] pl-[20%]">
@@ -162,7 +162,7 @@ export const AdminSignin = () => {
               {`${loadingResetPassword ? "Loading..." : "Forgot password?"}`}
             </button>
           </div>
-          <div className="w-[100%] h-[25%]">
+          <div className="w-[100%] h-[20%]">
             <AuthButton buttonName="Sign in" type="submit" loading={loading} />
           </div>
         </form>

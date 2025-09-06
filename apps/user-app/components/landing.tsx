@@ -23,6 +23,7 @@ import {
 } from "@repo/shared-store";
 import { PaymentGatewayMessage } from "./payment-gateway-message";
 import { WishList } from "./wishlist";
+import Skeleton from "@repo/ui/loading";
 
 export const LandingPage = () => {
   const { isWishListVisible } = useWishListVisibilityStore();
@@ -43,6 +44,8 @@ export const LandingPage = () => {
       <MobileGetStartedForm />
       <HeaderSection isExplore={true} />
       <PaymentGatewayMessage />
+
+      {/* <Skeleton/> */}
 
       <div>
         <HeroSection />

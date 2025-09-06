@@ -12,6 +12,6 @@ export default async function AdminCredentials() {
       </div>
     );
   } else {
-    redirect("/adminpanel")
+    redirect("/adminpanel");
   }
 }

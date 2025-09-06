@@ -19,7 +19,7 @@ export const SellerNavbar = () => {
     await signOut();
   }
   return (
-    <nav className="w-[100%] flex justify-between items-center ml-[1rem] mt-[1rem]">
+    <nav className="w-[100%] flex justify-between items-center ml-[1rem]">
       <SiteLogo />
       <div className="md:w-[9rem] md:h-[3.5rem] xl:w-[10rem] xl:h-[4rem] lg:text-[1rem] xl:text-[1.23044rem] mr-[2rem]">
         <AuthButton

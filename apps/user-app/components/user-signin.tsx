@@ -159,16 +159,16 @@ export const Sign_In = () => {
   return (
     <div className="w-screen h-screen bg-[#FFF6F4] flex new-sm:flex-col-reverse md:flex-row font-poppins">
       {/* Left Div */}
-      <div className="new-sm:w-[100%] new-sm:h-[60%] md:w-[50%] md:h-[100%] flex flex-col new-sm:gap-0 md:gap-[0.2rem] lg:gap-[1rem]">
+      <div className="new-sm:w-[100%] new-sm:h-[60%] md:w-[50%] md:h-[100%] flex flex-col new-sm:gap-0 md:gap-[0.2rem] lg:gap-[0rem]">
         {/* Site Logo */}
-        <div className="new-sm:hidden md:flex flex-col items-start gap-[2rem] pl-[2rem] pt-[1rem]">
+        <div className="new-sm:hidden md:flex flex-col items-start gap-[2rem] pl-[5rem] pt-[0.5rem]">
           <SiteLogo />
         </div>
 
         <div
           className={`flex flex-col new-sm:items-start md:items-center lg:items-start new-sm:px-[1rem] lg:pl-[6.5rem] ${
             errors.email || errors.password
-              ? "new-sm:mt-0 md:mt-[1rem]"
+              ? "new-sm:mt-0 md:mt-[0rem]"
               : "new-sm:mt-0 md:mt-[2rem]"
           }`}
         >
@@ -184,11 +184,7 @@ export const Sign_In = () => {
 
           {/* Form + Buttons */}
           <div
-            className={`new-sm:w-[100%] md:w-max h-max flex flex-col items-center gap-[1rem] new-sm:mt-[1rem] md:mt-[0.2rem] ${
-              errors.email || errors.password
-                ? "2xl:mt-[0.5rem]"
-                : "2xl:mt-[2rem]"
-            }`}
+            className={`new-sm:w-[100%] md:w-max h-max flex flex-col items-center gap-[1rem] new-sm:mt-[1rem] md:mt-[0.2rem] ${errors.email || errors.password ? "2xl:mt-[1rem]" : "2xl:mt-[2rem]"}`}
           >
             {/* Signin form */}
             <form

@@ -31,12 +31,20 @@ export default function Skeleton({ className }: SkeletonProp) {
         </svg>
 
         {/* Image Inside the Loader */}
-        <Image
-          src="/assets/images/HeaderImages/site-logo.svg"
+        {/* <Image
+          src="/assets/images/BrandLogo/brandLogo_Old.svg"
           alt="Loading Image"
           width={70}
           height={70}
           className=" object-contain justify-center ml-[0.2rem] mt-[0.5rem]"
+        /> */}
+
+        <Image
+          src="/assets/images/BrandLogo/brandLogo_Loader.svg"
+          alt="Loading Image"
+          width={50}
+          height={50}
+          className=" object-contain justify-center ml-[0.2rem] mb-[0.2rem]"
         />
       </div>
     </div>

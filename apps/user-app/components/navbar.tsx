@@ -91,7 +91,7 @@ export const Navbar = memo(() => {
           );
         })}
       </div>
-      <div className="absolute top-0 z-20 w-[100%] h-[100%] rounded-[6.5625rem] border-[1px] border-[FFF] bg-navbar-bg shadow-navbar-boxshadow backdrop-blur-navbar"></div>
+      <div className="absolute top-0 z-20 w-[100%] h-[100%] rounded-[6.5625rem] border-[0.8px] border-[#FFFFFF] bg-navbar-bg shadow-navbar-boxshadow backdrop-blur-navbar"></div>
     </div>
   );
 });

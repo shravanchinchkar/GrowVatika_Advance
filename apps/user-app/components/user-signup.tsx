@@ -106,7 +106,7 @@ export const Sign_Up = () => {
       {/* Following div consist of signup form  */}
       <div className="new-sm:w-[100%] new-sm:h-[65%] md:w-[50%] md:h-[100%] flex flex-col">
         {/* Following div consist of site logo*/}
-        <div className="new-sm:hidden md:flex flex-col lg:items-start gap-[2rem] lg:pl-[2rem] pt-[1rem]">
+        <div className="new-sm:hidden md:flex flex-col lg:items-start gap-[2rem] lg:pl-[4.5rem] pt-[0.5rem]">
           <SiteLogo />
         </div>
 

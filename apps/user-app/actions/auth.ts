@@ -3,8 +3,6 @@
 // Following is the backend SignUp route
 import client from "@repo/db/client";
 import { getIp } from "../helper/get-ip-address";
-import { hashPassword } from "@/utils/hashPassword";
-import { getExpiryDate } from "@repo/shared/utilfunctions";
 import { generateVerifyCode } from "@repo/shared/utilfunctions";
 import {
   authRateLimit,
@@ -13,6 +11,7 @@ import {
 } from "../lib/rate-limit";
 import { getUserByEmail } from "../services/user.service";
 import { sendResetPassword } from "../helper/send-reset-password-mail";
+import { getExpiryDate,hashPassword } from "@repo/shared/utilfunctions";
 import { sendVerificationEmail } from "../helper/send-verification-mail";
 import { getCurrentFormattedDateTimeString } from "@repo/shared/utilfunctions";
 import { successfulCollaboration } from "../helper/send-successful-collaboration-mail";

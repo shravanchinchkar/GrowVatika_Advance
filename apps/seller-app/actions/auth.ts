@@ -1,15 +1,19 @@
 "use server";
-import bcrypt from "bcrypt";
-import client from "@repo/db/client";
 import {
   SignUpInputs,
   SignupResponse,
   SignUpSchema,
 } from "@repo/common-types/types";
+import client from "@repo/db/client";
 import { getIp } from "../helper/get-ip-address";
 import { authRateLimit } from "../lib/rate-limit";
+import { getSellerByEmail } from "../services/seller.service";
 import { sendVerificationEmail } from "../helper/send-verification-mail";
-import { generateVerifyCode, getExpiryDate } from "@repo/shared/utilfunctions";
+import {
+  generateVerifyCode,
+  getExpiryDate,
+  hashPassword,
+} from "@repo/shared/utilfunctions";
 
 interface VerifyCodeProps {
   email?: string;
@@ -38,11 +42,8 @@ export async function sellerRegistration(
     };
   } else {
     try {
-      const sellerExists = await client.seller.findUnique({
-        where: {
-          email: registrationCredentials.email,
-        },
-      });
+      const sellerExists = await getSellerByEmail(validateInput.data.email);
+
       if (!sellerExists) {
         return {
           success: false,
@@ -56,9 +57,8 @@ export async function sellerRegistration(
           const verifyCode = generateVerifyCode(); //Generate the verify Code for email Authentication
           const expiryDate = getExpiryDate();
 
-          const hashPassword = await bcrypt.hash(
-            registrationCredentials.confirmPassword || "",
-            10
+          const hashedPassword = await hashPassword(
+            validateInput.data.confirmPassword!
           );
 
           const createNewSeller = await client.seller.update({
@@ -66,7 +66,7 @@ export async function sellerRegistration(
               email: sellerExists.email,
             },
             data: {
-              password: hashPassword,
+              password: hashedPassword,
               verifyCode: verifyCode,
               verifyCodeExpiry: expiryDate,
             },
@@ -98,16 +98,16 @@ export async function sellerRegistration(
         }
         //The seller exists and is verified
         else {
-          const hashPassword = await bcrypt.hash(
-            registrationCredentials.confirmPassword || "",
-            10
+          const hashedPassword = await hashPassword(
+            validateInput.data.confirmPassword!
           );
+
           const createNewSeller = await client.seller.update({
             where: {
               email: sellerExists.email,
             },
             data: {
-              password: hashPassword,
+              password: hashedPassword,
             },
           });
 
@@ -139,16 +139,12 @@ export async function verifyCode({
   userVerifyCode,
 }: VerifyCodeProps): Promise<SignupResponse> {
   try {
-    const existingSeller = await client.seller.findUnique({
-      where: {
-        email: email,
-      },
-    });
+    const existingSeller = await getSellerByEmail(email!);
 
     // If the email dose not exists then
     if (!existingSeller) {
       console.error("verify user not found!");
-      return { success: false, errors: "User not found!", status: 400 };
+      return { success: false, errors: "seller not found!", status: 400 };
     }
 
     const currentTime = new Date();
@@ -205,17 +201,15 @@ export async function resendOTP({
 }): Promise<SignupResponse> {
   try {
     //Get the requested user from db
-    const seller = await client.seller.findFirst({
-      where: { email: email },
-    });
+    const seller = await getSellerByEmail(email);
 
     // If user not found
     if (!seller) {
-      return { success: false, errors: "User not found" };
+      return { success: false, errors: "seller not found" };
     }
     //If user is already Verified
     if (seller.isVerified) {
-      return { success: false, message: "User already verified" };
+      return { success: false, message: "seller already verified" };
     }
 
     // Generate new OTP and new expiry time

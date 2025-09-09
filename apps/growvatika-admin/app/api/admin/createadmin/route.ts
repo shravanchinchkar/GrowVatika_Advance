@@ -1,8 +1,9 @@
-import bcrypt from "bcrypt";
 import client from "@repo/db/client";
 import { NEXT_AUTH } from "@/lib/auth";
 import { getServerSession } from "next-auth";
 import { NextRequest, NextResponse } from "next/server";
+import { hashPassword } from "@repo/shared/utilfunctions";
+import { getExistingAdminByEmail } from "@/services/admin.service";
 import { adminSignupSchema, TApiResponse } from "@repo/common-types/types";
 
 export async function POST(
@@ -48,9 +49,9 @@ export async function POST(
           { status: 400 }
         );
       }
-      const isExistingEmail = await client.growVatika_Admin.findUnique({
-        where: { email: validateInput.data.email },
-      });
+      const isExistingEmail = await getExistingAdminByEmail(
+        validateInput.data.email
+      );
       if (isExistingEmail) {
         return NextResponse.json(
           {
@@ -60,12 +61,12 @@ export async function POST(
           { status: 400 }
         );
       }
-      const hashPassword = await bcrypt.hash(validateInput.data.password, 10);
+      const hashedPassword = await hashPassword(validateInput.data.password);
       const newAdmin = await client.growVatika_Admin.create({
         data: {
           name: validateInput.data.name,
           email: validateInput.data.email,
-          password: hashPassword,
+          password: hashedPassword,
           assignedByAdminId: existingAdmin.id,
         },
       });

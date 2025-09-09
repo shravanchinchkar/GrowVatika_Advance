@@ -1,9 +1,9 @@
 "use server";
 
 // Following is the backend SignUp route
-import bcrypt from "bcrypt";
 import client from "@repo/db/client";
 import { getIp } from "../helper/get-ip-address";
+import { hashPassword } from "@/utils/hashPassword";
 import { getExpiryDate } from "@repo/shared/utilfunctions";
 import { generateVerifyCode } from "@repo/shared/utilfunctions";
 import {
@@ -11,8 +11,9 @@ import {
   getStartedFromLimit,
   resetPasswordLimit,
 } from "../lib/rate-limit";
-import { sendVerificationEmail } from "../helper/send-verification-mail";
+import { getUserByEmail } from "../services/user.service";
 import { sendResetPassword } from "../helper/send-reset-password-mail";
+import { sendVerificationEmail } from "../helper/send-verification-mail";
 import { getCurrentFormattedDateTimeString } from "@repo/shared/utilfunctions";
 import { successfulCollaboration } from "../helper/send-successful-collaboration-mail";
 import {
@@ -62,11 +63,7 @@ export async function signup(
   } else {
     try {
       //check if the user already exists
-      const existingUserByEmail = await client.user.findUnique({
-        where: {
-          email: result.data.email,
-        },
-      });
+      const existingUserByEmail = await getUserByEmail(result.data.email);
 
       const verifyCode = generateVerifyCode(); //Generate the verify Code for email Authentication
       const expiryDate = getExpiryDate();
@@ -80,14 +77,13 @@ export async function signup(
         }
         //If the user already exists but is not verified
         else {
-          const hashPassword = await bcrypt.hash(
-            result.data.confirmPassword || "",
-            10
+          const hashedPassword = await hashPassword(
+            result.data.confirmPassword!
           );
           await client.user.update({
             where: { email: result.data.email },
             data: {
-              password: hashPassword,
+              password: hashedPassword,
               verifyCode: verifyCode,
               verifyCodeExpiry: expiryDate,
             },
@@ -113,15 +109,13 @@ export async function signup(
         }
       } else {
         // If the user doesn't exists create the new fresh user
-        const hashPassword = await bcrypt.hash(
-          result.data.confirmPassword || "",
-          10
-        );
+        const hashedPassword = await hashPassword(result.data.confirmPassword!);
+
         const newUser = await client.user.create({
           data: {
             name: result.data.name || "",
             email: result.data.email,
-            password: hashPassword,
+            password: hashedPassword,
             verifyCode: verifyCode,
             verifyCodeExpiry: expiryDate,
           },
@@ -185,12 +179,8 @@ export async function resetPasswordEmail(
     };
   } else {
     try {
-      const existingUser = await client.user.findUnique({
-        where: {
-          email: validateInput.data,
-        },
-      });
-      if (!existingUser) {
+      const existingUserByEmail = await getUserByEmail(validateInput.data!);
+      if (!existingUserByEmail) {
         return {
           success: false,
           error: `user with email ${validateInput.data} not found!`,
@@ -198,7 +188,7 @@ export async function resetPasswordEmail(
       }
       const emailResponse = await sendResetPassword(
         validateInput.data || "",
-        existingUser.id
+        existingUserByEmail.id
       );
       // If error while sending email
       if (!emailResponse.success) {
@@ -254,26 +244,25 @@ export async function resetPassword(
   else {
     try {
       // Check if the user exists in the User table
-      const existingUser = await client.user.findUnique({
-        where: { email: validateInput.data?.email },
-      });
+      const existingUserByEmail = await getUserByEmail(
+        validateInput.data?.email!
+      );
 
       // If the user dose not exists return the error message
-      if (!existingUser) {
+      if (!existingUserByEmail) {
         return { success: false, error: "User Not Found" };
       }
       // If the user exists, then hash the new password and store it in db
       else {
-        const hashPassword = await bcrypt.hash(
-          validateInput.data?.confirmPassword || "",
-          10
+        const hashedPassword = await hashPassword(
+          validateInput.data?.confirmPassword!
         );
         const updateExistingUser = await client.user.update({
           where: {
-            email: existingUser.email,
+            email: existingUserByEmail.email,
           },
           data: {
-            password: hashPassword,
+            password: hashedPassword,
           },
         });
         if (!updateExistingUser) {
@@ -297,24 +286,20 @@ export async function verifyCode({
   userVerifyCode,
 }: VerifyCodeProps): Promise<SignupResponse> {
   try {
-    const user = await client.user.findUnique({
-      where: {
-        email: email,
-      },
-    });
+    const existingUserByEmail = await getUserByEmail(email!);
 
     // If the email dose not exists then
-    if (!user) {
+    if (!existingUserByEmail) {
       console.error("verify user not found!");
       return { success: false, errors: "User not found!", status: 400 };
     }
 
     const currentTime = new Date();
     if (
-      !user.verifyCode ||
-      !user.verifyCodeExpiry ||
-      user.verifyCode !== userVerifyCode ||
-      currentTime > user.verifyCodeExpiry
+      !existingUserByEmail.verifyCode ||
+      !existingUserByEmail.verifyCodeExpiry ||
+      existingUserByEmail.verifyCode !== userVerifyCode ||
+      currentTime > existingUserByEmail.verifyCodeExpiry
     ) {
       console.error("Invalid OTP");
       return { success: false, errors: "Invalid or expired OTP" };
@@ -352,16 +337,14 @@ export async function resendOTP({
 }): Promise<SignupResponse> {
   try {
     //Get the requested user from db
-    const user = await client.user.findFirst({
-      where: { email: email },
-    });
+    const existingUserByEmail = await getUserByEmail(email);
 
     // If user not found
-    if (!user) {
+    if (!existingUserByEmail) {
       return { success: false, errors: "User not found" };
     }
     //If user is already Verified
-    if (user.isVerified) {
+    if (existingUserByEmail.isVerified) {
       return { success: false, message: "User already verified" };
     }
 
@@ -380,8 +363,8 @@ export async function resendOTP({
 
     //Resend the OTP to the which is to be verified
     const emailResponse = await sendVerificationEmail(
-      user.name,
-      user.email,
+      existingUserByEmail.name,
+      existingUserByEmail.email,
       newOTP
     );
 

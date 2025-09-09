@@ -3,6 +3,7 @@ import client from "@repo/db/client";
 import { authRateLimit } from "./rate-limit";
 import { SignInSchema } from "@repo/common-types/types";
 import GoogleProvider from "next-auth/providers/google";
+import { getUserByEmail } from "@/services/user.service";
 import { getLocationFromIP } from "@repo/shared/utilfunctions";
 import { generateVerifyCode } from "@repo/shared/utilfunctions";
 import CredentialsProvider from "next-auth/providers/credentials";
@@ -62,11 +63,8 @@ export const NEXT_AUTH = {
           const { email, password } = inputResult.data;
 
           //check if the user with the entered email already exists in db
-          const userExists = await client.user.findFirst({
-            where: {
-              email: email,
-            },
-          });
+          const userExists = await getUserByEmail(email);
+          
           if (!userExists) {
             console.error("User doesn't exists");
             throw new Error(

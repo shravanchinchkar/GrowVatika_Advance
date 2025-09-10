@@ -1,6 +1,6 @@
 import { TApiResponse } from "@repo/common-types";
-import client from "@repo/db/client";
 import { NextResponse, NextRequest } from "next/server";
+import { getSingleProductData } from "@/services/user.service";
 
 export async function GET(
   req: NextRequest,
@@ -21,33 +21,7 @@ export async function GET(
       );
     }
 
-    const productData = await client.product.findUnique({
-      where: {
-        id: productId || "",
-        seller: {
-          isAdminVerified: true,
-          isSuspended: false,
-          isRemoved: false,
-        },
-      },
-      include: {
-        productSizeVariant: {
-          select: {
-            size: true,
-            price: true,
-            compareAt: true,
-            quantity: true,
-          },
-        },
-        seller: {
-          select: {
-            nurseryName: true,
-            address: true,
-            profilePictureURL: true,
-          },
-        },
-      },
-    });
+    const productData = await getSingleProductData(productId);
 
     if (!productData) {
       return NextResponse.json(

@@ -1,6 +1,9 @@
-import client from "@repo/db/client";
 import { TApiResponse } from "@repo/common-types";
 import { NextRequest, NextResponse } from "next/server";
+import {
+  getFilterProducts,
+  getTotalPages,
+} from "../../../services/user.service";
 
 export async function GET(
   req: NextRequest
@@ -84,39 +87,11 @@ export async function GET(
       );
     }
 
-    const filterProducts = await client.product.findMany({
-      where: {
-        productStatus: "Active",
-        collection: {
-          in: filterArray, // 'in' operator matches any of the values in the array
-        },
-      },
-      select: {
-        id: true,
-        category: true,
-        collection: true,
-        name: true,
-        tags: true,
-        imageURL: true,
-        productSizeVariant: {
-          select: {
-            size: true,
-            price: true,
-            compareAt: true,
-            quantity: true,
-          },
-        },
-      },
-      skip: skip, // Skip records based on current page
-      take: limit, // Limit the number of records returned
-      orderBy: {
-        id: "asc", // Optional: Add consistent ordering
-      },
-    });
+    //get the filter products from the db.
+    const filterProducts = await getFilterProducts(filterArray, skip, limit);
 
     const totalFilterProductsCount = filterProducts.length;
-    const totalPages = Math.ceil(totalFilterProductsCount / Number(limit));
-
+    const totalPages = getTotalPages(totalFilterProductsCount, limit);
     // If current page is greater than totalPages
     if (currentPage > totalPages) {
       return NextResponse.json(

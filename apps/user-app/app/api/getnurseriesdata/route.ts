@@ -1,5 +1,9 @@
 import { TApiResponse } from "@repo/common-types";
-import client from "@repo/db/client";
+import {
+  getNurseriesCount,
+  getNurseriesData,
+  getTotalPages,
+} from "../../../services/user.service";
 import { NextRequest, NextResponse } from "next/server";
 
 export async function GET(
@@ -26,43 +30,11 @@ export async function GET(
     }
 
     // Get sellers with their products in a single query
-    const sellersWithProducts = await client.seller.findMany({
-      where: {
-        isVerified: true,
-        isAdminVerified: true,
-        isSuspended: false,
-      },
-      select: {
-        id: true,
-        nurseryName: true,
-        address: true,
-        nurseryBio: true,
-        specialities: true,
-        location: true,
-        business_hours: true,
-        phoneNumber: true,
-        profilePictureURL: true,
-        products: {
-          where: {
-            productStatus: "Active",
-            imageURL: {
-              not: "",
-            },
-          },
-          select: {
-            imageURL: true,
-          },
-        },
-      },
-      skip: skip, // Skip records based on current page
-      take: limit, // Limit the number of records returned
-      orderBy: {
-        id: "asc", // Optional: Add consistent ordering
-      },
-    });
+    const nurseries = await getNurseriesData(skip, limit);
 
-    const totalSellerCount = await client.seller.count({});
-    const totalPages = Math.ceil(totalSellerCount / Number(limit));
+    const totalSellerCount = await getNurseriesCount();
+
+    const totalPages = getTotalPages(totalSellerCount, limit);
 
     if (currentPage > totalPages) {
       return NextResponse.json(
@@ -76,7 +48,7 @@ export async function GET(
       );
     }
 
-    if (sellersWithProducts.length === 0) {
+    if (nurseries.length === 0) {
       console.error("Error while getting seller and product data");
       return NextResponse.json(
         {
@@ -90,7 +62,7 @@ export async function GET(
     }
 
     // Transform the data to match your desired structure
-    const sellerWithProductData = sellersWithProducts.map((seller: any) => ({
+    const sellerWithProductData = nurseries.map((seller: any) => ({
       ...seller,
       products: seller.products.map((product: any) => product.imageURL),
       productCount: seller.products.length,

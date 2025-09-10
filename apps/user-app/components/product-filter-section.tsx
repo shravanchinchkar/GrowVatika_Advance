@@ -46,7 +46,6 @@ export const ProductFilterSection = memo(
             <Image
               src={"/assets/images/CommonImages/cancelIcon.svg"}
               alt="cancle"
-              className=""
               fill
             />
           </button>
@@ -67,7 +66,7 @@ export const ProductFilterSection = memo(
 
         {/* Plant Type Section */}
         <div className="new-sm:pt-[1.2rem] md:pt-[1.69rem] pb-[1.75rem] border-b">
-          <ul className="">
+          <ul>
             <li className="new-sm:text-[1rem] lg:text-[1.2rem] xl:text-[1.25rem] text-[#171717] font-medium">
               Plant Type
             </li>
@@ -94,7 +93,7 @@ export const ProductFilterSection = memo(
 
         {/* Soil Section */}
         <div className="new-sm:pt-[1.2rem] md:pt-[1.69rem] pb-[1.75rem] border-b-[0.0625rem] border-[#00000033]">
-          <ul className="">
+          <ul>
             <li className="new-sm:text-[1rem] lg:text-[1.2rem] xl:text-[1.25rem] text-[#171717] font-medium">
               Soil
             </li>
@@ -121,7 +120,7 @@ export const ProductFilterSection = memo(
 
         {/* Pots Section */}
         <div className="new-sm:pt-[1.2rem] md:pt-[1.69rem] pb-[1.75rem] border-b-[0.0625rem] border-[#00000033]">
-          <ul className="">
+          <ul>
             <li className="new-sm:text-[1rem] lg:text-[1.2rem] xl:text-[1.25rem] text-[#171717] font-medium">
               Pot Types
             </li>
@@ -148,7 +147,7 @@ export const ProductFilterSection = memo(
 
         {/* Fertilizers */}
         <div className="new-sm:pt-[1.2rem] md:pt-[1.69rem] pb-[1.75rem] border-b-[0.0625rem] border-[#00000033]">
-          <ul className="">
+          <ul>
             <li className="new-sm:text-[1rem] lg:text-[1.2rem] xl:text-[1.25rem] text-[#171717] font-medium">
               Fertilizers
             </li>

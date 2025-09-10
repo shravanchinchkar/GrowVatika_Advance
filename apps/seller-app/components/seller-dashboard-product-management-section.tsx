@@ -130,7 +130,7 @@ export const SellerDashboardProductManagementSection = () => {
 
             {/* Newest Section */}
             <div className="lg:w-[10rem] lg:h-[3rem] 2xl:w-[14.9375rem] 2xl:h-[3.1875rem] bg-white border-[1.5px] border-[#CBD0D3] rounded-[0.625rem] flex justify-between items-center gap-[1rem] px-[1rem] lg:text-[1rem] 2xl:text-[1.22669rem]">
-              <p className="">Newest</p>
+              <p>Newest</p>
               <div className="relative h-[0.40538rem] w-[0.6875rem]">
                 <Image
                   src="/assets/images/productSectionImages/newestIcon.svg"

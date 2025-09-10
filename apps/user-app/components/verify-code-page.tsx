@@ -54,8 +54,8 @@ export const VerifyCodePage = () => {
 
   return (
     <div className="bg-[#FFF6F4] w-screen h-screen flex justify-center items-center font-poppins">
-      <div className="w-[30rem] h-[30rem] rounded-[28px] border-[2px] border-[#56A430] shadow-md flex flex-col gap-[2rem] items-center pt-[1rem] bg-white">
-        <div className="mr-[2.5rem]">
+      <div className="w-[30rem] h-[30rem] rounded-[28px] border-[2px] border-[#56A430] shadow-md flex flex-col gap-[2rem] items-center pt-[0.5rem] bg-white">
+        <div>
           <SiteLogo />
         </div>
         <div className="text-[#123524] flex flex-col items-center gap-[0.5rem]">

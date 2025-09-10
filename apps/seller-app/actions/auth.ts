@@ -1,4 +1,5 @@
 "use server";
+import bcrypt from "bcrypt";
 import {
   SignUpInputs,
   SignupResponse,
@@ -9,11 +10,7 @@ import { getIp } from "../helper/get-ip-address";
 import { authRateLimit } from "../lib/rate-limit";
 import { getSellerByEmail } from "../services/seller.service";
 import { sendVerificationEmail } from "../helper/send-verification-mail";
-import {
-  generateVerifyCode,
-  getExpiryDate,
-  hashPassword,
-} from "@repo/shared/utilfunctions";
+import { generateVerifyCode, getExpiryDate } from "@repo/shared/utilfunctions";
 
 interface VerifyCodeProps {
   email?: string;
@@ -57,8 +54,9 @@ export async function sellerRegistration(
           const verifyCode = generateVerifyCode(); //Generate the verify Code for email Authentication
           const expiryDate = getExpiryDate();
 
-          const hashedPassword = await hashPassword(
-            validateInput.data.confirmPassword!
+          const hashedPassword = await bcrypt.hash(
+            validateInput.data.confirmPassword!,
+            10
           );
 
           const createNewSeller = await client.seller.update({
@@ -98,8 +96,9 @@ export async function sellerRegistration(
         }
         //The seller exists and is verified
         else {
-          const hashedPassword = await hashPassword(
-            validateInput.data.confirmPassword!
+          const hashedPassword = await bcrypt.hash(
+            validateInput.data.confirmPassword!,
+            10
           );
 
           const createNewSeller = await client.seller.update({

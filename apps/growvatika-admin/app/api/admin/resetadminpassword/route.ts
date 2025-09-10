@@ -32,7 +32,7 @@ export async function PATCH(
         { status: 400 }
       );
     }
-    const hashPassword = await bcrypt.hash(
+    const hashedPassword = await bcrypt.hash(
       validateInput.data.confirmNewPassword,
       10
     );
@@ -41,7 +41,7 @@ export async function PATCH(
         email: validateInput.data.email,
       },
       data: {
-        password: hashPassword,
+        password: hashedPassword,
       },
     });
     if (!updatedAdmin) {

@@ -1,5 +1,4 @@
 export * from "./utils/toast-style"
-export * from "./utils/hashPassword"
 export * from "./utils/get-current-date";
 export * from "./utils/get-current-location"
 export * from "./utils/generate-verify-code";

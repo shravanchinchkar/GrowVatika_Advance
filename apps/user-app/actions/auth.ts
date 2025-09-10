@@ -1,6 +1,7 @@
 "use server";
 
 // Following is the backend SignUp route
+import bcrypt from "bcrypt";
 import client from "@repo/db/client";
 import { getIp } from "../helper/get-ip-address";
 import { generateVerifyCode } from "@repo/shared/utilfunctions";
@@ -10,8 +11,8 @@ import {
   resetPasswordLimit,
 } from "../lib/rate-limit";
 import { getUserByEmail } from "../services/user.service";
+import { getExpiryDate } from "@repo/shared/utilfunctions";
 import { sendResetPassword } from "../helper/send-reset-password-mail";
-import { getExpiryDate,hashPassword } from "@repo/shared/utilfunctions";
 import { sendVerificationEmail } from "../helper/send-verification-mail";
 import { getCurrentFormattedDateTimeString } from "@repo/shared/utilfunctions";
 import { successfulCollaboration } from "../helper/send-successful-collaboration-mail";
@@ -76,8 +77,9 @@ export async function signup(
         }
         //If the user already exists but is not verified
         else {
-          const hashedPassword = await hashPassword(
-            result.data.confirmPassword!
+          const hashedPassword = await bcrypt.hash(
+            result.data.confirmPassword!,
+            10
           );
           await client.user.update({
             where: { email: result.data.email },
@@ -108,7 +110,10 @@ export async function signup(
         }
       } else {
         // If the user doesn't exists create the new fresh user
-        const hashedPassword = await hashPassword(result.data.confirmPassword!);
+        const hashedPassword = await bcrypt.hash(
+          result.data.confirmPassword!,
+          10
+        );
 
         const newUser = await client.user.create({
           data: {
@@ -253,8 +258,9 @@ export async function resetPassword(
       }
       // If the user exists, then hash the new password and store it in db
       else {
-        const hashedPassword = await hashPassword(
-          validateInput.data?.confirmPassword!
+        const hashedPassword = await bcrypt.hash(
+          validateInput.data?.confirmPassword!,
+          10
         );
         const updateExistingUser = await client.user.update({
           where: {

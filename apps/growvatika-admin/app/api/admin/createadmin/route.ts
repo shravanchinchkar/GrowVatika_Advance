@@ -1,8 +1,8 @@
+import bcrypt from "bcrypt";
 import client from "@repo/db/client";
 import { NEXT_AUTH } from "@/lib/auth";
 import { getServerSession } from "next-auth";
 import { NextRequest, NextResponse } from "next/server";
-import { hashPassword } from "@repo/shared/utilfunctions";
 import { getExistingAdminByEmail } from "@/services/admin.service";
 import { adminSignupSchema, TApiResponse } from "@repo/common-types/types";
 
@@ -61,7 +61,8 @@ export async function POST(
           { status: 400 }
         );
       }
-      const hashedPassword = await hashPassword(validateInput.data.password);
+      const hashedPassword = await bcrypt.hash(validateInput.data.password, 10);
+
       const newAdmin = await client.growVatika_Admin.create({
         data: {
           name: validateInput.data.name,

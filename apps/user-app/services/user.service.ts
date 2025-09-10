@@ -110,7 +110,7 @@ export async function getProductDataByCategory(
       },
     };
   }
-  const productdata = await client.product.findMany({
+  const productsData = await client.product.findMany({
     where: whereClause,
     select: {
       id: true,
@@ -134,18 +134,10 @@ export async function getProductDataByCategory(
       id: "asc", // Optional: Add consistent ordering
     },
   });
-
-  console.log("product data");
-  return productdata;
-}
-
-export async function getTotalProductCount() {
-  const totalCount = await client.product.count({
-    where: {
-      productStatus: "Active",
-    },
+  const totalProductsCount = await client.product.count({
+    where: whereClause,
   });
-  return totalCount;
+  return { productsData, totalProductsCount };
 }
 
 export async function getNurseriesCount() {

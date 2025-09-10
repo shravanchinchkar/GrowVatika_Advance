@@ -3,7 +3,6 @@ import { NextRequest, NextResponse } from "next/server";
 import {
   getProductDataByCategory,
   getTotalPages,
-  getTotalProductCount,
 } from "@/services/user.service";
 
 export async function GET(
@@ -30,13 +29,11 @@ export async function GET(
       );
     }
 
-    const productsData = await getProductDataByCategory(
+    const { productsData, totalProductsCount } = await getProductDataByCategory(
       categoryParams,
       skip,
       limit
     );
-
-    const totalProductsCount = await getTotalProductCount();
 
     if (!totalProductsCount) {
       console.error(
@@ -53,7 +50,7 @@ export async function GET(
         }
       );
     }
-    
+
     const totalPages = getTotalPages(totalProductsCount, limit);
 
     // if current page is greater than totalPages

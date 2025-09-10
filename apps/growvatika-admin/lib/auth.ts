@@ -1,10 +1,10 @@
 import bcrypt from "bcrypt";
 import { JWT } from "next-auth/jwt";
-import client from "@repo/db/client";
 import { Session, User } from "next-auth";
 import { adminSigninSchema } from "@repo/common-types/types";
 import { TAdminSigninSchema } from "@repo/common-types/types";
 import CredentialsProvider from "next-auth/providers/credentials";
+import { getExistingAdminByEmail } from "@/services/admin.service";
 
 // type decleration
 declare module "next-auth" {
@@ -63,11 +63,7 @@ export const NEXT_AUTH = {
           );
         } else {
           const { email, password } = validateInput.data;
-          const adminExists = await client.growVatika_Admin.findFirst({
-            where: {
-              email: email,
-            },
-          });
+          const adminExists = await getExistingAdminByEmail(email);
           if (!adminExists) {
             console.error("Admin doesn't exists");
             throw new Error(

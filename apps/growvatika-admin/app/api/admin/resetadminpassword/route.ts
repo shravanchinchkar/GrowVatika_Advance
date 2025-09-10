@@ -2,6 +2,7 @@ import bcrypt from "bcrypt";
 import client from "@repo/db/client";
 import { NextRequest, NextResponse } from "next/server";
 import { adminResetPasswordSchema, TApiResponse } from "@repo/common-types";
+import { getExistingAdminByEmail } from "@/services/admin.service";
 
 export async function PATCH(
   req: NextRequest
@@ -18,11 +19,9 @@ export async function PATCH(
         { status: 400 }
       );
     }
-    const existingAdmin = await client.growVatika_Admin.findUnique({
-      where: {
-        email: validateInput.data.email,
-      },
-    });
+    const existingAdmin = await getExistingAdminByEmail(
+      validateInput.data.email
+    );
     if (!existingAdmin) {
       return NextResponse.json(
         {

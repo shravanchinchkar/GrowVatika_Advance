@@ -5,6 +5,7 @@ import { EmailOnlySchema } from "@repo/common-types";
 import { resetPasswordLimit } from "@/lib/rate-limit";
 import { NextRequest, NextResponse } from "next/server";
 import { sendResetPassword } from "@/helper/send-reset-password-mail";
+import { getExistingAdminByEmail } from "@/services/admin.service";
 
 export async function POST(
   req: NextRequest
@@ -32,11 +33,7 @@ export async function POST(
         { status: 429 }
       );
     } else {
-      const existingAdmin = await client.growVatika_Admin.findUnique({
-        where: {
-          email: validateInput.data,
-        },
-      });
+      const existingAdmin = await getExistingAdminByEmail(validateInput.data);
       if (!existingAdmin) {
         return NextResponse.json(
           {

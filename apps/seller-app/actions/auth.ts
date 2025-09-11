@@ -1,15 +1,19 @@
 "use server";
-import bcrypt from "bcrypt";
 import {
   SignUpInputs,
   SignupResponse,
   SignUpSchema,
 } from "@repo/common-types/types";
+import {
+  getSellerByEmail,
+  updateUnverifiedSeller,
+  updateVerifiedSeller,
+} from "../services/seller.service";
 import client from "@repo/db/client";
+import { hashPassword } from "../utils/hash";
 import { getIp } from "../helper/get-ip-address";
 import { authRateLimit } from "../lib/rate-limit";
-import { getSellerByEmail } from "../services/seller.service";
-import { sendVerificationEmail } from "../helper/send-verification-mail";
+import { sellerEmailVerification } from "../services/email.service";
 import { generateVerifyCode, getExpiryDate } from "@repo/shared/utilfunctions";
 
 interface VerifyCodeProps {
@@ -39,7 +43,9 @@ export async function sellerRegistration(
     };
   } else {
     try {
-      const sellerExists = await getSellerByEmail(validateInput.data.email);
+      const { email, confirmPassword } = validateInput.data;
+
+      const sellerExists = await getSellerByEmail(email);
 
       if (!sellerExists) {
         return {
@@ -54,21 +60,14 @@ export async function sellerRegistration(
           const verifyCode = generateVerifyCode(); //Generate the verify Code for email Authentication
           const expiryDate = getExpiryDate();
 
-          const hashedPassword = await bcrypt.hash(
-            validateInput.data.confirmPassword!,
-            10
-          );
+          const hashedPassword = await hashPassword(confirmPassword!);
 
-          const createNewSeller = await client.seller.update({
-            where: {
-              email: sellerExists.email,
-            },
-            data: {
-              password: hashedPassword,
-              verifyCode: verifyCode,
-              verifyCodeExpiry: expiryDate,
-            },
-          });
+          const createNewSeller = await updateUnverifiedSeller(
+            sellerExists.email,
+            hashedPassword,
+            verifyCode,
+            expiryDate
+          );
 
           if (!createNewSeller) {
             console.error("Error while creating new seller");
@@ -78,7 +77,7 @@ export async function sellerRegistration(
             };
           }
 
-          const emailResponse = await sendVerificationEmail(
+          const emailResponse = await sellerEmailVerification(
             sellerExists.fullName,
             sellerExists.email,
             verifyCode
@@ -96,19 +95,12 @@ export async function sellerRegistration(
         }
         //The seller exists and is verified
         else {
-          const hashedPassword = await bcrypt.hash(
-            validateInput.data.confirmPassword!,
-            10
-          );
+          const hashedPassword = await hashPassword(confirmPassword!);
 
-          const createNewSeller = await client.seller.update({
-            where: {
-              email: sellerExists.email,
-            },
-            data: {
-              password: hashedPassword,
-            },
-          });
+          const createNewSeller = await updateVerifiedSeller(
+            sellerExists.email,
+            hashedPassword
+          );
 
           if (!createNewSeller) {
             console.error("Error while creating new seller");
@@ -159,7 +151,7 @@ export async function verifyCode({
 
     // If the entered OTP is correct then update the seller
     const updateSeller = await client.seller.update({
-      where: { email: email },
+      where: { email },
       data: {
         isVerified: true,
         verifyCode: null,
@@ -217,7 +209,7 @@ export async function resendOTP({
 
     // Upadate the user with newOTP and new expiryDate
     await client.seller.update({
-      where: { email: email },
+      where: { email },
       data: {
         verifyCode: newOTP,
         verifyCodeExpiry: expiryDate,
@@ -225,7 +217,7 @@ export async function resendOTP({
     });
 
     //Resend the OTP to the which is to be verified
-    const emailResponse = await sendVerificationEmail(
+    const emailResponse = await sellerEmailVerification(
       seller.fullName,
       seller.email,
       newOTP

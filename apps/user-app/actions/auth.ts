@@ -1,10 +1,9 @@
 "use server";
 
 // Following is the backend SignUp route
-import bcrypt from "bcrypt";
 import client from "@repo/db/client";
+import { hashPassword } from "../utils/hash";
 import { getIp } from "../helper/get-ip-address";
-import { generateVerifyCode } from "@repo/shared/utilfunctions";
 import {
   authRateLimit,
   getStartedFromLimit,
@@ -12,10 +11,7 @@ import {
 } from "../lib/rate-limit";
 import { getUserByEmail } from "../services/user.service";
 import { getExpiryDate } from "@repo/shared/utilfunctions";
-import { sendResetPassword } from "../helper/send-reset-password-mail";
-import { sendVerificationEmail } from "../helper/send-verification-mail";
-import { getCurrentFormattedDateTimeString } from "@repo/shared/utilfunctions";
-import { successfulCollaboration } from "../helper/send-successful-collaboration-mail";
+import { generateVerifyCode } from "@repo/shared/utilfunctions";
 import {
   SignUpInputs,
   SignUpSchema,
@@ -28,6 +24,11 @@ import {
   TEmailOnlySchema,
   SignInSchema,
 } from "@repo/common-types/types";
+import {
+  emailVerification,
+  resetPasswordEmail as resetPasswordEmailService,
+  successfulCollaborationService,
+} from "@/services/email.services";
 
 interface VerifyCodeProps {
   email?: string;
@@ -39,10 +40,11 @@ export async function signup(
   signupCredentials: SignUpInputs
 ): Promise<SignupResponse> {
   //validate the user's input
-  const result = SignUpSchema.safeParse(signupCredentials);
+  const validateInput = SignUpSchema.safeParse(signupCredentials);
+
   // If the user's input is incorrect execute the below code
-  if (!result.success) {
-    console.error("errors:", result.error.flatten().fieldErrors);
+  if (!validateInput.success) {
+    console.error("errors:", validateInput.error.flatten().fieldErrors);
     return {
       success: false,
       errors: "Invalid Inputs",
@@ -62,8 +64,10 @@ export async function signup(
     };
   } else {
     try {
+      const { email, confirmPassword, name } = validateInput.data;
+
       //check if the user already exists
-      const existingUserByEmail = await getUserByEmail(result.data.email);
+      const existingUserByEmail = await getUserByEmail(email);
 
       const verifyCode = generateVerifyCode(); //Generate the verify Code for email Authentication
       const expiryDate = getExpiryDate();
@@ -75,14 +79,13 @@ export async function signup(
           console.error("Email already in use", existingUserByEmail);
           return { success: false, errors: "Email already in use" };
         }
+
         //If the user already exists but is not verified
         else {
-          const hashedPassword = await bcrypt.hash(
-            result.data.confirmPassword!,
-            10
-          );
+          const hashedPassword = await hashPassword(confirmPassword!);
+
           await client.user.update({
-            where: { email: result.data.email },
+            where: { email },
             data: {
               password: hashedPassword,
               verifyCode: verifyCode,
@@ -91,11 +94,12 @@ export async function signup(
           });
 
           // Send verification email for the unverified user
-          const emailResponse = await sendVerificationEmail(
-            result.data.name || "",
-            result.data.email,
+          const emailResponse = await emailVerification(
+            name || "",
+            email,
             verifyCode
           );
+
           // If error while sending email
           if (!emailResponse.success) {
             console.error("email not send message:", emailResponse.message);
@@ -108,17 +112,15 @@ export async function signup(
             message: "User updated successfully. Please verify your email",
           };
         }
-      } else {
-        // If the user doesn't exists create the new fresh user
-        const hashedPassword = await bcrypt.hash(
-          result.data.confirmPassword!,
-          10
-        );
+      }
+      // If the user is new then execute the following block
+      else {
+        const hashedPassword = await hashPassword(confirmPassword!);
 
         const newUser = await client.user.create({
           data: {
-            name: result.data.name || "",
-            email: result.data.email,
+            name: name || "",
+            email: email,
             password: hashedPassword,
             verifyCode: verifyCode,
             verifyCodeExpiry: expiryDate,
@@ -134,7 +136,7 @@ export async function signup(
         }
 
         // If the new fresh user is created, then send an otp to the user's email to verify
-        const emailResponse = await sendVerificationEmail(
+        const emailResponse = await emailVerification(
           newUser.name,
           newUser.email,
           verifyCode
@@ -168,12 +170,14 @@ export async function resetPasswordEmail(
 ): Promise<ApiResponseType> {
   //Validate the input type
   const validateInput = EmailOnlySchema.safeParse(email);
+
   if (!validateInput) {
     return { success: false, error: "Invalid Email" };
   }
   //If the resetPassword request count goes beyond 2 within 5 minutes,then block the user for 5 minutes
   const IpAddress = await getIp(); //get the Ip address of the user
   const { success } = await resetPasswordLimit.limit(IpAddress);
+
   if (!success) {
     console.error("ResetPassword Limit Exhausted,try again after 5 Minutes");
     return {
@@ -184,16 +188,18 @@ export async function resetPasswordEmail(
   } else {
     try {
       const existingUserByEmail = await getUserByEmail(validateInput.data!);
+
       if (!existingUserByEmail) {
         return {
           success: false,
           error: `user with email ${validateInput.data} not found!`,
         };
       }
-      const emailResponse = await sendResetPassword(
+      const emailResponse = await resetPasswordEmailService(
         validateInput.data || "",
         existingUserByEmail.id
       );
+
       // If error while sending email
       if (!emailResponse.success) {
         return { success: false, error: emailResponse.message };
@@ -256,12 +262,13 @@ export async function resetPassword(
       if (!existingUserByEmail) {
         return { success: false, error: "User Not Found" };
       }
+
       // If the user exists, then hash the new password and store it in db
       else {
-        const hashedPassword = await bcrypt.hash(
-          validateInput.data?.confirmPassword!,
-          10
+        const hashedPassword = await hashPassword(
+          validateInput.data?.confirmPassword!
         );
+
         const updateExistingUser = await client.user.update({
           where: {
             email: existingUserByEmail.email,
@@ -270,12 +277,14 @@ export async function resetPassword(
             password: hashedPassword,
           },
         });
+
         if (!updateExistingUser) {
           return {
             success: false,
             error: "Error while updating the user password",
           };
         }
+
         return { success: true, message: "Password Updated Successfully" };
       }
     } catch (error) {
@@ -367,7 +376,7 @@ export async function resendOTP({
     });
 
     //Resend the OTP to the which is to be verified
-    const emailResponse = await sendVerificationEmail(
+    const emailResponse = await emailVerification(
       existingUserByEmail.name,
       existingUserByEmail.email,
       newOTP
@@ -390,11 +399,12 @@ export async function resendOTP({
 }
 
 // Following server action is used to store data in google sheets
-export async function storeDataInExcel(
+export async function storeGetStartedFormDetails(
   userDetails: TGetStartedFormSchema
 ): Promise<ApiResponseType> {
   //  First Validate the input
   const validateInput = GetStartedFormSchema.safeParse(userDetails);
+
   if (!validateInput.success) {
     return { success: false, error: "Invalid Inputs" };
   }
@@ -413,10 +423,14 @@ export async function storeDataInExcel(
   }
   // If above everything succeed then execute the following block
   else {
+    const { email, city, fullName, nurseryName, phoneNumber } =
+      validateInput.data;
+
     try {
       const existingSellerByEmail = await client.seller.findUnique({
-        where: { email: validateInput.data.email },
+        where: { email },
       });
+
       //If the seller already exists then evaluate the seller as follows:
       if (existingSellerByEmail) {
         //If the seller already exists and is verified
@@ -427,24 +441,24 @@ export async function storeDataInExcel(
           );
           return { success: false, error: "Seller Email already exists" };
         }
+
         //If the seller already exists but is not verified
         else {
           await client.seller.update({
-            where: { email: validateInput.data.email },
+            where: { email },
             data: {
-              fullName: validateInput.data.fullName,
-              nurseryName: validateInput.data.nurseryName,
-              phoneNumber: validateInput.data.phoneNumber,
-              address: validateInput.data.city,
+              fullName,
+              nurseryName,
+              phoneNumber,
+              address: city,
             },
           });
 
           // Send verification email for the unverified seller
-          const emailResponse = await successfulCollaboration(
-            validateInput.data.nurseryName,
-            validateInput.data.fullName,
-            getCurrentFormattedDateTimeString(),
-            userDetails.email
+          const emailResponse = await successfulCollaborationService(
+            nurseryName,
+            fullName,
+            email
           );
 
           // If error while sending email
@@ -460,16 +474,16 @@ export async function storeDataInExcel(
           };
         }
       } else {
-        //If the Seller Email address is unique then first store the details of the seller in the google spread sheet
+        //If the Seller Email address is unique then store the details of the seller in the database
 
         const createNewSeller = await client.seller.create({
           data: {
-            fullName: validateInput.data.fullName,
-            nurseryName: validateInput.data.nurseryName,
-            email: validateInput.data.email,
-            phoneNumber: validateInput.data.phoneNumber,
+            fullName,
+            nurseryName,
+            email,
+            phoneNumber,
             password: "",
-            address: validateInput.data.city,
+            address: city,
           },
         });
 
@@ -482,11 +496,10 @@ export async function storeDataInExcel(
         }
 
         //Send a successful collaboration mail to the end user
-        const emailResponse = await successfulCollaboration(
-          validateInput.data.nurseryName,
-          validateInput.data.fullName,
-          getCurrentFormattedDateTimeString(),
-          userDetails.email
+        const emailResponse = await successfulCollaborationService(
+          nurseryName,
+          fullName,
+          email
         );
 
         // If error while sending email

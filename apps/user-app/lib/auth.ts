@@ -4,11 +4,13 @@ import { authRateLimit } from "./rate-limit";
 import { SignInSchema } from "@repo/common-types/types";
 import GoogleProvider from "next-auth/providers/google";
 import { getUserByEmail } from "@/services/user.service";
+import {
+  emailVerification,
+  signinSuccessfulEmail,
+} from "@/services/email.services";
 import { getLocationFromIP } from "@repo/shared/utilfunctions";
 import { generateVerifyCode } from "@repo/shared/utilfunctions";
 import CredentialsProvider from "next-auth/providers/credentials";
-import { sendVerificationEmail } from "../helper/send-verification-mail";
-import { sendSignInSuccessfulMail } from "@/helper/send-signin-successful-mail";
 import { getCurrentDateTime, getExpiryDate } from "@repo/shared/utilfunctions";
 
 export const NEXT_AUTH = {
@@ -64,7 +66,7 @@ export const NEXT_AUTH = {
 
           //check if the user with the entered email already exists in db
           const userExists = await getUserByEmail(email);
-          
+
           if (!userExists) {
             console.error("User doesn't exists");
             throw new Error(
@@ -96,11 +98,12 @@ export const NEXT_AUTH = {
               });
               if (updateExistingUser) {
                 // Send verification email for the unverified user
-                const emailResponse = await sendVerificationEmail(
+                const emailResponse = await emailVerification(
                   userExists.name,
                   userExists.email,
                   verifyCode
                 );
+
                 // If error while sending email
                 if (!emailResponse.success) {
                   throw new Error(
@@ -162,14 +165,14 @@ export const NEXT_AUTH = {
             const currentDateTime = getCurrentDateTime(userTimezone);
             if (passwordValidation) {
               // send signin email notification
-              const emailResponse = await sendSignInSuccessfulMail({
-                username: userExists.name,
-                email: userExists.email,
-                accountType: "User Account",
-                ipAddress: IpAddress,
-                signintime: currentDateTime,
-                location: currentLocation || "",
-              });
+              const emailResponse = await signinSuccessfulEmail(
+                userExists.name,
+                userExists.email,
+                "User Account",
+                IpAddress,
+                currentDateTime,
+                currentLocation || ""
+              );
 
               if (!emailResponse.success) {
                 console.error(

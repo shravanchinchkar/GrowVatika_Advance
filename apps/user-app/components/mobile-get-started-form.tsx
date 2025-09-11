@@ -5,11 +5,11 @@ import { useState } from "react";
 import toast from "react-hot-toast";
 import { SiteLogo } from "@repo/ui/brand-logo";
 import { AuthButton } from "@repo/ui/auth-button";
-import { storeDataInExcel } from "@/actions/auth";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { toastStyle } from "@repo/shared/utilfunctions";
 import { useForm, SubmitHandler } from "react-hook-form";
 import { FormType, LabelInput } from "@repo/ui/label-input";
+import { storeGetStartedFormDetails } from "@/actions/auth";
 import { useChangeMobileConnectFormVisibility } from "@repo/shared-store";
 import {
   TGetStartedFormSchema,
@@ -45,7 +45,7 @@ export const MobileGetStartedForm = () => {
     data: TGetStartedFormSchema
   ) => {
     setLoading(true);
-    const res = await storeDataInExcel(data);
+    const res = await storeGetStartedFormDetails(data);
     setLoading(false);
 
     if (res.error) {
@@ -53,7 +53,9 @@ export const MobileGetStartedForm = () => {
     } else {
       setValue("fullName", "");
       setValue("phoneNumber", "");
-      setValue("email", ""), setValue("nurseryName", ""), setValue("city", "");
+      (setValue("email", ""),
+        setValue("nurseryName", ""),
+        setValue("city", ""));
       setValue("termsandconditions", false);
       toast.success("Submitted!", toastStyle);
     }
